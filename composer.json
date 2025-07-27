@@ -1,0 +1,13 @@
+{
+  "name": "doiftrue/unitest-wp-copy",
+  "description": "Collection of WordPress core functions and classes that can be used in unit tests to simulate WordPress environment.",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Timur Kamaev",
+      "email": "tnkamaev@gmail.com"
+    }
+  ],
+  "require": {}
+}
