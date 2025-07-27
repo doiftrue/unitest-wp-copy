@@ -6,8 +6,11 @@
   "authors": [
     {
       "name": "Timur Kamaev",
-      "email": "tnkamaev@gmail.com"
+      "email": "tnkamaev@gmail.com",
+      "homepage": "https://github.com/doiftrue/unitest-wp-copy"
     }
   ],
-  "require": {}
+  "require": {
+    "php": ">=7.4"
+  }
 }
