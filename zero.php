@@ -1,7 +1,8 @@
 <?php
 
-/// Runtime internal extra constants
-const WPCOPY__OPTION_BLOG_CHARSET = 'UTF-8';
+/// Runtime extra constants - that needed for some functions to work
+// `get_option( 'blog_charset' )` will be replaced with this constant in the code
+defined( 'WPCOPY__OPTION_BLOG_CHARSET' ) || define( 'WPCOPY__OPTION_BLOG_CHARSET', 'UTF-8' );
 
 /// Include files
 $files = [
@@ -12,8 +13,6 @@ $files = [
 foreach( $files as $file ){
 	require_once $file;
 }
-
-//require_once __DIR__ . '/constants.php';
 
 /// Set base constants
 wp_initial_constants();
