@@ -1,1 +1,2 @@
-/_parser   export-ignore
+/_parser        export-ignore
+composer.lock   export-ignore

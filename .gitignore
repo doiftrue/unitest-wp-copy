@@ -1,4 +1,5 @@
-Makefile
-__*
+/vendor/
+/Makefile
+/__*
 
-_parser/env.php
+/_parser/env.php

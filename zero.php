@@ -8,6 +8,7 @@ $files = [
 	...glob( __DIR__ . '/functions/*.php' ),
 	...glob( __DIR__ . '/functions/wp-includes/*.php' ),
 	...glob( __DIR__ . '/classes/*.php' ),
+	...glob( __DIR__ . '/init-parts/wp-includes/*.php' ),
 ];
 foreach( $files as $file ){
 	require_once $file;

@@ -11,6 +11,13 @@
     }
   ],
   "require": {
-    "php": ">=7.4"
-  }
+    "php": ">=7.4",
+    "wordpress/wordpress": "*"
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://raw.githubusercontent.com/doiftrue/wordpress-composer-repo/main/repo/no-content"
+    }
+  ]
 }

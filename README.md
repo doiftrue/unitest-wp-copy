@@ -39,6 +39,7 @@ The set of functions is specified in the config file `_config.php` and updated w
 Before run you need to specify path to the WP core code and other basic constants. To do this, copy the env.example.php env file:
 ```shell
 cp  _parser/env.sample.php  _parser/env.php
+composer install
 ```
 Then edit the `_parser/env.php` file to set the correct path to your WordPress core installation.
 After that, you can run the parser script using the following command:

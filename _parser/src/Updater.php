@@ -5,11 +5,11 @@ class Updater {
 	/** @see config.php */
 	private array $config;
 	private string $dest_dir;
-
-	private string $wp_core_dir = WP_CORE_DIR;
+	private string $wp_core_dir;
 	private string $wp_version;
 
-	public function __construct( string $root_dir ) {
+	public function __construct( string $root_dir, string $wp_core_dir ) {
+		$this->wp_core_dir = $wp_core_dir;
 		$this->dest_dir = "$root_dir/functions";
 		$this->config = include "$root_dir/config.php";
 	}
@@ -44,11 +44,14 @@ class Updater {
 
 		$append = '';
 		foreach( $funcs_data as $func_name => $code_lines ){
-			$code = "// $rel_file (WP $this->wp_version)\n";
-			$code .= implode( "\n", $code_lines );
-			$code .= "\n\n";
-
-			$append .= $code;
+			$comment = "// $rel_file (WP $this->wp_version)";
+			$func_code = implode( "\n\t", $code_lines );
+			$append .= <<<PHP
+				$comment
+				if( ! function_exists( '$func_name' ) ) :
+					$func_code
+				endif;
+				PHP . "\n\n";
 		}
 
 		$dest_content .= $append;
