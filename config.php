@@ -195,6 +195,7 @@ return [
 		'_wp_kses_allow_pdf_objects'          => '',
 	],
 	'wp-includes/load.php' => [
+		'wp_get_development_mode'    => '',
 		'wp_get_environment_type'    => '',
 		'wp_doing_ajax'              => '',
 		'is_admin'                   => '',
@@ -213,9 +214,12 @@ return [
 		'plugin_basename' => '',
 	],
 	'wp-includes/link-template.php' => [
+		'set_url_scheme' => '',
 		'plugins_url' => '',
+		'content_url' => '',
 	],
 	'wp-includes/default-constants.php' => [
+		'wp_initial_constants'          => '',
 		'wp_plugin_directory_constants' => '',
 	],
 ];

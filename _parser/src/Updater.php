@@ -6,12 +6,17 @@ class Updater {
 	private array $config;
 	private string $dest_dir;
 	private string $wp_core_dir;
+
 	private string $wp_version;
 
-	public function __construct( string $root_dir, string $wp_core_dir ) {
+	public function __construct(
+		string $dest_dir,
+		string $wp_core_dir,
+		array $config
+	) {
+		$this->dest_dir = $dest_dir;
 		$this->wp_core_dir = $wp_core_dir;
-		$this->dest_dir = "$root_dir/functions";
-		$this->config = include "$root_dir/config.php";
+		$this->config = $config;
 	}
 
 	public function setup(): void {

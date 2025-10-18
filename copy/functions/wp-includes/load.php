@@ -58,6 +58,40 @@ if( ! function_exists( 'wp_get_environment_type' ) ) :
 endif;
 
 // wp-includes/load.php (WP 6.8.3)
+if( ! function_exists( 'wp_get_development_mode' ) ) :
+	function wp_get_development_mode() {
+		static $current_mode = null;
+	
+		if ( ! defined( 'WP_RUN_CORE_TESTS' ) && null !== $current_mode ) {
+			return $current_mode;
+		}
+	
+		$development_mode = WP_DEVELOPMENT_MODE;
+	
+		// Exclusively for core tests, rely on the `$_wp_tests_development_mode` global.
+		if ( defined( 'WP_RUN_CORE_TESTS' ) && isset( $GLOBALS['_wp_tests_development_mode'] ) ) {
+			$development_mode = $GLOBALS['_wp_tests_development_mode'];
+		}
+	
+		$valid_modes = array(
+			'core',
+			'plugin',
+			'theme',
+			'all',
+			'',
+		);
+	
+		if ( ! in_array( $development_mode, $valid_modes, true ) ) {
+			$development_mode = '';
+		}
+	
+		$current_mode = $development_mode;
+	
+		return $current_mode;
+	}
+endif;
+
+// wp-includes/load.php (WP 6.8.3)
 if( ! function_exists( 'is_admin' ) ) :
 	function is_admin() {
 		if ( isset( $GLOBALS['current_screen'] ) ) {

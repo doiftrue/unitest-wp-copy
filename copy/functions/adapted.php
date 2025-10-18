@@ -5,6 +5,7 @@
  */
 
 // wp-includes/formatting.php (WP 6.8.1)
+if( ! function_exists( 'wp_allowed_protocols' ) ) :
 function wp_allowed_protocols() {
 	static $protocols = array();
 
@@ -25,3 +26,4 @@ function wp_allowed_protocols() {
 
 	return $protocols;
 }
+endif;

@@ -5,10 +5,10 @@
 require_once __DIR__ . '/constants.php';
 
 $files = [
-	...glob( __DIR__ . '/functions/*.php' ),
-	...glob( __DIR__ . '/functions/wp-includes/*.php' ),
-	...glob( __DIR__ . '/classes/*.php' ),
-	...glob( __DIR__ . '/init-parts/wp-includes/*.php' ),
+	...glob( __DIR__ . '/copy/functions/*.php' ),
+	...glob( __DIR__ . '/copy/functions/wp-includes/*.php' ),
+	...glob( __DIR__ . '/copy/classes/*.php' ),
+	...glob( __DIR__ . '/copy/init-parts/wp-includes/*.php' ), /// INIT
 ];
 foreach( $files as $file ){
 	require_once $file;
