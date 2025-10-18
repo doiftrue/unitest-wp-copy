@@ -4,18 +4,17 @@ class Updater {
 
 	/** @see config.php */
 	private array $config;
-
-	private string $dest_dir = WP_COPY_DIR . '/functions';
+	private string $dest_dir;
 
 	private string $wp_core_dir = WP_CORE_DIR;
 	private string $wp_version;
 
-	public function __construct() {
+	public function __construct( string $root_dir ) {
+		$this->dest_dir = "$root_dir/functions";
+		$this->config = include "$root_dir/config.php";
 	}
 
 	public function setup(): void {
-		$this->config = include CONFIG_FILE;
-
 		require_once "$this->wp_core_dir/wp-includes/version.php";
 		/** @var string $wp_version */
 		$this->wp_version = $wp_version;
@@ -29,7 +28,7 @@ class Updater {
 		echo "DONE!\n";
 	}
 
-	private function update_file( string $rel_file, array $func_names ) {
+	private function update_file( string $rel_file, array $func_names ): void {
 		$sep = '// ------------------auto-generated---------------------';
 
 		$core_file = "$this->wp_core_dir/$rel_file";

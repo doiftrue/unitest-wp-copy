@@ -6,13 +6,10 @@ The main idea behind this module is that when writing unit tests for WordPress, 
 
 * `trailingslashit`
 * `sanitize_key`
+* `is_email`
 * `wp_unslash`
 * `wp_parse_str`
 * `wp_parse_list`
-* `wpautop`
-* `wptexturize`
-* `is_email`
-* `urlencode_deep`
 * `wp_normalize_path`
 * `get_file_data`
 * `maybe_unserialize`
@@ -27,16 +24,24 @@ This module collects exactly those functions and classes. It simplifies unit tes
 
 Usage
 -----
-To use this module, you need to install it as a Composer package and include its main file in your PHPUnit t bootstrap using the following line of code:
+To use this module, you need to install it as a Composer package and include its main file in your PHPUnit bootstrap using the following line of code:
 ```php
+define( 'ABSPATH', 'path/to/wp/' );
+define( 'WP_CONTENT_DIR', 'path/to/wp/wp-content' );
+define( 'WP_CONTENT_URL', 'https://mytest.com/wp-content' );
 require_once __DIR__ . '/vendor/doiftrue/unitest-wp-copy/zero.php';
 ```
 
 
 Additional Info
 ---------------
-The set of functions is specified in the config file `_parser/config.php` and updated with the command:
-
+The set of functions is specified in the config file `_config.php` and updated with ``_parser`` script that should be run under php-cli environment.
+Before run you need to specify path to the WP core code and other basic constants. To do this, copy the env.example.php env file:
+```shell
+cp  _parser/env.sample.php  _parser/env.php
+```
+Then edit the `_parser/env.php` file to set the correct path to your WordPress core installation.
+After that, you can run the parser script using the following command:
 ```bash
 php _parser/run.php
 ```

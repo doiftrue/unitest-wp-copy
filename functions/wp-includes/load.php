@@ -1,13 +1,9 @@
 <?php
-/**
- * Copy of WP functions to they work as is.
- * Here is only functions that not depends on DB or other external libs.
- */
 
 
 // ------------------auto-generated---------------------
 
-// wp-includes/load.php (WP 6.8.1)
+// wp-includes/load.php (WP 6.8.3)
 function wp_get_environment_type() {
 	static $current_env = '';
 
@@ -59,7 +55,7 @@ function wp_get_environment_type() {
 	return $current_env;
 }
 
-// wp-includes/load.php (WP 6.8.1)
+// wp-includes/load.php (WP 6.8.3)
 function is_admin() {
 	if ( isset( $GLOBALS['current_screen'] ) ) {
 		return $GLOBALS['current_screen']->in_admin();
@@ -70,7 +66,7 @@ function is_admin() {
 	return false;
 }
 
-// wp-includes/load.php (WP 6.8.1)
+// wp-includes/load.php (WP 6.8.3)
 function is_multisite() {
 	if ( defined( 'MULTISITE' ) ) {
 		return MULTISITE;
@@ -83,12 +79,12 @@ function is_multisite() {
 	return false;
 }
 
-// wp-includes/load.php (WP 6.8.1)
+// wp-includes/load.php (WP 6.8.3)
 function absint( $maybeint ) {
 	return abs( (int) $maybeint );
 }
 
-// wp-includes/load.php (WP 6.8.1)
+// wp-includes/load.php (WP 6.8.3)
 function is_ssl() {
 	if ( isset( $_SERVER['HTTPS'] ) ) {
 		if ( 'on' === strtolower( $_SERVER['HTTPS'] ) ) {
@@ -105,7 +101,7 @@ function is_ssl() {
 	return false;
 }
 
-// wp-includes/load.php (WP 6.8.1)
+// wp-includes/load.php (WP 6.8.3)
 function wp_convert_hr_to_bytes( $value ) {
 	$value = strtolower( trim( $value ) );
 	$bytes = (int) $value;
@@ -122,7 +118,7 @@ function wp_convert_hr_to_bytes( $value ) {
 	return min( $bytes, PHP_INT_MAX );
 }
 
-// wp-includes/load.php (WP 6.8.1)
+// wp-includes/load.php (WP 6.8.3)
 function wp_is_ini_value_changeable( $setting ) {
 	static $ini_all;
 
@@ -148,7 +144,7 @@ function wp_is_ini_value_changeable( $setting ) {
 	return false;
 }
 
-// wp-includes/load.php (WP 6.8.1)
+// wp-includes/load.php (WP 6.8.3)
 function wp_doing_ajax() {
 	/**
 	 * Filters whether the current request is a WordPress Ajax request.
@@ -160,7 +156,7 @@ function wp_doing_ajax() {
 	return apply_filters( 'wp_doing_ajax', defined( 'DOING_AJAX' ) && DOING_AJAX );
 }
 
-// wp-includes/load.php (WP 6.8.1)
+// wp-includes/load.php (WP 6.8.3)
 function is_wp_error( $thing ) {
 	$is_wp_error = ( $thing instanceof WP_Error );
 

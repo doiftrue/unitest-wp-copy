@@ -208,5 +208,14 @@ return [
 	'wp-includes/compat.php' => [
 		'_is_utf8_charset' => '',
 	],
+	'wp-includes/plugin.php' => [
+		'wp_register_plugin_realpath' => '',
+		'plugin_basename' => '',
+	],
+	'wp-includes/link-template.php' => [
+		'plugins_url' => '',
+	],
+	'wp-includes/default-constants.php' => [
+		'wp_plugin_directory_constants' => '',
+	],
 ];
-

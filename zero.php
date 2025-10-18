@@ -16,3 +16,6 @@ foreach( $files as $file ){
 /// INIT
 
 wp_initial_constants();
+wp_plugin_directory_constants();
+global $wp_plugin_paths;
+$wp_plugin_paths || $wp_plugin_paths = [];

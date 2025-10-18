@@ -1,12 +1,8 @@
 <?php
-/**
- * Copy of WP functions to they work as is.
- * Here is only functions that not depends on DB or other external libs.
- */
 
 // ------------------auto-generated---------------------
 
-// wp-includes/compat.php (WP 6.8.1)
+// wp-includes/compat.php (WP 6.8.3)
 function _is_utf8_charset( $charset_slug ) {
 	if ( ! is_string( $charset_slug ) ) {
 		return false;

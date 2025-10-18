@@ -1,12 +1,8 @@
 <?php
-/**
- * Copy of WP functions to they work as is.
- * Here is only functions that not depends on DB or other external libs.
- */
 
 // ------------------auto-generated---------------------
 
-// wp-includes/functions.php (WP 6.8.1)
+// wp-includes/functions.php (WP 6.8.3)
 function number_format_i18n( $number, $decimals = 0 ) {
 	global $wp_locale;
 
@@ -29,7 +25,7 @@ function number_format_i18n( $number, $decimals = 0 ) {
 	return apply_filters( 'number_format_i18n', $formatted, $number, $decimals );
 }
 
-// wp-includes/functions.php (WP 6.8.1)
+// wp-includes/functions.php (WP 6.8.3)
 function size_format( $bytes, $decimals = 0 ) {
 	$quant = array(
 		/* translators: Unit symbol for yottabyte. */
@@ -66,7 +62,7 @@ function size_format( $bytes, $decimals = 0 ) {
 	return false;
 }
 
-// wp-includes/functions.php (WP 6.8.1)
+// wp-includes/functions.php (WP 6.8.3)
 function maybe_serialize( $data ) {
 	if ( is_array( $data ) || is_object( $data ) ) {
 		return serialize( $data );
@@ -84,7 +80,7 @@ function maybe_serialize( $data ) {
 	return $data;
 }
 
-// wp-includes/functions.php (WP 6.8.1)
+// wp-includes/functions.php (WP 6.8.3)
 function maybe_unserialize( $data ) {
 	if ( is_serialized( $data ) ) { // Don't attempt to unserialize data that wasn't serialized going in.
 		return @unserialize( trim( $data ) );
@@ -93,7 +89,7 @@ function maybe_unserialize( $data ) {
 	return $data;
 }
 
-// wp-includes/functions.php (WP 6.8.1)
+// wp-includes/functions.php (WP 6.8.3)
 function is_serialized( $data, $strict = true ) {
 	// If it isn't a string, it isn't serialized.
 	if ( ! is_string( $data ) ) {
@@ -153,7 +149,7 @@ function is_serialized( $data, $strict = true ) {
 	return false;
 }
 
-// wp-includes/functions.php (WP 6.8.1)
+// wp-includes/functions.php (WP 6.8.3)
 function is_serialized_string( $data ) {
 	// if it isn't a string, it isn't a serialized string.
 	if ( ! is_string( $data ) ) {
@@ -175,7 +171,7 @@ function is_serialized_string( $data ) {
 	}
 }
 
-// wp-includes/functions.php (WP 6.8.1)
+// wp-includes/functions.php (WP 6.8.3)
 function wp_normalize_path( $path ) {
 	$wrapper = '';
 
@@ -199,7 +195,7 @@ function wp_normalize_path( $path ) {
 	return $wrapper . $path;
 }
 
-// wp-includes/functions.php (WP 6.8.1)
+// wp-includes/functions.php (WP 6.8.3)
 function wp_parse_args( $args, $defaults = array() ) {
 	if ( is_object( $args ) ) {
 		$parsed_args = get_object_vars( $args );
@@ -215,7 +211,7 @@ function wp_parse_args( $args, $defaults = array() ) {
 	return $parsed_args;
 }
 
-// wp-includes/functions.php (WP 6.8.1)
+// wp-includes/functions.php (WP 6.8.3)
 function wp_parse_list( $input_list ) {
 	if ( ! is_array( $input_list ) ) {
 		return preg_split( '/[\s,]+/', $input_list, -1, PREG_SPLIT_NO_EMPTY );
@@ -227,7 +223,7 @@ function wp_parse_list( $input_list ) {
 	return $input_list;
 }
 
-// wp-includes/functions.php (WP 6.8.1)
+// wp-includes/functions.php (WP 6.8.3)
 function _deprecated_argument( $function_name, $version, $message = '' ) {
 
 	/**
@@ -287,7 +283,7 @@ function _deprecated_argument( $function_name, $version, $message = '' ) {
 	}
 }
 
-// wp-includes/functions.php (WP 6.8.1)
+// wp-includes/functions.php (WP 6.8.3)
 function _doing_it_wrong( $function_name, $message, $version ) {
 
 	/**
@@ -354,7 +350,7 @@ function _doing_it_wrong( $function_name, $message, $version ) {
 	}
 }
 
-// wp-includes/functions.php (WP 6.8.1)
+// wp-includes/functions.php (WP 6.8.3)
 function wp_trigger_error( $function_name, $message, $error_level = E_USER_NOTICE ) {
 
 	// Bail out if WP_DEBUG is not turned on.
@@ -398,12 +394,12 @@ function wp_trigger_error( $function_name, $message, $error_level = E_USER_NOTIC
 	trigger_error( $message, $error_level );
 }
 
-// wp-includes/functions.php (WP 6.8.1)
+// wp-includes/functions.php (WP 6.8.3)
 function _cleanup_header_comment( $str ) {
 	return trim( preg_replace( '/\s*(?:\*\/|\?>).*/', '', $str ) );
 }
 
-// wp-includes/functions.php (WP 6.8.1)
+// wp-includes/functions.php (WP 6.8.3)
 function get_file_data( $file, $default_headers, $context = '' ) {
 	// Pull only the first 8 KB of the file in.
 	$file_data = file_get_contents( $file, false, null, 0, 8 * KB_IN_BYTES );
@@ -444,7 +440,7 @@ function get_file_data( $file, $default_headers, $context = '' ) {
 	return $all_headers;
 }
 
-// wp-includes/functions.php (WP 6.8.1)
+// wp-includes/functions.php (WP 6.8.3)
 function wp_is_stream( $path ) {
 	$scheme_separator = strpos( $path, '://' );
 
@@ -458,12 +454,12 @@ function wp_is_stream( $path ) {
 	return in_array( $stream, stream_get_wrappers(), true );
 }
 
-// wp-includes/functions.php (WP 6.8.1)
+// wp-includes/functions.php (WP 6.8.3)
 function is_utf8_charset( $blog_charset = null ) {
 	return _is_utf8_charset( $blog_charset ?? WPCOPY__OPTION_BLOG_CHARSET );
 }
 
-// wp-includes/functions.php (WP 6.8.1)
+// wp-includes/functions.php (WP 6.8.3)
 function _canonical_charset( $charset ) {
 	if ( is_utf8_charset( $charset ) ) {
 		return 'UTF-8';
