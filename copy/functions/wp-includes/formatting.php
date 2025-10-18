@@ -820,7 +820,7 @@ if( ! function_exists( '_wp_specialchars' ) ) :
 			$quote_style = ENT_QUOTES;
 		}
 	
-		$charset = _canonical_charset( $charset ? $charset : WPCOPY__OPTION_BLOG_CHARSET );
+		$charset = _canonical_charset( $charset ? $charset : WPCOPY_OPTION__BLOG_CHARSET );
 	
 		$_quote_style = $quote_style;
 	
@@ -1879,7 +1879,7 @@ endif;
 // wp-includes/formatting.php (WP 6.8.3)
 if( ! function_exists( 'balanceTags' ) ) :
 	function balanceTags( $text, $force = false ) {  // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid
-		if ( $force || (int) get_option( 'use_balanceTags' ) === 1 ) {
+		if ( $force || (int) WPCOPY_OPTION__USE_BALANCETAGS === 1 ) {
 			return force_balance_tags( $text );
 		} else {
 			return $text;
@@ -2427,22 +2427,6 @@ if( ! function_exists( 'wp_rel_nofollow_callback' ) ) :
 endif;
 
 // wp-includes/formatting.php (WP 6.8.3)
-if( ! function_exists( 'wp_rel_ugc' ) ) :
-	function wp_rel_ugc( $text ) {
-		// This is a pre-save filter, so text is already escaped.
-		$text = stripslashes( $text );
-		$text = preg_replace_callback(
-			'|<a (.+?)>|i',
-			static function ( $matches ) {
-				return wp_rel_callback( $matches, 'nofollow ugc' );
-			},
-			$text
-		);
-		return wp_slash( $text );
-	}
-endif;
-
-// wp-includes/formatting.php (WP 6.8.3)
 if( ! function_exists( 'wp_targeted_link_rel' ) ) :
 	function wp_targeted_link_rel( $text ) {
 		_deprecated_function( __FUNCTION__, '6.7.0' );
@@ -2577,7 +2561,7 @@ if( ! function_exists( 'convert_smilies' ) ) :
 	function convert_smilies( $text ) {
 		global $wp_smiliessearch;
 	
-		if ( ! get_option( 'use_smilies' ) || empty( $wp_smiliessearch ) ) {
+		if ( ! WPCOPY_OPTION__USE_SMILIES || empty( $wp_smiliessearch ) ) {
 			// Return default text.
 			return $text;
 		}
@@ -3062,7 +3046,7 @@ if( ! function_exists( 'wp_trim_words' ) ) :
 		$text          = wp_strip_all_tags( $text );
 		$num_words     = (int) $num_words;
 	
-		if ( str_starts_with( wp_get_word_count_type(), 'characters' ) && preg_match( '/^utf\-?8$/i', WPCOPY__OPTION_BLOG_CHARSET ) ) {
+		if ( str_starts_with( wp_get_word_count_type(), 'characters' ) && preg_match( '/^utf\-?8$/i', WPCOPY_OPTION__BLOG_CHARSET ) ) {
 			$text = trim( preg_replace( "/[\n\r\t ]+/", ' ', $text ), ' ' );
 			preg_match_all( '/./u', $text, $words_array );
 			$words_array = array_slice( $words_array[0], 0, $num_words + 1 );
@@ -3380,7 +3364,7 @@ endif;
 if( ! function_exists( 'format_for_editor' ) ) :
 	function format_for_editor( $text, $default_editor = null ) {
 		if ( $text ) {
-			$text = htmlspecialchars( $text, ENT_NOQUOTES, WPCOPY__OPTION_BLOG_CHARSET );
+			$text = htmlspecialchars( $text, ENT_NOQUOTES, WPCOPY_OPTION__BLOG_CHARSET );
 		}
 	
 		/**
@@ -3407,14 +3391,6 @@ if( ! function_exists( '_deep_replace' ) ) :
 		}
 	
 		return $subject;
-	}
-endif;
-
-// wp-includes/formatting.php (WP 6.8.3)
-if( ! function_exists( 'esc_sql' ) ) :
-	function esc_sql( $data ) {
-		global $wpdb;
-		return $wpdb->_escape( $data );
 	}
 endif;
 
@@ -3611,7 +3587,7 @@ endif;
 // wp-includes/formatting.php (WP 6.8.3)
 if( ! function_exists( 'esc_textarea' ) ) :
 	function esc_textarea( $text ) {
-		$safe_text = htmlspecialchars( $text, ENT_QUOTES, WPCOPY__OPTION_BLOG_CHARSET );
+		$safe_text = htmlspecialchars( $text, ENT_QUOTES, WPCOPY_OPTION__BLOG_CHARSET );
 		/**
 		 * Filters a string cleaned and escaped for output in a textarea element.
 		 *
@@ -3749,21 +3725,6 @@ if( ! function_exists( 'wp_pre_kses_less_than_callback' ) ) :
 			return esc_html( $matches[0] );
 		}
 		return $matches[0];
-	}
-endif;
-
-// wp-includes/formatting.php (WP 6.8.3)
-if( ! function_exists( 'wp_pre_kses_block_attributes' ) ) :
-	function wp_pre_kses_block_attributes( $content, $allowed_html, $allowed_protocols ) {
-		/*
-		 * `filter_block_content` is expected to call `wp_kses`. Temporarily remove
-		 * the filter to avoid recursion.
-		 */
-		remove_filter( 'pre_kses', 'wp_pre_kses_block_attributes', 10 );
-		$content = filter_block_content( $content, $allowed_html, $allowed_protocols );
-		add_filter( 'pre_kses', 'wp_pre_kses_block_attributes', 10, 3 );
-	
-		return $content;
 	}
 endif;
 
@@ -3933,7 +3894,7 @@ if( ! function_exists( '_links_add_base' ) ) :
 		return $m[1] . '=' . $m[2] .
 			( preg_match( '#^(\w{1,20}):#', $m[3], $protocol ) && in_array( $protocol[1], wp_allowed_protocols(), true ) ?
 				$m[3] :
-				WP_Http::make_absolute_url( $m[3], $_links_add_base )
+				WP_Http__make_absolute_url( $m[3], $_links_add_base )
 			)
 			. $m[2];
 	}
@@ -4096,27 +4057,6 @@ if( ! function_exists( 'wp_basename' ) ) :
 endif;
 
 // wp-includes/formatting.php (WP 6.8.3)
-if( ! function_exists( 'capital_P_dangit' ) ) :
-	function capital_P_dangit( $text ) {
-		// Simple replacement for titles.
-		$current_filter = current_filter();
-		if ( 'the_title' === $current_filter || 'wp_title' === $current_filter ) {
-			return str_replace( 'Wordpress', 'WordPress', $text );
-		}
-		// Still here? Use the more judicious replacement.
-		static $dblq = false;
-		if ( false === $dblq ) {
-			$dblq = _x( '&#8220;', 'opening curly double quote' );
-		}
-		return str_replace(
-			array( ' Wordpress', '&#8216;Wordpress', $dblq . 'Wordpress', '>Wordpress', '(Wordpress' ),
-			array( ' WordPress', '&#8216;WordPress', $dblq . 'WordPress', '>WordPress', '(WordPress' ),
-			$text
-		);
-	}
-endif;
-
-// wp-includes/formatting.php (WP 6.8.3)
 if( ! function_exists( 'sanitize_mime_type' ) ) :
 	function sanitize_mime_type( $mime_type ) {
 		$sani_mime_type = preg_replace( '/[^-+*.a-zA-Z0-9\/]/', '', $mime_type );
@@ -4217,114 +4157,6 @@ if( ! function_exists( 'wp_spaces_regexp' ) ) :
 		}
 	
 		return $spaces;
-	}
-endif;
-
-// wp-includes/formatting.php (WP 6.8.3)
-if( ! function_exists( 'wp_enqueue_emoji_styles' ) ) :
-	function wp_enqueue_emoji_styles() {
-		// Back-compat for plugins that disable functionality by unhooking this action.
-		$action = is_admin() ? 'admin_print_styles' : 'wp_print_styles';
-		if ( ! has_action( $action, 'print_emoji_styles' ) ) {
-			return;
-		}
-		remove_action( $action, 'print_emoji_styles' );
-	
-		$emoji_styles = '
-		img.wp-smiley, img.emoji {
-			display: inline !important;
-			border: none !important;
-			box-shadow: none !important;
-			height: 1em !important;
-			width: 1em !important;
-			margin: 0 0.07em !important;
-			vertical-align: -0.1em !important;
-			background: none !important;
-			padding: 0 !important;
-		}';
-		$handle       = 'wp-emoji-styles';
-		wp_register_style( $handle, false );
-		wp_add_inline_style( $handle, $emoji_styles );
-		wp_enqueue_style( $handle );
-	}
-endif;
-
-// wp-includes/formatting.php (WP 6.8.3)
-if( ! function_exists( 'print_emoji_detection_script' ) ) :
-	function print_emoji_detection_script() {
-		static $printed = false;
-	
-		if ( $printed ) {
-			return;
-		}
-	
-		$printed = true;
-	
-		_print_emoji_detection_script();
-	}
-endif;
-
-// wp-includes/formatting.php (WP 6.8.3)
-if( ! function_exists( '_print_emoji_detection_script' ) ) :
-	function _print_emoji_detection_script() {
-		$settings = array(
-			/**
-			 * Filters the URL where emoji png images are hosted.
-			 *
-			 * @since 4.2.0
-			 *
-			 * @param string $url The emoji base URL for png images.
-			 */
-			'baseUrl' => apply_filters( 'emoji_url', 'https://s.w.org/images/core/emoji/16.0.1/72x72/' ),
-	
-			/**
-			 * Filters the extension of the emoji png files.
-			 *
-			 * @since 4.2.0
-			 *
-			 * @param string $extension The emoji extension for png files. Default .png.
-			 */
-			'ext'     => apply_filters( 'emoji_ext', '.png' ),
-	
-			/**
-			 * Filters the URL where emoji SVG images are hosted.
-			 *
-			 * @since 4.6.0
-			 *
-			 * @param string $url The emoji base URL for svg images.
-			 */
-			'svgUrl'  => apply_filters( 'emoji_svg_url', 'https://s.w.org/images/core/emoji/16.0.1/svg/' ),
-	
-			/**
-			 * Filters the extension of the emoji SVG files.
-			 *
-			 * @since 4.6.0
-			 *
-			 * @param string $extension The emoji extension for svg files. Default .svg.
-			 */
-			'svgExt'  => apply_filters( 'emoji_svg_ext', '.svg' ),
-		);
-	
-		$version = 'ver=' . get_bloginfo( 'version' );
-	
-		if ( SCRIPT_DEBUG ) {
-			$settings['source'] = array(
-				/** This filter is documented in wp-includes/class-wp-scripts.php */
-				'wpemoji' => apply_filters( 'script_loader_src', includes_url( "js/wp-emoji.js?$version" ), 'wpemoji' ),
-				/** This filter is documented in wp-includes/class-wp-scripts.php */
-				'twemoji' => apply_filters( 'script_loader_src', includes_url( "js/twemoji.js?$version" ), 'twemoji' ),
-			);
-		} else {
-			$settings['source'] = array(
-				/** This filter is documented in wp-includes/class-wp-scripts.php */
-				'concatemoji' => apply_filters( 'script_loader_src', includes_url( "js/wp-emoji-release.min.js?$version" ), 'concatemoji' ),
-			);
-		}
-	
-		wp_print_inline_script_tag(
-			sprintf( 'window._wpemojiSettings = %s;', wp_json_encode( $settings ) ) . "\n" .
-				file_get_contents( ABSPATH . WPINC . '/js/wp-emoji-loader' . wp_scripts_get_suffix() . '.js' )
-		);
 	}
 endif;
 

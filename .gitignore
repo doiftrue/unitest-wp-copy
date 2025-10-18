@@ -1,5 +1,5 @@
 /vendor/
-/Makefile
+/tmp/
 /__*
 
-/_parser/env.php
+/Makefile

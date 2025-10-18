@@ -10,9 +10,13 @@
       "homepage": "https://github.com/doiftrue/unitest-wp-copy"
     }
   ],
+  "scripts": {
+    "phpunit": "phpunit"
+  },
   "require": {
-    "php": ">=7.4",
-    "wordpress/wordpress": "*"
+    "wordpress/wordpress": "*",
+    "phpunit/phpunit": "^9",
+    "php": ">=7.4"
   },
   "repositories": [
     {

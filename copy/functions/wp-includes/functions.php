@@ -3,6 +3,35 @@
 // ------------------auto-generated---------------------
 
 // wp-includes/functions.php (WP 6.8.3)
+if( ! function_exists( 'wp_timezone_string' ) ) :
+	function wp_timezone_string() {
+		$timezone_string = WPCOPY_OPTION__TIMEZONE_STRING;
+	
+		if ( $timezone_string ) {
+			return $timezone_string;
+		}
+	
+		$offset  = (float) WPCOPY_OPTION__GMT_OFFSET;
+		$hours   = (int) $offset;
+		$minutes = ( $offset - $hours );
+	
+		$sign      = ( $offset < 0 ) ? '-' : '+';
+		$abs_hour  = abs( $hours );
+		$abs_mins  = abs( $minutes * 60 );
+		$tz_offset = sprintf( '%s%02d:%02d', $sign, $abs_hour, $abs_mins );
+	
+		return $tz_offset;
+	}
+endif;
+
+// wp-includes/functions.php (WP 6.8.3)
+if( ! function_exists( 'wp_timezone' ) ) :
+	function wp_timezone() {
+		return new DateTimeZone( wp_timezone_string() );
+	}
+endif;
+
+// wp-includes/functions.php (WP 6.8.3)
 if( ! function_exists( 'number_format_i18n' ) ) :
 	function number_format_i18n( $number, $decimals = 0 ) {
 		global $wp_locale;
@@ -210,6 +239,119 @@ if( ! function_exists( 'wp_normalize_path' ) ) :
 endif;
 
 // wp-includes/functions.php (WP 6.8.3)
+if( ! function_exists( 'smilies_init' ) ) :
+	function smilies_init() {
+		global $wpsmiliestrans, $wp_smiliessearch;
+	
+		// Don't bother setting up smilies if they are disabled.
+		if ( ! WPCOPY_OPTION__USE_SMILIES ) {
+			return;
+		}
+	
+		if ( ! isset( $wpsmiliestrans ) ) {
+			$wpsmiliestrans = array(
+				':mrgreen:' => 'mrgreen.png',
+				':neutral:' => "\xf0\x9f\x98\x90",
+				':twisted:' => "\xf0\x9f\x98\x88",
+				':arrow:'   => "\xe2\x9e\xa1",
+				':shock:'   => "\xf0\x9f\x98\xaf",
+				':smile:'   => "\xf0\x9f\x99\x82",
+				':???:'     => "\xf0\x9f\x98\x95",
+				':cool:'    => "\xf0\x9f\x98\x8e",
+				':evil:'    => "\xf0\x9f\x91\xbf",
+				':grin:'    => "\xf0\x9f\x98\x80",
+				':idea:'    => "\xf0\x9f\x92\xa1",
+				':oops:'    => "\xf0\x9f\x98\xb3",
+				':razz:'    => "\xf0\x9f\x98\x9b",
+				':roll:'    => "\xf0\x9f\x99\x84",
+				':wink:'    => "\xf0\x9f\x98\x89",
+				':cry:'     => "\xf0\x9f\x98\xa5",
+				':eek:'     => "\xf0\x9f\x98\xae",
+				':lol:'     => "\xf0\x9f\x98\x86",
+				':mad:'     => "\xf0\x9f\x98\xa1",
+				':sad:'     => "\xf0\x9f\x99\x81",
+				'8-)'       => "\xf0\x9f\x98\x8e",
+				'8-O'       => "\xf0\x9f\x98\xaf",
+				':-('       => "\xf0\x9f\x99\x81",
+				':-)'       => "\xf0\x9f\x99\x82",
+				':-?'       => "\xf0\x9f\x98\x95",
+				':-D'       => "\xf0\x9f\x98\x80",
+				':-P'       => "\xf0\x9f\x98\x9b",
+				':-o'       => "\xf0\x9f\x98\xae",
+				':-x'       => "\xf0\x9f\x98\xa1",
+				':-|'       => "\xf0\x9f\x98\x90",
+				';-)'       => "\xf0\x9f\x98\x89",
+				// This one transformation breaks regular text with frequency.
+				//     '8)' => "\xf0\x9f\x98\x8e",
+				'8O'        => "\xf0\x9f\x98\xaf",
+				':('        => "\xf0\x9f\x99\x81",
+				':)'        => "\xf0\x9f\x99\x82",
+				':?'        => "\xf0\x9f\x98\x95",
+				':D'        => "\xf0\x9f\x98\x80",
+				':P'        => "\xf0\x9f\x98\x9b",
+				':o'        => "\xf0\x9f\x98\xae",
+				':x'        => "\xf0\x9f\x98\xa1",
+				':|'        => "\xf0\x9f\x98\x90",
+				';)'        => "\xf0\x9f\x98\x89",
+				':!:'       => "\xe2\x9d\x97",
+				':?:'       => "\xe2\x9d\x93",
+			);
+		}
+	
+		/**
+		 * Filters all the smilies.
+		 *
+		 * This filter must be added before `smilies_init` is run, as
+		 * it is normally only run once to setup the smilies regex.
+		 *
+		 * @since 4.7.0
+		 *
+		 * @param string[] $wpsmiliestrans List of the smilies' hexadecimal representations, keyed by their smily code.
+		 */
+		$wpsmiliestrans = apply_filters( 'smilies', $wpsmiliestrans );
+	
+		if ( count( $wpsmiliestrans ) === 0 ) {
+			return;
+		}
+	
+		/*
+		 * NOTE: we sort the smilies in reverse key order. This is to make sure
+		 * we match the longest possible smilie (:???: vs :?) as the regular
+		 * expression used below is first-match
+		 */
+		krsort( $wpsmiliestrans );
+	
+		$spaces = wp_spaces_regexp();
+	
+		// Begin first "subpattern".
+		$wp_smiliessearch = '/(?<=' . $spaces . '|^)';
+	
+		$subchar = '';
+		foreach ( (array) $wpsmiliestrans as $smiley => $img ) {
+			$firstchar = substr( $smiley, 0, 1 );
+			$rest      = substr( $smiley, 1 );
+	
+			// New subpattern?
+			if ( $firstchar !== $subchar ) {
+				if ( '' !== $subchar ) {
+					$wp_smiliessearch .= ')(?=' . $spaces . '|$)';  // End previous "subpattern".
+					$wp_smiliessearch .= '|(?<=' . $spaces . '|^)'; // Begin another "subpattern".
+				}
+	
+				$subchar           = $firstchar;
+				$wp_smiliessearch .= preg_quote( $firstchar, '/' ) . '(?:';
+			} else {
+				$wp_smiliessearch .= '|';
+			}
+	
+			$wp_smiliessearch .= preg_quote( $rest, '/' );
+		}
+	
+		$wp_smiliessearch .= ')(?=' . $spaces . '|$)/m';
+	}
+endif;
+
+// wp-includes/functions.php (WP 6.8.3)
 if( ! function_exists( 'wp_parse_args' ) ) :
 	function wp_parse_args( $args, $defaults = array() ) {
 		if ( is_object( $args ) ) {
@@ -238,6 +380,68 @@ if( ! function_exists( 'wp_parse_list' ) ) :
 		$input_list = array_filter( $input_list, 'is_scalar' );
 	
 		return $input_list;
+	}
+endif;
+
+// wp-includes/functions.php (WP 6.8.3)
+if( ! function_exists( '_deprecated_function' ) ) :
+	function _deprecated_function( $function_name, $version, $replacement = '' ) {
+	
+		/**
+		 * Fires when a deprecated function is called.
+		 *
+		 * @since 2.5.0
+		 *
+		 * @param string $function_name The function that was called.
+		 * @param string $replacement   The function that should have been called.
+		 * @param string $version       The version of WordPress that deprecated the function.
+		 */
+		do_action( 'deprecated_function_run', $function_name, $replacement, $version );
+	
+		/**
+		 * Filters whether to trigger an error for deprecated functions.
+		 *
+		 * @since 2.5.0
+		 *
+		 * @param bool $trigger Whether to trigger the error for deprecated functions. Default true.
+		 */
+		if ( WP_DEBUG && apply_filters( 'deprecated_function_trigger_error', true ) ) {
+			if ( function_exists( '__' ) ) {
+				if ( $replacement ) {
+					$message = sprintf(
+						/* translators: 1: PHP function name, 2: Version number, 3: Alternative function name. */
+						__( 'Function %1$s is <strong>deprecated</strong> since version %2$s! Use %3$s instead.' ),
+						$function_name,
+						$version,
+						$replacement
+					);
+				} else {
+					$message = sprintf(
+						/* translators: 1: PHP function name, 2: Version number. */
+						__( 'Function %1$s is <strong>deprecated</strong> since version %2$s with no alternative available.' ),
+						$function_name,
+						$version
+					);
+				}
+			} else {
+				if ( $replacement ) {
+					$message = sprintf(
+						'Function %1$s is <strong>deprecated</strong> since version %2$s! Use %3$s instead.',
+						$function_name,
+						$version,
+						$replacement
+					);
+				} else {
+					$message = sprintf(
+						'Function %1$s is <strong>deprecated</strong> since version %2$s with no alternative available.',
+						$function_name,
+						$version
+					);
+				}
+			}
+	
+			wp_trigger_error( '', $message, E_USER_DEPRECATED );
+		}
 	}
 endif;
 
@@ -487,7 +691,7 @@ endif;
 // wp-includes/functions.php (WP 6.8.3)
 if( ! function_exists( 'is_utf8_charset' ) ) :
 	function is_utf8_charset( $blog_charset = null ) {
-		return _is_utf8_charset( $blog_charset ?? WPCOPY__OPTION_BLOG_CHARSET );
+		return _is_utf8_charset( $blog_charset ?? WPCOPY_OPTION__BLOG_CHARSET );
 	}
 endif;
 
@@ -515,6 +719,46 @@ if( ! function_exists( '_canonical_charset' ) ) :
 		}
 	
 		return $charset;
+	}
+endif;
+
+// wp-includes/functions.php (WP 6.8.3)
+if( ! function_exists( 'mbstring_binary_safe_encoding' ) ) :
+	function mbstring_binary_safe_encoding( $reset = false ) {
+		static $encodings  = array();
+		static $overloaded = null;
+	
+		if ( is_null( $overloaded ) ) {
+			if ( function_exists( 'mb_internal_encoding' )
+				&& ( (int) ini_get( 'mbstring.func_overload' ) & 2 ) // phpcs:ignore PHPCompatibility.IniDirectives.RemovedIniDirectives.mbstring_func_overloadDeprecated
+			) {
+				$overloaded = true;
+			} else {
+				$overloaded = false;
+			}
+		}
+	
+		if ( false === $overloaded ) {
+			return;
+		}
+	
+		if ( ! $reset ) {
+			$encoding = mb_internal_encoding();
+			array_push( $encodings, $encoding );
+			mb_internal_encoding( 'ISO-8859-1' );
+		}
+	
+		if ( $reset && $encodings ) {
+			$encoding = array_pop( $encodings );
+			mb_internal_encoding( $encoding );
+		}
+	}
+endif;
+
+// wp-includes/functions.php (WP 6.8.3)
+if( ! function_exists( 'reset_mbstring_encoding' ) ) :
+	function reset_mbstring_encoding() {
+		mbstring_binary_safe_encoding( true );
 	}
 endif;
 

@@ -39,6 +39,8 @@ class Updater {
 		$core_file = "$this->wp_core_dir/$rel_file";
 		$dest_file = "$this->dest_dir/$rel_file";
 
+		$this->check_create_dest_file( $dest_file );
+
 		$dest_content = file_get_contents( $dest_file );
 		$dest_content = explode( $sep, $dest_content )[0] . "$sep\n\n";
 
@@ -68,8 +70,28 @@ class Updater {
 		echo "Updated: $rel_file\n";
 	}
 
-	private function extra_replace_in_code( string & $dest_content ) {
-		$dest_content = str_replace( "get_option( 'blog_charset' )", 'WPCOPY__OPTION_BLOG_CHARSET', $dest_content );
+	private function check_create_dest_file( string $file ): void {
+	    if( ! file_exists( $file ) ){
+			file_put_contents( $file, "<?php\n\n" );
+	    }
+	}
+
+	private function extra_replace_in_code( string & $text ) {
+		$text = strtr( $text, [
+			"get_option( 'blog_charset' )"    => 'WPCOPY_OPTION__BLOG_CHARSET',
+			"get_option( 'timezone_string' )" => 'WPCOPY_OPTION__TIMEZONE_STRING',
+			"get_option( 'gmt_offset' )"      => 'WPCOPY_OPTION__GMT_OFFSET',
+			"get_option( 'use_smilies' )"     => 'WPCOPY_OPTION__USE_SMILIES',
+			"get_option( 'home' )"            => 'WPCOPY_OPTION__HOME',
+			"get_option( 'use_balanceTags' )" => 'WPCOPY_OPTION__USE_BALANCETAGS',
+			"get_option( 'WPLANG' )"          => 'WPCOPY_OPTION__WPLANG',
+			"get_site_option( 'WPLANG' )"     => 'WPCOPY_OPTION__WPLANG',
+		] );
+
+		$text = str_replace( "get_bloginfo( 'version' )", "'$this->wp_version'", $text );
+
+		// static class method replacement
+		$text = str_replace( "WP_Http::make_absolute_url(", "WP_Http__make_absolute_url(", $text );
 	}
 
 }
