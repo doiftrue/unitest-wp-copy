@@ -14,9 +14,11 @@
     "phpunit": "phpunit"
   },
   "require": {
-    "wordpress/wordpress": "*",
-    "phpunit/phpunit": "^9",
     "php": ">=7.4"
+  },
+  "require-dev": {
+    "wordpress/wordpress": "*",
+    "phpunit/phpunit": "^9"
   },
   "repositories": [
     {
