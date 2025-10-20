@@ -69,4 +69,25 @@ class default_contants_Test extends TestCase {
 		$this->assertSame( 'wp-content/mu-plugins', MUPLUGINDIR );
 	}
 
+	public function test__wp_cookie_constants() {
+		$this->assertSame( md5( $GLOBALS['stub_wp_options']->siteurl ), COOKIEHASH );
+		$this->assertSame( 'wordpress_' . COOKIEHASH, AUTH_COOKIE );
+		$this->assertSame( 'wordpress_logged_in_' . COOKIEHASH, LOGGED_IN_COOKIE );
+		$this->assertSame( '', COOKIE_DOMAIN );
+		$this->assertStringEndsWith( '/wp-admin', ADMIN_COOKIE_PATH );
+		$this->assertStringEndsWith( '/wp-content/plugins', PLUGINS_COOKIE_PATH );
+	}
+
+	public function test__wp_ssl_constants__https() {
+		$this->assertTrue( FORCE_SSL_ADMIN );
+	}
+
+	/** @runInSeparateProcess */
+	public function test__wp_functionality_constants() {
+		$this->assertSame( 60, AUTOSAVE_INTERVAL );
+		$this->assertSame( 30, EMPTY_TRASH_DAYS );
+		$this->assertTrue( WP_POST_REVISIONS );
+		$this->assertSame( 60, WP_CRON_LOCK_TIMEOUT );
+	}
+
 }
