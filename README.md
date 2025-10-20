@@ -59,15 +59,12 @@ $GLOBALS['stub_wp_options']->home = 'https://changed-for-test.com';
 
 Additional Info
 ---------------
-The set of functions is specified in the config file `src/config.php` and updated with ``_parser`` script that should be run under php-cli environment.
-Before run you need to specify path to the WP core code and other basic constants. To do this, copy the env.example.php env file:
+The set of functions is specified in the config file `src/config.php` and updated with ``_parser`` script that should be run under php-cli environment. Before run you need to install dependencies using composer:
 ```shell
-cp  _parser/env.sample.php  _parser/env.php
 composer install
 ```
-Then edit the `_parser/env.php` file to set the correct path to your WordPress core installation.
-After that, you can run the parser script using the following command:
-```bash
+After that, you can run the parser:
+```shell
 php _parser/run.php
 ```
 
