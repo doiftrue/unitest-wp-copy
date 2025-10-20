@@ -1084,20 +1084,6 @@ if( ! function_exists( '_wp_kses_decode_entities_chr_hexdec' ) ) :
 endif;
 
 // wp-includes/kses.php (WP 6.8.3)
-if( ! function_exists( 'wp_filter_kses' ) ) :
-	function wp_filter_kses( $data ) {
-		return addslashes( wp_kses( stripslashes( $data ), current_filter() ) );
-	}
-endif;
-
-// wp-includes/kses.php (WP 6.8.3)
-if( ! function_exists( 'wp_kses_data' ) ) :
-	function wp_kses_data( $data ) {
-		return wp_kses( $data, current_filter() );
-	}
-endif;
-
-// wp-includes/kses.php (WP 6.8.3)
 if( ! function_exists( 'wp_filter_post_kses' ) ) :
 	function wp_filter_post_kses( $data ) {
 		return addslashes( wp_kses( stripslashes( $data ), 'post' ) );
@@ -1144,27 +1130,6 @@ endif;
 if( ! function_exists( 'wp_filter_nohtml_kses' ) ) :
 	function wp_filter_nohtml_kses( $data ) {
 		return addslashes( wp_kses( stripslashes( $data ), 'strip' ) );
-	}
-endif;
-
-// wp-includes/kses.php (WP 6.8.3)
-if( ! function_exists( 'kses_remove_filters' ) ) :
-	function kses_remove_filters() {
-		// Normal filtering.
-		remove_filter( 'title_save_pre', 'wp_filter_kses' );
-	
-		// Comment filtering.
-		remove_filter( 'pre_comment_content', 'wp_filter_post_kses' );
-		remove_filter( 'pre_comment_content', 'wp_filter_kses' );
-	
-		// Global Styles filtering.
-		remove_filter( 'content_save_pre', 'wp_filter_global_styles_post', 9 );
-		remove_filter( 'content_filtered_save_pre', 'wp_filter_global_styles_post', 9 );
-	
-		// Post filtering.
-		remove_filter( 'content_save_pre', 'wp_filter_post_kses' );
-		remove_filter( 'excerpt_save_pre', 'wp_filter_post_kses' );
-		remove_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
 	}
 endif;
 
@@ -1529,35 +1494,6 @@ if( ! function_exists( '_wp_add_global_attributes' ) ) :
 		}
 	
 		return $value;
-	}
-endif;
-
-// wp-includes/kses.php (WP 6.8.3)
-if( ! function_exists( '_wp_kses_allow_pdf_objects' ) ) :
-	function _wp_kses_allow_pdf_objects( $url ) {
-		// We're not interested in URLs that contain query strings or fragments.
-		if ( str_contains( $url, '?' ) || str_contains( $url, '#' ) ) {
-			return false;
-		}
-	
-		// If it doesn't have a PDF extension, it's not safe.
-		if ( ! str_ends_with( $url, '.pdf' ) ) {
-			return false;
-		}
-	
-		// If the URL host matches the current site's media URL, it's safe.
-		$upload_info = wp_upload_dir( null, false );
-		$parsed_url  = wp_parse_url( $upload_info['url'] );
-		$upload_host = isset( $parsed_url['host'] ) ? $parsed_url['host'] : '';
-		$upload_port = isset( $parsed_url['port'] ) ? ':' . $parsed_url['port'] : '';
-	
-		if ( str_starts_with( $url, "http://$upload_host$upload_port/" )
-			|| str_starts_with( $url, "https://$upload_host$upload_port/" )
-		) {
-			return true;
-		}
-	
-		return false;
 	}
 endif;
 

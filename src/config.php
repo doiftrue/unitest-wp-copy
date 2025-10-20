@@ -188,17 +188,17 @@ return [
 		'wp_kses_decode_entities'             => '',
 		'_wp_kses_decode_entities_chr'        => '',
 		'_wp_kses_decode_entities_chr_hexdec' => '',
-		'wp_filter_kses'                      => '',
-		'wp_kses_data'                        => '',
+		// 'wp_filter_kses'                      => '', // current_filter() dependency
+		// 'wp_kses_data'                        => '', // current_filter() dependency
 		'wp_filter_post_kses'                 => '',
 		'wp_filter_global_styles_post'        => '',
 		'wp_kses_post'                        => '',
 		'wp_kses_post_deep'                   => '',
 		'wp_filter_nohtml_kses'               => '',
-		'kses_remove_filters'                 => '',
+		// 'kses_remove_filters'                 => '', // make no sense
 		'safecss_filter_attr'                 => '',
 		'_wp_add_global_attributes'           => '',
-		'_wp_kses_allow_pdf_objects'          => '',
+		// '_wp_kses_allow_pdf_objects'          => '', // wp_upload_dir() dependency
 	],
 	'wp-includes/load.php' => [
 		'wp_get_development_mode'    => '',
