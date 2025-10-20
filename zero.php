@@ -26,6 +26,10 @@ wp_plugin_directory_constants();
 global $wp_plugin_paths;
 $wp_plugin_paths || $wp_plugin_paths = [];
 
+wp_cookie_constants();
+wp_ssl_constants();
+wp_functionality_constants();
+
 smilies_init();
 
 global $shortcode_tags;

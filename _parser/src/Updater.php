@@ -77,20 +77,14 @@ class Updater {
 	}
 
 	private function extra_replace_in_code( string & $text ) {
-		$text = strtr( $text, [
-			"get_option( 'blog_charset' )"    => "\$GLOBALS['stub_wp_options']->blog_charset",
-			"get_option( 'timezone_string' )" => "\$GLOBALS['stub_wp_options']->timezone_string",
-			"get_option( 'gmt_offset' )"      => "\$GLOBALS['stub_wp_options']->gmt_offset",
-			"get_option( 'use_smilies' )"     => "\$GLOBALS['stub_wp_options']->use_smilies",
-			"get_option( 'home' )"            => "\$GLOBALS['stub_wp_options']->home",
-			"get_option( 'use_balanceTags' )" => "\$GLOBALS['stub_wp_options']->use_balanceTags",
-			"get_option( 'WPLANG' )"          => "\$GLOBALS['stub_wp_options']->WPLANG",
-			"get_site_option( 'WPLANG' )"     => "\$GLOBALS['stub_wp_options']->WPLANG",
-		] );
+		static $stub_wp_options;
+		$stub_wp_options || $stub_wp_options = require dirname( __DIR__ ) . '/stub_wp_options.php';
+		$text = strtr( $text, $stub_wp_options );
 
 		$text = str_replace( "get_bloginfo( 'version' )", "'$this->wp_version'", $text );
 
 		// static class method replacement
+		// TODO make it automatic from $config
 		$text = str_replace( "WP_Http::make_absolute_url(", "WP_Http__make_absolute_url(", $text );
 	}
 

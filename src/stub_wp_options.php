@@ -7,6 +7,7 @@ $default_stub_wp_options = [
 	'gmt_offset'      => 0,
 	'use_smilies'     => true,
 	'home'            => 'https://mytest.com',
+	'siteurl'         => 'https://mytest.com',
 	'use_balanceTags' => true,
 	'WPLANG'          => '',
 ];
