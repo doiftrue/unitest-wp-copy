@@ -820,7 +820,7 @@ if( ! function_exists( '_wp_specialchars' ) ) :
 			$quote_style = ENT_QUOTES;
 		}
 	
-		$charset = _canonical_charset( $charset ? $charset : WPCOPY_OPTION__BLOG_CHARSET );
+		$charset = _canonical_charset( $charset ? $charset : $GLOBALS['stub_wp_options']->blog_charset );
 	
 		$_quote_style = $quote_style;
 	
@@ -1879,7 +1879,7 @@ endif;
 // wp-includes/formatting.php (WP 6.8.3)
 if( ! function_exists( 'balanceTags' ) ) :
 	function balanceTags( $text, $force = false ) {  // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid
-		if ( $force || (int) WPCOPY_OPTION__USE_BALANCETAGS === 1 ) {
+		if ( $force || (int) $GLOBALS['stub_wp_options']->use_balanceTags === 1 ) {
 			return force_balance_tags( $text );
 		} else {
 			return $text;
@@ -2155,191 +2155,6 @@ if( ! function_exists( 'antispambot' ) ) :
 endif;
 
 // wp-includes/formatting.php (WP 6.8.3)
-if( ! function_exists( '_make_url_clickable_cb' ) ) :
-	function _make_url_clickable_cb( $matches ) {
-		$url = $matches[2];
-	
-		if ( ')' === $matches[3] && strpos( $url, '(' ) ) {
-			/*
-			 * If the trailing character is a closing parenthesis, and the URL has an opening parenthesis in it,
-			 * add the closing parenthesis to the URL. Then we can let the parenthesis balancer do its thing below.
-			 */
-			$url   .= $matches[3];
-			$suffix = '';
-		} else {
-			$suffix = $matches[3];
-		}
-	
-		if ( isset( $matches[4] ) && ! empty( $matches[4] ) ) {
-			$url .= $matches[4];
-		}
-	
-		// Include parentheses in the URL only if paired.
-		while ( substr_count( $url, '(' ) < substr_count( $url, ')' ) ) {
-			$suffix = strrchr( $url, ')' ) . $suffix;
-			$url    = substr( $url, 0, strrpos( $url, ')' ) );
-		}
-	
-		$url = esc_url( $url );
-		if ( empty( $url ) ) {
-			return $matches[0];
-		}
-	
-		$rel_attr = _make_clickable_rel_attr( $url );
-	
-		return $matches[1] . "<a href=\"{$url}\"{$rel_attr}>{$url}</a>" . $suffix;
-	}
-endif;
-
-// wp-includes/formatting.php (WP 6.8.3)
-if( ! function_exists( '_make_web_ftp_clickable_cb' ) ) :
-	function _make_web_ftp_clickable_cb( $matches ) {
-		$ret  = '';
-		$dest = $matches[2];
-		$dest = 'http://' . $dest;
-	
-		// Removed trailing [.,;:)] from URL.
-		$last_char = substr( $dest, -1 );
-		if ( in_array( $last_char, array( '.', ',', ';', ':', ')' ), true ) === true ) {
-			$ret  = $last_char;
-			$dest = substr( $dest, 0, strlen( $dest ) - 1 );
-		}
-	
-		$dest = esc_url( $dest );
-		if ( empty( $dest ) ) {
-			return $matches[0];
-		}
-	
-		$rel_attr = _make_clickable_rel_attr( $dest );
-	
-		return $matches[1] . "<a href=\"{$dest}\"{$rel_attr}>{$dest}</a>{$ret}";
-	}
-endif;
-
-// wp-includes/formatting.php (WP 6.8.3)
-if( ! function_exists( '_make_email_clickable_cb' ) ) :
-	function _make_email_clickable_cb( $matches ) {
-		$email = $matches[2] . '@' . $matches[3];
-	
-		return $matches[1] . "<a href=\"mailto:{$email}\">{$email}</a>";
-	}
-endif;
-
-// wp-includes/formatting.php (WP 6.8.3)
-if( ! function_exists( '_make_clickable_rel_attr' ) ) :
-	function _make_clickable_rel_attr( $url ) {
-		$rel_parts        = array();
-		$scheme           = strtolower( wp_parse_url( $url, PHP_URL_SCHEME ) );
-		$nofollow_schemes = array_intersect( wp_allowed_protocols(), array( 'https', 'http' ) );
-	
-		// Apply "nofollow" to external links with qualifying URL schemes (mailto:, tel:, etc... shouldn't be followed).
-		if ( ! wp_is_internal_link( $url ) && in_array( $scheme, $nofollow_schemes, true ) ) {
-			$rel_parts[] = 'nofollow';
-		}
-	
-		// Apply "ugc" when in comment context.
-		if ( 'comment_text' === current_filter() ) {
-			$rel_parts[] = 'ugc';
-		}
-	
-		$rel = implode( ' ', $rel_parts );
-	
-		/**
-		 * Filters the rel value that is added to URL matches converted to links.
-		 *
-		 * @since 5.3.0
-		 *
-		 * @param string $rel The rel value.
-		 * @param string $url The matched URL being converted to a link tag.
-		 */
-		$rel = apply_filters( 'make_clickable_rel', $rel, $url );
-	
-		$rel_attr = $rel ? ' rel="' . esc_attr( $rel ) . '"' : '';
-	
-		return $rel_attr;
-	}
-endif;
-
-// wp-includes/formatting.php (WP 6.8.3)
-if( ! function_exists( 'make_clickable' ) ) :
-	function make_clickable( $text ) {
-		$r               = '';
-		$textarr         = preg_split( '/(<[^<>]+>)/', $text, -1, PREG_SPLIT_DELIM_CAPTURE ); // Split out HTML tags.
-		$nested_code_pre = 0; // Keep track of how many levels link is nested inside <pre> or <code>.
-		foreach ( $textarr as $piece ) {
-	
-			if ( preg_match( '|^<code[\s>]|i', $piece )
-				|| preg_match( '|^<pre[\s>]|i', $piece )
-				|| preg_match( '|^<script[\s>]|i', $piece )
-				|| preg_match( '|^<style[\s>]|i', $piece )
-			) {
-				++$nested_code_pre;
-			} elseif ( $nested_code_pre
-				&& ( '</code>' === strtolower( $piece )
-					|| '</pre>' === strtolower( $piece )
-					|| '</script>' === strtolower( $piece )
-					|| '</style>' === strtolower( $piece )
-				)
-			) {
-				--$nested_code_pre;
-			}
-	
-			if ( $nested_code_pre
-				|| empty( $piece )
-				|| ( '<' === $piece[0] && ! preg_match( '|^<\s*[\w]{1,20}+://|', $piece ) )
-			) {
-				$r .= $piece;
-				continue;
-			}
-	
-			// Long strings might contain expensive edge cases...
-			if ( 10000 < strlen( $piece ) ) {
-				// ...break it up.
-				foreach ( _split_str_by_whitespace( $piece, 2100 ) as $chunk ) { // 2100: Extra room for scheme and leading and trailing parentheses.
-					if ( 2101 < strlen( $chunk ) ) {
-						$r .= $chunk; // Too big, no whitespace: bail.
-					} else {
-						$r .= make_clickable( $chunk );
-					}
-				}
-			} else {
-				$ret = " $piece "; // Pad with whitespace to simplify the regexes.
-	
-				$url_clickable = '~
-					([\\s(<.,;:!?])                                # 1: Leading whitespace, or punctuation.
-					(                                              # 2: URL.
-						[\\w]{1,20}+://                                # Scheme and hier-part prefix.
-						(?=\S{1,2000}\s)                               # Limit to URLs less than about 2000 characters long.
-						[\\w\\x80-\\xff#%\\~/@\\[\\]*(+=&$-]*+         # Non-punctuation URL character.
-						(?:                                            # Unroll the Loop: Only allow punctuation URL character if followed by a non-punctuation URL character.
-							[\'.,;:!?)]                                    # Punctuation URL character.
-							[\\w\\x80-\\xff#%\\~/@\\[\\]*(+=&$-]++         # Non-punctuation URL character.
-						)*
-					)
-					(\)?)                                          # 3: Trailing closing parenthesis (for parenthesis balancing post processing).
-					(\\.\\w{2,6})?                                 # 4: Allowing file extensions (e.g., .jpg, .png).
-				~xS';
-				/*
-				 * The regex is a non-anchored pattern and does not have a single fixed starting character.
-				 * Tell PCRE to spend more time optimizing since, when used on a page load, it will probably be used several times.
-				 */
-	
-				$ret = preg_replace_callback( $url_clickable, '_make_url_clickable_cb', $ret );
-	
-				$ret = preg_replace_callback( '#([\s>])((www|ftp)\.[\w\\x80-\\xff\#$%&~/.\-;:=,?@\[\]+]+)#is', '_make_web_ftp_clickable_cb', $ret );
-				$ret = preg_replace_callback( '#([\s>])([.0-9a-z_+-]+)@(([0-9a-z-]+\.)+[0-9a-z]{2,})#i', '_make_email_clickable_cb', $ret );
-	
-				$ret = substr( $ret, 1, -1 ); // Remove our whitespace padding.
-				$r  .= $ret;
-			}
-		}
-	
-		// Cleanup of accidental links within links.
-		return preg_replace( '#(<a([ \r\n\t]+[^>]+?>|>))<a [^>]+?>([^>]+?)</a></a>#i', '$1$3</a>', $r );
-	}
-endif;
-
-// wp-includes/formatting.php (WP 6.8.3)
 if( ! function_exists( '_split_str_by_whitespace' ) ) :
 	function _split_str_by_whitespace( $text, $goal ) {
 		$chunks = array();
@@ -2420,107 +2235,6 @@ if( ! function_exists( 'wp_rel_nofollow' ) ) :
 endif;
 
 // wp-includes/formatting.php (WP 6.8.3)
-if( ! function_exists( 'wp_rel_nofollow_callback' ) ) :
-	function wp_rel_nofollow_callback( $matches ) {
-		return wp_rel_callback( $matches, 'nofollow' );
-	}
-endif;
-
-// wp-includes/formatting.php (WP 6.8.3)
-if( ! function_exists( 'wp_targeted_link_rel' ) ) :
-	function wp_targeted_link_rel( $text ) {
-		_deprecated_function( __FUNCTION__, '6.7.0' );
-	
-		// Don't run (more expensive) regex if no links with targets.
-		if ( stripos( $text, 'target' ) === false || stripos( $text, '<a ' ) === false || is_serialized( $text ) ) {
-			return $text;
-		}
-	
-		$script_and_style_regex = '/<(script|style).*?<\/\\1>/si';
-	
-		preg_match_all( $script_and_style_regex, $text, $matches );
-		$extra_parts = $matches[0];
-		$html_parts  = preg_split( $script_and_style_regex, $text );
-	
-		foreach ( $html_parts as &$part ) {
-			$part = preg_replace_callback( '|<a\s([^>]*target\s*=[^>]*)>|i', 'wp_targeted_link_rel_callback', $part );
-		}
-	
-		$text = '';
-		for ( $i = 0; $i < count( $html_parts ); $i++ ) {
-			$text .= $html_parts[ $i ];
-			if ( isset( $extra_parts[ $i ] ) ) {
-				$text .= $extra_parts[ $i ];
-			}
-		}
-	
-		return $text;
-	}
-endif;
-
-// wp-includes/formatting.php (WP 6.8.3)
-if( ! function_exists( 'wp_targeted_link_rel_callback' ) ) :
-	function wp_targeted_link_rel_callback( $matches ) {
-		_deprecated_function( __FUNCTION__, '6.7.0' );
-	
-		$link_html          = $matches[1];
-		$original_link_html = $link_html;
-	
-		// Consider the HTML escaped if there are no unescaped quotes.
-		$is_escaped = ! preg_match( '/(^|[^\\\\])[\'"]/', $link_html );
-		if ( $is_escaped ) {
-			// Replace only the quotes so that they are parsable by wp_kses_hair(), leave the rest as is.
-			$link_html = preg_replace( '/\\\\([\'"])/', '$1', $link_html );
-		}
-	
-		$atts = wp_kses_hair( $link_html, wp_allowed_protocols() );
-	
-		/**
-		 * Filters the rel values that are added to links with `target` attribute.
-		 *
-		 * @since 5.1.0
-		 *
-		 * @param string $rel       The rel values.
-		 * @param string $link_html The matched content of the link tag including all HTML attributes.
-		 */
-		$rel = apply_filters( 'wp_targeted_link_rel', 'noopener', $link_html );
-	
-		// Return early if no rel values to be added or if no actual target attribute.
-		if ( ! $rel || ! isset( $atts['target'] ) ) {
-			return "<a $original_link_html>";
-		}
-	
-		if ( isset( $atts['rel'] ) ) {
-			$all_parts = preg_split( '/\s/', "{$atts['rel']['value']} $rel", -1, PREG_SPLIT_NO_EMPTY );
-			$rel       = implode( ' ', array_unique( $all_parts ) );
-		}
-	
-		$atts['rel']['whole'] = 'rel="' . esc_attr( $rel ) . '"';
-		$link_html            = implode( ' ', array_column( $atts, 'whole' ) );
-	
-		if ( $is_escaped ) {
-			$link_html = preg_replace( '/[\'"]/', '\\\\$0', $link_html );
-		}
-	
-		return "<a $link_html>";
-	}
-endif;
-
-// wp-includes/formatting.php (WP 6.8.3)
-if( ! function_exists( 'wp_init_targeted_link_rel_filters' ) ) :
-	function wp_init_targeted_link_rel_filters() {
-		_deprecated_function( __FUNCTION__, '6.7.0' );
-	}
-endif;
-
-// wp-includes/formatting.php (WP 6.8.3)
-if( ! function_exists( 'wp_remove_targeted_link_rel_filters' ) ) :
-	function wp_remove_targeted_link_rel_filters() {
-		_deprecated_function( __FUNCTION__, '6.7.0' );
-	}
-endif;
-
-// wp-includes/formatting.php (WP 6.8.3)
 if( ! function_exists( 'translate_smiley' ) ) :
 	function translate_smiley( $matches ) {
 		global $wpsmiliestrans;
@@ -2561,7 +2275,7 @@ if( ! function_exists( 'convert_smilies' ) ) :
 	function convert_smilies( $text ) {
 		global $wp_smiliessearch;
 	
-		if ( ! WPCOPY_OPTION__USE_SMILIES || empty( $wp_smiliessearch ) ) {
+		if ( ! $GLOBALS['stub_wp_options']->use_smilies || empty( $wp_smiliessearch ) ) {
 			// Return default text.
 			return $text;
 		}
@@ -3046,7 +2760,7 @@ if( ! function_exists( 'wp_trim_words' ) ) :
 		$text          = wp_strip_all_tags( $text );
 		$num_words     = (int) $num_words;
 	
-		if ( str_starts_with( wp_get_word_count_type(), 'characters' ) && preg_match( '/^utf\-?8$/i', WPCOPY_OPTION__BLOG_CHARSET ) ) {
+		if ( str_starts_with( wp_get_word_count_type(), 'characters' ) && preg_match( '/^utf\-?8$/i', $GLOBALS['stub_wp_options']->blog_charset ) ) {
 			$text = trim( preg_replace( "/[\n\r\t ]+/", ' ', $text ), ' ' );
 			preg_match_all( '/./u', $text, $words_array );
 			$words_array = array_slice( $words_array[0], 0, $num_words + 1 );
@@ -3364,7 +3078,7 @@ endif;
 if( ! function_exists( 'format_for_editor' ) ) :
 	function format_for_editor( $text, $default_editor = null ) {
 		if ( $text ) {
-			$text = htmlspecialchars( $text, ENT_NOQUOTES, WPCOPY_OPTION__BLOG_CHARSET );
+			$text = htmlspecialchars( $text, ENT_NOQUOTES, $GLOBALS['stub_wp_options']->blog_charset );
 		}
 	
 		/**
@@ -3587,7 +3301,7 @@ endif;
 // wp-includes/formatting.php (WP 6.8.3)
 if( ! function_exists( 'esc_textarea' ) ) :
 	function esc_textarea( $text ) {
-		$safe_text = htmlspecialchars( $text, ENT_QUOTES, WPCOPY_OPTION__BLOG_CHARSET );
+		$safe_text = htmlspecialchars( $text, ENT_QUOTES, $GLOBALS['stub_wp_options']->blog_charset );
 		/**
 		 * Filters a string cleaned and escaped for output in a textarea element.
 		 *

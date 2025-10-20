@@ -22,7 +22,6 @@ return [
 		'wptexturize_primes'                  => '',
 		'is_email'                            => '',
 		'wp_check_invalid_utf8'               => '',
-		// need check (from GPT):
 		'_wptexturize_pushpop_element'        => '',
 		'wp_html_split'                       => '',
 		'get_html_split_regex'                => '',
@@ -67,7 +66,7 @@ return [
 		'wp_rel_nofollow'                     => '',
 		// 'wp_rel_nofollow_callback'            => '', // deprecated
 		// 'wp_rel_ugc'                          => '', // too many dependencies
-		'wp_targeted_link_rel'                => '',
+		// 'wp_targeted_link_rel'                => '', // deprecated
 		// 'wp_targeted_link_rel_callback'       => '', // deprecated
 		// 'wp_init_targeted_link_rel_filters'   => '', // deprecated
 		// 'wp_remove_targeted_link_rel_filters' => '', // deprecated

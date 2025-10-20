@@ -5,13 +5,13 @@
 // wp-includes/functions.php (WP 6.8.3)
 if( ! function_exists( 'wp_timezone_string' ) ) :
 	function wp_timezone_string() {
-		$timezone_string = WPCOPY_OPTION__TIMEZONE_STRING;
+		$timezone_string = $GLOBALS['stub_wp_options']->timezone_string;
 	
 		if ( $timezone_string ) {
 			return $timezone_string;
 		}
 	
-		$offset  = (float) WPCOPY_OPTION__GMT_OFFSET;
+		$offset  = (float) $GLOBALS['stub_wp_options']->gmt_offset;
 		$hours   = (int) $offset;
 		$minutes = ( $offset - $hours );
 	
@@ -244,7 +244,7 @@ if( ! function_exists( 'smilies_init' ) ) :
 		global $wpsmiliestrans, $wp_smiliessearch;
 	
 		// Don't bother setting up smilies if they are disabled.
-		if ( ! WPCOPY_OPTION__USE_SMILIES ) {
+		if ( ! $GLOBALS['stub_wp_options']->use_smilies ) {
 			return;
 		}
 	
@@ -691,7 +691,7 @@ endif;
 // wp-includes/functions.php (WP 6.8.3)
 if( ! function_exists( 'is_utf8_charset' ) ) :
 	function is_utf8_charset( $blog_charset = null ) {
-		return _is_utf8_charset( $blog_charset ?? WPCOPY_OPTION__BLOG_CHARSET );
+		return _is_utf8_charset( $blog_charset ?? $GLOBALS['stub_wp_options']->blog_charset );
 	}
 endif;
 

@@ -15,10 +15,10 @@ if( ! function_exists( 'get_home_url' ) ) :
 		$orig_scheme = $scheme;
 	
 		if ( empty( $blog_id ) || ! is_multisite() ) {
-			$url = WPCOPY_OPTION__HOME;
+			$url = $GLOBALS['stub_wp_options']->home;
 		} else {
 			switch_to_blog( $blog_id );
-			$url = WPCOPY_OPTION__HOME;
+			$url = $GLOBALS['stub_wp_options']->home;
 			restore_current_blog();
 		}
 	

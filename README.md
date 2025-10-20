@@ -37,10 +37,29 @@ define( 'WP_CONTENT_URL', 'https://mytest.com/wp-content' );
 require_once __DIR__ . '/vendor/doiftrue/unitest-wp-copy/zero.php';
 ```
 
+Some core WordPress functions make DB calls for options (for example, `get_option('blog_charset')`). Such calls are stubbed by the following construct: `$GLOBALS['stub_wp_options']->blog_charset`. The list of such predefined options:
+
+```php
+$GLOBALS['stub_wp_options'] = (object) [
+	'blog_charset'    => 'UTF-8',
+	'timezone_string' => 'UTC',
+	'gmt_offset'      => 0,
+	'use_smilies'     => true,
+	'home'            => 'https://mytest.com',
+	'use_balanceTags' => true,
+	'WPLANG'          => '',
+];
+```
+
+You can override them in your bootstrap file, or directly in the test. Example of overriding the `home` option in the bootstrap file:
+```php
+$GLOBALS['stub_wp_options']->home = 'https://changed-for-test.com';
+```
+
 
 Additional Info
 ---------------
-The set of functions is specified in the config file `_config.php` and updated with ``_parser`` script that should be run under php-cli environment.
+The set of functions is specified in the config file `src/config.php` and updated with ``_parser`` script that should be run under php-cli environment.
 Before run you need to specify path to the WP core code and other basic constants. To do this, copy the env.example.php env file:
 ```shell
 cp  _parser/env.sample.php  _parser/env.php

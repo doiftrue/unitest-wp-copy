@@ -225,11 +225,6 @@ class formatting__Test extends TestCase {
 		$this->assertStringContainsString( 'rel="nofollow"', wp_rel_callback( '<a href="x">x</a>' ) );
 	}
 
-	public function test__wp_targeted_link_rel(): void {
-		$html = '<a href="x" target="_blank">x</a>';
-		$this->assertStringContainsString( 'rel="noopener', wp_targeted_link_rel( $html ) );
-	}
-
 	public function test__translate_smiley(): void {
 		$this->assertIsString( translate_smiley( [':)'] ) );
 	}

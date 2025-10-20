@@ -2,7 +2,7 @@
 
 class Updater {
 
-	/** @see config.php */
+	/** @see src/config.php */
 	private array $config;
 	private string $dest_dir;
 	private string $wp_core_dir;
@@ -78,14 +78,14 @@ class Updater {
 
 	private function extra_replace_in_code( string & $text ) {
 		$text = strtr( $text, [
-			"get_option( 'blog_charset' )"    => 'WPCOPY_OPTION__BLOG_CHARSET',
-			"get_option( 'timezone_string' )" => 'WPCOPY_OPTION__TIMEZONE_STRING',
-			"get_option( 'gmt_offset' )"      => 'WPCOPY_OPTION__GMT_OFFSET',
-			"get_option( 'use_smilies' )"     => 'WPCOPY_OPTION__USE_SMILIES',
-			"get_option( 'home' )"            => 'WPCOPY_OPTION__HOME',
-			"get_option( 'use_balanceTags' )" => 'WPCOPY_OPTION__USE_BALANCETAGS',
-			"get_option( 'WPLANG' )"          => 'WPCOPY_OPTION__WPLANG',
-			"get_site_option( 'WPLANG' )"     => 'WPCOPY_OPTION__WPLANG',
+			"get_option( 'blog_charset' )"    => "\$GLOBALS['stub_wp_options']->blog_charset",
+			"get_option( 'timezone_string' )" => "\$GLOBALS['stub_wp_options']->timezone_string",
+			"get_option( 'gmt_offset' )"      => "\$GLOBALS['stub_wp_options']->gmt_offset",
+			"get_option( 'use_smilies' )"     => "\$GLOBALS['stub_wp_options']->use_smilies",
+			"get_option( 'home' )"            => "\$GLOBALS['stub_wp_options']->home",
+			"get_option( 'use_balanceTags' )" => "\$GLOBALS['stub_wp_options']->use_balanceTags",
+			"get_option( 'WPLANG' )"          => "\$GLOBALS['stub_wp_options']->WPLANG",
+			"get_site_option( 'WPLANG' )"     => "\$GLOBALS['stub_wp_options']->WPLANG",
 		] );
 
 		$text = str_replace( "get_bloginfo( 'version' )", "'$this->wp_version'", $text );
