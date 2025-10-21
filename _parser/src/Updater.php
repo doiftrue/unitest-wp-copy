@@ -10,8 +10,8 @@ class Updater {
 	public function __construct(
 		private readonly string $dest_dir,
 		private readonly string $wp_core_dir,
-		private readonly array $config_funcs,   /** @see src/config-funcs.php */
-		private readonly array $config_classes, /** @see src/config-classes.php */
+		private readonly array $config_funcs,   /** @see _parser/config-funcs.php */
+		private readonly array $config_classes, /** @see _parser/config-classes.php */
 	) {
 	}
 
