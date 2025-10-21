@@ -24,11 +24,8 @@ Also take into account that my PHPUnit environment uses mocks for the following 
 - esc_url_raw()
 - esc_js()
 - esc_textarea()
-
-And 
-```
-content of src/config.php file here
-```
+- And config from `src/config-funcs.php` file.
+- And  config from `src/config-classes.php` file.
 
 I need list of functions that depend only on PHP and other WordPress functions that can be used as is in PHP and do not rely on any external libraries.
 

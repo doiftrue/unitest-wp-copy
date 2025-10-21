@@ -13,9 +13,7 @@
   "scripts": {
     "phpunit": "phpunit"
   },
-  "require": {
-    "php": ">=7.4"
-  },
+  "require": {},
   "require-dev": {
     "wordpress/wordpress": "*",
     "phpunit/phpunit": "^9"

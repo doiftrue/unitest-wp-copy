@@ -1,12 +1,14 @@
 <?php
 
-require_once __DIR__ . '/src/Updater.php';
-require_once __DIR__ . '/src/Parser_Helpers.php';
+foreach( glob( __DIR__ . '/src/*.php' ) as $path ) {
+	require_once $path;
+}
 
 $up = new Updater(
-	dirname( __DIR__ ) . '/copy/functions',
-	dirname( __DIR__ ) . '/vendor/wordpress/wordpress',
-	include dirname( __DIR__ ) . '/src/config.php'
+	dest_dir: dirname( __DIR__ ) . '/copy',
+	wp_core_dir: dirname( __DIR__ ) . '/vendor/wordpress/wordpress',
+	config_funcs: include dirname( __DIR__ ) . '/src/config-funcs.php',
+	config_classes: include dirname( __DIR__ ) . '/src/config-classes.php',
 );
 $up->setup();
 $up->run();

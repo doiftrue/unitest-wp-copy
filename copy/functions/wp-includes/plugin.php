@@ -56,3 +56,27 @@ if( ! function_exists( 'wp_register_plugin_realpath' ) ) :
 	}
 endif;
 
+// wp-includes/plugin.php (WP 6.8.3)
+if( ! function_exists( '_wp_filter_build_unique_id' ) ) :
+	function _wp_filter_build_unique_id( $hook_name, $callback, $priority ) {
+		if ( is_string( $callback ) ) {
+			return $callback;
+		}
+	
+		if ( is_object( $callback ) ) {
+			// Closures are currently implemented as objects.
+			$callback = array( $callback, '' );
+		} else {
+			$callback = (array) $callback;
+		}
+	
+		if ( is_object( $callback[0] ) ) {
+			// Object class calling.
+			return spl_object_hash( $callback[0] ) . $callback[1];
+		} elseif ( is_string( $callback[0] ) ) {
+			// Static calling.
+			return $callback[0] . '::' . $callback[1];
+		}
+	}
+endif;
+

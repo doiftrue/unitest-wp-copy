@@ -59,7 +59,7 @@ $GLOBALS['stub_wp_options']->home = 'https://changed-for-test.com';
 
 Additional Info
 ---------------
-The set of functions is specified in the config file `src/config.php` and updated with ``_parser`` script that should be run under php-cli environment. Before run you need to install dependencies using composer:
+The set of functions/classes is specified in the config file `src/config-funcs.php` & `src/config-classes.php` and updated with ``_parser`` script that should be run under php-cli environment. Before run you need to install dependencies using composer:
 ```shell
 composer install
 ```

@@ -1,16 +1,9 @@
 <?php
-/**
- * WP_Exception class
- *
- * @package WordPress
- * @since 6.7.0
- */
 
-/**
- * Core base Exception class.
- *
- * Future, more specific, Exceptions should always extend this base class.
- *
- * @since 6.7.0
- */
-class WP_Exception extends Exception {}
+// ------------------auto-generated---------------------
+
+// wp-includes/class-wp-exception.php (WP 6.8.3)
+if( ! class_exists( 'WP_Exception' ) ) :
+	class WP_Exception extends Exception {}
+endif;
+

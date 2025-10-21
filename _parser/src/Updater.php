@@ -2,51 +2,69 @@
 
 class Updater {
 
-	/** @see src/config.php */
-	private array $config;
-	private string $dest_dir;
-	private string $wp_core_dir;
+	private const SEP = '// ------------------auto-generated---------------------';
 
 	private string $wp_version;
+	private Extra_Replacer $extra_replacer;
 
 	public function __construct(
-		string $dest_dir,
-		string $wp_core_dir,
-		array $config
+		private readonly string $dest_dir,
+		private readonly string $wp_core_dir,
+		private readonly array $config_funcs,   /** @see src/config-funcs.php */
+		private readonly array $config_classes, /** @see src/config-classes.php */
 	) {
-		$this->dest_dir = $dest_dir;
-		$this->wp_core_dir = $wp_core_dir;
-		$this->config = $config;
 	}
 
 	public function setup(): void {
 		require_once "$this->wp_core_dir/wp-includes/version.php";
 		/** @var string $wp_version */
 		$this->wp_version = $wp_version;
+
+		$this->extra_replacer = new Extra_Replacer( $wp_version );
 	}
 
 	public function run(): void {
-		foreach( $this->config as $rel_file => $funcs_names ){
-			$this->update_file( $rel_file, $funcs_names );
+		// functions
+		foreach( $this->config_funcs as $rel_file => $funcs_names ){
+			$this->update_file( $rel_file, $funcs_names, '' );
+		}
+
+		// classes
+		foreach( $this->config_classes as $rel_file => $class_name ){
+			$this->update_file( $rel_file, [], $class_name );
 		}
 
 		echo "DONE!\n";
 	}
 
-	private function update_file( string $rel_file, array $func_names ): void {
-		$sep = '// ------------------auto-generated---------------------';
+	private function update_file( string $rel_file, array $func_names, string $class_name ): void {
+		$is_class = $this->is_class( $rel_file );
 
 		$core_file = "$this->wp_core_dir/$rel_file";
-		$dest_file = "$this->dest_dir/$rel_file";
+		$dest_file = $this->dest_dir . ( $is_class ? "/classes/$class_name.php" : "/functions/$rel_file" );
 
 		$this->check_create_dest_file( $dest_file );
 
 		$dest_content = file_get_contents( $dest_file );
-		$dest_content = explode( $sep, $dest_content )[0] . "$sep\n\n";
+		$dest_content = explode( self::SEP, $dest_content )[0] . self::SEP . "\n\n";
 
-		$core_file_content = file_get_contents( $core_file );
+		$dest_content .= $is_class
+			? $this->update_class_file( file_get_contents( $core_file ), $rel_file, $class_name )
+			: $this->update_func_file( file_get_contents( $core_file ), $rel_file, $func_names );
+
+		$dest_content = $this->extra_replacer->replace_in_code( $dest_content );
+
+		file_put_contents( $dest_file, $dest_content );
+
+		echo "Updated: $rel_file\n";
+	}
+
+	private function is_class( string $rel_file ): bool {
+		return str_contains( $rel_file, 'class-' );
+	}
+
+	private function update_func_file( string $core_file_content, string $rel_file, array $func_names ): string {
 		$funcs_data = Parser_Helpers::get_class_func_code_from_php_code( $core_file_content, [ 'type' => 'func' ] );
-
 		$funcs_data = array_intersect_key( $funcs_data, $func_names );
 
 		$append = '';
@@ -61,31 +79,26 @@ class Updater {
 				PHP . "\n\n";
 		}
 
-		$dest_content .= $append;
+		return $append;
+	}
 
-		$this->extra_replace_in_code( $dest_content );
+	private function update_class_file( string $core_file_content, string $rel_file, string $class_name ): string {
+		$code_lines = Parser_Helpers::get_class_func_code_from_php_code( $core_file_content, [ 'type' => 'class', 'name' => $class_name ] );
+		$comment = "// $rel_file (WP $this->wp_version)";
+		$class_code = implode( "\n\t", $code_lines );
 
-		file_put_contents( $dest_file, $dest_content );
-
-		echo "Updated: $rel_file\n";
+		return <<<PHP
+			$comment
+			if( ! class_exists( '$class_name' ) ) :
+				$class_code
+			endif;
+			PHP . "\n\n";
 	}
 
 	private function check_create_dest_file( string $file ): void {
 	    if( ! file_exists( $file ) ){
 			file_put_contents( $file, "<?php\n\n" );
 	    }
-	}
-
-	private function extra_replace_in_code( string & $text ) {
-		static $stub_wp_options;
-		$stub_wp_options || $stub_wp_options = require dirname( __DIR__ ) . '/stub_wp_options.php';
-		$text = strtr( $text, $stub_wp_options );
-
-		$text = str_replace( "get_bloginfo( 'version' )", "'$this->wp_version'", $text );
-
-		// static class method replacement
-		// TODO make it automatic from $config
-		$text = str_replace( "WP_Http::make_absolute_url(", "WP_Http__make_absolute_url(", $text );
 	}
 
 }
