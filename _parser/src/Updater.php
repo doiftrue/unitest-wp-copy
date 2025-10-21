@@ -66,6 +66,11 @@ class Updater {
 	private function update_func_file( string $core_file_content, string $rel_file, array $func_names ): string {
 		$funcs_data = Parser_Helpers::get_class_func_code_from_php_code( $core_file_content, [ 'type' => 'func' ] );
 		$funcs_data = array_intersect_key( $funcs_data, $func_names );
+		$not_found_funcs = array_diff_key( $func_names, $funcs_data );
+
+		if( $not_found_funcs ){
+			throw new RuntimeException( "WARNING: Not found funcs in `$rel_file`:\n\t" . implode( "\n\t", array_keys( $not_found_funcs ) ) . "\n" );
+		}
 
 		$append = '';
 		foreach( $funcs_data as $func_name => $code_lines ){

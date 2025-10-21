@@ -31,10 +31,10 @@ define( 'ABSPATH', 'path/to/wp/' );
 define( 'WP_CONTENT_DIR', 'path/to/wp/wp-content' );
 define( 'WP_CONTENT_URL', 'https://mytest.com/wp-content' );
 
-// WP_Mock init (if needed) - it should go before unitest-wp-copy/zero.php
-// WP_Mock::bootstrap();
-
 require_once __DIR__ . '/vendor/doiftrue/unitest-wp-copy/zero.php';
+
+// WP_Mock (if needed - should go after unitest-wp-copy/zero.php)
+// WP_Mock::bootstrap();
 ```
 
 Some core WordPress functions make DB calls for options (for example, `get_option('blog_charset')`). Such calls are stubbed by the following construct: `$GLOBALS['stub_wp_options']->blog_charset`. The list of such predefined options:

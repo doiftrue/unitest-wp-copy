@@ -431,4 +431,35 @@ class formatting__Test extends TestCase {
 		$this->assertSame( '#ff00aa', maybe_hash_hex_color( 'ff00aa' ) );
 	}
 
+	public function test__make_clickable(): void {
+		$this->assertStringContainsString( '<a href="http://example.com"', make_clickable( 'http://example.com' ) );
+	}
+
+	public function test___make_url_clickable_cb(): void {
+		$this->assertStringContainsString(
+			'<a href="http://example.com"',
+			_make_url_clickable_cb( [ '', '', 'http://example.com', '', '' ] )
+		);
+	}
+
+	public function test___make_web_ftp_clickable_cb(): void {
+		$this->assertStringContainsString(
+			'<a href="http://example.com"',
+			_make_web_ftp_clickable_cb( [ '', '', 'example.com', '', '' ] )
+		);
+	}
+
+	public function test___make_email_clickable_cb() {
+		$this->assertIsString( _make_email_clickable_cb( [
+			0 => 'user@example.com',
+			1 => '',
+			2 => 'user@example.com',
+			3 => '',
+		] ) );
+	}
+
+	public function test___make_clickable_rel_attr() {
+		$this->assertIsString( _make_clickable_rel_attr( 'http://example.com' ) );
+	}
+
 }

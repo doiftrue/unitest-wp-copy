@@ -379,4 +379,10 @@ class functions__Test extends TestCase {
 		$this->assertSame( 10, strlen( $id ) ); // p_ + 8 hex
 	}
 
+	public function test__wp_allowed_protocols() {
+		$protocols = wp_allowed_protocols();
+		$this->assertContains( 'http', $protocols );
+		$this->assertContains( 'https', $protocols );
+	}
+
 }

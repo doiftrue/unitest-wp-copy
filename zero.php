@@ -34,3 +34,6 @@ smilies_init();
 
 global $shortcode_tags;
 $shortcode_tags = [];
+
+global $wp_locale;
+$wp_locale = new WP_Locale();

@@ -37,5 +37,6 @@ return [
 	'wp-includes/class-walker-category.php'                => 'Walker_Category',
 	// (класс из `class-phpass.php`) — portable хеширование паролей; чистый PHP.
 	'wp-includes/class-phpass.php'                         => 'PasswordHash',
+	'wp-includes/class-wp-locale.php'                      => 'WP_Locale',
 ];
 

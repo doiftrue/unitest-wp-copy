@@ -1765,6 +1765,30 @@ if( ! function_exists( 'wp_find_hierarchy_loop_tortoise_hare' ) ) :
 endif;
 
 // wp-includes/functions.php (WP 6.8.3)
+if( ! function_exists( 'wp_allowed_protocols' ) ) :
+	function wp_allowed_protocols() {
+		static $protocols = array();
+	
+		if ( empty( $protocols ) ) {
+			$protocols = array( 'http', 'https', 'ftp', 'ftps', 'mailto', 'news', 'irc', 'irc6', 'ircs', 'gopher', 'nntp', 'feed', 'telnet', 'mms', 'rtsp', 'sms', 'svn', 'tel', 'fax', 'xmpp', 'webcal', 'urn' );
+		}
+	
+		if ( ! did_action( 'wp_loaded' ) ) {
+			/**
+			 * Filters the list of protocols allowed in HTML attributes.
+			 *
+			 * @since 3.0.0
+			 *
+			 * @param string[] $protocols Array of allowed protocols e.g. 'http', 'ftp', 'tel', and more.
+			 */
+			$protocols = array_unique( (array) apply_filters( 'kses_allowed_protocols', $protocols ) );
+		}
+	
+		return $protocols;
+	}
+endif;
+
+// wp-includes/functions.php (WP 6.8.3)
 if( ! function_exists( 'wp_debug_backtrace_summary' ) ) :
 	function wp_debug_backtrace_summary( $ignore_class = null, $skip_frames = 0, $pretty = true ) {
 		static $truncate_paths;

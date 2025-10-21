@@ -56,11 +56,11 @@ return [
 		'rawurlencode_deep'                   => '',
 		'urldecode_deep'                      => '',
 		'antispambot'                         => '',
-		// '_make_url_clickable_cb'              => '', // current_filter() dependency
-		// '_make_web_ftp_clickable_cb'          => '',
-		// '_make_email_clickable_cb'            => '',
-		// '_make_clickable_rel_attr'            => '',
-		// 'make_clickable'                      => '', // current_filter() dependency
+		'make_clickable'                      => '',
+		'_make_url_clickable_cb'              => '',
+		'_make_web_ftp_clickable_cb'          => '',
+		'_make_email_clickable_cb'            => '',
+		'_make_clickable_rel_attr'            => '',
 		'_split_str_by_whitespace'            => '',
 		'wp_rel_callback'                     => '',
 		'wp_rel_nofollow'                     => '',
@@ -123,8 +123,8 @@ return [
 		'sanitize_hex_color'                  => '',
 		'sanitize_hex_color_no_hash'          => '',
 		'maybe_hash_hex_color'                => '',
+		'capital_P_dangit'                    => '',
 		// NOT suitable:
-		// 'capital_P_dangit'                    => '', // reason: current_filter()
 		// 'wp_enqueue_emoji_styles'             => '', // wp_add_inline_style dependency
 		// 'print_emoji_detection_script'        => '',
 		// '_print_emoji_detection_script'       => '',
@@ -214,7 +214,7 @@ return [
 		'wp_trigger_error'              => '',
 		'smilies_init'                  => '',
 		'force_ssl_admin'               => '',
-		// 'wp_allowed_protocols'    => '', // adapted
+		'wp_allowed_protocols'          => '',
 	],
 	'wp-includes/kses.php' => [
 		// need check (from GPT):
@@ -249,8 +249,8 @@ return [
 		'wp_kses_decode_entities'             => '',
 		'_wp_kses_decode_entities_chr'        => '',
 		'_wp_kses_decode_entities_chr_hexdec' => '',
-		// 'wp_filter_kses'                      => '', // current_filter() dependency
-		// 'wp_kses_data'                        => '', // current_filter() dependency
+		'wp_filter_kses'                      => '', // current_filter() dependency
+		'wp_kses_data'                        => '', // current_filter() dependency
 		'wp_filter_post_kses'                 => '',
 		'wp_filter_global_styles_post'        => '',
 		'wp_kses_post'                        => '',
@@ -294,6 +294,26 @@ return [
 		'array_all'          => '',
 	],
 	'wp-includes/plugin.php' => [
+		// hooks
+		'add_filter'                  => '',
+		'apply_filters'               => '',
+		'apply_filters_ref_array'     => '',
+		'has_filter'                  => '',
+		'remove_filter'               => '',
+		'remove_all_filters'          => '',
+		'current_filter'              => '',
+		'doing_filter'                => '',
+		'did_filter'                  => '',
+		'add_action'                  => '',
+		'do_action'                   => '',
+		'do_action_ref_array'         => '',
+		'has_action'                  => '',
+		'remove_action'               => '',
+		'remove_all_actions'          => '',
+		'current_action'              => '',
+		'doing_action'                => '',
+		'did_action'                  => '',
+		// others
 		'wp_register_plugin_realpath' => '',
 		'plugin_basename'             => '',
 		'_wp_filter_build_unique_id'  => '',
@@ -322,6 +342,14 @@ return [
 		'_get_component_from_parsed_url_array' => '',
 	],
 	'wp-includes/l10n.php' => [
-		'get_locale' => '',
+		'_n_noop'                    => '',
+		'_nx_noop'                   => '',
+		'is_rtl'                     => '',
+		'translate_nooped_plural'    => '',
+		'determine_locale'           => '',
+		'get_locale'                 => '',
+		'wp_get_list_item_separator' => '',
+		'wp_get_word_count_type'     => '',
+		'before_last_bar'            => '',
 	],
 ];

@@ -200,4 +200,12 @@ class kses__Test extends TestCase {
 		$this->assertSame( 'x', _wp_add_global_attributes( 'x' ) );
 	}
 
+	public function test__wp_filter_kses() {
+		$this->assertSame( 'AB', wp_filter_kses( 'A<iframe src="x"></iframe>B' ) );
+	}
+
+	public function test__wp_kses_data() {
+		$this->assertSame( 'XY', wp_kses_data( 'X<iframe src="y"></iframe>Y' ) );
+	}
+
 }

@@ -13,7 +13,7 @@ $default_stub_wp_options = [
 ];
 
 // allow to override stub options before including this file
-$GLOBALS['stub_wp_options'] = (object) ( ( $GLOBALS['stub_wp_options'] ?? [] ) + $default_stub_wp_options );
+$GLOBALS['stub_wp_options'] = (object) ( (array) ( $GLOBALS['stub_wp_options'] ?? [] ) + $default_stub_wp_options );
 
 // cleanup
 unset( $default_stub_wp_options );

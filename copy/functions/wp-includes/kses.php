@@ -1084,6 +1084,20 @@ if( ! function_exists( '_wp_kses_decode_entities_chr_hexdec' ) ) :
 endif;
 
 // wp-includes/kses.php (WP 6.8.3)
+if( ! function_exists( 'wp_filter_kses' ) ) :
+	function wp_filter_kses( $data ) {
+		return addslashes( wp_kses( stripslashes( $data ), current_filter() ) );
+	}
+endif;
+
+// wp-includes/kses.php (WP 6.8.3)
+if( ! function_exists( 'wp_kses_data' ) ) :
+	function wp_kses_data( $data ) {
+		return wp_kses( $data, current_filter() );
+	}
+endif;
+
+// wp-includes/kses.php (WP 6.8.3)
 if( ! function_exists( 'wp_filter_post_kses' ) ) :
 	function wp_filter_post_kses( $data ) {
 		return addslashes( wp_kses( stripslashes( $data ), 'post' ) );
