@@ -6,8 +6,8 @@ $default_stub_wp_options = [
 	'timezone_string' => 'UTC',
 	'gmt_offset'      => 0,
 	'use_smilies'     => true,
-	'home'            => 'https://mytest.com',
-	'siteurl'         => 'https://mytest.com',
+	'home'            => 'https://unitest-wp-copy.loc',
+	'siteurl'         => 'https://unitest-wp-copy.loc',
 	'use_balanceTags' => true,
 	'WPLANG'          => '',
 ];

@@ -20,6 +20,10 @@ foreach ( glob( __DIR__ . '/copy/init-parts/wp-includes/*.php' ) as $init_file )
 	require_once $init_file;
 }
 
+putenv( 'WP_ENVIRONMENT_TYPE=local' );
+$GLOBALS['timestart'] = microtime( true );
+$_SERVER['HTTP_HOST'] = parse_url( $GLOBALS['stub_wp_options']->home, PHP_URL_HOST );
+
 wp_initial_constants();
 
 wp_plugin_directory_constants();
@@ -37,3 +41,4 @@ $shortcode_tags = [];
 
 global $wp_locale;
 $wp_locale = new WP_Locale();
+
