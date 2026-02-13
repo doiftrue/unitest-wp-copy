@@ -265,7 +265,6 @@ return [
 		'wp_get_development_mode'    => '',
 		'wp_get_environment_type'    => '',
 		'wp_doing_ajax'              => '',
-		'is_admin'                   => '',
 		'is_ssl'                     => '',
 		'wp_convert_hr_to_bytes'     => '',
 		'wp_is_ini_value_changeable' => '',

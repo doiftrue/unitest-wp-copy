@@ -92,19 +92,6 @@ if( ! function_exists( 'wp_get_development_mode' ) ) :
 endif;
 
 // wp-includes/load.php (WP 6.8.3)
-if( ! function_exists( 'is_admin' ) ) :
-	function is_admin() {
-		if ( isset( $GLOBALS['current_screen'] ) ) {
-			return $GLOBALS['current_screen']->in_admin();
-		} elseif ( defined( 'WP_ADMIN' ) ) {
-			return WP_ADMIN;
-		}
-	
-		return false;
-	}
-endif;
-
-// wp-includes/load.php (WP 6.8.3)
 if( ! function_exists( 'is_multisite' ) ) :
 	function is_multisite() {
 		if ( defined( 'MULTISITE' ) ) {
