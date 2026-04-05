@@ -1,15 +1,15 @@
-Для написания тестов
-====================
+For Writing Tests
+=================
 
-Пишу тесты для функций WordPress. Нужны самые простые тесты для каждой функции из списка (из прикрепленного файла). Достаточно базово проверить, что функция работает и не вызывает фатальных ошибок. Не обязательно покрывать все кейсы. Важно убедиться, что при разных вариантах параметров, где есть разветвления логики, каждая ветка работает. 
+Tests for WordPress functions. We need the simplest possible test for each function from the list (in the attached file). A basic check that the function works and does not cause fatal errors is enough. It is not necessary to cover all cases. It is important to ensure that for different parameter variants, where logic branches exist, each branch works.
 
-Инструкции:
-- Метод каждого тест-кейса должен начинаться с префикса `test__` а затем название фукнции. Например, для функции `my_function` метод должен называться `test__my_function`, а для `_my_function` > `test___my_function`.
-- Нужно чтобы тесты были простыми (один два кейса) и не зависели от других функций WordPress.
-- Тест каждой функции должен быть отдельно - не нужно объединять несколько фукнций в один тест.
+Instructions:
+- Each test method must start with the `test__` prefix, followed by the function name. For example, for `my_function`, the method name should be `test__my_function`, and for `_my_function` it should be `test___my_function`.
+- Tests should be simple (one or two cases) and should not depend on other WordPress functions.
+- Each function must have its own separate test. Do not combine multiple functions into a single test.
 
-## Примеры теста
-Есть фукнция:
+## Test example
+There is a function:
 ```php
 function add_numbers( $a, $b = 0 ) {
 	if( $b ) {
@@ -19,7 +19,7 @@ function add_numbers( $a, $b = 0 ) {
 }
 ```
 
-Файл теста:
+Test file:
 ```php
 use PHPUnit\Framework\TestCase;
 
@@ -32,4 +32,3 @@ class AddNumbersTest extends TestCase {
 	
 }
 ```
-
