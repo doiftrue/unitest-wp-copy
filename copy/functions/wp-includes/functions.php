@@ -2134,19 +2134,6 @@ if( ! function_exists( 'wp_privacy_anonymize_data' ) ) :
 endif;
 
 // wp-includes/functions.php (WP 6.8.3)
-if( ! function_exists( 'wp_get_wp_version' ) ) :
-	function wp_get_wp_version() {
-		static $wp_version;
-	
-		if ( ! isset( $wp_version ) ) {
-			require ABSPATH . WPINC . '/version.php';
-		}
-	
-		return $wp_version;
-	}
-endif;
-
-// wp-includes/functions.php (WP 6.8.3)
 if( ! function_exists( 'wp_fuzzy_number_match' ) ) :
 	function wp_fuzzy_number_match( $expected, $actual, $precision = 1 ) {
 		return abs( (float) $expected - (float) $actual ) <= $precision;
@@ -2164,34 +2151,6 @@ if( ! function_exists( 'wp_is_heic_image_mime_type' ) ) :
 		);
 	
 		return in_array( $mime_type, $heic_mime_types, true );
-	}
-endif;
-
-// wp-includes/functions.php (WP 6.8.3)
-if( ! function_exists( 'wp_fast_hash' ) ) :
-	function wp_fast_hash(
-		#[\SensitiveParameter]
-		string $message
-	): string {
-		$hashed = sodium_crypto_generichash( $message, 'wp_fast_hash_6.8+', 30 );
-		return '$generic$' . sodium_bin2base64( $hashed, SODIUM_BASE64_VARIANT_URLSAFE_NO_PADDING );
-	}
-endif;
-
-// wp-includes/functions.php (WP 6.8.3)
-if( ! function_exists( 'wp_verify_fast_hash' ) ) :
-	function wp_verify_fast_hash(
-		#[\SensitiveParameter]
-		string $message,
-		string $hash
-	): bool {
-		if ( ! str_starts_with( $hash, '$generic$' ) ) {
-			// Back-compat for old phpass hashes.
-			require_once ABSPATH . WPINC . '/class-phpass.php';
-			return ( new PasswordHash( 8, true ) )->CheckPassword( $message, $hash );
-		}
-	
-		return hash_equals( $hash, wp_fast_hash( $message ) );
 	}
 endif;
 

@@ -70,6 +70,7 @@ class default_contants_Test extends TestCase {
 	}
 
 	public function test__wp_cookie_constants() {
+		wp_cookie_constants();
 		$this->assertSame( md5( $GLOBALS['stub_wp_options']->siteurl ), COOKIEHASH );
 		$this->assertSame( 'wordpress_' . COOKIEHASH, AUTH_COOKIE );
 		$this->assertSame( 'wordpress_logged_in_' . COOKIEHASH, LOGGED_IN_COOKIE );
@@ -82,8 +83,14 @@ class default_contants_Test extends TestCase {
 		$this->assertTrue( FORCE_SSL_ADMIN );
 	}
 
+	public function test__wp_ssl_constants() {
+		wp_ssl_constants();
+		$this->assertTrue( defined( 'FORCE_SSL_ADMIN' ) );
+	}
+
 	/** @runInSeparateProcess */
 	public function test__wp_functionality_constants() {
+		wp_functionality_constants();
 		$this->assertSame( 60, AUTOSAVE_INTERVAL );
 		$this->assertSame( 30, EMPTY_TRASH_DAYS );
 		$this->assertTrue( WP_POST_REVISIONS );

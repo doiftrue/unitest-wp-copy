@@ -169,7 +169,7 @@ return [
 		'wp_checkdate'                           => '',
 		'wp_debug_backtrace_summary'             => '',
 		'wp_ext2type'                            => '',
-		'wp_fast_hash'                           => '',
+		// 'wp_fast_hash'                           => '', // not used in this project (requires sodium)
 		'wp_filter_object_list'                  => '',
 		'wp_find_hierarchy_loop'                 => '',
 		'wp_find_hierarchy_loop_tortoise_hare'   => '',
@@ -180,7 +180,7 @@ return [
 		'wp_get_image_mime'                      => '',
 		'wp_get_mime_types'                      => '',
 		'wp_get_nocache_headers'                 => '',
-		'wp_get_wp_version'                      => '',
+		// 'wp_get_wp_version'                      => '', // not used in this project (requires full WP file tree via ABSPATH/WPINC)
 		'wp_is_heic_image_mime_type'             => '',
 		'wp_is_numeric_array'                    => '',
 		'wp_is_stream'                           => '',
@@ -202,8 +202,7 @@ return [
 		'wp_unique_id_from_values'               => '',
 		'wp_unique_prefixed_id'                  => '',
 		'wp_validate_boolean'                    => '',
-		'wp_verify_fast_hash'                    => '',
-		// more
+		// 'wp_verify_fast_hash'                    => '', // not used in this project (legacy branch requires full WP file tree)
 		'_deprecated_function'          => '',
 		'wp_timezone'                   => '',
 		'wp_timezone_string'            => '',
@@ -318,14 +317,16 @@ return [
 		'_wp_filter_build_unique_id'  => '',
 	],
 	'wp-includes/link-template.php' => [
-		'home_url' => '',
-		'get_home_url' => '',
-		'wp_internal_hosts' => '',
+		'home_url'            => '',
+		'get_home_url'        => '',
+		'site_url'            => '',
+		'get_site_url'        => '',
+		'wp_internal_hosts'   => '',
 		'wp_is_internal_link' => '',
-		'set_url_scheme' => '',
-		'plugins_url' => '',
-		'content_url' => '',
-		'includes_url' => '',
+		'set_url_scheme'      => '',
+		'plugins_url'         => '',
+		'content_url'         => '',
+		'includes_url'        => '',
 	],
 	'wp-includes/default-constants.php' => [
 		'wp_initial_constants'          => '',

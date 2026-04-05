@@ -141,11 +141,11 @@ class kses__Test extends TestCase {
 	}
 
 	public function test__wp_kses_normalize_entities2(): void {
-		$this->assertIsString( wp_kses_normalize_entities2( '&#x3C;' ) );
+		$this->assertSame( '&#060;', wp_kses_normalize_entities2( [ 1 => '60' ] ) );
 	}
 
 	public function test__wp_kses_normalize_entities3(): void {
-		$this->assertIsString( wp_kses_normalize_entities3( '&#60;' ) );
+		$this->assertSame( '&#x3C;', wp_kses_normalize_entities3( [ 1 => '3C' ] ) );
 	}
 
 	public function test__valid_unicode(): void {

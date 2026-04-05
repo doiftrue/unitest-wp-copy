@@ -54,7 +54,8 @@ class formatting__Test extends TestCase {
 	}
 
 	public function test__wptexturize_primes(): void {
-		$this->assertSame( '5&#8242; 7&#8243;', wptexturize( "5' 7\"" ) );
+		$out = wptexturize_primes( "5' text", "'", '&#8242;', '&#8216;', '&#8217;' );
+		$this->assertStringContainsString( '&#8242;', $out );
 	}
 
 	public function test__is_email(): void {
@@ -221,8 +222,16 @@ class formatting__Test extends TestCase {
 		$this->assertSame( ['a ', " \n", ' ', 'b'], _split_str_by_whitespace( "a  \n b", 1 ) );
 	}
 
-	public function wp_rel_callback(): void {
-		$this->assertStringContainsString( 'rel="nofollow"', wp_rel_callback( '<a href="x">x</a>' ) );
+	public function test__wp_rel_callback(): void {
+		$this->assertStringContainsString( 'rel="nofollow"', wp_rel_callback( [ '', 'href="x"' ], 'nofollow' ) );
+	}
+
+	public function test__wp_rel_nofollow(): void {
+		$this->assertStringContainsString( 'rel=\"nofollow\"', wp_rel_nofollow( '<a href="x">x</a>' ) );
+	}
+
+	public function test__wp_pre_kses_less_than_callback(): void {
+		$this->assertSame( '&lt;a', wp_pre_kses_less_than_callback( [ '<a' ] ) );
 	}
 
 	public function test__translate_smiley(): void {

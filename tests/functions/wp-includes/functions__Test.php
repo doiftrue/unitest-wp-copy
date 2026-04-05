@@ -284,6 +284,16 @@ class functions__Test extends TestCase {
 		$this->assertArrayHasKey( 1, $loop );
 	}
 
+	public function test__wp_find_hierarchy_loop_tortoise_hare() {
+		$map = [ 1 => 2, 2 => 3, 3 => 1 ];
+		$cb  = function ( $id ) use ( $map ) { return $map[ $id ] ?? null; };
+		$member = wp_find_hierarchy_loop_tortoise_hare( $cb, 1 );
+		$this->assertSame( 2, $member );
+
+		$loop = wp_find_hierarchy_loop_tortoise_hare( $cb, 1, [], [], true );
+		$this->assertArrayHasKey( 1, $loop );
+	}
+
 	public function test__wp_debug_backtrace_summary() {
 		$sum = wp_debug_backtrace_summary();
 		$this->assertIsString( $sum );
@@ -361,16 +371,6 @@ class functions__Test extends TestCase {
 	public function test__wp_is_heic_image_mime_type() {
 		$this->assertTrue( wp_is_heic_image_mime_type( 'image/heic' ) );
 		$this->assertFalse( wp_is_heic_image_mime_type( 'image/png' ) );
-	}
-
-	public function test__wp_fast_hash__and__verify_fast_hash() {
-		if ( ! function_exists( 'sodium_crypto_generichash' ) ) {
-			$this->markTestSkipped( 'libsodium not available' );
-		}
-		$hash = wp_fast_hash( 'secret' );
-		$this->assertStringStartsWith( '$generic$', $hash );
-		$this->assertTrue( wp_verify_fast_hash( 'secret', $hash ) );
-		$this->assertFalse( wp_verify_fast_hash( 'nope', $hash ) );
 	}
 
 	public function test__wp_unique_id_from_values() {

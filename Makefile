@@ -8,6 +8,11 @@ endef
 php.connect:
 	$(call php_run, sh)
 
+composer.install:
+	$(call php_run, composer install)
+composer.update:
+	$(call php_run, composer update)
+
 phpunit:
 	$(call php_run, composer run phpunit)
 

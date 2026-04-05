@@ -52,9 +52,9 @@ Main entry point: `zero.php` (loads copied functions/classes and initializes bas
 ## Quick workflow
 
 1. Install dependencies:
-   `composer install`
+   `make composer.install`
 2. Run tests:
-   `composer phpunit`
+   `make phpunit`
 3. If you need to refresh copied functions/classes:
    `php _parser/run.php`
 4. Always rerun tests after refreshing copies.

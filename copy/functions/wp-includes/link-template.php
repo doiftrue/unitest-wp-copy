@@ -52,6 +52,45 @@ if( ! function_exists( 'get_home_url' ) ) :
 endif;
 
 // wp-includes/link-template.php (WP 6.8.3)
+if( ! function_exists( 'site_url' ) ) :
+	function site_url( $path = '', $scheme = null ) {
+		return get_site_url( null, $path, $scheme );
+	}
+endif;
+
+// wp-includes/link-template.php (WP 6.8.3)
+if( ! function_exists( 'get_site_url' ) ) :
+	function get_site_url( $blog_id = null, $path = '', $scheme = null ) {
+		if ( empty( $blog_id ) || ! is_multisite() ) {
+			$url = $GLOBALS['stub_wp_options']->siteurl;
+		} else {
+			switch_to_blog( $blog_id );
+			$url = $GLOBALS['stub_wp_options']->siteurl;
+			restore_current_blog();
+		}
+	
+		$url = set_url_scheme( $url, $scheme );
+	
+		if ( $path && is_string( $path ) ) {
+			$url .= '/' . ltrim( $path, '/' );
+		}
+	
+		/**
+		 * Filters the site URL.
+		 *
+		 * @since 2.7.0
+		 *
+		 * @param string      $url     The complete site URL including scheme and path.
+		 * @param string      $path    Path relative to the site URL. Blank string if no path is specified.
+		 * @param string|null $scheme  Scheme to give the site URL context. Accepts 'http', 'https', 'login',
+		 *                             'login_post', 'admin', 'relative' or null.
+		 * @param int|null    $blog_id Site ID, or null for the current site.
+		 */
+		return apply_filters( 'site_url', $url, $path, $scheme, $blog_id );
+	}
+endif;
+
+// wp-includes/link-template.php (WP 6.8.3)
 if( ! function_exists( 'includes_url' ) ) :
 	function includes_url( $path = '', $scheme = null ) {
 		$url = site_url( '/' . WPINC . '/', $scheme );
