@@ -25,8 +25,10 @@ Also take into account that my PHPUnit environment uses mocks for the following 
 - esc_js()
 - esc_textarea()
 - And config from `config-funcs.php` file.
-- And  config from `config-classes.php` file.
+- And config from `config-classes.php` file.
 
 I need list of functions that depend only on PHP and other WordPress functions that can be used as is in PHP and do not rely on any external libraries.
+
+Important: if code contains substring from this mocked options `stub_wp_options.php` then this function/method should be considered as pure function that can be used in PHPUnit tests without bootstrapping WordPress, because in my PHPUnit environment such calls are stubbed via `$GLOBALS['stub_wp_options']`.
 
 
