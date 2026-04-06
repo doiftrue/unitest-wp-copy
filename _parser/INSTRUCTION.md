@@ -113,3 +113,37 @@ Step-By-Step: Add More WP Core Functions
 8) Final review before commit
 - Ensure generated `copy/` changes correspond only to intended functions.
 - Ensure comments in config explain why entries are commented out (if any).
+
+
+Step-By-Step: Add More WP Core Classes
+======================================
+
+1) Select candidate classes
+- Prefer classes with pure PHP logic and in-memory behavior.
+- Avoid classes requiring full WP runtime (DB queries, post/taxonomy loaders, block registries that depend on extra runtime, etc.).
+
+2) Check class dependency chain
+- Before adding a class, inspect all classes/functions it directly needs.
+- If class needs helper classes from WP core, add the full minimal chain to `_parser/config-classes.php`.
+- Keep chain comments in config so it is clear why related classes are grouped.
+
+3) Update parser config
+- Add class mapping into `_parser/config-classes.php`.
+- If class is known but not suitable, keep it as commented note (do not delete awareness comments).
+
+4) Regenerate copied code
+- Run `make run.parser` (or `php _parser/run.php`).
+- Verify new/updated files in `copy/classes/`.
+
+5) Add class tests
+- Add one test file per class in `tests/classes/...` with `__Test.php` suffix.
+- Use `test__*` method names without class name duplication in method name.
+- Validate runtime independence:
+  - positive smoke test for independent behavior;
+  - explicit `test__not_independent_*` with expected `Error` for known unresolved runtime dependencies.
+
+6) Run suite and confirm behavior
+- Run `make phpunit`.
+- If test shows unresolved dependency:
+  - either add minimal missing dependency chain/stub (if still within project ideology), or
+  - keep class marked/covered as not independent in tests and config comments.

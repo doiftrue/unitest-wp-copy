@@ -42,10 +42,13 @@ Main entry point: `zero.php` (loads copied functions/classes and initializes bas
   - `_parser/config-classes.php` — class list;
   - `_parser/INSTRUCTION.md` — instructions for updating copied code.
   - `_parser/run.php` — update runner.
-    - Should be run with `make parser.run` command.
+    - Should be run with `make run.parser` command.
 
 - `tests/`  
-  PHPUnit tests for whole project. It tests how the copied functions/classes work in the provided environment. The current WP-like test env loaded as if it used on another project as phpunit test WP environment, and all WP functions are tested if they works correctly without real WP environments (without DB, external services, etc).
+  PHPUnit tests for whole project.
+  - `tests/functions/` — function tests.
+  - `tests/classes/` — class tests.
+  It tests how the copied functions/classes work in the provided environment. The current WP-like test env loaded as if it used on another project as phpunit test WP environment, and all WP functions/classes are tested if they work correctly without real WP environment (without DB, external services, etc).
 
 
 ## Quick workflow
@@ -55,7 +58,7 @@ Main entry point: `zero.php` (loads copied functions/classes and initializes bas
 2. Run tests:
    `make phpunit`
 3. If you need to refresh copied functions/classes:
-   `make parser.run`
+   `make run.parser`
 4. Always rerun tests after refreshing copies.
 
 
@@ -63,5 +66,5 @@ Main entry point: `zero.php` (loads copied functions/classes and initializes bas
 
 - Do not manually remove or alter logic in `copy/` without understanding the impact: these files are synchronized via `_parser`.
 - When adding a new function/class, update the relevant `_parser/config-*.php` first, then run `_parser/run.php`.
-- When adding tests, keep them isolated from full WordPress runtime and cover basic logic branches without extra dependencies.
-- See `tests/INSTRUCTIONS.md` when writing tests.
+- Detailed parser workflow and class/function inclusion rules: see `_parser/INSTRUCTION.md`.
+- Detailed testing conventions (naming, file layout, class-vs-function test rules): see `tests/INSTRUCTIONS.md`.
