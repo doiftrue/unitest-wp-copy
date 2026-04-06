@@ -1624,6 +1624,19 @@ if( ! function_exists( 'force_ssl_admin' ) ) :
 endif;
 
 // wp-includes/functions.php (WP 6.8.3)
+if( ! function_exists( 'wp_suspend_cache_addition' ) ) :
+	function wp_suspend_cache_addition( $suspend = null ) {
+		static $_suspend = false;
+	
+		if ( is_bool( $suspend ) ) {
+			$_suspend = $suspend;
+		}
+	
+		return $_suspend;
+	}
+endif;
+
+// wp-includes/functions.php (WP 6.8.3)
 if( ! function_exists( '_cleanup_header_comment' ) ) :
 	function _cleanup_header_comment( $str ) {
 		return trim( preg_replace( '/\s*(?:\*\/|\?>).*/', '', $str ) );

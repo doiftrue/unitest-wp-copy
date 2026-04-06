@@ -212,6 +212,7 @@ return [
 		'wp_trigger_error'              => '',
 		'smilies_init'                  => '',
 		'force_ssl_admin'               => '',
+		'wp_suspend_cache_addition'     => '',
 		'wp_allowed_protocols'          => '',
 	],
 	'wp-includes/kses.php' => [
