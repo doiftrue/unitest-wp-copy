@@ -225,6 +225,13 @@ class functions__Test extends TestCase {
 		$this->assertTrue( true );
 	}
 
+	public function test___deprecated_hook() {
+		set_error_handler( function () { /* absorb */ } );
+		_deprecated_hook( 'old_hook', '1.0.0', 'new_hook', 'custom message' );
+		restore_error_handler();
+		$this->assertTrue( true );
+	}
+
 	public function test__validate_file() {
 		$this->assertSame( 1, validate_file( '../etc/passwd' ) );
 		$this->assertSame( 0, validate_file( 'ok/file.php' ) );
@@ -383,6 +390,49 @@ class functions__Test extends TestCase {
 		$protocols = wp_allowed_protocols();
 		$this->assertContains( 'http', $protocols );
 		$this->assertContains( 'https', $protocols );
+	}
+
+	public function test__get_status_header_desc() {
+		$this->assertSame( 'Not Found', get_status_header_desc( 404 ) );
+		$this->assertSame( '', get_status_header_desc( 999 ) );
+	}
+
+	public function test__get_tag_regex() {
+		$this->assertSame( '', get_tag_regex( '' ) );
+		$this->assertStringContainsString( '<video', get_tag_regex( 'video' ) );
+	}
+
+	public function test__human_readable_duration() {
+		$this->assertSame( false, human_readable_duration( '' ) );
+		$this->assertSame( '1 minute, 2 seconds', human_readable_duration( '01:02' ) );
+	}
+
+	public function test__current_datetime() {
+		$current = current_datetime();
+		$this->assertInstanceOf( DateTimeImmutable::class, $current );
+		$this->assertSame( 'UTC', $current->getTimezone()->getName() );
+	}
+
+	public function test__current_time() {
+		$this->assertIsInt( current_time( 'timestamp' ) );
+		$this->assertMatchesRegularExpression( '/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/', current_time( 'mysql' ) );
+	}
+
+	public function test__date_i18n() {
+		$this->assertSame( 100, date_i18n( 'U', 100, true ) );
+	}
+
+	public function test__mysql2date() {
+		$this->assertFalse( mysql2date( 'Y-m-d', '' ) );
+		$this->assertSame( '2020-01-02', mysql2date( 'Y-m-d', '2020-01-02 03:04:05', false ) );
+	}
+
+	public function test__mysql_to_rfc3339() {
+		$this->assertSame( '2020-01-02T03:04:05', mysql_to_rfc3339( '2020-01-02 03:04:05' ) );
+	}
+
+	public function test__wp_date() {
+		$this->assertSame( '1970-01-01 00:00', wp_date( 'Y-m-d H:i', 0, new DateTimeZone( 'UTC' ) ) );
 	}
 
 }

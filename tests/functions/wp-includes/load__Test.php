@@ -12,10 +12,6 @@ class load__Test extends TestCase {
 		$this->assertSame( '', wp_get_development_mode() );
 	}
 
-	public function test__is_admin() {
-		$this->assertFalse( is_admin() );
-	}
-
 	public function test__is_multisite() {
 		$this->assertFalse( is_multisite() );
 	}
@@ -47,9 +43,50 @@ class load__Test extends TestCase {
 		$this->assertFalse( wp_doing_ajax() );
 	}
 
+	public function test__wp_installing() {
+		$initial = wp_installing();
+		$this->assertIsBool( $initial );
+
+		$old = wp_installing( true );
+		$this->assertSame( $initial, $old );
+		$this->assertTrue( wp_installing() );
+
+		$old = wp_installing( false );
+		$this->assertTrue( $old );
+		$this->assertFalse( wp_installing() );
+
+		wp_installing( $initial );
+	}
+
 	public function test__is_wp_error() {
 		$this->assertTrue( is_wp_error( new WP_Error( 'e', 'msg' ) ) );
 		$this->assertFalse( is_wp_error( new stdClass() ) );
+	}
+
+	public function test__get_current_blog_id() {
+		$GLOBALS['blog_id'] = 12;
+		$this->assertSame( 12, get_current_blog_id() );
+	}
+
+	public function test__get_current_network_id() {
+		$this->assertSame( 1, get_current_network_id() );
+	}
+
+	public function test__timer_float() {
+		$_SERVER['REQUEST_TIME_FLOAT'] = microtime( true ) - 0.5;
+		$this->assertGreaterThan( 0, timer_float() );
+	}
+
+	public function test__timer_start() {
+		$this->assertTrue( timer_start() );
+		$this->assertIsFloat( $GLOBALS['timestart'] );
+	}
+
+	public function test__timer_stop() {
+		timer_start();
+		$result = timer_stop( 0, 3 );
+		$this->assertIsString( $result );
+		$this->assertMatchesRegularExpression( '/^\d+(?:[.,]\d+)?$/', $result );
 	}
 
 }

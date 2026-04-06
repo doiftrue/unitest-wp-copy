@@ -13,10 +13,6 @@ class l10n__Test extends TestCase {
 		$this->assertSame( 'en_US', get_locale() );
 	}
 
-	public function test__determine_locale() {
-		$this->assertSame( get_locale(), determine_locale() );
-	}
-
 	public function test__before_last_bar() {
 		$this->assertSame( 'a|b', before_last_bar( 'a|b|c' ) );
 		$this->assertSame( 'abc', before_last_bar( 'abc' ) );

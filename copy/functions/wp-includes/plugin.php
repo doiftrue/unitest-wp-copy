@@ -316,6 +316,32 @@ if( ! function_exists( 'did_action' ) ) :
 endif;
 
 // wp-includes/plugin.php (WP 6.8.3)
+if( ! function_exists( 'apply_filters_deprecated' ) ) :
+	function apply_filters_deprecated( $hook_name, $args, $version, $replacement = '', $message = '' ) {
+		if ( ! has_filter( $hook_name ) ) {
+			return $args[0];
+		}
+	
+		_deprecated_hook( $hook_name, $version, $replacement, $message );
+	
+		return apply_filters_ref_array( $hook_name, $args );
+	}
+endif;
+
+// wp-includes/plugin.php (WP 6.8.3)
+if( ! function_exists( 'do_action_deprecated' ) ) :
+	function do_action_deprecated( $hook_name, $args, $version, $replacement = '', $message = '' ) {
+		if ( ! has_action( $hook_name ) ) {
+			return;
+		}
+	
+		_deprecated_hook( $hook_name, $version, $replacement, $message );
+	
+		do_action_ref_array( $hook_name, $args );
+	}
+endif;
+
+// wp-includes/plugin.php (WP 6.8.3)
 if( ! function_exists( 'plugin_basename' ) ) :
 	function plugin_basename( $file ) {
 		global $wp_plugin_paths;
@@ -366,6 +392,68 @@ if( ! function_exists( 'wp_register_plugin_realpath' ) ) :
 		}
 	
 		return true;
+	}
+endif;
+
+// wp-includes/plugin.php (WP 6.8.3)
+if( ! function_exists( 'plugin_dir_path' ) ) :
+	function plugin_dir_path( $file ) {
+		return trailingslashit( dirname( $file ) );
+	}
+endif;
+
+// wp-includes/plugin.php (WP 6.8.3)
+if( ! function_exists( 'plugin_dir_url' ) ) :
+	function plugin_dir_url( $file ) {
+		return trailingslashit( plugins_url( '', $file ) );
+	}
+endif;
+
+// wp-includes/plugin.php (WP 6.8.3)
+if( ! function_exists( 'register_activation_hook' ) ) :
+	function register_activation_hook( $file, $callback ) {
+		$file = plugin_basename( $file );
+		add_action( 'activate_' . $file, $callback );
+	}
+endif;
+
+// wp-includes/plugin.php (WP 6.8.3)
+if( ! function_exists( 'register_deactivation_hook' ) ) :
+	function register_deactivation_hook( $file, $callback ) {
+		$file = plugin_basename( $file );
+		add_action( 'deactivate_' . $file, $callback );
+	}
+endif;
+
+// wp-includes/plugin.php (WP 6.8.3)
+if( ! function_exists( 'register_uninstall_hook' ) ) :
+	function register_uninstall_hook( $file, $callback ) {
+		if ( is_array( $callback ) && is_object( $callback[0] ) ) {
+			_doing_it_wrong( __FUNCTION__, __( 'Only a static class method or function can be used in an uninstall hook.' ), '3.1.0' );
+			return;
+		}
+	
+		/*
+		 * The option should not be autoloaded, because it is not needed in most
+		 * cases. Emphasis should be put on using the 'uninstall.php' way of
+		 * uninstalling the plugin.
+		 */
+		$uninstallable_plugins = (array) get_option( 'uninstall_plugins' );
+		$plugin_basename       = plugin_basename( $file );
+	
+		if ( ! isset( $uninstallable_plugins[ $plugin_basename ] ) || $uninstallable_plugins[ $plugin_basename ] !== $callback ) {
+			$uninstallable_plugins[ $plugin_basename ] = $callback;
+			update_option( 'uninstall_plugins', $uninstallable_plugins );
+		}
+	}
+endif;
+
+// wp-includes/plugin.php (WP 6.8.3)
+if( ! function_exists( '_wp_call_all_hook' ) ) :
+	function _wp_call_all_hook( $args ) {
+		global $wp_filter;
+	
+		$wp_filter['all']->do_all_hook( $args );
 	}
 endif;
 

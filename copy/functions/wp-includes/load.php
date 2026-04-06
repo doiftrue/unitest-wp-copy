@@ -92,6 +92,46 @@ if( ! function_exists( 'wp_get_development_mode' ) ) :
 endif;
 
 // wp-includes/load.php (WP 6.8.3)
+if( ! function_exists( 'timer_float' ) ) :
+	function timer_float() {
+		return microtime( true ) - $_SERVER['REQUEST_TIME_FLOAT'];
+	}
+endif;
+
+// wp-includes/load.php (WP 6.8.3)
+if( ! function_exists( 'timer_start' ) ) :
+	function timer_start() {
+		global $timestart;
+	
+		$timestart = microtime( true );
+	
+		return true;
+	}
+endif;
+
+// wp-includes/load.php (WP 6.8.3)
+if( ! function_exists( 'timer_stop' ) ) :
+	function timer_stop( $display = 0, $precision = 3 ) {
+		global $timestart, $timeend;
+	
+		$timeend   = microtime( true );
+		$timetotal = $timeend - $timestart;
+	
+		if ( function_exists( 'number_format_i18n' ) ) {
+			$r = number_format_i18n( $timetotal, $precision );
+		} else {
+			$r = number_format( $timetotal, $precision );
+		}
+	
+		if ( $display ) {
+			echo $r;
+		}
+	
+		return $r;
+	}
+endif;
+
+// wp-includes/load.php (WP 6.8.3)
 if( ! function_exists( 'is_multisite' ) ) :
 	function is_multisite() {
 		if ( defined( 'MULTISITE' ) ) {
@@ -110,6 +150,53 @@ endif;
 if( ! function_exists( 'absint' ) ) :
 	function absint( $maybeint ) {
 		return abs( (int) $maybeint );
+	}
+endif;
+
+// wp-includes/load.php (WP 6.8.3)
+if( ! function_exists( 'get_current_blog_id' ) ) :
+	function get_current_blog_id() {
+		global $blog_id;
+	
+		return absint( $blog_id );
+	}
+endif;
+
+// wp-includes/load.php (WP 6.8.3)
+if( ! function_exists( 'get_current_network_id' ) ) :
+	function get_current_network_id() {
+		if ( ! is_multisite() ) {
+			return 1;
+		}
+	
+		$current_network = get_network();
+	
+		if ( ! isset( $current_network->id ) ) {
+			return get_main_network_id();
+		}
+	
+		return absint( $current_network->id );
+	}
+endif;
+
+// wp-includes/load.php (WP 6.8.3)
+if( ! function_exists( 'wp_installing' ) ) :
+	function wp_installing( $is_installing = null ) {
+		static $installing = null;
+	
+		// Support for the `WP_INSTALLING` constant, defined before WP is loaded.
+		if ( is_null( $installing ) ) {
+			$installing = defined( 'WP_INSTALLING' ) && WP_INSTALLING;
+		}
+	
+		if ( ! is_null( $is_installing ) ) {
+			$old_installing = $installing;
+			$installing     = $is_installing;
+	
+			return (bool) $old_installing;
+		}
+	
+		return (bool) $installing;
 	}
 endif;
 

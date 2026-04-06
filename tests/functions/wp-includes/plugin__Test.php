@@ -144,4 +144,58 @@ class plugin__Test extends TestCase {
 		$this->assertStringContainsString( 'm', $id );
 	}
 
+	public function test___wp_call_all_hook() {
+		$GLOBALS['all_hook_args'] = [];
+		add_filter(
+			'all',
+			static function ( $hook, $arg = null ) {
+				$GLOBALS['all_hook_args'] = [ $hook, $arg ];
+			},
+			10,
+			2
+		);
+
+		_wp_call_all_hook( [ 'all_hook_test', 'value' ] );
+
+		$this->assertSame( [ 'all_hook_test', 'value' ], $GLOBALS['all_hook_args'] );
+	}
+
+	public function test__apply_filters_deprecated() {
+		$this->assertSame(
+			'value',
+			apply_filters_deprecated( 'missing_deprecated_filter', [ 'value' ], '1.0.0' )
+		);
+	}
+
+	public function test__do_action_deprecated() {
+		do_action_deprecated( 'missing_deprecated_action', [ 'value' ], '1.0.0' );
+		$this->assertTrue( true );
+	}
+
+	public function test__plugin_dir_path() {
+		$this->assertSame( '/var/www/plugin/', plugin_dir_path( '/var/www/plugin/main.php' ) );
+	}
+
+	public function test__plugin_dir_url() {
+		$url = plugin_dir_url( '/path/to/wp/wp-content/plugins/my-plugin/main.php' );
+		$this->assertStringContainsString( '/wp-content/plugins/my-plugin/', $url );
+	}
+
+	public function test__register_activation_hook() {
+		register_activation_hook( '/path/to/wp/wp-content/plugins/my-plugin/main.php', '__return_true' );
+		$this->assertNotFalse( has_action( 'activate_my-plugin/main.php', '__return_true' ) );
+	}
+
+	public function test__register_deactivation_hook() {
+		register_deactivation_hook( '/path/to/wp/wp-content/plugins/my-plugin/main.php', '__return_false' );
+		$this->assertNotFalse( has_action( 'deactivate_my-plugin/main.php', '__return_false' ) );
+	}
+
+	public function test__register_uninstall_hook() {
+		set_error_handler( function () { /* absorb */ } );
+		$plugin = new stdClass();
+		$this->assertNull( register_uninstall_hook( '/path/to/wp/wp-content/plugins/my-plugin/main.php', [ $plugin, 'run' ] ) );
+		restore_error_handler();
+	}
+
 }

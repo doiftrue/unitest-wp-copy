@@ -3,6 +3,59 @@
 // ------------------auto-generated---------------------
 
 // wp-includes/functions.php (WP 6.8.3)
+if( ! function_exists( 'mysql2date' ) ) :
+	function mysql2date( $format, $date, $translate = true ) {
+		if ( empty( $date ) ) {
+			return false;
+		}
+	
+		$timezone = wp_timezone();
+		$datetime = date_create( $date, $timezone );
+	
+		if ( false === $datetime ) {
+			return false;
+		}
+	
+		// Returns a sum of timestamp with timezone offset. Ideally should never be used.
+		if ( 'G' === $format || 'U' === $format ) {
+			return $datetime->getTimestamp() + $datetime->getOffset();
+		}
+	
+		if ( $translate ) {
+			return wp_date( $format, $datetime->getTimestamp(), $timezone );
+		}
+	
+		return $datetime->format( $format );
+	}
+endif;
+
+// wp-includes/functions.php (WP 6.8.3)
+if( ! function_exists( 'current_time' ) ) :
+	function current_time( $type, $gmt = 0 ) {
+		// Don't use non-GMT timestamp, unless you know the difference and really need to.
+		if ( 'timestamp' === $type || 'U' === $type ) {
+			return $gmt ? time() : time() + (int) ( (float) $GLOBALS['stub_wp_options']->gmt_offset * HOUR_IN_SECONDS );
+		}
+	
+		if ( 'mysql' === $type ) {
+			$type = 'Y-m-d H:i:s';
+		}
+	
+		$timezone = $gmt ? new DateTimeZone( 'UTC' ) : wp_timezone();
+		$datetime = new DateTime( 'now', $timezone );
+	
+		return $datetime->format( $type );
+	}
+endif;
+
+// wp-includes/functions.php (WP 6.8.3)
+if( ! function_exists( 'current_datetime' ) ) :
+	function current_datetime() {
+		return new DateTimeImmutable( 'now', wp_timezone() );
+	}
+endif;
+
+// wp-includes/functions.php (WP 6.8.3)
 if( ! function_exists( 'wp_timezone_string' ) ) :
 	function wp_timezone_string() {
 		$timezone_string = $GLOBALS['stub_wp_options']->timezone_string;
@@ -28,6 +81,139 @@ endif;
 if( ! function_exists( 'wp_timezone' ) ) :
 	function wp_timezone() {
 		return new DateTimeZone( wp_timezone_string() );
+	}
+endif;
+
+// wp-includes/functions.php (WP 6.8.3)
+if( ! function_exists( 'date_i18n' ) ) :
+	function date_i18n( $format, $timestamp_with_offset = false, $gmt = false ) {
+		$timestamp = $timestamp_with_offset;
+	
+		// If timestamp is omitted it should be current time (summed with offset, unless `$gmt` is true).
+		if ( ! is_numeric( $timestamp ) ) {
+			// phpcs:ignore WordPress.DateTime.CurrentTimeTimestamp.Requested
+			$timestamp = current_time( 'timestamp', $gmt );
+		}
+	
+		/*
+		 * This is a legacy implementation quirk that the returned timestamp is also with offset.
+		 * Ideally this function should never be used to produce a timestamp.
+		 */
+		if ( 'U' === $format ) {
+			$date = $timestamp;
+		} elseif ( $gmt && false === $timestamp_with_offset ) { // Current time in UTC.
+			$date = wp_date( $format, null, new DateTimeZone( 'UTC' ) );
+		} elseif ( false === $timestamp_with_offset ) { // Current time in site's timezone.
+			$date = wp_date( $format );
+		} else {
+			/*
+			 * Timestamp with offset is typically produced by a UTC `strtotime()` call on an input without timezone.
+			 * This is the best attempt to reverse that operation into a local time to use.
+			 */
+			$local_time = gmdate( 'Y-m-d H:i:s', $timestamp );
+			$timezone   = wp_timezone();
+			$datetime   = date_create( $local_time, $timezone );
+			$date       = wp_date( $format, $datetime->getTimestamp(), $timezone );
+		}
+	
+		/**
+		 * Filters the date formatted based on the locale.
+		 *
+		 * @since 2.8.0
+		 *
+		 * @param string $date      Formatted date string.
+		 * @param string $format    Format to display the date.
+		 * @param int    $timestamp A sum of Unix timestamp and timezone offset in seconds.
+		 *                          Might be without offset if input omitted timestamp but requested GMT.
+		 * @param bool   $gmt       Whether to use GMT timezone. Only applies if timestamp was not provided.
+		 *                          Default false.
+		 */
+		$date = apply_filters( 'date_i18n', $date, $format, $timestamp, $gmt );
+	
+		return $date;
+	}
+endif;
+
+// wp-includes/functions.php (WP 6.8.3)
+if( ! function_exists( 'wp_date' ) ) :
+	function wp_date( $format, $timestamp = null, $timezone = null ) {
+		global $wp_locale;
+	
+		if ( null === $timestamp ) {
+			$timestamp = time();
+		} elseif ( ! is_numeric( $timestamp ) ) {
+			return false;
+		}
+	
+		if ( ! $timezone ) {
+			$timezone = wp_timezone();
+		}
+	
+		$datetime = date_create( '@' . $timestamp );
+		$datetime->setTimezone( $timezone );
+	
+		if ( empty( $wp_locale->month ) || empty( $wp_locale->weekday ) ) {
+			$date = $datetime->format( $format );
+		} else {
+			// We need to unpack shorthand `r` format because it has parts that might be localized.
+			$format = preg_replace( '/(?<!\\\\)r/', DATE_RFC2822, $format );
+	
+			$new_format    = '';
+			$format_length = strlen( $format );
+			$month         = $wp_locale->get_month( $datetime->format( 'm' ) );
+			$weekday       = $wp_locale->get_weekday( $datetime->format( 'w' ) );
+	
+			for ( $i = 0; $i < $format_length; $i++ ) {
+				switch ( $format[ $i ] ) {
+					case 'D':
+						$new_format .= addcslashes( $wp_locale->get_weekday_abbrev( $weekday ), '\\A..Za..z' );
+						break;
+					case 'F':
+						$new_format .= addcslashes( $month, '\\A..Za..z' );
+						break;
+					case 'l':
+						$new_format .= addcslashes( $weekday, '\\A..Za..z' );
+						break;
+					case 'M':
+						$new_format .= addcslashes( $wp_locale->get_month_abbrev( $month ), '\\A..Za..z' );
+						break;
+					case 'a':
+						$new_format .= addcslashes( $wp_locale->get_meridiem( $datetime->format( 'a' ) ), '\\A..Za..z' );
+						break;
+					case 'A':
+						$new_format .= addcslashes( $wp_locale->get_meridiem( $datetime->format( 'A' ) ), '\\A..Za..z' );
+						break;
+					case '\\':
+						$new_format .= $format[ $i ];
+	
+						// If character follows a slash, we add it without translating.
+						if ( $i < $format_length ) {
+							$new_format .= $format[ ++$i ];
+						}
+						break;
+					default:
+						$new_format .= $format[ $i ];
+						break;
+				}
+			}
+	
+			$date = $datetime->format( $new_format );
+			$date = wp_maybe_decline_date( $date, $format );
+		}
+	
+		/**
+		 * Filters the date formatted based on the locale.
+		 *
+		 * @since 5.3.0
+		 *
+		 * @param string       $date      Formatted date string.
+		 * @param string       $format    Format to display the date.
+		 * @param int          $timestamp Unix timestamp.
+		 * @param DateTimeZone $timezone  Timezone.
+		 */
+		$date = apply_filters( 'wp_date', $date, $format, $timestamp, $timezone );
+	
+		return $date;
 	}
 endif;
 
@@ -92,6 +278,70 @@ if( ! function_exists( 'size_format' ) ) :
 		}
 	
 		return false;
+	}
+endif;
+
+// wp-includes/functions.php (WP 6.8.3)
+if( ! function_exists( 'human_readable_duration' ) ) :
+	function human_readable_duration( $duration = '' ) {
+		if ( ( empty( $duration ) || ! is_string( $duration ) ) ) {
+			return false;
+		}
+	
+		$duration = trim( $duration );
+	
+		// Remove prepended negative sign.
+		if ( str_starts_with( $duration, '-' ) ) {
+			$duration = substr( $duration, 1 );
+		}
+	
+		// Extract duration parts.
+		$duration_parts = array_reverse( explode( ':', $duration ) );
+		$duration_count = count( $duration_parts );
+	
+		$hour   = null;
+		$minute = null;
+		$second = null;
+	
+		if ( 3 === $duration_count ) {
+			// Validate HH:ii:ss duration format.
+			if ( ! ( (bool) preg_match( '/^([0-9]+):([0-5]?[0-9]):([0-5]?[0-9])$/', $duration ) ) ) {
+				return false;
+			}
+			// Three parts: hours, minutes & seconds.
+			list( $second, $minute, $hour ) = $duration_parts;
+		} elseif ( 2 === $duration_count ) {
+			// Validate ii:ss duration format.
+			if ( ! ( (bool) preg_match( '/^([0-5]?[0-9]):([0-5]?[0-9])$/', $duration ) ) ) {
+				return false;
+			}
+			// Two parts: minutes & seconds.
+			list( $second, $minute ) = $duration_parts;
+		} else {
+			return false;
+		}
+	
+		$human_readable_duration = array();
+	
+		// Add the hour part to the string.
+		if ( is_numeric( $hour ) ) {
+			/* translators: %s: Time duration in hour or hours. */
+			$human_readable_duration[] = sprintf( _n( '%s hour', '%s hours', $hour ), (int) $hour );
+		}
+	
+		// Add the minute part to the string.
+		if ( is_numeric( $minute ) ) {
+			/* translators: %s: Time duration in minute or minutes. */
+			$human_readable_duration[] = sprintf( _n( '%s minute', '%s minutes', $minute ), (int) $minute );
+		}
+	
+		// Add the second part to the string.
+		if ( is_numeric( $second ) ) {
+			/* translators: %s: Time duration in second or seconds. */
+			$human_readable_duration[] = sprintf( _n( '%s second', '%s seconds', $second ), (int) $second );
+		}
+	
+		return implode( ', ', $human_readable_duration );
 	}
 endif;
 
@@ -341,6 +591,91 @@ if( ! function_exists( 'remove_query_arg' ) ) :
 			return $query;
 		}
 		return add_query_arg( $key, false, $query );
+	}
+endif;
+
+// wp-includes/functions.php (WP 6.8.3)
+if( ! function_exists( 'get_status_header_desc' ) ) :
+	function get_status_header_desc( $code ) {
+		global $wp_header_to_desc;
+	
+		$code = absint( $code );
+	
+		if ( ! isset( $wp_header_to_desc ) ) {
+			$wp_header_to_desc = array(
+				100 => 'Continue',
+				101 => 'Switching Protocols',
+				102 => 'Processing',
+				103 => 'Early Hints',
+	
+				200 => 'OK',
+				201 => 'Created',
+				202 => 'Accepted',
+				203 => 'Non-Authoritative Information',
+				204 => 'No Content',
+				205 => 'Reset Content',
+				206 => 'Partial Content',
+				207 => 'Multi-Status',
+				226 => 'IM Used',
+	
+				300 => 'Multiple Choices',
+				301 => 'Moved Permanently',
+				302 => 'Found',
+				303 => 'See Other',
+				304 => 'Not Modified',
+				305 => 'Use Proxy',
+				306 => 'Reserved',
+				307 => 'Temporary Redirect',
+				308 => 'Permanent Redirect',
+	
+				400 => 'Bad Request',
+				401 => 'Unauthorized',
+				402 => 'Payment Required',
+				403 => 'Forbidden',
+				404 => 'Not Found',
+				405 => 'Method Not Allowed',
+				406 => 'Not Acceptable',
+				407 => 'Proxy Authentication Required',
+				408 => 'Request Timeout',
+				409 => 'Conflict',
+				410 => 'Gone',
+				411 => 'Length Required',
+				412 => 'Precondition Failed',
+				413 => 'Request Entity Too Large',
+				414 => 'Request-URI Too Long',
+				415 => 'Unsupported Media Type',
+				416 => 'Requested Range Not Satisfiable',
+				417 => 'Expectation Failed',
+				418 => 'I\'m a teapot',
+				421 => 'Misdirected Request',
+				422 => 'Unprocessable Entity',
+				423 => 'Locked',
+				424 => 'Failed Dependency',
+				425 => 'Too Early',
+				426 => 'Upgrade Required',
+				428 => 'Precondition Required',
+				429 => 'Too Many Requests',
+				431 => 'Request Header Fields Too Large',
+				451 => 'Unavailable For Legal Reasons',
+	
+				500 => 'Internal Server Error',
+				501 => 'Not Implemented',
+				502 => 'Bad Gateway',
+				503 => 'Service Unavailable',
+				504 => 'Gateway Timeout',
+				505 => 'HTTP Version Not Supported',
+				506 => 'Variant Also Negotiates',
+				507 => 'Insufficient Storage',
+				510 => 'Not Extended',
+				511 => 'Network Authentication Required',
+			);
+		}
+	
+		if ( isset( $wp_header_to_desc[ $code ] ) ) {
+			return $wp_header_to_desc[ $code ];
+		} else {
+			return '';
+		}
 	}
 endif;
 
@@ -1453,6 +1788,54 @@ if( ! function_exists( '_deprecated_argument' ) ) :
 endif;
 
 // wp-includes/functions.php (WP 6.8.3)
+if( ! function_exists( '_deprecated_hook' ) ) :
+	function _deprecated_hook( $hook, $version, $replacement = '', $message = '' ) {
+		/**
+		 * Fires when a deprecated hook is called.
+		 *
+		 * @since 4.6.0
+		 *
+		 * @param string $hook        The hook that was called.
+		 * @param string $replacement The hook that should be used as a replacement.
+		 * @param string $version     The version of WordPress that deprecated the argument used.
+		 * @param string $message     A message regarding the change.
+		 */
+		do_action( 'deprecated_hook_run', $hook, $replacement, $version, $message );
+	
+		/**
+		 * Filters whether to trigger deprecated hook errors.
+		 *
+		 * @since 4.6.0
+		 *
+		 * @param bool $trigger Whether to trigger deprecated hook errors. Requires
+		 *                      `WP_DEBUG` to be defined true.
+		 */
+		if ( WP_DEBUG && apply_filters( 'deprecated_hook_trigger_error', true ) ) {
+			$message = empty( $message ) ? '' : ' ' . $message;
+	
+			if ( $replacement ) {
+				$message = sprintf(
+					/* translators: 1: WordPress hook name, 2: Version number, 3: Alternative hook name. */
+					__( 'Hook %1$s is <strong>deprecated</strong> since version %2$s! Use %3$s instead.' ),
+					$hook,
+					$version,
+					$replacement
+				) . $message;
+			} else {
+				$message = sprintf(
+					/* translators: 1: WordPress hook name, 2: Version number. */
+					__( 'Hook %1$s is <strong>deprecated</strong> since version %2$s with no alternative available.' ),
+					$hook,
+					$version
+				) . $message;
+			}
+	
+			wp_trigger_error( '', $message, E_USER_DEPRECATED );
+		}
+	}
+endif;
+
+// wp-includes/functions.php (WP 6.8.3)
 if( ! function_exists( '_doing_it_wrong' ) ) :
 	function _doing_it_wrong( $function_name, $message, $version ) {
 	
@@ -1878,6 +2261,16 @@ if( ! function_exists( 'wp_checkdate' ) ) :
 endif;
 
 // wp-includes/functions.php (WP 6.8.3)
+if( ! function_exists( 'get_tag_regex' ) ) :
+	function get_tag_regex( $tag ) {
+		if ( empty( $tag ) ) {
+			return '';
+		}
+		return sprintf( '<%1$s[^<]*(?:>[\s\S]*<\/%1$s>|\s*\/>)', tag_escape( $tag ) );
+	}
+endif;
+
+// wp-includes/functions.php (WP 6.8.3)
 if( ! function_exists( 'is_utf8_charset' ) ) :
 	function is_utf8_charset( $blog_charset = null ) {
 		return _is_utf8_charset( $blog_charset ?? $GLOBALS['stub_wp_options']->blog_charset );
@@ -1963,6 +2356,13 @@ if( ! function_exists( 'wp_validate_boolean' ) ) :
 		}
 	
 		return (bool) $value;
+	}
+endif;
+
+// wp-includes/functions.php (WP 6.8.3)
+if( ! function_exists( 'mysql_to_rfc3339' ) ) :
+	function mysql_to_rfc3339( $date_string ) {
+		return mysql2date( 'Y-m-d\TH:i:s', $date_string, false );
 	}
 endif;
 
