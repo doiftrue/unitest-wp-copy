@@ -14,40 +14,39 @@ Main entry point: `zero.php` (loads copied functions/classes and initializes bas
 ## Project structure
 
 - `zero.php`  
-  Library entry point. Loads files from `copy/`, stubs from `src/`, and init parts from `copy/init-parts/`.
+  Library entry point. Loads files from `copy/`, stubs from `src/`.
 
-- `copy/functions/` и `copy/functions/wp-includes/`  
-  Copied WordPress functions.
+- `copy/`  
+  Copied WordPress functions/classes.
 
-- `copy/classes/`  
-  Copied WordPress classes.
+  - `copy/init-parts/`  
+    Minimal WP initialization fragments required to run some functions.
 
-- `copy/init-parts/wp-includes/`  
-  Minimal WP initialization fragments required to run some functions.
+  - `copy/mocks/`  
+    WP functions/methods which code was changed (mocked) to work like in WP environment, but without loading WP. For example, `switch_to_blog()` is mocked to change the value of `$GLOBALS['current_blog_id']` instead of loading the new blog.
 
-- `copy/mocks.php`  
-  Helper mocks/stubs for compatibility.
+- `src/`  
+  Stubs and environment initialization for copied functions/classes.
 
-- `src/stub_wp_options.php`  
-  Stub for `get_option()`-like calls via `$GLOBALS['stub_wp_options']`.
+  - `src/stub_wp_options.php`  
+    Stub for `get_option()`-like calls via `$GLOBALS['stub_wp_options']`. Some kinds mock of DB-stored options, some just return hardcoded values.
 
-- `src/constants.php`  
-  Base constants and environment values for test execution.
+  - `src/constants.php`  
+    Base WP constants and environment values for test execution.
 
-- `_parser/`  
+
+### `_parser/`
+  Separate part of project that creates `copy/` code copiing it from WP core code.
   Internal generator/updater for copied functions and classes.
   - `_parser/config-funcs.php` — function list;
   - `_parser/config-classes.php` — class list;
+  - `_parser/INSTRUCTION.md` — instructions for updating copied code.
   - `_parser/run.php` — update runner.
+    - Should be run with `make parser.run` command.
 
 - `tests/`  
-  PHPUnit tests for included functions.
+  PHPUnit tests for whole project. It tests how the copied functions/classes work in the provided environment. The current WP-like test env loaded as if it used on another project as phpunit test WP environment, and all WP functions are tested if they works correctly without real WP environments (without DB, external services, etc).
 
-- `phpunit.xml`  
-  Test run configuration.
-
-- `composer.json`  
-  Package metadata and dev dependencies (`phpunit`, `wordpress/wordpress`).
 
 ## Quick workflow
 
@@ -56,8 +55,9 @@ Main entry point: `zero.php` (loads copied functions/classes and initializes bas
 2. Run tests:
    `make phpunit`
 3. If you need to refresh copied functions/classes:
-   `php _parser/run.php`
+   `make parser.run`
 4. Always rerun tests after refreshing copies.
+
 
 ## Important notes for agents
 
