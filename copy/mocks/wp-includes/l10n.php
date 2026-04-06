@@ -4,40 +4,49 @@
  * Supports WP_Mock unit testing implementation.
  */
 
-use WP_Mock\Functions\Handler;
-
 if ( ! function_exists( '__' ) ) :
 	function __( $text, $domain = 'default' ) {
-		return class_exists( Handler::class )
-			? Handler::handlePredefinedReturnFunction( __FUNCTION__, func_get_args() )
+		return wp_mock_has_handler( __FUNCTION__ )
+			? wp_mock_call( __FUNCTION__, func_get_args() )
 			: $text;
 	}
 endif;
 
 if ( ! function_exists( '_e' ) ) :
 	function _e( $text, $domain = 'default' ) {
-		class_exists( Handler::class )
-			? Handler::handlePredefinedEchoFunction( __FUNCTION__, func_get_args() )
-			: print $text;
+		if ( wp_mock_has_handler( __FUNCTION__ ) ) {
+			wp_mock_echo_call( __FUNCTION__, func_get_args() );
+			return;
+		}
+
+		echo $text;
 	}
 endif;
 
 if ( ! function_exists( '_x' ) ) :
 	function _x( $text, $context, $domain = 'default' ) {
-		return class_exists( Handler::class )
-			? Handler::handlePredefinedReturnFunction( __FUNCTION__, func_get_args() )
+		return wp_mock_has_handler( __FUNCTION__ )
+			? wp_mock_call( __FUNCTION__, func_get_args() )
 			: $text;
 	}
 endif;
 
 if ( ! function_exists( '_n' ) ) :
 	function _n( $single, $plural, $number, $domain = 'default' ) {
+		if ( wp_mock_has_handler( __FUNCTION__ ) ) {
+			return wp_mock_call( __FUNCTION__, func_get_args() );
+		}
+
 		return $number <= 1 ? $single : $plural;
 	}
 endif;
 
 if ( ! function_exists( '_nx' ) ) :
 	function _nx( $single, $plural, $number, $context, $domain = 'default' ) {
+		if ( wp_mock_has_handler( __FUNCTION__ ) ) {
+			return wp_mock_call( __FUNCTION__, func_get_args() );
+		}
+
 		return $number <= 1 ? $single : $plural;
 	}
 endif;

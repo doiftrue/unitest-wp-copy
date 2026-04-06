@@ -46,4 +46,62 @@ class l10n__Test extends TestCase {
 		$this->assertSame( 'words', wp_get_word_count_type() );
 	}
 
+	public function test____() {
+		$this->assertSame( 'abc', __( 'abc' ) );
+	}
+
+	public function test___e() {
+		ob_start();
+		_e( 'abc' );
+		$out = ob_get_clean();
+
+		$this->assertSame( 'abc', $out );
+	}
+
+	public function test___x() {
+		$this->assertSame( 'abc', _x( 'abc', 'ctx' ) );
+	}
+
+	public function test___n() {
+		$this->assertSame( 'one', _n( 'one', 'many', 1 ) );
+		$this->assertSame( 'many', _n( 'one', 'many', 2 ) );
+	}
+
+	public function test___nx() {
+		$this->assertSame( 'one', _nx( 'one', 'many', 1, 'ctx' ) );
+		$this->assertSame( 'many', _nx( 'one', 'many', 2, 'ctx' ) );
+	}
+
+	public function test__esc_html__() {
+		$this->assertSame( 'abc', esc_html__( 'abc' ) );
+	}
+
+	public function test__esc_html_e() {
+		ob_start();
+		esc_html_e( 'abc' );
+		$out = ob_get_clean();
+
+		$this->assertSame( 'abc', $out );
+	}
+
+	public function test__esc_html_x() {
+		$this->assertSame( 'abc', esc_html_x( 'abc', 'ctx' ) );
+	}
+
+	public function test__esc_attr__() {
+		$this->assertSame( 'abc', esc_attr__( 'abc' ) );
+	}
+
+	public function test__esc_attr_e() {
+		ob_start();
+		esc_attr_e( 'abc' );
+		$out = ob_get_clean();
+
+		$this->assertSame( 'abc', $out );
+	}
+
+	public function test__esc_attr_x() {
+		$this->assertSame( 'abc', esc_attr_x( 'abc', 'ctx' ) );
+	}
+
 }
