@@ -35,3 +35,81 @@ When updating parser configs (`config-funcs.php` / `config-classes.php`):
 - If a function/class is not suitable or not used in this project, comment it out.
 - Do not delete such entries, so it remains visible that it exists in WordPress.
 
+
+How Parser Works In This Project
+================================
+
+The parser is a whitelist-based copier of selected WordPress code, not a dependency analyzer.
+
+Core flow:
+- Edit lists in `_parser/config-funcs.php` and `_parser/config-classes.php`.
+- Run `php _parser/run.php`.
+- `run.php` creates `Updater` and passes:
+  - destination folder: `copy/`
+  - WP core source folder: `vendor/wordpress/wordpress`
+  - function/class configs.
+
+What `Updater` does:
+- For each configured source file, reads original WP file.
+- Extracts only selected top-level functions or one class using `Parser_Helpers::get_class_func_code_from_php_code()`.
+- Rebuilds destination file content only after separator:
+  - `// ------------------auto-generated---------------------`
+- Wraps generated code with:
+  - `if( ! function_exists( '...' ) ) : ... endif;`
+  - `if( ! class_exists( '...' ) ) : ... endif;`
+- Applies project-specific post-processing via `Extra_Replacer`:
+  - replaces known `get_option()`/`get_site_option()` calls with `$GLOBALS['stub_wp_options']`;
+  - replaces `get_bloginfo( 'version' )` with fixed WP version string;
+  - applies static-method compatibility replacement (for `WP_Http::make_absolute_url`).
+
+Important constraints:
+- Files in `copy/` are generated; avoid manual edits there unless adaptation is intentional.
+- Parser only copies symbols listed in config files.
+- If a configured function is missing in source file, parser throws an exception.
+
+
+Step-By-Step: Add More WP Core Functions
+========================================
+
+1) Select candidate functions
+- Start from a specific WP core file. Find it in `vendor/wordpress/wordpress`.
+- Choose functions that are pure PHP or depend only on already available copied functions/classes/mocks/init.
+- If function needs DB/filesystem/network/full runtime, usually skip it.
+
+2) Check compatibility with current test environment
+- Available stubs/constants/init are loaded by `zero.php`, `src/constants.php`, `src/stub_wp_options.php`, and `copy/init-parts/*`.
+- Mocked compatibility functions are in `copy/mocks/wp-includes/*`.
+- If option access is covered by `$GLOBALS['stub_wp_options']`, function is acceptable.
+
+3) Update parser config
+- Add function name into `_parser/config-funcs.php` under the correct WP source file key.
+- If function exists but is not suitable for this project, keep it commented (do not delete).
+
+4) Add/adjust compatibility only when needed
+- If new function requires small safe adaptation, add it via:
+  - `Extra_Replacer` rule, or
+  - dedicated helper/adapted copy file (existing project pattern).
+- Keep adaptations minimal and explicit.
+
+5) Regenerate copied code
+- Run:
+  - `php _parser/run.php`
+- Confirm target file in `copy/functions/...` was updated and no parser warnings/errors occurred.
+
+6) Add tests
+- Add/update PHPUnit tests in `tests/functions/...`.
+- Follow `tests/INSTRUCTIONS.md`:
+  - one function per test method;
+  - `test__function_name` naming convention;
+  - cover basic logic branches enough to ensure function works without full WP runtime.
+
+7) Run test suite
+- Run:
+  - `make phpunit`
+- If failures are due to missing runtime pieces, either:
+  - add minimal mock/stub/init support, or
+  - revert function from active config (leave commented note).
+
+8) Final review before commit
+- Ensure generated `copy/` changes correspond only to intended functions.
+- Ensure comments in config explain why entries are commented out (if any).

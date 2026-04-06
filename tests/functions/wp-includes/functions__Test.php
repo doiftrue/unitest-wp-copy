@@ -252,27 +252,27 @@ class functions__Test extends TestCase {
 		$this->assertSame( 'My Plugin', $out['Name'] );
 	}
 
-	public function test___return_true() {
+	public function test____return_true() {
 		$this->assertTrue( __return_true() );
 	}
 
-	public function test___return_false() {
+	public function test____return_false() {
 		$this->assertFalse( __return_false() );
 	}
 
-	public function test___return_zero() {
+	public function test____return_zero() {
 		$this->assertSame( 0, __return_zero() );
 	}
 
-	public function test___return_empty_array() {
+	public function test____return_empty_array() {
 		$this->assertSame( [], __return_empty_array() );
 	}
 
-	public function test___return_null() {
+	public function test____return_null() {
 		$this->assertNull( __return_null() );
 	}
 
-	public function test___return_empty_string() {
+	public function test____return_empty_string() {
 		$this->assertSame( '', __return_empty_string() );
 	}
 

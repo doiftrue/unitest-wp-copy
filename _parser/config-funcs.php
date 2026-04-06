@@ -97,9 +97,9 @@ return [
 		'esc_xml'                             => '',
 		'tag_escape'                          => '',
 		'wp_make_link_relative'               => '',
-		//'sanitize_option'                     => '',
+		// 'sanitize_option'                     => '',
 		'map_deep'                            => '',
-		//'wp_pre_kses_block_attributes'        => '', // dependency on block parser (maybe can be implemented later)
+		// 'wp_pre_kses_block_attributes'        => '', // dependency on block parser (maybe can be implemented later)
 		'wp_sprintf'                          => '',
 		'wp_sprintf_l'                        => '',
 		'wp_html_excerpt'                     => '',
@@ -124,10 +124,9 @@ return [
 		'sanitize_hex_color_no_hash'          => '',
 		'maybe_hash_hex_color'                => '',
 		'capital_P_dangit'                    => '',
-		// NOT suitable:
 		// 'wp_enqueue_emoji_styles'             => '', // wp_add_inline_style dependency
-		// 'print_emoji_detection_script'        => '',
-		// '_print_emoji_detection_script'       => '',
+		// 'print_emoji_detection_script'        => '', // NOT suitable
+		// '_print_emoji_detection_script'       => '', // NOT suitable
 	],
 	'wp-includes/functions.php' => [
 		'__return_empty_array'                   => '',
@@ -216,7 +215,6 @@ return [
 		'wp_allowed_protocols'          => '',
 	],
 	'wp-includes/kses.php' => [
-		// need check (from GPT):
 		'wp_kses'                             => '',
 		'wp_kses_one_attr'                    => '',
 		'wp_kses_allowed_html'                => '',
@@ -311,7 +309,6 @@ return [
 		'current_action'              => '',
 		'doing_action'                => '',
 		'did_action'                  => '',
-		// others
 		'wp_register_plugin_realpath' => '',
 		'plugin_basename'             => '',
 		'_wp_filter_build_unique_id'  => '',
@@ -351,5 +348,16 @@ return [
 		'wp_get_list_item_separator' => '',
 		'wp_get_word_count_type'     => '',
 		'before_last_bar'            => '',
+		// '__'         => '', // mocked
+		// '_e'         => '', // mocked
+		// '_x'         => '', // mocked
+		// '_n'         => '', // mocked
+		// '_nx'        => '', // mocked
+		// 'esc_html__' => '', // mocked
+		// 'esc_html_e' => '', // mocked
+		// 'esc_html_x' => '', // mocked
+		// 'esc_attr__' => '', // mocked
+		// 'esc_attr_e' => '', // mocked
+		// 'esc_attr_x' => '', // mocked
 	],
 ];
