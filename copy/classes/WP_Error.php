@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-error.php (WP 6.8.3)
+// wp-includes/class-wp-error.php (WP 6.8.5)
 if( ! class_exists( 'WP_Error' ) ) :
 	class WP_Error {
 		/**

@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/html-api/class-wp-html-tag-processor.php (WP 6.8.3)
+// wp-includes/html-api/class-wp-html-tag-processor.php (WP 6.8.5)
 if( ! class_exists( 'WP_HTML_Tag_Processor' ) ) :
 	class WP_HTML_Tag_Processor {
 		/**
@@ -4160,6 +4160,15 @@ if( ! class_exists( 'WP_HTML_Tag_Processor' ) ) :
 		 * @since 6.7.0
 		 */
 		const TEXT_IS_WHITESPACE = 'TEXT_IS_WHITESPACE';
+	
+		/**
+		 * Wakeup magic method.
+		 *
+		 * @since 6.9.2
+		 */
+		public function __wakeup() {
+			throw new \LogicException( __CLASS__ . ' should never be unserialized' );
+		}
 	}
 endif;
 

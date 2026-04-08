@@ -2,14 +2,14 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/link-template.php (WP 6.8.3)
+// wp-includes/link-template.php (WP 6.8.5)
 if( ! function_exists( 'home_url' ) ) :
 	function home_url( $path = '', $scheme = null ) {
 		return get_home_url( null, $path, $scheme );
 	}
 endif;
 
-// wp-includes/link-template.php (WP 6.8.3)
+// wp-includes/link-template.php (WP 6.8.5)
 if( ! function_exists( 'get_home_url' ) ) :
 	function get_home_url( $blog_id = null, $path = '', $scheme = null ) {
 		$orig_scheme = $scheme;
@@ -51,14 +51,14 @@ if( ! function_exists( 'get_home_url' ) ) :
 	}
 endif;
 
-// wp-includes/link-template.php (WP 6.8.3)
+// wp-includes/link-template.php (WP 6.8.5)
 if( ! function_exists( 'site_url' ) ) :
 	function site_url( $path = '', $scheme = null ) {
 		return get_site_url( null, $path, $scheme );
 	}
 endif;
 
-// wp-includes/link-template.php (WP 6.8.3)
+// wp-includes/link-template.php (WP 6.8.5)
 if( ! function_exists( 'get_site_url' ) ) :
 	function get_site_url( $blog_id = null, $path = '', $scheme = null ) {
 		if ( empty( $blog_id ) || ! is_multisite() ) {
@@ -90,7 +90,7 @@ if( ! function_exists( 'get_site_url' ) ) :
 	}
 endif;
 
-// wp-includes/link-template.php (WP 6.8.3)
+// wp-includes/link-template.php (WP 6.8.5)
 if( ! function_exists( 'includes_url' ) ) :
 	function includes_url( $path = '', $scheme = null ) {
 		$url = site_url( '/' . WPINC . '/', $scheme );
@@ -115,7 +115,7 @@ if( ! function_exists( 'includes_url' ) ) :
 	}
 endif;
 
-// wp-includes/link-template.php (WP 6.8.3)
+// wp-includes/link-template.php (WP 6.8.5)
 if( ! function_exists( 'content_url' ) ) :
 	function content_url( $path = '' ) {
 		$url = set_url_scheme( WP_CONTENT_URL );
@@ -137,7 +137,7 @@ if( ! function_exists( 'content_url' ) ) :
 	}
 endif;
 
-// wp-includes/link-template.php (WP 6.8.3)
+// wp-includes/link-template.php (WP 6.8.5)
 if( ! function_exists( 'plugins_url' ) ) :
 	function plugins_url( $path = '', $plugin = '' ) {
 	
@@ -179,7 +179,7 @@ if( ! function_exists( 'plugins_url' ) ) :
 	}
 endif;
 
-// wp-includes/link-template.php (WP 6.8.3)
+// wp-includes/link-template.php (WP 6.8.5)
 if( ! function_exists( 'set_url_scheme' ) ) :
 	function set_url_scheme( $url, $scheme = null ) {
 		$orig_scheme = $scheme;
@@ -220,7 +220,7 @@ if( ! function_exists( 'set_url_scheme' ) ) :
 	}
 endif;
 
-// wp-includes/link-template.php (WP 6.8.3)
+// wp-includes/link-template.php (WP 6.8.5)
 if( ! function_exists( 'wp_internal_hosts' ) ) :
 	function wp_internal_hosts() {
 		static $internal_hosts;
@@ -248,7 +248,7 @@ if( ! function_exists( 'wp_internal_hosts' ) ) :
 	}
 endif;
 
-// wp-includes/link-template.php (WP 6.8.3)
+// wp-includes/link-template.php (WP 6.8.5)
 if( ! function_exists( 'wp_is_internal_link' ) ) :
 	function wp_is_internal_link( $link ) {
 		$link = strtolower( $link );

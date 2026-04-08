@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-walker-nav-menu.php (WP 6.8.3)
+// wp-includes/class-walker-nav-menu.php (WP 6.8.5)
 if( ! class_exists( 'Walker_Nav_Menu' ) ) :
 	class Walker_Nav_Menu extends Walker {
 		/**

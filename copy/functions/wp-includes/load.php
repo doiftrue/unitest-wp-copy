@@ -1,9 +1,8 @@
 <?php
 
-
 // ------------------auto-generated---------------------
 
-// wp-includes/load.php (WP 6.8.3)
+// wp-includes/load.php (WP 6.8.5)
 if( ! function_exists( 'wp_get_environment_type' ) ) :
 	function wp_get_environment_type() {
 		static $current_env = '';
@@ -57,7 +56,7 @@ if( ! function_exists( 'wp_get_environment_type' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 6.8.3)
+// wp-includes/load.php (WP 6.8.5)
 if( ! function_exists( 'wp_get_development_mode' ) ) :
 	function wp_get_development_mode() {
 		static $current_mode = null;
@@ -91,14 +90,14 @@ if( ! function_exists( 'wp_get_development_mode' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 6.8.3)
+// wp-includes/load.php (WP 6.8.5)
 if( ! function_exists( 'timer_float' ) ) :
 	function timer_float() {
 		return microtime( true ) - $_SERVER['REQUEST_TIME_FLOAT'];
 	}
 endif;
 
-// wp-includes/load.php (WP 6.8.3)
+// wp-includes/load.php (WP 6.8.5)
 if( ! function_exists( 'timer_start' ) ) :
 	function timer_start() {
 		global $timestart;
@@ -109,7 +108,7 @@ if( ! function_exists( 'timer_start' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 6.8.3)
+// wp-includes/load.php (WP 6.8.5)
 if( ! function_exists( 'timer_stop' ) ) :
 	function timer_stop( $display = 0, $precision = 3 ) {
 		global $timestart, $timeend;
@@ -131,14 +130,14 @@ if( ! function_exists( 'timer_stop' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 6.8.3)
+// wp-includes/load.php (WP 6.8.5)
 if( ! function_exists( 'absint' ) ) :
 	function absint( $maybeint ) {
 		return abs( (int) $maybeint );
 	}
 endif;
 
-// wp-includes/load.php (WP 6.8.3)
+// wp-includes/load.php (WP 6.8.5)
 if( ! function_exists( 'get_current_blog_id' ) ) :
 	function get_current_blog_id() {
 		global $blog_id;
@@ -147,7 +146,7 @@ if( ! function_exists( 'get_current_blog_id' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 6.8.3)
+// wp-includes/load.php (WP 6.8.5)
 if( ! function_exists( 'get_current_network_id' ) ) :
 	function get_current_network_id() {
 		if ( ! is_multisite() ) {
@@ -164,7 +163,7 @@ if( ! function_exists( 'get_current_network_id' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 6.8.3)
+// wp-includes/load.php (WP 6.8.5)
 if( ! function_exists( 'wp_installing' ) ) :
 	function wp_installing( $is_installing = null ) {
 		static $installing = null;
@@ -185,7 +184,7 @@ if( ! function_exists( 'wp_installing' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 6.8.3)
+// wp-includes/load.php (WP 6.8.5)
 if( ! function_exists( 'is_ssl' ) ) :
 	function is_ssl() {
 		if ( isset( $_SERVER['HTTPS'] ) ) {
@@ -204,7 +203,7 @@ if( ! function_exists( 'is_ssl' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 6.8.3)
+// wp-includes/load.php (WP 6.8.5)
 if( ! function_exists( 'wp_convert_hr_to_bytes' ) ) :
 	function wp_convert_hr_to_bytes( $value ) {
 		$value = strtolower( trim( $value ) );
@@ -223,7 +222,7 @@ if( ! function_exists( 'wp_convert_hr_to_bytes' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 6.8.3)
+// wp-includes/load.php (WP 6.8.5)
 if( ! function_exists( 'wp_is_ini_value_changeable' ) ) :
 	function wp_is_ini_value_changeable( $setting ) {
 		static $ini_all;
@@ -251,7 +250,7 @@ if( ! function_exists( 'wp_is_ini_value_changeable' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 6.8.3)
+// wp-includes/load.php (WP 6.8.5)
 if( ! function_exists( 'wp_doing_ajax' ) ) :
 	function wp_doing_ajax() {
 		/**
@@ -265,7 +264,7 @@ if( ! function_exists( 'wp_doing_ajax' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 6.8.3)
+// wp-includes/load.php (WP 6.8.5)
 if( ! function_exists( 'is_wp_error' ) ) :
 	function is_wp_error( $thing ) {
 		$is_wp_error = ( $thing instanceof WP_Error );

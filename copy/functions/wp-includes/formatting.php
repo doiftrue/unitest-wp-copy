@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'wptexturize' ) ) :
 	function wptexturize( $text, $reset = false ) {
 		global $wp_cockneyreplace, $shortcode_tags;
@@ -274,7 +274,7 @@ if( ! function_exists( 'wptexturize' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'wptexturize_primes' ) ) :
 	function wptexturize_primes( $haystack, $needle, $prime, $open_quote, $close_quote ) {
 		$spaces           = wp_spaces_regexp();
@@ -334,7 +334,7 @@ if( ! function_exists( 'wptexturize_primes' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( '_wptexturize_pushpop_element' ) ) :
 	function _wptexturize_pushpop_element( $text, &$stack, $disabled_elements ) {
 		// Is it an opening tag or closing tag?
@@ -377,7 +377,7 @@ if( ! function_exists( '_wptexturize_pushpop_element' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'wpautop' ) ) :
 	function wpautop( $text, $br = true ) {
 		$pre_tags = array();
@@ -541,14 +541,14 @@ if( ! function_exists( 'wpautop' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'wp_html_split' ) ) :
 	function wp_html_split( $input ) {
 		return preg_split( get_html_split_regex(), $input, -1, PREG_SPLIT_DELIM_CAPTURE );
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'get_html_split_regex' ) ) :
 	function get_html_split_regex() {
 		static $regex;
@@ -600,7 +600,7 @@ if( ! function_exists( 'get_html_split_regex' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( '_get_wptexturize_split_regex' ) ) :
 	function _get_wptexturize_split_regex( $shortcode_regex = '' ) {
 		static $html_regex;
@@ -635,7 +635,7 @@ if( ! function_exists( '_get_wptexturize_split_regex' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( '_get_wptexturize_shortcode_regex' ) ) :
 	function _get_wptexturize_shortcode_regex( $tagnames ) {
 		$tagregexp = implode( '|', array_map( 'preg_quote', $tagnames ) );
@@ -658,7 +658,7 @@ if( ! function_exists( '_get_wptexturize_shortcode_regex' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'wp_replace_in_html_tags' ) ) :
 	function wp_replace_in_html_tags( $haystack, $replace_pairs ) {
 		// Find all elements.
@@ -703,14 +703,14 @@ if( ! function_exists( 'wp_replace_in_html_tags' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( '_autop_newline_preservation_helper' ) ) :
 	function _autop_newline_preservation_helper( $matches ) {
 		return str_replace( "\n", '<WPPreserveNewline />', $matches[0] );
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'shortcode_unautop' ) ) :
 	function shortcode_unautop( $text ) {
 		global $shortcode_tags;
@@ -760,7 +760,7 @@ if( ! function_exists( 'shortcode_unautop' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'seems_utf8' ) ) :
 	function seems_utf8( $str ) {
 		mbstring_binary_safe_encoding();
@@ -797,7 +797,7 @@ if( ! function_exists( 'seems_utf8' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( '_wp_specialchars' ) ) :
 	function _wp_specialchars( $text, $quote_style = ENT_NOQUOTES, $charset = false, $double_encode = false ) {
 		$text = (string) $text;
@@ -850,7 +850,7 @@ if( ! function_exists( '_wp_specialchars' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'wp_specialchars_decode' ) ) :
 	function wp_specialchars_decode( $text, $quote_style = ENT_NOQUOTES ) {
 		$text = (string) $text;
@@ -927,7 +927,7 @@ if( ! function_exists( 'wp_specialchars_decode' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'wp_check_invalid_utf8' ) ) :
 	function wp_check_invalid_utf8( $text, $strip = false ) {
 		$text = (string) $text;
@@ -970,7 +970,7 @@ if( ! function_exists( 'wp_check_invalid_utf8' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'utf8_uri_encode' ) ) :
 	function utf8_uri_encode( $utf8_string, $length = 0, $encode_ascii_characters = false ) {
 		$unicode        = '';
@@ -1028,7 +1028,7 @@ if( ! function_exists( 'utf8_uri_encode' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'remove_accents' ) ) :
 	function remove_accents( $text, $locale = '' ) {
 		if ( ! preg_match( '/[\x80-\xff]/', $text ) ) {
@@ -1439,7 +1439,7 @@ if( ! function_exists( 'remove_accents' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'sanitize_file_name' ) ) :
 	function sanitize_file_name( $filename ) {
 		$filename_raw = $filename;
@@ -1548,7 +1548,7 @@ if( ! function_exists( 'sanitize_file_name' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'sanitize_user' ) ) :
 	function sanitize_user( $username, $strict = false ) {
 		$raw_username = $username;
@@ -1581,7 +1581,7 @@ if( ! function_exists( 'sanitize_user' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'sanitize_key' ) ) :
 	function sanitize_key( $key ) {
 		$sanitized_key = '';
@@ -1603,7 +1603,7 @@ if( ! function_exists( 'sanitize_key' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'sanitize_title' ) ) :
 	function sanitize_title( $title, $fallback_title = '', $context = 'save' ) {
 		$raw_title = $title;
@@ -1631,14 +1631,14 @@ if( ! function_exists( 'sanitize_title' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'sanitize_title_for_query' ) ) :
 	function sanitize_title_for_query( $title ) {
 		return sanitize_title( $title, '', 'query' );
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'sanitize_title_with_dashes' ) ) :
 	function sanitize_title_with_dashes( $title, $raw_title = '', $context = 'display' ) {
 		$title = strip_tags( $title );
@@ -1762,7 +1762,7 @@ if( ! function_exists( 'sanitize_title_with_dashes' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'sanitize_sql_orderby' ) ) :
 	function sanitize_sql_orderby( $orderby ) {
 		if ( preg_match( '/^\s*(([a-z0-9_]+|`[a-z0-9_]+`)(\s+(ASC|DESC))?\s*(,\s*(?=[a-z0-9_`])|$))+$/i', $orderby ) || preg_match( '/^\s*RAND\(\s*\)\s*$/i', $orderby ) ) {
@@ -1772,7 +1772,7 @@ if( ! function_exists( 'sanitize_sql_orderby' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'sanitize_html_class' ) ) :
 	function sanitize_html_class( $classname, $fallback = '' ) {
 		// Strip out any percent-encoded characters.
@@ -1797,7 +1797,7 @@ if( ! function_exists( 'sanitize_html_class' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'sanitize_locale_name' ) ) :
 	function sanitize_locale_name( $locale_name ) {
 		// Limit to A-Z, a-z, 0-9, '_', '-'.
@@ -1815,7 +1815,7 @@ if( ! function_exists( 'sanitize_locale_name' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'convert_chars' ) ) :
 	function convert_chars( $content, $deprecated = '' ) {
 		if ( ! empty( $deprecated ) ) {
@@ -1830,7 +1830,7 @@ if( ! function_exists( 'convert_chars' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'convert_invalid_entities' ) ) :
 	function convert_invalid_entities( $content ) {
 		$wp_htmltranswinuni = array(
@@ -1876,7 +1876,7 @@ if( ! function_exists( 'convert_invalid_entities' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'balanceTags' ) ) :
 	function balanceTags( $text, $force = false ) {  // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid
 		if ( $force || (int) $GLOBALS['stub_wp_options']->use_balanceTags === 1 ) {
@@ -1887,7 +1887,7 @@ if( ! function_exists( 'balanceTags' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'force_balance_tags' ) ) :
 	function force_balance_tags( $text ) {
 		$tagstack  = array();
@@ -2042,7 +2042,7 @@ if( ! function_exists( 'force_balance_tags' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'format_to_edit' ) ) :
 	function format_to_edit( $content, $rich_text = false ) {
 		/**
@@ -2060,14 +2060,14 @@ if( ! function_exists( 'format_to_edit' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'zeroise' ) ) :
 	function zeroise( $number, $threshold ) {
 		return sprintf( '%0' . $threshold . 's', $number );
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'backslashit' ) ) :
 	function backslashit( $value ) {
 		if ( isset( $value[0] ) && $value[0] >= '0' && $value[0] <= '9' ) {
@@ -2077,63 +2077,63 @@ if( ! function_exists( 'backslashit' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'trailingslashit' ) ) :
 	function trailingslashit( $value ) {
 		return untrailingslashit( $value ) . '/';
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'untrailingslashit' ) ) :
 	function untrailingslashit( $value ) {
 		return rtrim( $value, '/\\' );
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'addslashes_gpc' ) ) :
 	function addslashes_gpc( $gpc ) {
 		return wp_slash( $gpc );
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'stripslashes_deep' ) ) :
 	function stripslashes_deep( $value ) {
 		return map_deep( $value, 'stripslashes_from_strings_only' );
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'stripslashes_from_strings_only' ) ) :
 	function stripslashes_from_strings_only( $value ) {
 		return is_string( $value ) ? stripslashes( $value ) : $value;
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'urlencode_deep' ) ) :
 	function urlencode_deep( $value ) {
 		return map_deep( $value, 'urlencode' );
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'rawurlencode_deep' ) ) :
 	function rawurlencode_deep( $value ) {
 		return map_deep( $value, 'rawurlencode' );
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'urldecode_deep' ) ) :
 	function urldecode_deep( $value ) {
 		return map_deep( $value, 'urldecode' );
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'antispambot' ) ) :
 	function antispambot( $email_address, $hex_encoding = 0 ) {
 		$email_no_spam_address = '';
@@ -2154,7 +2154,7 @@ if( ! function_exists( 'antispambot' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( '_make_url_clickable_cb' ) ) :
 	function _make_url_clickable_cb( $matches ) {
 		$url = $matches[2];
@@ -2191,7 +2191,7 @@ if( ! function_exists( '_make_url_clickable_cb' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( '_make_web_ftp_clickable_cb' ) ) :
 	function _make_web_ftp_clickable_cb( $matches ) {
 		$ret  = '';
@@ -2216,7 +2216,7 @@ if( ! function_exists( '_make_web_ftp_clickable_cb' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( '_make_email_clickable_cb' ) ) :
 	function _make_email_clickable_cb( $matches ) {
 		$email = $matches[2] . '@' . $matches[3];
@@ -2225,7 +2225,7 @@ if( ! function_exists( '_make_email_clickable_cb' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( '_make_clickable_rel_attr' ) ) :
 	function _make_clickable_rel_attr( $url ) {
 		$rel_parts        = array();
@@ -2260,7 +2260,7 @@ if( ! function_exists( '_make_clickable_rel_attr' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'make_clickable' ) ) :
 	function make_clickable( $text ) {
 		$r               = '';
@@ -2339,7 +2339,7 @@ if( ! function_exists( 'make_clickable' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( '_split_str_by_whitespace' ) ) :
 	function _split_str_by_whitespace( $text, $goal ) {
 		$chunks = array();
@@ -2369,7 +2369,7 @@ if( ! function_exists( '_split_str_by_whitespace' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'wp_rel_callback' ) ) :
 	function wp_rel_callback( $matches, $rel ) {
 		$text = $matches[1];
@@ -2403,7 +2403,7 @@ if( ! function_exists( 'wp_rel_callback' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'wp_rel_nofollow' ) ) :
 	function wp_rel_nofollow( $text ) {
 		// This is a pre-save filter, so text is already escaped.
@@ -2419,7 +2419,7 @@ if( ! function_exists( 'wp_rel_nofollow' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'translate_smiley' ) ) :
 	function translate_smiley( $matches ) {
 		global $wpsmiliestrans;
@@ -2455,7 +2455,7 @@ if( ! function_exists( 'translate_smiley' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'convert_smilies' ) ) :
 	function convert_smilies( $text ) {
 		global $wp_smiliessearch;
@@ -2506,7 +2506,7 @@ if( ! function_exists( 'convert_smilies' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'is_email' ) ) :
 	function is_email( $email, $deprecated = false ) {
 		if ( ! empty( $deprecated ) ) {
@@ -2594,7 +2594,7 @@ if( ! function_exists( 'is_email' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'wp_iso_descrambler' ) ) :
 	function wp_iso_descrambler( $subject ) {
 		/* this may only work with iso-8859-1, I'm afraid */
@@ -2607,14 +2607,14 @@ if( ! function_exists( 'wp_iso_descrambler' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( '_wp_iso_convert' ) ) :
 	function _wp_iso_convert( $matches ) {
 		return chr( hexdec( strtolower( $matches[1] ) ) );
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'get_gmt_from_date' ) ) :
 	function get_gmt_from_date( $date_string, $format = 'Y-m-d H:i:s' ) {
 		$datetime = date_create( $date_string, wp_timezone() );
@@ -2627,7 +2627,7 @@ if( ! function_exists( 'get_gmt_from_date' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'get_date_from_gmt' ) ) :
 	function get_date_from_gmt( $date_string, $format = 'Y-m-d H:i:s' ) {
 		$datetime = date_create( $date_string, new DateTimeZone( 'UTC' ) );
@@ -2640,7 +2640,7 @@ if( ! function_exists( 'get_date_from_gmt' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'iso8601_timezone_to_offset' ) ) :
 	function iso8601_timezone_to_offset( $timezone ) {
 		// $timezone is either 'Z' or '[+|-]hhmm'.
@@ -2656,7 +2656,7 @@ if( ! function_exists( 'iso8601_timezone_to_offset' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'iso8601_to_datetime' ) ) :
 	function iso8601_to_datetime( $date_string, $timezone = 'user' ) {
 		$timezone    = strtolower( $timezone );
@@ -2679,7 +2679,7 @@ if( ! function_exists( 'iso8601_to_datetime' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'sanitize_email' ) ) :
 	function sanitize_email( $email ) {
 		// Test for the minimum length the email can be.
@@ -2780,7 +2780,7 @@ if( ! function_exists( 'sanitize_email' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'human_time_diff' ) ) :
 	function human_time_diff( $from, $to = 0 ) {
 		if ( empty( $to ) ) {
@@ -2854,7 +2854,7 @@ if( ! function_exists( 'human_time_diff' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'wp_trim_excerpt' ) ) :
 	function wp_trim_excerpt( $text = '', $post = null ) {
 		$raw_excerpt = $text;
@@ -2934,7 +2934,7 @@ if( ! function_exists( 'wp_trim_excerpt' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'wp_trim_words' ) ) :
 	function wp_trim_words( $text, $num_words = 55, $more = null ) {
 		if ( null === $more ) {
@@ -2977,7 +2977,7 @@ if( ! function_exists( 'wp_trim_words' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'ent2ncr' ) ) :
 	function ent2ncr( $text ) {
 	
@@ -3259,7 +3259,7 @@ if( ! function_exists( 'ent2ncr' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'format_for_editor' ) ) :
 	function format_for_editor( $text, $default_editor = null ) {
 		if ( $text ) {
@@ -3279,7 +3279,7 @@ if( ! function_exists( 'format_for_editor' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( '_deep_replace' ) ) :
 	function _deep_replace( $search, $subject ) {
 		$subject = (string) $subject;
@@ -3293,7 +3293,7 @@ if( ! function_exists( '_deep_replace' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'esc_url' ) ) :
 	function esc_url( $url, $protocols = null, $_context = 'display' ) {
 		$original_url = $url;
@@ -3395,21 +3395,21 @@ if( ! function_exists( 'esc_url' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'esc_url_raw' ) ) :
 	function esc_url_raw( $url, $protocols = null ) {
 		return sanitize_url( $url, $protocols );
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'sanitize_url' ) ) :
 	function sanitize_url( $url, $protocols = null ) {
 		return esc_url( $url, $protocols, 'db' );
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'htmlentities2' ) ) :
 	function htmlentities2( $text ) {
 		$translation_table = get_html_translation_table( HTML_ENTITIES, ENT_QUOTES );
@@ -3420,7 +3420,7 @@ if( ! function_exists( 'htmlentities2' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'esc_js' ) ) :
 	function esc_js( $text ) {
 		$safe_text = wp_check_invalid_utf8( $text );
@@ -3443,7 +3443,7 @@ if( ! function_exists( 'esc_js' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'esc_html' ) ) :
 	function esc_html( $text ) {
 		$safe_text = wp_check_invalid_utf8( $text );
@@ -3463,7 +3463,7 @@ if( ! function_exists( 'esc_html' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'esc_attr' ) ) :
 	function esc_attr( $text ) {
 		$safe_text = wp_check_invalid_utf8( $text );
@@ -3483,7 +3483,7 @@ if( ! function_exists( 'esc_attr' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'esc_textarea' ) ) :
 	function esc_textarea( $text ) {
 		$safe_text = htmlspecialchars( $text, ENT_QUOTES, $GLOBALS['stub_wp_options']->blog_charset );
@@ -3499,7 +3499,7 @@ if( ! function_exists( 'esc_textarea' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'esc_xml' ) ) :
 	function esc_xml( $text ) {
 		$safe_text = wp_check_invalid_utf8( $text );
@@ -3551,7 +3551,7 @@ if( ! function_exists( 'esc_xml' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'tag_escape' ) ) :
 	function tag_escape( $tag_name ) {
 		$safe_tag = strtolower( preg_replace( '/[^a-zA-Z0-9-_:]/', '', $tag_name ) );
@@ -3567,14 +3567,14 @@ if( ! function_exists( 'tag_escape' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'wp_make_link_relative' ) ) :
 	function wp_make_link_relative( $link ) {
 		return preg_replace( '|^(https?:)?//[^/]+(/?.*)|i', '$2', $link );
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'map_deep' ) ) :
 	function map_deep( $value, $callback ) {
 		if ( is_array( $value ) ) {
@@ -3594,7 +3594,7 @@ if( ! function_exists( 'map_deep' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'wp_parse_str' ) ) :
 	function wp_parse_str( $input_string, &$result ) {
 		parse_str( (string) $input_string, $result );
@@ -3610,14 +3610,14 @@ if( ! function_exists( 'wp_parse_str' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'wp_pre_kses_less_than' ) ) :
 	function wp_pre_kses_less_than( $content ) {
 		return preg_replace_callback( '%<[^>]*?((?=<)|>|$)%', 'wp_pre_kses_less_than_callback', $content );
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'wp_pre_kses_less_than_callback' ) ) :
 	function wp_pre_kses_less_than_callback( $matches ) {
 		if ( ! str_contains( $matches[0], '>' ) ) {
@@ -3627,7 +3627,7 @@ if( ! function_exists( 'wp_pre_kses_less_than_callback' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'wp_sprintf' ) ) :
 	function wp_sprintf( $pattern, ...$args ) {
 		$len       = strlen( $pattern );
@@ -3696,7 +3696,7 @@ if( ! function_exists( 'wp_sprintf' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'wp_sprintf_l' ) ) :
 	function wp_sprintf_l( $pattern, $args ) {
 		// Not a match.
@@ -3754,7 +3754,7 @@ if( ! function_exists( 'wp_sprintf_l' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'wp_html_excerpt' ) ) :
 	function wp_html_excerpt( $str, $count, $more = null ) {
 		if ( null === $more ) {
@@ -3775,7 +3775,7 @@ if( ! function_exists( 'wp_html_excerpt' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'links_add_base_url' ) ) :
 	function links_add_base_url( $content, $base, $attrs = array( 'src', 'href' ) ) {
 		global $_links_add_base;
@@ -3785,7 +3785,7 @@ if( ! function_exists( 'links_add_base_url' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( '_links_add_base' ) ) :
 	function _links_add_base( $m ) {
 		global $_links_add_base;
@@ -3799,7 +3799,7 @@ if( ! function_exists( '_links_add_base' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'links_add_target' ) ) :
 	function links_add_target( $content, $target = '_blank', $tags = array( 'a' ) ) {
 		global $_links_add_target;
@@ -3809,7 +3809,7 @@ if( ! function_exists( 'links_add_target' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( '_links_add_target' ) ) :
 	function _links_add_target( $m ) {
 		global $_links_add_target;
@@ -3819,7 +3819,7 @@ if( ! function_exists( '_links_add_target' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'normalize_whitespace' ) ) :
 	function normalize_whitespace( $str ) {
 		$str = trim( $str );
@@ -3829,7 +3829,7 @@ if( ! function_exists( 'normalize_whitespace' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'wp_strip_all_tags' ) ) :
 	function wp_strip_all_tags( $text, $remove_breaks = false ) {
 		if ( is_null( $text ) ) {
@@ -3870,7 +3870,7 @@ if( ! function_exists( 'wp_strip_all_tags' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'sanitize_text_field' ) ) :
 	function sanitize_text_field( $str ) {
 		$filtered = _sanitize_text_fields( $str, false );
@@ -3887,7 +3887,7 @@ if( ! function_exists( 'sanitize_text_field' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'sanitize_textarea_field' ) ) :
 	function sanitize_textarea_field( $str ) {
 		$filtered = _sanitize_text_fields( $str, true );
@@ -3904,7 +3904,7 @@ if( ! function_exists( 'sanitize_textarea_field' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( '_sanitize_text_fields' ) ) :
 	function _sanitize_text_fields( $str, $keep_newlines = false ) {
 		if ( is_object( $str ) || is_array( $str ) ) {
@@ -3948,14 +3948,14 @@ if( ! function_exists( '_sanitize_text_fields' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'wp_basename' ) ) :
 	function wp_basename( $path, $suffix = '' ) {
 		return urldecode( basename( str_replace( array( '%2F', '%5C' ), '/', urlencode( $path ) ), $suffix ) );
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'capital_P_dangit' ) ) :
 	function capital_P_dangit( $text ) {
 		// Simple replacement for titles.
@@ -3976,7 +3976,7 @@ if( ! function_exists( 'capital_P_dangit' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'sanitize_mime_type' ) ) :
 	function sanitize_mime_type( $mime_type ) {
 		$sani_mime_type = preg_replace( '/[^-+*.a-zA-Z0-9\/]/', '', $mime_type );
@@ -3992,7 +3992,7 @@ if( ! function_exists( 'sanitize_mime_type' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'sanitize_trackback_urls' ) ) :
 	function sanitize_trackback_urls( $to_ping ) {
 		$urls_to_ping = preg_split( '/[\r\n\t ]/', trim( $to_ping ), -1, PREG_SPLIT_NO_EMPTY );
@@ -4018,7 +4018,7 @@ if( ! function_exists( 'sanitize_trackback_urls' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'wp_slash' ) ) :
 	function wp_slash( $value ) {
 		if ( is_array( $value ) ) {
@@ -4033,14 +4033,14 @@ if( ! function_exists( 'wp_slash' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'wp_unslash' ) ) :
 	function wp_unslash( $value ) {
 		return stripslashes_deep( $value );
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'get_url_in_content' ) ) :
 	function get_url_in_content( $content ) {
 		if ( empty( $content ) ) {
@@ -4055,7 +4055,7 @@ if( ! function_exists( 'get_url_in_content' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'wp_spaces_regexp' ) ) :
 	function wp_spaces_regexp() {
 		static $spaces = '';
@@ -4080,7 +4080,7 @@ if( ! function_exists( 'wp_spaces_regexp' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'wp_encode_emoji' ) ) :
 	function wp_encode_emoji( $content ) {
 		$emoji = _wp_emoji_list( 'partials' );
@@ -4096,7 +4096,7 @@ if( ! function_exists( 'wp_encode_emoji' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'wp_staticize_emoji' ) ) :
 	function wp_staticize_emoji( $text ) {
 		if ( ! str_contains( $text, '&#x' ) ) {
@@ -4186,7 +4186,7 @@ if( ! function_exists( 'wp_staticize_emoji' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'wp_staticize_emoji_for_email' ) ) :
 	function wp_staticize_emoji_for_email( $mail ) {
 		if ( ! isset( $mail['message'] ) ) {
@@ -4248,7 +4248,7 @@ if( ! function_exists( 'wp_staticize_emoji_for_email' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( '_wp_emoji_list' ) ) :
 	function _wp_emoji_list( $type = 'entities' ) {
 		// Do not remove the START/END comments - they're used to find where to insert the arrays.
@@ -4266,7 +4266,7 @@ if( ! function_exists( '_wp_emoji_list' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'url_shorten' ) ) :
 	function url_shorten( $url, $length = 35 ) {
 		$stripped  = str_replace( array( 'https://', 'http://', 'www.' ), '', $url );
@@ -4279,7 +4279,7 @@ if( ! function_exists( 'url_shorten' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'sanitize_hex_color' ) ) :
 	function sanitize_hex_color( $color ) {
 		if ( '' === $color ) {
@@ -4293,7 +4293,7 @@ if( ! function_exists( 'sanitize_hex_color' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'sanitize_hex_color_no_hash' ) ) :
 	function sanitize_hex_color_no_hash( $color ) {
 		$color = ltrim( $color, '#' );
@@ -4306,7 +4306,7 @@ if( ! function_exists( 'sanitize_hex_color_no_hash' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.8.3)
+// wp-includes/formatting.php (WP 6.8.5)
 if( ! function_exists( 'maybe_hash_hex_color' ) ) :
 	function maybe_hash_hex_color( $color ) {
 		$unhashed = sanitize_hex_color_no_hash( $color );
