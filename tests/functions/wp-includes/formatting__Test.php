@@ -1,8 +1,6 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-
-class formatting__Test extends TestCase {
+class formatting__Test extends \PHPUnit\Framework\TestCase {
 
 	public function test__zeroise(): void {
 		$this->assertEquals( '05', zeroise( 5, 2 ) );
@@ -69,7 +67,9 @@ class formatting__Test extends TestCase {
 	}
 
 	public function test__wptexturize_pushpop_element(): void {
-		$this->assertIsArray( (function() { $stack = []; _wptexturize_pushpop_element( '<code>', $stack, ['code'] ); return $stack; })() );
+		$stack = [];
+		_wptexturize_pushpop_element( '<code>', $stack, [ 'code' ] );
+		$this->assertIsArray( $stack );
 	}
 
 	public function test__wp_html_split(): void {

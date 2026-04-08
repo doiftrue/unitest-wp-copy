@@ -1,8 +1,6 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-
-class WP_Block_Type__Test extends TestCase {
+class WP_Block_Type__Test extends \PHPUnit\Framework\TestCase {
 
 	public function test__basic_runtime() {
 		$type = new WP_Block_Type( 'core/test', [

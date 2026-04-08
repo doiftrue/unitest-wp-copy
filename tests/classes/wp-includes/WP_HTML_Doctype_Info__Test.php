@@ -1,8 +1,6 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-
-class WP_HTML_Doctype_Info__Test extends TestCase {
+class WP_HTML_Doctype_Info__Test extends \PHPUnit\Framework\TestCase {
 
 	public function test__from_doctype_token() {
 		$doctype = WP_HTML_Doctype_Info::from_doctype_token( '<!DOCTYPE html>' );

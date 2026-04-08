@@ -132,21 +132,6 @@ if( ! function_exists( 'timer_stop' ) ) :
 endif;
 
 // wp-includes/load.php (WP 6.8.3)
-if( ! function_exists( 'is_multisite' ) ) :
-	function is_multisite() {
-		if ( defined( 'MULTISITE' ) ) {
-			return MULTISITE;
-		}
-	
-		if ( defined( 'SUBDOMAIN_INSTALL' ) || defined( 'VHOST' ) || defined( 'SUNRISE' ) ) {
-			return true;
-		}
-	
-		return false;
-	}
-endif;
-
-// wp-includes/load.php (WP 6.8.3)
 if( ! function_exists( 'absint' ) ) :
 	function absint( $maybeint ) {
 		return abs( (int) $maybeint );

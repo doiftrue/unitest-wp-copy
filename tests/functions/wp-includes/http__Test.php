@@ -1,8 +1,6 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-
-class http__Test extends TestCase {
+class http__Test extends \PHPUnit\Framework\TestCase {
 
 	public function test__wp_parse_url() {
 		$parts = wp_parse_url( 'https://example.com/a?b=1#c' );

@@ -1,8 +1,6 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-
-class WP_Exception__Test extends TestCase {
+class WP_Exception__Test extends \PHPUnit\Framework\TestCase {
 
 	public function test__construct() {
 		$ex = new WP_Exception( 'boom' );

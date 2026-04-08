@@ -1,7 +1,5 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-
 if ( ! class_exists( 'Walker_For_Test' ) ) {
 	class Walker_For_Test extends Walker {
 		public $db_fields = [ 'parent' => 'parent', 'id' => 'id' ];
@@ -24,7 +22,7 @@ if ( ! class_exists( 'Walker_For_Test' ) ) {
 	}
 }
 
-class Walker__Test extends TestCase {
+class Walker__Test extends \PHPUnit\Framework\TestCase {
 
 	public function test__public_methods() {
 		$walker = new Walker_For_Test();

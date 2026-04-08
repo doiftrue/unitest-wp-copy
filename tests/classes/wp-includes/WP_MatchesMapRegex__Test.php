@@ -1,8 +1,6 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-
-class WP_MatchesMapRegex__Test extends TestCase {
+class WP_MatchesMapRegex__Test extends \PHPUnit\Framework\TestCase {
 
 	public function test__public_methods() {
 		$obj = new WP_MatchesMapRegex( 'a=$matches[1]', [ 1 => 'x y' ] );

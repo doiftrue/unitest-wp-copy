@@ -1,8 +1,6 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-
-class PasswordHash__Test extends TestCase {
+class PasswordHash__Test extends \PHPUnit\Framework\TestCase {
 
 	public function test__public_methods() {
 		$hasher = new PasswordHash( 8, true );

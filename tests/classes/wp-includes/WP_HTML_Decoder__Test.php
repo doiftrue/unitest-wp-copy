@@ -1,8 +1,6 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-
-class WP_HTML_Decoder__Test extends TestCase {
+class WP_HTML_Decoder__Test extends \PHPUnit\Framework\TestCase {
 
 	public function test__independent_part() {
 		$this->assertSame( 'A', WP_HTML_Decoder::code_point_to_utf8_bytes( 65 ) );

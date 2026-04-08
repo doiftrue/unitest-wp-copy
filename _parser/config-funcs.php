@@ -402,7 +402,7 @@ return [
 		'wp_convert_hr_to_bytes'     => '',
 		'wp_is_ini_value_changeable' => '',
 		'is_wp_error'                => '',
-		'is_multisite'               => '',
+		// 'is_multisite'               => '', // why: moved to copy/mocks to add WP_Mock handler support.
 		'absint'                     => '',
 		'timer_float'                => '',
 		'timer_start'                => '',

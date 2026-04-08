@@ -1,8 +1,6 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-
-class WP_List_Util__Test extends TestCase {
+class WP_List_Util__Test extends \PHPUnit\Framework\TestCase {
 
 	public function test__public_methods() {
 		$list = new WP_List_Util( [

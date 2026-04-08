@@ -1,8 +1,6 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-
-class WP_Block_Patterns_Registry__Test extends TestCase {
+class WP_Block_Patterns_Registry__Test extends \PHPUnit\Framework\TestCase {
 
 	public function test__register_flow() {
 		$registry = WP_Block_Patterns_Registry::get_instance();

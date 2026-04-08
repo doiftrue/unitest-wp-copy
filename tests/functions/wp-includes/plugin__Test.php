@@ -1,8 +1,6 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-
-class plugin__Test extends TestCase {
+class plugin__Test extends \PHPUnit\Framework\TestCase {
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -19,16 +17,14 @@ class plugin__Test extends TestCase {
 	}
 
 	public function test__apply_filters() {
-		add_filter( 'apply_filters_h', static function ( $v ) { return $v . '!'; } );
+		add_filter( 'apply_filters_h', static fn( $v ) => $v . '!' );
 		$this->assertSame( 'ok!', apply_filters( 'apply_filters_h', 'ok' ) );
 	}
 
 	public function test__apply_filters_ref_array() {
 		add_filter(
 			'apply_filters_ref_array_h',
-			static function ( $v, $suffix ) {
-				return $v . $suffix;
-			},
+			static fn( $v, $suffix ) => $v . $suffix,
 			10,
 			2
 		);
@@ -54,12 +50,12 @@ class plugin__Test extends TestCase {
 	}
 
 	public function test__current_filter() {
-		add_filter( 'current_filter_h', static function ( $v ) { return current_filter(); } );
+		add_filter( 'current_filter_h', static fn( $v ) => current_filter() );
 		$this->assertSame( 'current_filter_h', apply_filters( 'current_filter_h', 'x' ) );
 	}
 
 	public function test__doing_filter() {
-		add_filter( 'doing_filter_h', static function ( $v ) { return doing_filter( 'doing_filter_h' ); } );
+		add_filter( 'doing_filter_h', static fn( $v ) => doing_filter( 'doing_filter_h' ) );
 		$this->assertTrue( apply_filters( 'doing_filter_h', 'x' ) );
 	}
 
@@ -75,14 +71,14 @@ class plugin__Test extends TestCase {
 
 	public function test__do_action() {
 		$GLOBALS['do_action_hits'] = 0;
-		add_action( 'do_action_h', static function () { $GLOBALS['do_action_hits']++; } );
+		add_action( 'do_action_h', static fn() => $GLOBALS['do_action_hits']++ );
 		do_action( 'do_action_h' );
 		$this->assertSame( 1, $GLOBALS['do_action_hits'] );
 	}
 
 	public function test__do_action_ref_array() {
 		$GLOBALS['do_action_ref_array_arg'] = '';
-		add_action( 'do_action_ref_array_h', static function ( $v ) { $GLOBALS['do_action_ref_array_arg'] = $v; } );
+		add_action( 'do_action_ref_array_h', static fn( $v ) => $GLOBALS['do_action_ref_array_arg'] = $v );
 		do_action_ref_array( 'do_action_ref_array_h', [ 'ok' ] );
 		$this->assertSame( 'ok', $GLOBALS['do_action_ref_array_arg'] );
 	}
@@ -106,14 +102,14 @@ class plugin__Test extends TestCase {
 
 	public function test__current_action() {
 		$GLOBALS['current_action_name'] = '';
-		add_action( 'current_action_h', static function () { $GLOBALS['current_action_name'] = current_action(); } );
+		add_action( 'current_action_h', static fn() => $GLOBALS['current_action_name'] = current_action() );
 		do_action( 'current_action_h' );
 		$this->assertSame( 'current_action_h', $GLOBALS['current_action_name'] );
 	}
 
 	public function test__doing_action() {
 		$GLOBALS['doing_action_state'] = false;
-		add_action( 'doing_action_h', static function () { $GLOBALS['doing_action_state'] = doing_action( 'doing_action_h' ); } );
+		add_action( 'doing_action_h', static fn() => $GLOBALS['doing_action_state'] = doing_action( 'doing_action_h' ) );
 		do_action( 'doing_action_h' );
 		$this->assertTrue( $GLOBALS['doing_action_state'] );
 	}
@@ -148,9 +144,7 @@ class plugin__Test extends TestCase {
 		$GLOBALS['all_hook_args'] = [];
 		add_filter(
 			'all',
-			static function ( $hook, $arg = null ) {
-				$GLOBALS['all_hook_args'] = [ $hook, $arg ];
-			},
+			static fn( $hook, $arg = null ) => $GLOBALS['all_hook_args'] = [ $hook, $arg ],
 			10,
 			2
 		);
@@ -192,7 +186,7 @@ class plugin__Test extends TestCase {
 	}
 
 	public function test__register_uninstall_hook() {
-		set_error_handler( function () { /* absorb */ } );
+		set_error_handler( fn() => null );
 		$plugin = new stdClass();
 		$this->assertNull( register_uninstall_hook( '/path/to/wp/wp-content/plugins/my-plugin/main.php', [ $plugin, 'run' ] ) );
 		restore_error_handler();

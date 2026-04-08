@@ -1,8 +1,6 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-
-class WP_Object_Cache__Test extends TestCase {
+class WP_Object_Cache__Test extends \PHPUnit\Framework\TestCase {
 
 	public function test__public_methods() {
 		$cache = new WP_Object_Cache();
@@ -49,7 +47,7 @@ class WP_Object_Cache__Test extends TestCase {
 		$cache->add_global_groups( [ 'global' ] );
 		$cache->switch_to_blog( 7 );
 
-		$previous = set_error_handler( static function () { return true; } );
+		$previous = set_error_handler( static fn() => true );
 		$cache->reset();
 		set_error_handler( $previous );
 
@@ -63,4 +61,3 @@ class WP_Object_Cache__Test extends TestCase {
 		$this->assertStringContainsString( 'Cache Hits', $stats );
 	}
 }
-

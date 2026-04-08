@@ -1,8 +1,6 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-
-class functions__Test extends TestCase {
+class functions__Test extends \PHPUnit\Framework\TestCase {
 
 	public function test__wp_timezone_string() {
 		$this->assertSame( 'UTC', wp_timezone_string() );
@@ -216,7 +214,7 @@ class functions__Test extends TestCase {
 	}
 
 	public function test___deprecated_function_argument_doing_it_wrong() {
-		set_error_handler( function () { /* absorb */ } );
+		set_error_handler( fn() => null );
 		_deprecated_function( 'foo', '1.0.0', 'bar' );
 		_deprecated_argument( 'foo', '1.0.0', 'x' );
 		_doing_it_wrong( 'foo', 'Bad usage', '1.0.0' );
@@ -226,7 +224,7 @@ class functions__Test extends TestCase {
 	}
 
 	public function test___deprecated_hook() {
-		set_error_handler( function () { /* absorb */ } );
+		set_error_handler( fn() => null );
 		_deprecated_hook( 'old_hook', '1.0.0', 'new_hook', 'custom message' );
 		restore_error_handler();
 		$this->assertTrue( true );
@@ -285,7 +283,7 @@ class functions__Test extends TestCase {
 
 	public function test__wp_find_hierarchy_loop() {
 		$map = [ 1 => 2, 2 => 3, 3 => 1 ];
-		$cb  = function ( $id ) use ( $map ) { return $map[ $id ] ?? null; };
+		$cb  = fn( $id ) => $map[ $id ] ?? null;
 		$loop = wp_find_hierarchy_loop( $cb, 1, null );
 		$this->assertNotEmpty( $loop );
 		$this->assertArrayHasKey( 1, $loop );
@@ -293,7 +291,7 @@ class functions__Test extends TestCase {
 
 	public function test__wp_find_hierarchy_loop_tortoise_hare() {
 		$map = [ 1 => 2, 2 => 3, 3 => 1 ];
-		$cb  = function ( $id ) use ( $map ) { return $map[ $id ] ?? null; };
+		$cb  = fn( $id ) => $map[ $id ] ?? null;
 		$member = wp_find_hierarchy_loop_tortoise_hare( $cb, 1 );
 		$this->assertSame( 2, $member );
 

@@ -1,8 +1,6 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-
-class WP_Locale__Test extends TestCase {
+class WP_Locale__Test extends \PHPUnit\Framework\TestCase {
 
 	public function test__public_methods() {
 		$locale = new WP_Locale();

@@ -1,8 +1,6 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-
-class WP_HTTP_Proxy__Test extends TestCase {
+class WP_HTTP_Proxy__Test extends \PHPUnit\Framework\TestCase {
 
 	public function test__public_methods() {
 		$proxy = new WP_HTTP_Proxy();

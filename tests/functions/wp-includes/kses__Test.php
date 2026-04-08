@@ -1,8 +1,6 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-
-class kses__Test extends TestCase {
+class kses__Test extends \PHPUnit\Framework\TestCase {
 
 	public function test__wp_kses(): void {
 		$html = '<a href="http://e.com" onclick="x">ok</a><script>x</script>';
@@ -93,7 +91,7 @@ class kses__Test extends TestCase {
 		$this->assertTrue( wp_kses_check_attr_val( 'on', '', 'values', array( 'on', 'off' ) ) );
 		$this->assertFalse( wp_kses_check_attr_val( 'maybe', '', 'values', array( 'on', 'off' ) ) );
 
-		$cb = static function( $v ) { return $v === 'ok'; };
+		$cb = static fn( $v ) => $v === 'ok';
 		$this->assertTrue( wp_kses_check_attr_val( 'ok', '', 'value_callback', $cb ) );
 		$this->assertFalse( wp_kses_check_attr_val( 'no', '', 'value_callback', $cb ) );
 	}

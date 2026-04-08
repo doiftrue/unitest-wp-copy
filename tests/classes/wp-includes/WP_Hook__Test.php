@@ -1,8 +1,6 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-
-class WP_Hook__Test extends TestCase {
+class WP_Hook__Test extends \PHPUnit\Framework\TestCase {
 
 	public function test__filter_action_methods() {
 		$hook = new WP_Hook();

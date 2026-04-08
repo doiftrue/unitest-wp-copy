@@ -1,8 +1,6 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-
-class WP_Http_Encoding__Test extends TestCase {
+class WP_Http_Encoding__Test extends \PHPUnit\Framework\TestCase {
 
 	public function test__public_methods() {
 		$raw = 'Hello WP';

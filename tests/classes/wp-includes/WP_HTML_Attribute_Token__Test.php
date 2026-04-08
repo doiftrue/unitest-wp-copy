@@ -1,8 +1,6 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-
-class WP_HTML_Attribute_Token__Test extends TestCase {
+class WP_HTML_Attribute_Token__Test extends \PHPUnit\Framework\TestCase {
 
 	public function test__construct() {
 		$token = new WP_HTML_Attribute_Token( 'class', 10, 3, 4, 9, false );

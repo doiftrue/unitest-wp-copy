@@ -1,8 +1,6 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-
-class link_template__Test extends TestCase {
+class link_template__Test extends \PHPUnit\Framework\TestCase {
 
 	public function test__home_url() {
 		$this->assertSame( 'https://unitest-wp-copy.loc/a', home_url( 'a' ) );

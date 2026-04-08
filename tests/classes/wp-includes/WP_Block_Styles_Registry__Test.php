@@ -1,8 +1,6 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-
-class WP_Block_Styles_Registry__Test extends TestCase {
+class WP_Block_Styles_Registry__Test extends \PHPUnit\Framework\TestCase {
 
 	public function test__public_methods() {
 		$registry = WP_Block_Styles_Registry::get_instance();

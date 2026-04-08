@@ -1,8 +1,6 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-
-class compat_Test extends TestCase {
+class compat_Test extends \PHPUnit\Framework\TestCase {
 
 	public function test___() {
 		$this->assertSame( 'x', _( 'x' ) );
@@ -84,26 +82,26 @@ class compat_Test extends TestCase {
 
 	public function test__array_find() {
 		$a = [ 1, 2, 3 ];
-		$this->assertSame( 2, array_find( $a, static function( $v ) { return 2 === $v; } ) );
-		$this->assertNull( array_find( $a, static function( $v ) { return 9 === $v; } ) );
+		$this->assertSame( 2, array_find( $a, static fn( $v ) => 2 === $v ) );
+		$this->assertNull( array_find( $a, static fn( $v ) => 9 === $v ) );
 	}
 
 	public function test__array_find_key() {
 		$a = [ 'x' => 10, 'y' => 20 ];
-		$this->assertSame( 'y', array_find_key( $a, static function( $v ) { return 20 === $v; } ) );
-		$this->assertNull( array_find_key( $a, static function( $v ) { return 5 === $v; } ) );
+		$this->assertSame( 'y', array_find_key( $a, static fn( $v ) => 20 === $v ) );
+		$this->assertNull( array_find_key( $a, static fn( $v ) => 5 === $v ) );
 	}
 
 	public function test__array_any() {
 		$a = [ 1, 2, 3 ];
-		$this->assertTrue( array_any( $a, static function( $v ) { return $v > 2; } ) );
-		$this->assertFalse( array_any( $a, static function( $v ) { return $v > 5; } ) );
+		$this->assertTrue( array_any( $a, static fn( $v ) => $v > 2 ) );
+		$this->assertFalse( array_any( $a, static fn( $v ) => $v > 5 ) );
 	}
 
 	public function test__array_all() {
 		$a = [ 2, 4, 6 ];
-		$this->assertTrue( array_all( $a, static function( $v ) { return 0 === ( $v % 2 ); } ) );
-		$this->assertFalse( array_all( $a, static function( $v ) { return $v > 4; } ) );
+		$this->assertTrue( array_all( $a, static fn( $v ) => 0 === ( $v % 2 ) ) );
+		$this->assertFalse( array_all( $a, static fn( $v ) => $v > 4 ) );
 	}
 
 }

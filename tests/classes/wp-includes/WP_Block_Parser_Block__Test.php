@@ -1,8 +1,6 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-
-class WP_Block_Parser_Block__Test extends TestCase {
+class WP_Block_Parser_Block__Test extends \PHPUnit\Framework\TestCase {
 
 	public function test__construct() {
 		$block = new WP_Block_Parser_Block( 'core/paragraph', [ 'k' => 'v' ], [], '<p>x</p>', [ '<p>x</p>' ] );

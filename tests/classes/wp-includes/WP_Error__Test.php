@@ -1,8 +1,6 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-
-class WP_Error__Test extends TestCase {
+class WP_Error__Test extends \PHPUnit\Framework\TestCase {
 
 	public function test__public_methods() {
 		$err = new WP_Error( 'e_code', 'E message', [ 'x' => 1 ] );

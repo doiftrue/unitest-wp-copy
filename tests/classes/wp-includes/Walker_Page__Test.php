@@ -1,8 +1,6 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-
-class Walker_Page__Test extends TestCase {
+class Walker_Page__Test extends \PHPUnit\Framework\TestCase {
 
 	public function test__partial_independence() {
 		$walker = new Walker_Page();

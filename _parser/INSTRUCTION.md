@@ -28,6 +28,7 @@ Also take into account that my PHPUnit environment uses mocks for the following 
 - And configs from `config-funcs.php` and `config-classes.php`.
 
 I need a list of functions that depend only on PHP and other already available WordPress functions, and do not require external libraries.
+This must include full transitive dependency validation (dependency of dependency, and so on), not only direct calls.
 
 Important: if code uses options from `stub_wp_options.php`, then this function/method should be treated as usable in PHPUnit without bootstrapping WordPress, because these calls are stubbed via `$GLOBALS['stub_wp_options']`.
 
@@ -40,6 +41,7 @@ How Parser Works In This Project
 ================================
 
 The parser is a whitelist-based copier of selected WordPress code, not a dependency analyzer.
+So dependency-chain validation is a mandatory manual step before adding anything to config.
 
 Core flow:
 - Edit lists in `_parser/config-funcs.php` and `_parser/config-classes.php`.
@@ -68,6 +70,21 @@ Important constraints:
 - If a configured function is missing in source file, parser throws an exception.
 
 
+Mandatory Dependency-Chain Rule (Functions and Classes)
+=======================================================
+
+Before adding any function/class to `_parser/config-funcs.php` or `_parser/config-classes.php`, validate the full transitive dependency chain.
+
+Hard rule:
+- A function/class is allowed only if every dependency in the chain is:
+  - already available in this project (`copy/`, `copy/mocks/`, `copy/init-parts/`, `src/*`), or
+  - added in the same change and passes the same dependency-chain rule recursively.
+- If dependency A requires dependency B, B must be checked with the same strict criteria, recursively until chain end.
+- If at least one dependency in the chain is incompatible with this project ideology (DB-bound runtime, full WP bootstrap, network I/O, unsupported filesystem/runtime coupling, etc.), then the top-level function/class is not allowed.
+- Never add a function/class with unresolved dependency "for later fix". In this project, unresolved dependency means symbol is not suitable now.
+- When a function/class is rejected, keep it commented in config and include a short reason mentioning the blocking chain segment.
+
+
 Step-By-Step: Add More WP Core Functions
 ========================================
 
@@ -75,11 +92,14 @@ Step-By-Step: Add More WP Core Functions
 - Start from a specific WP core file. Find it in `vendor/wordpress/wordpress`.
 - Choose functions that are pure PHP or depend only on already available copied functions/classes/mocks/init.
 - If function needs DB/filesystem/network/full runtime, usually skip it.
+- Build dependency chain for each candidate (direct + transitive calls).
+- Candidate is valid only if whole chain can be satisfied by existing project symbols or by symbols that are also valid to add now.
 
 2) Check compatibility with current test environment
 - Available stubs/constants/init are loaded by `zero.php`, `src/constants.php`, `src/stub_wp_options.php`, and `copy/init-parts/*`.
 - Mocked compatibility functions are in `copy/mocks/wp-includes/*`.
 - If option access is covered by `$GLOBALS['stub_wp_options']`, function is acceptable.
+- Reject candidate if any dependency in its chain remains unresolved or requires unsupported runtime behavior.
 
 3) Update parser config
 - Add function name into `_parser/config-funcs.php` under the correct WP source file key.
@@ -118,32 +138,18 @@ Step-By-Step: Add More WP Core Functions
 Step-By-Step: Add More WP Core Classes
 ======================================
 
-1) Select candidate classes
-- Prefer classes with pure PHP logic and in-memory behavior.
-- Avoid classes requiring full WP runtime (DB queries, post/taxonomy loaders, block registries that depend on extra runtime, etc.).
+Use the same flow as "Step-By-Step: Add More WP Core Functions":
+- select candidate;
+- validate compatibility and full transitive dependency chain (same strict rule from section above);
+- update parser config;
+- regenerate;
+- add tests;
+- run suite;
+- final review.
 
-2) Check class dependency chain
-- Before adding a class, inspect all classes/functions it directly needs.
-- If class needs helper classes from WP core, add the full minimal chain to `_parser/config-classes.php`.
-- Keep chain comments in config so it is clear why related classes are grouped.
-
-3) Update parser config
-- Add class mapping into `_parser/config-classes.php`.
-- If class is known but not suitable, keep it as commented note (do not delete awareness comments).
-
-4) Regenerate copied code
-- Run `make run.parser` (or `php _parser/run.php`).
-- Verify new/updated files in `copy/classes/`.
-
-5) Add class tests
-- Add one test file per class in `tests/classes/...` with `__Test.php` suffix.
-- Use `test__*` method names without class name duplication in method name.
-- Validate runtime independence:
-  - positive smoke test for independent behavior;
-  - explicit `test__not_independent_*` with expected `Error` for known unresolved runtime dependencies.
-
-6) Run suite and confirm behavior
-- Run `make phpunit`.
-- If test shows unresolved dependency:
-  - either add minimal missing dependency chain/stub (if still within project ideology), or
-  - keep class marked/covered as not independent in tests and config comments.
+Class-specific differences:
+- Candidate filter: prefer pure PHP/in-memory classes; skip classes requiring full WP runtime.
+- Config target: use `_parser/config-classes.php`.
+- Dependency graph: include full minimal class/function chain needed by the class.
+- Tests: one class per file in `tests/classes/...` with `__Test.php`; methods use `test__*` without class-name duplication.
+- If class is not independent in current env, add explicit `test__not_independent_*` with `expectException( Error::class )` (see `tests/INSTRUCTIONS.md`).

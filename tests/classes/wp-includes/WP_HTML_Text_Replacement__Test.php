@@ -1,8 +1,6 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-
-class WP_HTML_Text_Replacement__Test extends TestCase {
+class WP_HTML_Text_Replacement__Test extends \PHPUnit\Framework\TestCase {
 
 	public function test__construct() {
 		$replacement = new WP_HTML_Text_Replacement( 5, 2, 'ok' );

@@ -1,8 +1,6 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-
-class WP_HTML_Tag_Processor__Test extends TestCase {
+class WP_HTML_Tag_Processor__Test extends \PHPUnit\Framework\TestCase {
 
 	public function test__basic_html_flow() {
 		$p = new WP_HTML_Tag_Processor( '<div class="a b">Hi</div>' );
