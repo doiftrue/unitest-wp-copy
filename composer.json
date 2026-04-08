@@ -15,8 +15,9 @@
   },
   "require": {},
   "require-dev": {
-    "wordpress/wordpress": "*",
-    "phpunit/phpunit": "^9"
+    "wordpress/wordpress": "~6.8.3",
+    "phpunit/phpunit": "^9",
+    "10up/wp_mock": "*"
   },
   "repositories": [
     {

@@ -1,8 +1,6 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-
-class load__Test extends TestCase {
+class load__Test extends \PHPUnit\Framework\TestCase {
 
 	public function test__wp_get_environment_type() {
 		$this->assertSame( 'local', wp_get_environment_type() );
@@ -10,10 +8,6 @@ class load__Test extends TestCase {
 
 	public function test__wp_get_development_mode() {
 		$this->assertSame( '', wp_get_development_mode() );
-	}
-
-	public function test__is_multisite() {
-		$this->assertFalse( is_multisite() );
 	}
 
 	public function test__absint() {

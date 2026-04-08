@@ -8,12 +8,14 @@ Instructions:
 - Test file names must use the `__Test.php` suffix (double underscore), for example: `formatting__Test.php`, `WP_Error__Test.php`.
 - For class tests, method names must start with `test__` but should NOT include the class name in the method name. Example for `WP_Error__Test.php`: use `test__public_methods`, not `test__WP_Error__public_methods`.
 - Put class tests in `tests/classes/...` and keep one class per test file.
+- Put copied core function tests in `tests/functions/...`.
+- Put tests for functions implemented in `copy/mocks/...` in `tests/mocks/...` with the same WP-path structure (for example `tests/mocks/wp-includes/...`).
 - For class tests, verify independent runtime behavior in this project environment:
   - If class is independent: add positive smoke tests for constructor/basic public methods.
   - If class has unavoidable external dependency in current project setup: add explicit `test__not_independent_*` test with `expectException( Error::class )` to document this limitation.
 - Tests should be simple - no need to fully cover function/method logic we only need to test that all logics of function works without WordPress environment.
 - Each function must have its own separate test. Do not combine multiple functions into a single test.
-- Never create WP function mocks to pass the test - we need to test that function can work without WP environment, but inside this project WP-Copy environment.
+- Do not add ad-hoc stubs for WP function mocks in tests. For `copy/mocks/...` tests, use installed `10up/wp_mock` only when you need to validate WP_Mock handler behavior.
 
 ## Test example
 There is a function:
@@ -28,9 +30,7 @@ function add_numbers( $a, $b = 0 ) {
 
 Test file:
 ```php
-use PHPUnit\Framework\TestCase;
-
-class AddNumbersTest extends TestCase {
+class AddNumbersTest extends \PHPUnit\Framework\TestCase {
 	
 	public function test__add_with_two_parameters() {
 		$this->assertEquals( 4, add_numbers( 4 ) );

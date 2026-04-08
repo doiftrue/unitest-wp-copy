@@ -1,14 +1,21 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+// Needed only for mock tests: loads 10up/wp_mock classes.
+require_once dirname( __DIR__, 3 ) . '/vendor/autoload.php';
 
-class ms_blogs__Test extends TestCase {
+class ms_blogs__Test extends \PHPUnit\Framework\TestCase {
 
 	protected function setUp(): void {
 		parent::setUp();
+		\WP_Mock::setUp();
 
 		$GLOBALS['blog_id'] = 1;
 		unset( $GLOBALS['current_blog_id'], $GLOBALS['_wp_switched_stack'], $GLOBALS['switched'] );
+	}
+
+	protected function tearDown(): void {
+		\WP_Mock::tearDown();
+		parent::tearDown();
 	}
 
 	public function test__switch_to_blog() {
@@ -19,6 +26,15 @@ class ms_blogs__Test extends TestCase {
 		$this->assertSame( 5, $GLOBALS['current_blog_id'] );
 		$this->assertTrue( $GLOBALS['switched'] );
 		$this->assertSame( [ 1 ], $GLOBALS['_wp_switched_stack'] );
+	}
+
+	public function test__switch_to_blog_wp_mock_handler() {
+		\WP_Mock::userFunction( 'switch_to_blog', [ 'return' => false ] );
+
+		$result = switch_to_blog( 5 );
+		$this->assertFalse( $result );
+		$this->assertSame( 1, $GLOBALS['blog_id'] );
+		$this->assertArrayNotHasKey( 'current_blog_id', $GLOBALS );
 	}
 
 	public function test__restore_current_blog() {
