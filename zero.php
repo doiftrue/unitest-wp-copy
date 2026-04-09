@@ -5,6 +5,7 @@
 $files = [
 	...glob( __DIR__ . '/copy/functions/*.php' ),
 	...glob( __DIR__ . '/copy/functions/wp-includes/*.php' ),
+	...glob( __DIR__ . '/copy/classes-statics/*.php' ),
 	...glob( __DIR__ . '/copy/classes/*.php' ),
 	...glob( __DIR__ . '/copy/mocks/wp-includes/*.php' ),
 ];

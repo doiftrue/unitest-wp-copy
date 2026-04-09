@@ -25,14 +25,14 @@ Also take into account that my PHPUnit environment uses mocks for the following 
 - esc_url_raw()
 - esc_js()
 - esc_textarea()
-- And configs from `config-funcs.php` and `config-classes.php`.
+- And configs from `config-funcs.php`, `config-classes.php`, and `config-class-statics.php`.
 
 I need a list of functions that depend only on PHP and other already available WordPress functions, and do not require external libraries.
 This must include full transitive dependency validation (dependency of dependency, and so on), not only direct calls.
 
 Important: if code uses options from `stub_wp_options.php`, then this function/method should be treated as usable in PHPUnit without bootstrapping WordPress, because these calls are stubbed via `$GLOBALS['stub_wp_options']`.
 
-When updating parser configs (`config-funcs.php` / `config-classes.php`):
+When updating parser configs (`config-funcs.php` / `config-classes.php` / `config-class-statics.php`):
 - If a function/class is not suitable or not used in this project, comment it out.
 - Do not delete such entries, so it remains visible that it exists in WordPress.
 
@@ -44,16 +44,16 @@ The parser is a whitelist-based copier of selected WordPress code, not a depende
 So dependency-chain validation is a mandatory manual step before adding anything to config.
 
 Core flow:
-- Edit lists in `_parser/config-funcs.php` and `_parser/config-classes.php`.
+- Edit lists in `_parser/config-funcs.php`, `_parser/config-classes.php`, and (when needed) `_parser/config-class-statics.php`.
 - Run `php _parser/run.php`.
 - `run.php` creates `Updater` and passes:
   - destination folder: `copy/`
   - WP core source folder: `vendor/wordpress/wordpress`
-  - function/class configs.
+  - function/class/static-method configs.
 
 What `Updater` does:
 - For each configured source file, reads original WP file.
-- Extracts only selected top-level functions or one class using `Parser_Helpers::get_class_func_code_from_php_code()`.
+- Extracts only selected top-level functions or one class using `Helpers::get_class_func_code_from_php_code()`.
 - Rebuilds destination file content only after separator:
   - `// ------------------auto-generated---------------------`
 - Wraps generated code with:
@@ -61,8 +61,7 @@ What `Updater` does:
   - `if( ! class_exists( '...' ) ) : ... endif;`
 - Applies project-specific post-processing via `Extra_Replacer`:
   - replaces known `get_option()`/`get_site_option()` calls with `$GLOBALS['stub_wp_options']`;
-  - replaces `get_bloginfo( 'version' )` with fixed WP version string;
-  - applies static-method compatibility replacement (for `WP_Http::make_absolute_url`).
+  - applies static-method call replacement (`ClassName::method()` -> `ClassName__method()`) from `config-class-statics.php`.
 
 Important constraints:
 - Files in `copy/` are generated; avoid manual edits there unless adaptation is intentional.
@@ -70,19 +69,19 @@ Important constraints:
 - If a configured function is missing in source file, parser throws an exception.
 
 
-Mandatory Dependency-Chain Rule (Functions and Classes)
-=======================================================
+Mandatory Dependency-Chain Rule (Functions, Classes, Static Methods)
+====================================================================
 
-Before adding any function/class to `_parser/config-funcs.php` or `_parser/config-classes.php`, validate the full transitive dependency chain.
+Before adding any function/class/static-method to parser configs, validate the full transitive dependency chain.
 
 Hard rule:
-- A function/class is allowed only if every dependency in the chain is:
+- A function/class/static-method is allowed only if every dependency in the chain is:
   - already available in this project (`copy/`, `copy/mocks/`, `copy/init-parts/`, `src/*`), or
   - added in the same change and passes the same dependency-chain rule recursively.
 - If dependency A requires dependency B, B must be checked with the same strict criteria, recursively until chain end.
-- If at least one dependency in the chain is incompatible with this project ideology (DB-bound runtime, full WP bootstrap, network I/O, unsupported filesystem/runtime coupling, etc.), then the top-level function/class is not allowed.
-- Never add a function/class with unresolved dependency "for later fix". In this project, unresolved dependency means symbol is not suitable now.
-- When a function/class is rejected, keep it commented in config and include a short reason mentioning the blocking chain segment.
+- If at least one dependency in the chain is incompatible with this project ideology (DB-bound runtime, full WP bootstrap, network I/O, unsupported filesystem/runtime coupling, etc.), then the top-level function/class/static-method is not allowed.
+- Never add a function/class/static-method with unresolved dependency "for later fix". In this project, unresolved dependency means symbol is not suitable now.
+- When a function/class/static-method is rejected, keep it commented in config and include a short reason mentioning the blocking chain segment.
 
 
 Step-By-Step: Add More WP Core Functions
@@ -153,3 +152,34 @@ Class-specific differences:
 - Dependency graph: include full minimal class/function chain needed by the class.
 - Tests: one class per file in `tests/classes/...` with `__Test.php`; methods use `test__*` without class-name duplication.
 - If class is not independent in current env, add explicit `test__not_independent_*` with `expectException( Error::class )` (see `tests/INSTRUCTIONS.md`).
+
+
+Step-By-Step: Copy Static Class Methods As Functions (Experimental)
+===================================================================
+
+This is an in-progress compatibility mechanism used in `copy/classes-statics/`.
+Use it only when whole class copy is not suitable, but one utility-like static method is needed by another copied symbol.
+
+When to use:
+- Source class is not suitable for this project as a whole.
+- Needed static method is isolated and behaves like pure utility function.
+- Full dependency chain of that method is valid for this project (same strict rule as above).
+
+How it works:
+- Source: `ClassName::methodName()`.
+- Copied symbol: plain function `ClassName__methodName()`.
+- Parser stores such functions in `copy/classes-statics/ClassName.php`.
+- During parser replace phase, calls are rewritten:
+  - `ClassName::methodName(...)` -> `ClassName__methodName(...)`.
+
+Workflow:
+1) Add source class + methods in `_parser/config-class-statics.php` using explicit format:
+   - `'path/to/class-file.php' => [ 'class' => 'ClassName', 'methods' => [ 'methodName' => '' ] ]`
+2) Run `php _parser/run.php` (or `make run.parser`).
+3) Verify generated function in `copy/classes-statics/ClassName.php`.
+4) Verify call replacement happened in copied code.
+5) Add/update tests for the behavior that depends on this method.
+
+Important:
+- Keep this mechanism minimal and explicit. Do not move arbitrary class methods here.
+- This is not a full class emulation; only selected utility-like static methods are allowed.

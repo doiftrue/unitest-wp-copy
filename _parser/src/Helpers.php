@@ -1,6 +1,6 @@
 <?php
 
-class Parser_Helpers {
+class Helpers {
 
 	/**
 	 * Cuts classes, functions and stores all their data in a variable: names, code and line numbers.

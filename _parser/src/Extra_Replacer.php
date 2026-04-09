@@ -16,20 +16,35 @@ class Extra_Replacer {
 	];
 
 	public function __construct(
-		private readonly string $wp_version
+		private readonly array $config_class_statics = [],
 	){
 	}
 
 	public function replace_in_code( string $code_text ): string {
 		$code_text = strtr( $code_text, self::$stub_wp_options );
 
-		$code_text = str_replace( "get_bloginfo( 'version' )", "'$this->wp_version'", $code_text );
-
-		// static class method replacement
-		// TODO make it automatic from config for functions class like
-		$code_text = str_replace( "WP_Http::make_absolute_url(", "WP_Http__make_absolute_url(", $code_text );
+		// Replace `Class::method( >>> Class__method(` in code functions body.
+		$code_text = strtr( $code_text, $this->build_static_method_replacements() );
 
 		return $code_text;
+	}
+
+	private function build_static_method_replacements(): array {
+		$replace = [];
+
+		foreach( $this->config_class_statics as $static_config ){
+			$class_name = $static_config['class'] ?? '';
+			$method_names = $static_config['methods'] ?? [];
+			if( ! $class_name || ! $method_names ){
+				continue;
+			}
+
+			foreach( array_keys( $method_names ) as $method_name ){
+				$replace[ "$class_name::$method_name(" ] = "{$class_name}__$method_name(";
+			}
+		}
+
+		return $replace;
 	}
 
 }
