@@ -6,13 +6,13 @@ class Config {
 
 	public readonly string $wp_core_dir;
 
-	/** @see _parser/config-funcs.php */
+	/** @see _parser/config/functions.php */
 	public readonly array $funcs_data;
 
-	/** @see _parser/config-classes.php */
+	/** @see _parser/config/classes.php */
 	public readonly array $classes_data;
 
-	/** @see _parser/config-class-statics.php */
+	/** @see _parser/config/static-methods.php */
 	public readonly array $static_methods_data;
 
 	public function __construct() {
@@ -21,9 +21,9 @@ class Config {
 
 		$this->dest_dir = "$project_dir/copy";
 		$this->wp_core_dir = "$project_dir/vendor/wordpress/wordpress";
-		$this->funcs_data = include "$parser_dir/config-funcs.php";
-		$this->classes_data = include "$parser_dir/config-classes.php";
-		$this->static_methods_data = include "$parser_dir/config-class-statics.php";
+		$this->funcs_data = include "$parser_dir/config/functions.php";
+		$this->classes_data = include "$parser_dir/config/classes.php";
+		$this->static_methods_data = include "$parser_dir/config/static-methods.php";
 	}
 
 }

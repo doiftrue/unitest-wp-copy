@@ -25,14 +25,14 @@ Also take into account that my PHPUnit environment uses mocks for the following 
 - esc_url_raw()
 - esc_js()
 - esc_textarea()
-- And configs from `config-funcs.php`, `config-classes.php`, and `config-class-statics.php`.
+- And configs from `config/functions.php`, `config/classes.php`, and `config/static-methods.php`.
 
 I need a list of functions that depend only on PHP and other already available WordPress functions, and do not require external libraries.
 This must include full transitive dependency validation (dependency of dependency, and so on), not only direct calls.
 
 Important: if code uses options from `stub_wp_options.php`, then this function/method should be treated as usable in PHPUnit without bootstrapping WordPress, because these calls are stubbed via `$GLOBALS['stub_wp_options']`.
 
-When updating parser configs (`config-funcs.php` / `config-classes.php` / `config-class-statics.php`):
+When updating parser configs (`config/functions.php` / `config/classes.php` / `config/static-methods.php`):
 - If a function/class is not suitable or not used in this project, comment it out.
 - Do not delete such entries, so it remains visible that it exists in WordPress.
 
@@ -44,7 +44,7 @@ The parser is a whitelist-based copier of selected WordPress code, not a depende
 So dependency-chain validation is a mandatory manual step before adding anything to config.
 
 Core flow:
-- Edit lists in `_parser/config-funcs.php`, `_parser/config-classes.php`, and (when needed) `_parser/config-class-statics.php`.
+- Edit lists in `_parser/config/functions.php`, `_parser/config/classes.php`, and (when needed) `_parser/config/static-methods.php`.
 - Run `php _parser/run.php`.
 - `run.php` creates `Updater` and passes:
   - destination folder: `copy/`
@@ -61,7 +61,7 @@ What `Updater` does:
   - `if( ! class_exists( '...' ) ) : ... endif;`
 - Applies project-specific post-processing via `Extra_Replacer`:
   - replaces known `get_option()`/`get_site_option()` calls with `$GLOBALS['stub_wp_options']`;
-  - applies static-method call replacement (`ClassName::method()` -> `ClassName__method()`) from `config-class-statics.php`.
+  - applies static-method call replacement (`ClassName::method()` -> `ClassName__method()`) from `config/static-methods.php`.
 
 Important constraints:
 - Files in `copy/` are generated; avoid manual edits there unless adaptation is intentional.
@@ -101,7 +101,7 @@ Step-By-Step: Add More WP Core Functions
 - Reject candidate if any dependency in its chain remains unresolved or requires unsupported runtime behavior.
 
 3) Update parser config
-- Add function name into `_parser/config-funcs.php` under the correct WP source file key.
+- Add function name into `_parser/config/functions.php` under the correct WP source file key.
 - If function exists but is not suitable for this project, keep it commented (do not delete).
 
 4) Add/adjust compatibility only when needed
@@ -148,7 +148,7 @@ Use the same flow as "Step-By-Step: Add More WP Core Functions":
 
 Class-specific differences:
 - Candidate filter: prefer pure PHP/in-memory classes; skip classes requiring full WP runtime.
-- Config target: use `_parser/config-classes.php`.
+- Config target: use `_parser/config/classes.php`.
 - Dependency graph: include full minimal class/function chain needed by the class.
 - Tests: one class per file in `tests/classes/...` with `__Test.php`; methods use `test__*` without class-name duplication.
 - If class is not independent in current env, add explicit `test__not_independent_*` with `expectException( Error::class )` (see `tests/INSTRUCTIONS.md`).
@@ -173,7 +173,7 @@ How it works:
   - `ClassName::methodName(...)` -> `ClassName__methodName(...)`.
 
 Workflow:
-1) Add source class + methods in `_parser/config-class-statics.php` using explicit format:
+1) Add source class + methods in `_parser/config/static-methods.php` using explicit format:
    - `'path/to/class-file.php' => [ 'class' => 'ClassName', 'methods' => [ 'methodName' => '' ] ]`
 2) Run `php _parser/run.php` (or `make run.parser`).
 3) Verify generated function in `copy/classes-statics/ClassName.php`.

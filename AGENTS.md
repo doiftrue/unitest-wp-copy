@@ -46,9 +46,9 @@ Main entry point: `zero.php` (loads copied functions/classes and initializes bas
 ### `_parser/`
   Separate part of project that creates `copy/` code copiing it from WP core code.
   Internal generator/updater for copied functions, classes, and selected static class methods.
-  - `_parser/config-funcs.php` — function list;
-  - `_parser/config-classes.php` — class list;
-  - `_parser/config-class-statics.php` — selected static class methods copied as plain functions;
+  - `_parser/config/functions.php` — function list;
+  - `_parser/config/classes.php` — class list;
+  - `_parser/config/static-methods.php` — selected static class methods copied as plain functions;
   - `_parser/INSTRUCTION.md` — instructions for updating copied code.
   - `_parser/run.php` — update runner.
     - Should be run with `make run.parser` command.
