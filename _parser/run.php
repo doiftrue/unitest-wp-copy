@@ -1,8 +1,8 @@
 <?php
 
-foreach( glob( __DIR__ . '/src/*.php' ) as $path ) {
-	require_once $path;
-}
+namespace Parser;
+
+require_once __DIR__ . '/autoload.php';
 
 $up = new Updater();
 $up->setup();

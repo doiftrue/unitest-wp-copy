@@ -1,4 +1,5 @@
 <?php
+namespace Parser;
 
 class Helpers {
 

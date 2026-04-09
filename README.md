@@ -1,6 +1,6 @@
 About
 =====
-`unitest-wp-copy` is a helper library for PHPUnit tests.
+Helper library for PHPUnit tests.
 It provides selected WordPress core functions/classes that can run without full WordPress bootstrap, database, or external services.
 
 This helps test real WP logic (pure-PHP parts) instead of mocking everything.
@@ -55,8 +55,8 @@ This state is shared across tests in the same PHP process.
 If a test changes values like `$wp_locale`, `$shortcode_tags`, `$wp_plugin_paths`, `$_SERVER['HTTP_HOST']`, or `$GLOBALS['stub_wp_options']`, restore them in `setUp()`/`tearDown()` to avoid leaking state into other tests.
 
 
-Stubbed Options (`$GLOBALS['stub_wp_options']`)
------------------------------------------------
+Stubbed Options
+---------------
 Some copied functions that normally read options from DB are adapted to read from `$GLOBALS['stub_wp_options']`.
 
 Default values:
@@ -90,9 +90,7 @@ Library also contains mock-compatible WP functions (from `copy/mocks/...`), for 
 - `restore_current_blog()`
 - i18n helpers like `__()`, `_e()`, `_x()`, `_n()`
 
-These functions have built-in default behavior and can be overridden via WP_Mock handlers.
-
-Example:
+These functions have built-in default behavior and can be overridden via WP_Mock handlers:
 
 ```php
 \WP_Mock::userFunction( 'is_multisite', [ 'return' => true ] );

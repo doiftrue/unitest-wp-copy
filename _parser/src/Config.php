@@ -1,4 +1,9 @@
 <?php
+namespace Parser;
+
+use FilesystemIterator;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 
 class Config {
 

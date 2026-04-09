@@ -1,12 +1,20 @@
 <?php
+namespace Parser;
+
+use Parser\Strategy\Copy_Classes;
+use Parser\Strategy\Copy_Functions;
+use Parser\Strategy\Copy_Static_Methods;
 
 class Updater {
 
 	private const SEP = '// ------------------auto-generated---------------------';
 
 	private string $wp_version;
+
 	private Extra_Replacer $extra_replacer;
+
 	private readonly Config $config;
+
 
 	public function __construct() {
 		$this->config = new Config();
@@ -21,150 +29,43 @@ class Updater {
 	}
 
 	public function run(): void {
-		// functions
-		foreach( $this->config->funcs_data as $rel_file => $funcs_names ){
-			$this->update_file( $rel_file, $funcs_names, '' );
-		}
+		/** @var File_Updater_Interface[] $strategies */
+		$strategies = [
+			new Copy_Functions( $this->config, $this->wp_version ),
+			new Copy_Classes( $this->config, $this->wp_version ),
+			new Copy_Static_Methods( $this->config, $this->wp_version ),
+		];
 
-		// classes
-		foreach( $this->config->classes_data as $rel_file => $class_name ){
-			$this->update_file( $rel_file, [], $class_name );
-		}
+		foreach( $strategies as $strategy ){
+			foreach( $strategy->get_items() as $item ){
+				$dest_file = $strategy->get_dest_file( $item );
 
-		// static class methods copied as plain functions
-		foreach( $this->config->static_methods_data as $rel_file => $config ){
-			$class_name = $config['class'] ?? '';
-			$method_names = $config['methods'] ?? [];
-			$this->update_class_static_file( $rel_file, $class_name, $method_names );
+				$this->run_update_pipeline(
+					$dest_file,
+					fn() => $strategy->generate_content( $item )
+				);
+
+				echo $strategy->get_log_message( $item ) . "\n";
+			}
 		}
 
 		echo "DONE!\n";
 	}
 
-	private function update_file( string $rel_file, array $func_names, string $class_name ): void {
-		$is_class = $this->is_class( $rel_file );
-
-		$core_file = "{$this->config->wp_core_dir}/$rel_file";
-		$dest_file = $this->config->dest_dir . ( $is_class ? "/classes/$class_name.php" : "/functions/$rel_file" );
-
+	/**
+	 * Common file update pipeline:
+	 * read destination -> reset generated block -> append generated code -> run replacements -> write file.
+	 */
+	private function run_update_pipeline( string $dest_file, callable $content_generator ): void {
 		$this->check_create_dest_file( $dest_file );
 
 		$dest_content = file_get_contents( $dest_file );
 		$dest_content = $this->reset_generated_part( $dest_content );
-
-		$dest_content .= $is_class
-			? $this->update_class_file( $rel_file, $class_name )
-			: $this->update_func_file( $rel_file, $func_names );
+		$dest_content .= $content_generator();
 
 		$dest_content = $this->extra_replacer->replace_in_code( $dest_content );
 
 		file_put_contents( $dest_file, $dest_content );
-
-		echo "Updated: $rel_file\n";
-	}
-
-	private function is_class( string $rel_file ): bool {
-		return str_contains( $rel_file, 'class-' );
-	}
-
-	private function update_func_file( string $rel_file, array $func_names ): string {
-		$core_file_content = file_get_contents( "{$this->config->wp_core_dir}/$rel_file" );
-		$funcs_data = Helpers::get_class_func_code_from_php_code( $core_file_content, [ 'type' => 'func' ] );
-		$funcs_data = array_intersect_key( $funcs_data, $func_names );
-		$not_found_funcs = array_diff_key( $func_names, $funcs_data );
-
-		if( $not_found_funcs ){
-			throw new RuntimeException( "WARNING: Not found funcs in `$rel_file`:\n\t" . implode( "\n\t", array_keys( $not_found_funcs ) ) . "\n" );
-		}
-
-		$append = '';
-		foreach( $funcs_data as $func_name => $code_lines ){
-			$comment = "// $rel_file (WP $this->wp_version)";
-			$func_code = implode( "\n\t", $code_lines );
-			$append .= <<<CODE
-				$comment
-				if( ! function_exists( '$func_name' ) ) :
-					$func_code
-				endif;
-				CODE . "\n\n";
-		}
-
-		return $append;
-	}
-
-	private function update_class_file( string $rel_file, string $class_name ): string {
-		$file_content = file_get_contents( "{$this->config->wp_core_dir}/$rel_file" );
-		$code_lines = Helpers::get_class_func_code_from_php_code( $file_content, [ 'type' => 'class', 'name' => $class_name ] );
-		$comment = "// $rel_file (WP $this->wp_version)";
-		$class_code = implode( "\n\t", $code_lines );
-
-		return <<<CODE
-			$comment
-			if( ! class_exists( '$class_name' ) ) :
-				$class_code
-			endif;
-			CODE . "\n\n";
-	}
-
-	private function update_class_static_file( string $rel_file, string $class_name, array $method_names ): void {
-		if( ! $class_name || ! $method_names ){
-			throw new RuntimeException( "WARNING: Invalid static-method config for `$rel_file`. Expected keys: class, methods." );
-		}
-
-		$file_content = file_get_contents( "{$this->config->wp_core_dir}/$rel_file" );
-		$dest_file = "{$this->config->dest_dir}/classes-statics/$class_name.php";
-
-		$content = file_get_contents( $dest_file );
-		$content = $this->reset_generated_part( $content );
-		$content .= $this->get_class_static_methods_file_content( $file_content, $rel_file, $class_name, $method_names );
-
-		$content = $this->extra_replacer->replace_in_code( $content );
-
-		$this->check_create_dest_file( $dest_file );
-		file_put_contents( $dest_file, $content );
-
-		echo "Updated static methods: $rel_file\n";
-	}
-
-	/**
-	 * Static class method replacement: `Class::method -> Class__method()`
-	 */
-	private function get_class_static_methods_file_content( string $core_file_content, string $rel_file, string $class_name, array $method_names ): string {
-		$methods_data = Helpers::get_class_func_code_from_php_code( $core_file_content, [ 'type' => 'method' ] );
-		$methods_data = array_intersect_key( $methods_data, $method_names );
-		$not_found_methods = array_diff_key( $method_names, $methods_data );
-
-		if( $not_found_methods ){
-			throw new RuntimeException( "WARNING: Not found static methods:\n\t" . implode( "\n\t", array_keys( $not_found_methods ) ) . "\n" );
-		}
-
-		$append = '';
-		foreach( $methods_data as $method_name => $code_lines ){
-			$comment = "// $rel_file (WP $this->wp_version)";
-			$func_name = "{$class_name}__$method_name";
-			$method_code = implode( "\n\t", $code_lines );
-			$func_code = $this->rename_method_name( $method_code, $method_name, $func_name );
-
-			$append .= <<<CODE
-				$comment
-				if( ! function_exists( '$func_name' ) ) :
-					$func_code
-				endif;
-				CODE . "\n\n";
-		}
-
-		return $append;
-	}
-
-	private function rename_method_name( string $method_code, string $method_name, string $func_name ): string {
-		$method_code = trim( $method_code );
-		$lines = explode( "\n", $method_code );
-
-		$line = & $lines[0];
-		$line = preg_replace( '~\b(?:final|abstract|public|protected|private|static)\s+~', '', $line );
-		$line = str_replace( " $method_name(", " $func_name(", $line );
-
-		return implode( "\n", $lines );
 	}
 
 	private function reset_generated_part( string $dest_content ): string {
