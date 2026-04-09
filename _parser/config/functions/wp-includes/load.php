@@ -1,0 +1,63 @@
+<?php
+
+return [
+	'wp_get_development_mode'    => '',
+	'wp_get_environment_type'    => '',
+	'wp_doing_ajax'              => '',
+	'get_current_blog_id'        => '',
+	'get_current_network_id'     => '',
+	'is_ssl'                     => '',
+	'wp_convert_hr_to_bytes'     => '',
+	'wp_is_ini_value_changeable' => '',
+	'is_wp_error'                => '',
+	// 'is_multisite'               => '', // why: moved to copy/mocks to add WP_Mock handler support.
+	'absint'                     => '',
+	'timer_float'                => '',
+	'timer_start'                => '',
+	'timer_stop'                 => '',
+	// Missing in config, kept for visibility because not suitable for isolated PHPUnit env:
+	// 'is_admin'                                  => '', // why: requires admin bootstrap/request context.
+	// 'is_blog_admin'                             => '', // why: requires admin bootstrap/request context.
+	// 'is_login'                                  => '', // why: requires login screen/request context.
+	// 'is_network_admin'                          => '', // why: requires multisite admin context.
+	// 'is_protected_ajax_action'                  => '', // why: protected-endpoint runtime dependency.
+	// 'is_protected_endpoint'                     => '', // why: protected-endpoint runtime dependency.
+	// 'is_user_admin'                             => '', // why: requires user-admin request context.
+	// 'require_wp_db'                             => '', // why: hard DB bootstrap dependency.
+	// 'shutdown_action_hook'                      => '', // why: shutdown hook/runtime side effects.
+	// 'wp_check_php_mysql_versions'               => '', // why: environment + DB capability checks.
+	// 'wp_clone'                                  => '', // why: full bootstrap clone lifecycle.
+	// 'wp_debug_mode'                             => '', // why: global runtime/error-handler mutation.
+	// 'wp_doing_cron'                             => '', // why: cron/request runtime dependency.
+	// 'wp_favicon_request'                        => '', // why: request routing/output dependency.
+	// 'wp_finalize_scraping_edited_file_errors'   => '', // why: admin/editor error-scraping runtime.
+	// 'wp_fix_server_vars'                        => '', // why: mutates global server runtime.
+	// 'wp_get_active_and_valid_plugins'           => '', // why: plugin bootstrap/filesystem dependency.
+	// 'wp_get_active_and_valid_themes'            => '', // why: theme bootstrap/filesystem dependency.
+	// 'wp_get_mu_plugins'                         => '', // why: mu-plugin filesystem bootstrap dependency.
+	// 'wp_get_server_protocol'                    => '', // why: request server-runtime dependency.
+	'wp_installing'                                => '', // note: in 99% is not installing, and it used as deps so add it
+	// 'wp_is_development_mode'                    => '', // why: full runtime option/env dependency.
+	// 'wp_is_file_mod_allowed'                    => '', // why: file-modification policy/runtime dependency.
+	// 'wp_is_json_media_type'                     => '', // why: request/content-type runtime dependency.
+	// 'wp_is_json_request'                        => '', // why: request/content-type runtime dependency.
+	// 'wp_is_jsonp_request'                       => '', // why: request/content-type runtime dependency.
+	// 'wp_is_maintenance_mode'                    => '', // why: filesystem + bootstrap dependency.
+	// 'wp_is_recovery_mode'                       => '', // why: recovery bootstrap/session dependency.
+	// 'wp_is_site_protected_by_basic_auth'        => '', // why: server/auth runtime dependency.
+	// 'wp_is_xml_request'                         => '', // why: request/content-type runtime dependency.
+	// 'wp_load_translations_early'                => '', // why: translation bootstrap dependency.
+	// 'wp_magic_quotes'                           => '', // why: mutates request globals.
+	// 'wp_maintenance'                            => '', // why: maintenance bootstrap/output dependency.
+	// 'wp_not_installed'                          => '', // why: install/bootstrap + output dependency.
+	// 'wp_populate_basic_auth_from_authorization_header' => '', // why: request/auth header mutation.
+	// 'wp_set_internal_encoding'                  => '', // why: global runtime encoding mutation.
+	// 'wp_set_lang_dir'                           => '', // why: translation/bootstrap path mutation.
+	// 'wp_set_wpdb_vars'                          => '', // why: hard $wpdb dependency.
+	// 'wp_skip_paused_plugins'                    => '', // why: recovery mode/plugin runtime dependency.
+	// 'wp_skip_paused_themes'                     => '', // why: recovery mode/theme runtime dependency.
+	// 'wp_start_object_cache'                     => '', // why: object-cache bootstrap dependency.
+	// 'wp_start_scraping_edited_file_errors'      => '', // why: admin/editor runtime dependency.
+	// 'wp_using_ext_object_cache'                 => '', // why: object-cache runtime dependency.
+	// 'wp_using_themes'                           => '', // why: theme bootstrap state dependency.
+];

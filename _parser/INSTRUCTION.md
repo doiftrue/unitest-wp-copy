@@ -25,14 +25,14 @@ Also take into account that my PHPUnit environment uses mocks for the following 
 - esc_url_raw()
 - esc_js()
 - esc_textarea()
-- And configs from `config/functions.php`, `config/classes.php`, and `config/static-methods.php`.
+- And configs from `config/functions/<wp-source-file>.php`, `config/classes.php`, and `config/static-methods.php`.
 
 I need a list of functions that depend only on PHP and other already available WordPress functions, and do not require external libraries.
 This must include full transitive dependency validation (dependency of dependency, and so on), not only direct calls.
 
 Important: if code uses options from `stub_wp_options.php`, then this function/method should be treated as usable in PHPUnit without bootstrapping WordPress, because these calls are stubbed via `$GLOBALS['stub_wp_options']`.
 
-When updating parser configs (`config/functions.php` / `config/classes.php` / `config/static-methods.php`):
+When updating parser configs (`config/functions/<wp-source-file>.php` / `config/classes.php` / `config/static-methods.php`):
 - If a function/class is not suitable or not used in this project, comment it out.
 - Do not delete such entries, so it remains visible that it exists in WordPress.
 
@@ -44,7 +44,7 @@ The parser is a whitelist-based copier of selected WordPress code, not a depende
 So dependency-chain validation is a mandatory manual step before adding anything to config.
 
 Core flow:
-- Edit lists in `_parser/config/functions.php`, `_parser/config/classes.php`, and (when needed) `_parser/config/static-methods.php`.
+- Edit lists in `_parser/config/functions/<wp-source-file>.php`, `_parser/config/classes.php`, and (when needed) `_parser/config/static-methods.php`.
 - Run `php _parser/run.php`.
 - `run.php` creates `Updater` and passes:
   - destination folder: `copy/`
@@ -101,7 +101,7 @@ Step-By-Step: Add More WP Core Functions
 - Reject candidate if any dependency in its chain remains unresolved or requires unsupported runtime behavior.
 
 3) Update parser config
-- Add function name into `_parser/config/functions.php` under the correct WP source file key.
+- Add function name into `_parser/config/functions/<wp-source-file>.php` (for example `_parser/config/functions/wp-includes/formatting.php`).
 - If function exists but is not suitable for this project, keep it commented (do not delete).
 
 4) Add/adjust compatibility only when needed
