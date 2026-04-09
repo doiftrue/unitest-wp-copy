@@ -6,8 +6,8 @@
 
 if ( ! function_exists( 'is_multisite' ) ) :
 	function is_multisite() {
-		if ( wp_mock_has_handler( __FUNCTION__ ) ) {
-			return (bool) wp_mock_call( __FUNCTION__, func_get_args() );
+		if ( WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return (bool) WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
 		}
 
 		if ( defined( 'MULTISITE' ) ) {

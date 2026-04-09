@@ -6,8 +6,8 @@
 
 if ( ! function_exists( 'switch_to_blog' ) ) :
 	function switch_to_blog( $new_blog_id, $deprecated = null ) {
-		if ( wp_mock_has_handler( __FUNCTION__ ) ) {
-			return wp_mock_call( __FUNCTION__, func_get_args() );
+		if ( WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
 		}
 
 		$prev_blog_id = (int) ( $GLOBALS['blog_id'] ?? 1 );
@@ -27,8 +27,8 @@ endif;
 
 if ( ! function_exists( 'restore_current_blog' ) ) :
 	function restore_current_blog() {
-		if ( wp_mock_has_handler( __FUNCTION__ ) ) {
-			return wp_mock_call( __FUNCTION__, func_get_args() );
+		if ( WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
 		}
 
 		if ( empty( $GLOBALS['_wp_switched_stack'] ) || ! is_array( $GLOBALS['_wp_switched_stack'] ) ) {

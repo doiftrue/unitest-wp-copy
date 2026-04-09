@@ -15,9 +15,9 @@ foreach( $files as $file ){
 
 /// INIT WP ENV
 
+require_once __DIR__ . '/src/WP_Mock_Utils.php';
 require_once __DIR__ . '/src/stub_wp_options.php';
 require_once __DIR__ . '/src/constants.php';
-require_once __DIR__ . '/src/utils-functions.php';
 foreach ( glob( __DIR__ . '/copy/init-parts/wp-includes/*.php' ) as $init_file ) {
 	require_once $init_file;
 }
