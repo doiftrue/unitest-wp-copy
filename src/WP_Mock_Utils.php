@@ -41,12 +41,12 @@ class WP_Mock_Utils {
 	}
 
 	private static function get_handler_class(): string {
-		$class = \WP_Mock\Functions\Handler::class; // v1.1
+		$class = \WP_Mock\Functions\Handler::class; // version >=1.0
 		if( class_exists( $class ) ){
 			return $class;
 		}
 
-		$class = \WP_Mock\Handler::class; // v0.4
+		$class = \WP_Mock\Handler::class; // version <=0.5
 		if( class_exists( $class ) ){
 			return $class;
 		}

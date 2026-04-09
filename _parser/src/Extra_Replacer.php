@@ -16,7 +16,7 @@ class Extra_Replacer {
 	];
 
 	public function __construct(
-		private readonly array $config_class_statics = [],
+		private readonly Config $config,
 	){
 	}
 
@@ -24,17 +24,17 @@ class Extra_Replacer {
 		$code_text = strtr( $code_text, self::$stub_wp_options );
 
 		// Replace `Class::method( >>> Class__method(` in code functions body.
-		$code_text = strtr( $code_text, $this->build_static_method_replacements() );
+		$code_text = strtr( $code_text, $this->build_static_method_replace_array() );
 
 		return $code_text;
 	}
 
-	private function build_static_method_replacements(): array {
+	private function build_static_method_replace_array(): array {
 		$replace = [];
 
-		foreach( $this->config_class_statics as $static_config ){
-			$class_name = $static_config['class'] ?? '';
-			$method_names = $static_config['methods'] ?? [];
+		foreach( $this->config->static_methods_data as $config ){
+			$class_name = $config['class'] ?? '';
+			$method_names = $config['methods'] ?? [];
 			if( ! $class_name || ! $method_names ){
 				continue;
 			}

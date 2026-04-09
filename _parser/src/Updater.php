@@ -6,37 +6,33 @@ class Updater {
 
 	private string $wp_version;
 	private Extra_Replacer $extra_replacer;
+	private readonly Config $config;
 
-	public function __construct(
-		private readonly string $dest_dir,
-		private readonly string $wp_core_dir,
-		private readonly array $config_funcs,   /** @see _parser/config-funcs.php */
-		private readonly array $config_classes, /** @see _parser/config-classes.php */
-		private readonly array $config_class_statics = [], /** @see _parser/config-class-statics.php */
-	) {
+	public function __construct() {
+		$this->config = new Config();
 	}
 
 	public function setup(): void {
-		require_once "$this->wp_core_dir/wp-includes/version.php";
+		require_once "{$this->config->wp_core_dir}/wp-includes/version.php";
 		/** @var string $wp_version */
 		$this->wp_version = $wp_version;
 
-		$this->extra_replacer = new Extra_Replacer( $this->config_class_statics );
+		$this->extra_replacer = new Extra_Replacer( $this->config );
 	}
 
 	public function run(): void {
 		// functions
-		foreach( $this->config_funcs as $rel_file => $funcs_names ){
+		foreach( $this->config->funcs_data as $rel_file => $funcs_names ){
 			$this->update_file( $rel_file, $funcs_names, '' );
 		}
 
 		// classes
-		foreach( $this->config_classes as $rel_file => $class_name ){
+		foreach( $this->config->classes_data as $rel_file => $class_name ){
 			$this->update_file( $rel_file, [], $class_name );
 		}
 
 		// static class methods copied as plain functions
-		foreach( $this->config_class_statics as $rel_file => $config ){
+		foreach( $this->config->static_methods_data as $rel_file => $config ){
 			$class_name = $config['class'] ?? '';
 			$method_names = $config['methods'] ?? [];
 			$this->update_class_static_file( $rel_file, $class_name, $method_names );
@@ -48,8 +44,8 @@ class Updater {
 	private function update_file( string $rel_file, array $func_names, string $class_name ): void {
 		$is_class = $this->is_class( $rel_file );
 
-		$core_file = "$this->wp_core_dir/$rel_file";
-		$dest_file = $this->dest_dir . ( $is_class ? "/classes/$class_name.php" : "/functions/$rel_file" );
+		$core_file = "{$this->config->wp_core_dir}/$rel_file";
+		$dest_file = $this->config->dest_dir . ( $is_class ? "/classes/$class_name.php" : "/functions/$rel_file" );
 
 		$this->check_create_dest_file( $dest_file );
 
@@ -72,7 +68,7 @@ class Updater {
 	}
 
 	private function update_func_file( string $rel_file, array $func_names ): string {
-		$core_file_content = file_get_contents( "$this->wp_core_dir/$rel_file" );
+		$core_file_content = file_get_contents( "{$this->config->wp_core_dir}/$rel_file" );
 		$funcs_data = Helpers::get_class_func_code_from_php_code( $core_file_content, [ 'type' => 'func' ] );
 		$funcs_data = array_intersect_key( $funcs_data, $func_names );
 		$not_found_funcs = array_diff_key( $func_names, $funcs_data );
@@ -97,7 +93,7 @@ class Updater {
 	}
 
 	private function update_class_file( string $rel_file, string $class_name ): string {
-		$file_content = file_get_contents( "$this->wp_core_dir/$rel_file" );
+		$file_content = file_get_contents( "{$this->config->wp_core_dir}/$rel_file" );
 		$code_lines = Helpers::get_class_func_code_from_php_code( $file_content, [ 'type' => 'class', 'name' => $class_name ] );
 		$comment = "// $rel_file (WP $this->wp_version)";
 		$class_code = implode( "\n\t", $code_lines );
@@ -115,8 +111,8 @@ class Updater {
 			throw new RuntimeException( "WARNING: Invalid static-method config for `$rel_file`. Expected keys: class, methods." );
 		}
 
-		$file_content = file_get_contents( "$this->wp_core_dir/$rel_file" );
-		$dest_file = "$this->dest_dir/classes-statics/$class_name.php";
+		$file_content = file_get_contents( "{$this->config->wp_core_dir}/$rel_file" );
+		$dest_file = "{$this->config->dest_dir}/classes-statics/$class_name.php";
 
 		$content = file_get_contents( $dest_file );
 		$content = $this->reset_generated_part( $content );
