@@ -6,6 +6,36 @@ It provides selected WordPress core functions/classes that can run without full 
 This helps test real WP logic (pure-PHP parts) instead of mocking everything.
 
 
+Quick Example (Why This Helps)
+------------------------------
+Suppose your code builds preview URLs using real WordPress helpers:
+
+```php
+function build_preview_url( string $title ): string {
+	return add_query_arg(
+		[
+			'preview' => '1',
+			'slug'    => sanitize_title( $title ),
+		],
+		'https://example.com/post.php'
+	);
+}
+```
+
+Without this library, tests often mock `sanitize_title()` and `add_query_arg()`, so they do not validate real WordPress behavior.
+With this library, the same test can run real implementations in plain PHPUnit:
+
+```php
+require_once __DIR__ . '/vendor/autoload.php';
+\Unitest_WP_Copy\Bootstrap::init();
+
+$this->assertSame(
+	'https://example.com/post.php?preview=1&slug=hello-world',
+	build_preview_url( 'Hello World!' )
+);
+```
+
+
 Installation
 ------------
 Install as a dev dependency:
@@ -30,8 +60,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 \Unitest_WP_Copy\Bootstrap::init();
 ```
 
-You can optionally define your own constants before calling `\Unitest_WP_Copy\Bootstrap::init()`.
-If you do not define them, defaults are used.
+You can optionally define your own constants:
 
 ```php
 define( 'ABSPATH', '/path/to/wp/' );
@@ -41,6 +70,20 @@ define( 'WP_CONTENT_URL', 'https://test.example/wp-content' );
 require_once __DIR__ . '/vendor/autoload.php';
 \Unitest_WP_Copy\Bootstrap::init();
 ```
+
+If you do not define them, defaults are used.
+
+
+Available Symbols Reference
+---------------------------
+Use [`copy/SYMBOLS-INFO.md`](copy/SYMBOLS-INFO.md) as a quick index of all symbols available in this package version.
+
+It includes:
+
+- mock-friendly functions (easy to override in tests);
+- functions/classes available as-is.
+
+Check this file first when you need to know whether a specific WP symbol is already available in the test environment.
 
 
 What bootstrap initializes
