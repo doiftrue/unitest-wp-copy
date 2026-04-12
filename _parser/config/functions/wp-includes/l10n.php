@@ -21,7 +21,7 @@ return [
 	// 'esc_attr__' => '', // mocked
 	// 'esc_attr_e' => '', // mocked
 	// 'esc_attr_x' => '', // mocked
-	// Missing in config, kept for visibility because not suitable for isolated PHPUnit env:
+	// Not suitable in isolated PHPUnit env (i18n registry/filesystem runtime dependency):
 	// '_ex'                          => '', // why: i18n runtime dependency (context translation).
 	// '_load_textdomain_just_in_time' => '', // why: textdomain loading/filesystem/runtime dependency.
 	// 'get_available_languages'      => '', // why: language pack filesystem dependency.

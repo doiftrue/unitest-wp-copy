@@ -95,7 +95,7 @@ return [
 	'wp_suspend_cache_addition'     => '',
 	'wp_allowed_protocols'          => '',
 	'wp_date'                       => '',
-	// Missing in config, kept for visibility because not suitable for isolated PHPUnit env:
+	// Not suitable in isolated PHPUnit env (DB/filesystem/request/bootstrap runtime coupling):
 	// '_ajax_wp_die_handler'               => '', // why: requires full HTTP output/wp_die runtime flow.
 	// '_config_wp_home'                    => '', // why: mutates global config/runtime state.
 	// '_config_wp_siteurl'                 => '', // why: mutates global config/runtime state.

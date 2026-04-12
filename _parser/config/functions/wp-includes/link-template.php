@@ -11,7 +11,7 @@ return [
 	'plugins_url'         => '',
 	'content_url'         => '',
 	'includes_url'        => '',
-	// Missing in config, kept for visibility because not suitable for isolated PHPUnit env:
+	// Not suitable in isolated PHPUnit env (query/template/admin runtime coupling):
 	// '_get_page_link'                => '', // why: requires WP query/post permalink runtime.
 	// '_navigation_markup'            => '', // why: depends on theme/template rendering context.
 	// 'adjacent_post_link'            => '', // why: requires post loop/query runtime.

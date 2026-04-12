@@ -16,7 +16,7 @@ return [
 	'timer_float'                => '',
 	'timer_start'                => '',
 	'timer_stop'                 => '',
-	// Missing in config, kept for visibility because not suitable for isolated PHPUnit env:
+	// Not suitable in isolated PHPUnit env (bootstrap/request/admin runtime coupling):
 	// 'is_blog_admin'                             => '', // why: requires admin bootstrap/request context.
 	// 'is_login'                                  => '', // why: requires login screen/request context.
 	// 'is_network_admin'                          => '', // why: requires multisite admin context.

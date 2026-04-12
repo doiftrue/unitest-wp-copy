@@ -12,7 +12,7 @@ return [
 	'get_registered_theme_features' => '',
 	'get_registered_theme_feature'  => '',
 	'create_initial_theme_features' => '',
-	// Missing in config, kept for visibility because not suitable for isolated PHPUnit env:
+	// Not suitable in isolated PHPUnit env (theme discovery/filesystem/runtime coupling):
 	// 'wp_get_themes'                      => '', // why: theme discovery + filesystem scan/runtime cache.
 	// 'wp_get_theme'                       => '', // why: theme discovery + filesystem scan/runtime cache.
 	// 'wp_clean_themes_cache'              => '', // why: theme discovery + filesystem scan/runtime cache.

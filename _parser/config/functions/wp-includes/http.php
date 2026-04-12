@@ -4,7 +4,7 @@ return [
 	'wp_parse_url' => '',
 	'_wp_translate_php_url_constant_to_key' => '',
 	'_get_component_from_parsed_url_array' => '',
-	// Missing in config, kept for visibility because not suitable for isolated PHPUnit env:
+	// Not suitable in isolated PHPUnit env (network/CORS/runtime coupling):
 	// '_wp_http_get_object'            => '', // why: requires WP_HTTP class stack/runtime.
 	// 'allowed_http_request_hosts'     => '', // why: HTTP policy/runtime dependency.
 	// 'get_allowed_http_origins'       => '', // why: CORS/runtime dependency.

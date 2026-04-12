@@ -17,15 +17,16 @@ class WP_Block_Type__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertTrue( isset( $type->variations ) );
 	}
 
-	public function test__not_independent_prepare_attributes_for_render() {
+	public function test__prepare_attributes_for_render() {
 		$type = new WP_Block_Type( 'core/test', [
 			'attributes' => [
 				'k' => [ 'type' => 'string' ],
 			],
 		] );
 
-		$this->expectException( Error::class );
-		$type->prepare_attributes_for_render( [ 'k' => 'v' ] );
+		$this->assertSame(
+			[ 'k' => 'v' ],
+			$type->prepare_attributes_for_render( [ 'k' => 'v' ] )
+		);
 	}
 }
-
