@@ -92,6 +92,15 @@ Library also contains mock-compatible WP functions (from `copy/mocks/...`), for 
 
 These functions have built-in default behavior and can be overridden via WP_Mock handlers:
 
+When you use WP_Mock handlers, call `\WP_Mock::bootstrap()` before loading this package:
+
+```php
+require_once __DIR__ . '/vendor/autoload.php';
+\WP_Mock::bootstrap();
+
+require_once __DIR__ . '/vendor/doiftrue/unitest-wp-copy/zero.php';
+```
+
 ```php
 \WP_Mock::userFunction( 'is_multisite', [ 'return' => true ] );
 $this->assertTrue( is_multisite() );

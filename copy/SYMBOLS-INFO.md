@@ -1,5 +1,22 @@
-The following functions and classes are available in the unit test environment. They are copied directly from WordPress 6.8.5 source and work as-is, so no mocks are required.
+The following functions and classes are available in this (unit test) environment. Symbols are copied from WordPress 6.8.5.
 
+Mock-friendly functions (override their behavior in tests when needed):
+__()
+_e()
+_n()
+_nx()
+_x()
+esc_attr__()
+esc_attr_e()
+esc_attr_x()
+esc_html__()
+esc_html_e()
+esc_html_x()
+is_multisite()
+restore_current_blog()
+switch_to_blog()
+
+Functions and classes available as-is:
 PasswordHash{}
 WP_Block_Parser_Block{}
 WP_Block_Parser_Frame{}
