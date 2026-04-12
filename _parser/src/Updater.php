@@ -4,12 +4,11 @@ namespace Parser;
 use Parser\Strategy\Copy_Classes;
 use Parser\Strategy\Copy_Functions;
 use Parser\Strategy\Copy_Static_Methods;
+use Parser\Strategy\File_Update_Strategy;
 
 class Updater {
 
 	private const SEP = '// ------------------auto-generated---------------------';
-
-	private string $wp_version;
 
 	private Extra_Replacer $extra_replacer;
 
@@ -17,23 +16,21 @@ class Updater {
 
 
 	public function __construct() {
-		$this->config = new Config();
+		$this->config = config();
 	}
 
 	public function setup(): void {
-		require_once "{$this->config->wp_core_dir}/wp-includes/version.php";
-		/** @var string $wp_version */
-		$this->wp_version = $wp_version;
-
 		$this->extra_replacer = new Extra_Replacer( $this->config );
 	}
 
 	public function run(): void {
-		/** @var File_Updater_Interface[] $strategies */
+		$lister = new Copied_Lister( $this->config );
+
+		/** @var File_Update_Strategy[] $strategies */
 		$strategies = [
-			new Copy_Functions( $this->config, $this->wp_version ),
-			new Copy_Classes( $this->config, $this->wp_version ),
-			new Copy_Static_Methods( $this->config, $this->wp_version ),
+			new Copy_Functions( $this->config, $lister ),
+			new Copy_Classes( $this->config, $lister ),
+			new Copy_Static_Methods( $this->config, $lister ),
 		];
 
 		foreach( $strategies as $strategy ){
@@ -48,6 +45,8 @@ class Updater {
 				echo $strategy->get_log_message( $item ) . "\n";
 			}
 		}
+
+		$lister->generate_list();
 
 		echo "DONE!\n";
 	}

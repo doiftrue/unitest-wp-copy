@@ -2,17 +2,18 @@
 namespace Parser\Strategy;
 
 use Parser\Config;
+use Parser\Copied_Lister;
 
 abstract class File_Update_Strategy {
 
 	public function __construct(
 		protected readonly Config $config,
-		protected readonly string $wp_version,
+		protected readonly Copied_Lister $lister,
 	){
 	}
 
 	protected function get_file_comment( string $rel_file ): string {
-		return "// $rel_file (WP $this->wp_version)";
+		return "// $rel_file (WP {$this->config->wp_version})";
 	}
 
 	/**

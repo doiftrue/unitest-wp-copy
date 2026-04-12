@@ -46,6 +46,8 @@ class Copy_Functions extends File_Update_Strategy {
 					$func_code
 				endif;
 				CODE . "\n\n";
+
+			$this->lister->names[] = "$func_name()";
 		}
 
 		return $append;

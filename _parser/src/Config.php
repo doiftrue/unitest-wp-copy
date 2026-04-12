@@ -11,6 +11,8 @@ class Config {
 
 	public readonly string $wp_core_dir;
 
+	public readonly string $wp_version;
+
 	/** @see _parser/config/functions/**.php */
 	public readonly array $funcs_data;
 
@@ -29,6 +31,10 @@ class Config {
 		$this->funcs_data = $this->build_functions_config( "$parser_dir/config/functions" );
 		$this->classes_data = include "$parser_dir/config/classes.php";
 		$this->static_methods_data = include "$parser_dir/config/static-methods.php";
+
+		require_once "$this->wp_core_dir/wp-includes/version.php";
+		/** @var string $wp_version */
+		$this->wp_version = $wp_version;
 	}
 
 	private function build_functions_config( string $base_dir ): array {

@@ -31,6 +31,8 @@ class Copy_Classes extends File_Update_Strategy {
 		$comment = $this->get_file_comment( $rel_file );
 		$class_code = implode( "\n\t", $code_lines );
 
+		$this->lister->names[] = "$class_name{}";
+
 		return <<<CODE
 			$comment
 			if( ! class_exists( '$class_name' ) ) :

@@ -5,6 +5,8 @@
 
 namespace Parser;
 
+require_once __DIR__ . '/src/functions.php';
+
 spl_autoload_register( static function( $class ) {
 	if( ! str_starts_with( $class, __NAMESPACE__ . '\\' ) ){
 		return;

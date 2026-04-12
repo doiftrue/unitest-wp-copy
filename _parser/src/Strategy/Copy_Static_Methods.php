@@ -58,6 +58,8 @@ class Copy_Static_Methods extends File_Update_Strategy {
 					$func_code
 				endif;
 				CODE . "\n\n";
+
+			$this->lister->names[] = "$class_name::$method_name()";
 		}
 
 		return $append;
