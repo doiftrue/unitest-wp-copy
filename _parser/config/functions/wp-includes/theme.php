@@ -1,9 +1,9 @@
 <?php
 
 return [
-	// Нужна для script/style tag helpers и классов WP_Scripts/WP_Styles.
+	// Required for script/style tag helpers and WP_Scripts/WP_Styles classes.
 	'current_theme_supports' => '',
-	// Реестр theme-support фичей в памяти.
+	// In-memory registry of theme-support features.
 	'add_theme_support'             => '',
 	'get_theme_support'             => '',
 	'remove_theme_support'          => '',
@@ -78,7 +78,7 @@ return [
 	// 'remove_editor_styles'               => '', // why: stylesheet path resolution/filesystem dependency.
 	// 'get_editor_stylesheets'             => '', // why: stylesheet path resolution/filesystem dependency.
 	// 'get_theme_starter_content'          => '', // why: theme starter-content runtime dependency.
-	// 'require_if_theme_supports' => '', // why: requires arbitrary file include from runtime path.
+	// 'require_if_theme_supports'          => '', // why: requires arbitrary file include from runtime path.
 	// '_wp_customize_include'              => '', // why: customizer request/session/runtime dependency.
 	// '_wp_customize_publish_changeset'    => '', // why: customizer request/session/runtime dependency.
 	// '_wp_customize_changeset_filter_insert_post_data' => '', // why: customizer request/session/runtime dependency.
@@ -88,7 +88,7 @@ return [
 	// 'is_customize_preview'               => '', // why: customizer request/session/runtime dependency.
 	// '_wp_keep_alive_customize_changeset_dependent_auto_drafts' => '', // why: customizer request/session/runtime dependency.
 	// '_delete_attachment_theme_mod'       => '', // why: attachment + theme_mod storage runtime dependency.
-	// 'wp_is_block_theme'                => '', // why: depends on WP_Theme + real theme filesystem.
-	// '_add_default_theme_supports'      => '', // why: depends on WP_Theme + real theme filesystem.
-	// 'wp_theme_get_element_class_name' => '', // why: requires WP_Theme_JSON class/runtime not included.
+	// 'wp_is_block_theme'                  => '', // why: depends on WP_Theme + real theme filesystem.
+	// '_add_default_theme_supports'        => '', // why: depends on WP_Theme + real theme filesystem.
+	// 'wp_theme_get_element_class_name'    => '', // why: requires WP_Theme_JSON class/runtime not included.
 ];

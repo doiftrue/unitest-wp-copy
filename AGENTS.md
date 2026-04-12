@@ -79,3 +79,4 @@ Main entry point: `zero.php` (loads copied functions/classes and initializes bas
 - When adding a new function/class/static-method shim, update the relevant `_parser/config-*.php` first, then run `_parser/run.php`.
 - Detailed parser workflow and class/function inclusion rules: see `_parser/INSTRUCTION.md`.
 - Detailed testing conventions (naming, file layout, class-vs-function test rules): see `tests/INSTRUCTIONS.md`.
+- Project code and code comments must be written in English.

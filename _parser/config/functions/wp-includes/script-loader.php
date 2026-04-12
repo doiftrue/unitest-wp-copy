@@ -1,16 +1,16 @@
 <?php
 
 return [
-	// Чистая in-memory утилита переупорядочивания handles.
+	// Pure in-memory utility for handle reordering.
 	'wp_prototype_before_jquery'     => '',
-	// Минимальные helper-функции, которые требуются WP_Scripts при выводе тегов.
+	// Minimal helper functions required by WP_Scripts when rendering tags.
 	'wp_sanitize_script_attributes' => '',
 	'wp_get_script_tag'             => '',
 	'wp_print_script_tag'           => '',
 	'wp_get_inline_script_tag'      => '',
 	'wp_print_inline_script_tag'    => '',
 	'_print_scripts'                => '',
-	// Чистая string-утилита для удаления внешних <script>...</script> литералов.
+	// Pure string utility for stripping outer <script>...</script> literals.
 	'wp_remove_surrounding_empty_script_tags' => '',
 	// Missing in config, kept for visibility because not suitable for isolated PHPUnit env:
 	// 'wp_scripts_get_suffix'          => '', // why: require ABSPATH . WPINC . '/version.php' (filesystem/runtime path dependency).
@@ -45,7 +45,7 @@ return [
 	// 'wp_should_load_block_assets_on_demand' => '', // why: request/admin/runtime context dependency.
 	// 'wp_localize_jquery_ui_datepicker'   => '', // why: editor/admin/context-sensitive localization runtime.
 	// 'wp_localize_community_events'        => '', // why: editor/admin/context-sensitive localization runtime.
-	// 'wp_maybe_inline_styles'        => '', // why: читает CSS-файлы по абсолютному пути (filesystem runtime dependency).
+	// 'wp_maybe_inline_styles'        => '', // why: reads CSS files by absolute path (filesystem runtime dependency).
 	// 'wp_filter_out_block_nodes'     => '', // why: tied to global styles/block parser pipeline.
 	// '_wp_normalize_relative_css_links' => '', // why: tied to global styles URL normalization pipeline.
 	// 'wp_enqueue_stored_styles'      => '', // why: depends on global-styles storage/runtime.
