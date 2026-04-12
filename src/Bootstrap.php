@@ -32,7 +32,7 @@ class Bootstrap {
 
 	private static function load_wp_runtime( string $base_dir ): void {
 		require_once "$base_dir/src/stub-wp-options.php";
-		require_once "$base_dir/src/constants.php";
+		require_once "$base_dir/src/base-wp-constants.php";
 
 		self::setup_wp_constants();
 		self::require_files( [

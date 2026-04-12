@@ -96,7 +96,7 @@ Step-By-Step: Add More WP Core Functions
 - Candidate is valid only if whole chain can be satisfied by existing project symbols or by symbols that are also valid to add now.
 
 2) Check compatibility with current test environment
-- Available stubs/constants/init are loaded by `zero.php`, `src/constants.php`, `src/stub-wp-options.php`, and `copy/init-parts/*`.
+- Available stubs/constants/init are loaded by `zero.php`, `src/base-wp-constants.php`, `src/stub-wp-options.php`, and `copy/init-parts/*`.
 - Mocked compatibility functions are in `copy/mocks/wp-includes/*`.
 - If option access is covered by `$GLOBALS['stub_wp_options']`, function is acceptable.
 - Reject candidate if any dependency in its chain remains unresolved or requires unsupported runtime behavior.

@@ -43,7 +43,7 @@ Entry point script: `zero.php` (includes `src/Bootstrap.php` and calls `\Unitest
   - `src/stub-wp-options.php`  
     Stub for `get_option()`-like calls via `$GLOBALS['stub_wp_options']`. Some kinds mock of DB-stored options, some just return hardcoded values.
 
-  - `src/constants.php`  
+  - `src/base-wp-constants.php`  
     Base WP constants and environment values for test execution.
   
 - `wordpress/`  
