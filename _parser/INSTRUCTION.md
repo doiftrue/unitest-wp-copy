@@ -48,7 +48,7 @@ Core flow:
 - Run `php _parser/run.php`.
 - `run.php` creates `Updater` and passes:
   - destination folder: `copy/`
-  - WP core source folder: `vendor/wordpress/wordpress`
+  - WP core source folder: `wordpress`
   - function/class/static-method configs.
 
 What `Updater` does:
@@ -88,7 +88,7 @@ Step-By-Step: Add More WP Core Functions
 ========================================
 
 1) Select candidate functions
-- Start from a specific WP core file. Find it in `vendor/wordpress/wordpress`.
+- Start from a specific WP core file. Find it in `wordpress`.
 - Choose functions that are pure PHP or depend only on already available copied functions/classes/mocks/init.
 - If function needs DB/filesystem/network/full runtime, usually skip it.
 - Build dependency chain for each candidate (direct + transitive calls).

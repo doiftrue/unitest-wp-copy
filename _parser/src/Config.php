@@ -25,7 +25,7 @@ class Config {
 		$project_dir = dirname( $parser_dir );
 
 		$this->dest_dir = "$project_dir/copy";
-		$this->wp_core_dir = "$project_dir/vendor/wordpress/wordpress";
+		$this->wp_core_dir = "$project_dir/wordpress";
 		$this->funcs_data = $this->build_functions_config( "$parser_dir/config/functions" );
 		$this->classes_data = include "$parser_dir/config/classes.php";
 		$this->static_methods_data = include "$parser_dir/config/static-methods.php";

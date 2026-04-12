@@ -15,9 +15,20 @@
   },
   "require": {},
   "require-dev": {
+    "composer/installers": "^2.3",
     "wordpress/wordpress": "~6.8.3",
     "phpunit/phpunit": "^9",
     "10up/wp_mock": "*"
+  },
+  "config": {
+    "allow-plugins": {
+      "composer/installers": true
+    }
+  },
+  "extra": {
+    "installer-paths": {
+      "wordpress/": [ "wordpress/wordpress" ]
+    }
   },
   "repositories": [
     {

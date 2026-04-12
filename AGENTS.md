@@ -39,7 +39,7 @@ Main entry point: `zero.php` (loads copied functions/classes and initializes bas
   - `src/constants.php`  
     Base WP constants and environment values for test execution.
   
-- `vendor/wordpress/wordpress`  
+- `wordpress/`  
   WordPress core code, used as source for copied functions/classes. Not loaded in runtime, only for reference and copy.
 
 
