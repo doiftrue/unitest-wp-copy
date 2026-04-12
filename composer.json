@@ -13,6 +13,11 @@
   "scripts": {
     "phpunit": "phpunit"
   },
+  "autoload": {
+    "psr-4": {
+      "Unitest_WP_Copy\\": "src/"
+    }
+  },
   "require": {},
   "require-dev": {
     "composer/installers": "^2.3",

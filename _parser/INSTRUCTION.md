@@ -30,7 +30,7 @@ Also take into account that my PHPUnit environment uses mocks for the following 
 I need a list of functions that depend only on PHP and other already available WordPress functions, and do not require external libraries.
 This must include full transitive dependency validation (dependency of dependency, and so on), not only direct calls.
 
-Important: if code uses options from `stub_wp_options.php`, then this function/method should be treated as usable in PHPUnit without bootstrapping WordPress, because these calls are stubbed via `$GLOBALS['stub_wp_options']`.
+Important: if code uses options from `stub-wp-options.php`, then this function/method should be treated as usable in PHPUnit without bootstrapping WordPress, because these calls are stubbed via `$GLOBALS['stub_wp_options']`.
 
 When updating parser configs (`config/functions/<wp-source-file>.php` / `config/classes.php` / `config/static-methods.php`):
 - If a function/class is not suitable or not used in this project, comment it out.
@@ -96,7 +96,7 @@ Step-By-Step: Add More WP Core Functions
 - Candidate is valid only if whole chain can be satisfied by existing project symbols or by symbols that are also valid to add now.
 
 2) Check compatibility with current test environment
-- Available stubs/constants/init are loaded by `zero.php`, `src/constants.php`, `src/stub_wp_options.php`, and `copy/init-parts/*`.
+- Available stubs/constants/init are loaded by `zero.php`, `src/constants.php`, `src/stub-wp-options.php`, and `copy/init-parts/*`.
 - Mocked compatibility functions are in `copy/mocks/wp-includes/*`.
 - If option access is covered by `$GLOBALS['stub_wp_options']`, function is acceptable.
 - Reject candidate if any dependency in its chain remains unresolved or requires unsupported runtime behavior.

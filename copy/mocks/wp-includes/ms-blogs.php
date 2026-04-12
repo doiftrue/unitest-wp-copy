@@ -4,6 +4,8 @@
  * Supports WP_Mock unit testing implementation.
  */
 
+use Unitest_WP_Copy\WP_Mock_Utils;
+
 if ( ! function_exists( 'switch_to_blog' ) ) :
 	function switch_to_blog( $new_blog_id, $deprecated = null ) {
 		if ( WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {

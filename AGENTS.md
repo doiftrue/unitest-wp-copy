@@ -9,15 +9,19 @@ The project includes:
 - minimal stubs/environment initialization so these functions can be safely executed in PHPUnit;
 - tests that verify basic behavior of included functions.
 
-Main entry point: `zero.php` (loads copied functions/classes and initializes base WP constants/globals).
+Main bootstrap API: `\Unitest_WP_Copy\Bootstrap::init()`.
+Entry point script: `zero.php` (includes `src/Bootstrap.php` and calls `\Unitest_WP_Copy\Bootstrap::init()`).
 
 ## Project structure
 
 - `zero.php`  
-  Library entry point. Loads files from `copy/`, stubs from `src/`.
+  Library entry point. Includes `src/Bootstrap.php` and calls `\Unitest_WP_Copy\Bootstrap::init()`.
 
 - `copy/`  
   Copied WordPress functions/classes.
+
+  - `copy/SYMBOLS-INFO.md`  
+    Reference list of symbols included in `copy/` (functions/classes/statics/mocks) for quick lookup.
 
   - `copy/classes-statics/`  
     Experimental compatibility layer for selected static class methods copied as plain functions.
@@ -33,7 +37,10 @@ Main entry point: `zero.php` (loads copied functions/classes and initializes bas
 - `src/`  
   Stubs and environment initialization for copied functions/classes.
 
-  - `src/stub_wp_options.php`  
+  - `src/Bootstrap.php`  
+    Main bootstrap implementation. Loads copies from `copy/`, stubs from `src/`, and initializes base WP-like globals/constants.
+
+  - `src/stub-wp-options.php`  
     Stub for `get_option()`-like calls via `$GLOBALS['stub_wp_options']`. Some kinds mock of DB-stored options, some just return hardcoded values.
 
   - `src/constants.php`  

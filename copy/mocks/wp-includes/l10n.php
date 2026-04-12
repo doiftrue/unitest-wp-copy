@@ -4,6 +4,8 @@
  * Supports WP_Mock unit testing implementation.
  */
 
+use Unitest_WP_Copy\WP_Mock_Utils;
+
 if ( ! function_exists( '__' ) ) :
 	function __( $text, $domain = 'default' ) {
 		return WP_Mock_Utils::has_handler( __FUNCTION__ )

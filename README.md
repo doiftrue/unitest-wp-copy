@@ -26,25 +26,25 @@ Usage
 Add library bootstrap in your PHPUnit bootstrap file:
 
 ```php
-require_once __DIR__ . '/vendor/doiftrue/unitest-wp-copy/zero.php';
+require_once __DIR__ . '/vendor/autoload.php';
+\Unitest_WP_Copy\Bootstrap::init();
 ```
 
-You can optionally define your own constants before including `zero.php`.
-If you do not define them, safe defaults are used.
+You can optionally define your own constants before calling `\Unitest_WP_Copy\Bootstrap::init()`.
+If you do not define them, defaults are used.
 
 ```php
 define( 'ABSPATH', '/path/to/wp/' );
 define( 'WP_CONTENT_DIR', '/path/to/wp/wp-content' );
 define( 'WP_CONTENT_URL', 'https://test.example/wp-content' );
 
-require_once __DIR__ . '/vendor/doiftrue/unitest-wp-copy/zero.php';
+require_once __DIR__ . '/vendor/autoload.php';
+\Unitest_WP_Copy\Bootstrap::init();
 ```
 
 
-What `zero.php` initializes
----------------------------
-When loaded, `zero.php`:
-
+What bootstrap initializes
+--------------------------
 - loads copied WP functions/classes and mock implementations;
 - defines default WP-like constants if they are not already defined;
 - initializes `$GLOBALS['stub_wp_options']`;
@@ -83,7 +83,7 @@ $GLOBALS['stub_wp_options']->home = 'https://changed-for-test.com';
 
 Mock Functions and WP_Mock
 --------------------------
-Library also contains mock-compatible WP functions (from `copy/mocks/...`), for example:
+Library also contains some Mock-friendly WP functions (from `copy/mocks/...`), for example:
 
 - `is_multisite()`
 - `switch_to_blog()`
@@ -97,8 +97,7 @@ When you use WP_Mock handlers, call `\WP_Mock::bootstrap()` before loading this 
 ```php
 require_once __DIR__ . '/vendor/autoload.php';
 \WP_Mock::bootstrap();
-
-require_once __DIR__ . '/vendor/doiftrue/unitest-wp-copy/zero.php';
+\Unitest_WP_Copy\Bootstrap::init();
 ```
 
 ```php
@@ -109,32 +108,21 @@ $this->assertTrue( is_multisite() );
 Overriding specific functions
 -----------------------------
 Copied functions in this project are wrapped with `if ( ! function_exists( '...' ) )`.
-So you can provide your own implementation for specific functions before loading `zero.php`.
-
-Typical flow:
-
-1. Load your custom test overrides file.
-2. Define/mimic only functions you need to change for your test project.
-3. Load `zero.php`.
-
-Example:
+So you can provide your own implementation for specific functions before bootstrap initialization. Example:
 
 ```php
 // tests/bootstrap.php
 require_once __DIR__ . '/wp-overrides.php';
-require_once __DIR__ . '/vendor/doiftrue/unitest-wp-copy/zero.php';
+require_once __DIR__ . '/vendor/autoload.php';
+\Unitest_WP_Copy\Bootstrap::init();
 ```
 
 ```php
 // tests/wp-overrides.php
-if ( ! function_exists( 'is_multisite' ) ) {
-	function is_multisite() {
-		return true;
-	}
+function is_multisite() {
+	return true;
 }
 ```
-
-In this case, your override is used, and the library copy is skipped.
 
 
 Limitations

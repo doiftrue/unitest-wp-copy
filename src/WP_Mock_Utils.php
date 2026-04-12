@@ -1,5 +1,7 @@
 <?php
 
+namespace Unitest_WP_Copy;
+
 class WP_Mock_Utils {
 
 	/**
