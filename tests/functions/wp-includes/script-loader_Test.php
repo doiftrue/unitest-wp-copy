@@ -66,4 +66,16 @@ class script_loader_Test extends \PHPUnit\Framework\TestCase {
 		$this->assertStringContainsString( 'ready-js', $output );
 	}
 
+	public function test__wp_prototype_before_jquery() {
+		$sorted = wp_prototype_before_jquery( [ 'jquery', 'prototype', 'utils' ] );
+		$this->assertSame( [ 'prototype', 'jquery', 'utils' ], array_values( $sorted ) );
+	}
+
+	public function test__wp_remove_surrounding_empty_script_tags() {
+		$this->assertSame(
+			'console.log("ok");',
+			wp_remove_surrounding_empty_script_tags( '  <script>console.log("ok");</script>  ' )
+		);
+	}
+
 }

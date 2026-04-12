@@ -3,6 +3,33 @@
 // ------------------auto-generated---------------------
 
 // wp-includes/script-loader.php (WP 6.8.5)
+if( ! function_exists( 'wp_prototype_before_jquery' ) ) :
+	function wp_prototype_before_jquery( $js_array ) {
+		$prototype = array_search( 'prototype', $js_array, true );
+	
+		if ( false === $prototype ) {
+			return $js_array;
+		}
+	
+		$jquery = array_search( 'jquery', $js_array, true );
+	
+		if ( false === $jquery ) {
+			return $js_array;
+		}
+	
+		if ( $prototype < $jquery ) {
+			return $js_array;
+		}
+	
+		unset( $js_array[ $prototype ] );
+	
+		array_splice( $js_array, $jquery, 0, 'prototype' );
+	
+		return $js_array;
+	}
+endif;
+
+// wp-includes/script-loader.php (WP 6.8.5)
 if( ! function_exists( '_print_scripts' ) ) :
 	function _print_scripts() {
 		global $wp_scripts, $compress_scripts;
@@ -181,6 +208,36 @@ endif;
 if( ! function_exists( 'wp_print_inline_script_tag' ) ) :
 	function wp_print_inline_script_tag( $data, $attributes = array() ) {
 		echo wp_get_inline_script_tag( $data, $attributes );
+	}
+endif;
+
+// wp-includes/script-loader.php (WP 6.8.5)
+if( ! function_exists( 'wp_remove_surrounding_empty_script_tags' ) ) :
+	function wp_remove_surrounding_empty_script_tags( $contents ) {
+		$contents = trim( $contents );
+		$opener   = '<SCRIPT>';
+		$closer   = '</SCRIPT>';
+	
+		if (
+			strlen( $contents ) > strlen( $opener ) + strlen( $closer ) &&
+			strtoupper( substr( $contents, 0, strlen( $opener ) ) ) === $opener &&
+			strtoupper( substr( $contents, -strlen( $closer ) ) ) === $closer
+		) {
+			return substr( $contents, strlen( $opener ), -strlen( $closer ) );
+		} else {
+			$error_message = __( 'Expected string to start with script tag (without attributes) and end with script tag, with optional whitespace.' );
+			_doing_it_wrong( __FUNCTION__, $error_message, '6.4' );
+			return sprintf(
+				'console.error(%s)',
+				wp_json_encode(
+					sprintf(
+						/* translators: %s: wp_remove_surrounding_empty_script_tags() */
+						__( 'Function %s used incorrectly in PHP.' ),
+						'wp_remove_surrounding_empty_script_tags()'
+					) . ' ' . $error_message
+				)
+			);
+		}
 	}
 endif;
 

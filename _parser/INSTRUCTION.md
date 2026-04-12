@@ -35,6 +35,7 @@ Important: if code uses options from `stub_wp_options.php`, then this function/m
 When updating parser configs (`config/functions/<wp-source-file>.php` / `config/classes.php` / `config/static-methods.php`):
 - If a function/class is not suitable or not used in this project, comment it out.
 - Do not delete such entries, so it remains visible that it exists in WordPress.
+- In config comments, always list exact symbol names (e.g. `wp_get_theme`, `wp_get_themes`), never masks/wildcards like `wp_get_theme*`.
 
 
 How Parser Works In This Project
