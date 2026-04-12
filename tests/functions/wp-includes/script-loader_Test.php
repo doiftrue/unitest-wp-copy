@@ -78,4 +78,25 @@ class script_loader_Test extends \PHPUnit\Framework\TestCase {
 		);
 	}
 
+	public function test__wp_filter_out_block_nodes() {
+		$nodes = [
+			[ 'path' => [ 'styles', 'elements' ] ],
+			[ 'path' => [ 'styles', 'blocks', 'core/paragraph' ] ],
+		];
+
+		$result = wp_filter_out_block_nodes( $nodes );
+
+		$this->assertCount( 1, $result );
+		$this->assertSame( [ 'styles', 'elements' ], array_values( $result )[0]['path'] );
+	}
+
+	public function test___wp_normalize_relative_css_links() {
+		$css = 'body{background:url(images/bg.png)}';
+		$url = 'https://example.com/wp-content/themes/my-theme/style.css';
+
+		$normalized = _wp_normalize_relative_css_links( $css, $url );
+
+		$this->assertStringContainsString( 'url(/wp-content/themes/my-theme/images/bg.png)', $normalized );
+	}
+
 }

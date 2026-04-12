@@ -29,3 +29,57 @@ if( ! function_exists( 'get_post_format_slugs' ) ) :
 	}
 endif;
 
+// wp-includes/post-formats.php (WP 6.8.5)
+if( ! function_exists( 'get_post_format_string' ) ) :
+	function get_post_format_string( $slug ) {
+		$strings = get_post_format_strings();
+		if ( ! $slug ) {
+			return $strings['standard'];
+		} else {
+			return ( isset( $strings[ $slug ] ) ) ? $strings[ $slug ] : '';
+		}
+	}
+endif;
+
+// wp-includes/post-formats.php (WP 6.8.5)
+if( ! function_exists( '_post_format_get_term' ) ) :
+	function _post_format_get_term( $term ) {
+		if ( isset( $term->slug ) ) {
+			$term->name = get_post_format_string( str_replace( 'post-format-', '', $term->slug ) );
+		}
+		return $term;
+	}
+endif;
+
+// wp-includes/post-formats.php (WP 6.8.5)
+if( ! function_exists( '_post_format_get_terms' ) ) :
+	function _post_format_get_terms( $terms, $taxonomies, $args ) {
+		if ( in_array( 'post_format', (array) $taxonomies, true ) ) {
+			if ( isset( $args['fields'] ) && 'names' === $args['fields'] ) {
+				foreach ( $terms as $order => $name ) {
+					$terms[ $order ] = get_post_format_string( str_replace( 'post-format-', '', $name ) );
+				}
+			} else {
+				foreach ( (array) $terms as $order => $term ) {
+					if ( isset( $term->taxonomy ) && 'post_format' === $term->taxonomy ) {
+						$terms[ $order ]->name = get_post_format_string( str_replace( 'post-format-', '', $term->slug ) );
+					}
+				}
+			}
+		}
+		return $terms;
+	}
+endif;
+
+// wp-includes/post-formats.php (WP 6.8.5)
+if( ! function_exists( '_post_format_wp_get_object_terms' ) ) :
+	function _post_format_wp_get_object_terms( $terms ) {
+		foreach ( (array) $terms as $order => $term ) {
+			if ( isset( $term->taxonomy ) && 'post_format' === $term->taxonomy ) {
+				$terms[ $order ]->name = get_post_format_string( str_replace( 'post-format-', '', $term->slug ) );
+			}
+		}
+		return $terms;
+	}
+endif;
+

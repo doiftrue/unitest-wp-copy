@@ -16,6 +16,8 @@ return [
 	'wp-includes/class-wp-dependencies.php'                => 'WP_Dependencies',
 	// JS asset manager built on top of WP_Dependencies.
 	'wp-includes/class-wp-scripts.php'                     => 'WP_Scripts',
+	// Script Modules in-memory registry and rendering helpers.
+	'wp-includes/class-wp-script-modules.php'              => 'WP_Script_Modules',
 	// CSS asset manager built on top of WP_Dependencies.
 	'wp-includes/class-wp-styles.php'                      => 'WP_Styles',
 	// Conditionally suitable: in-memory cache, but has function dependencies (is_multisite/get_current_blog_id/wp_suspend_cache_addition).

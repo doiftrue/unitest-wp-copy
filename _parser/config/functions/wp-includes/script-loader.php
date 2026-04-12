@@ -12,7 +12,11 @@ return [
 	'_print_scripts'                => '',
 	// Pure string utility for stripping outer <script>...</script> literals.
 	'wp_remove_surrounding_empty_script_tags' => '',
-	// Missing in config, kept for visibility because not suitable for isolated PHPUnit env:
+	// Pure block-node filter helper.
+	'wp_filter_out_block_nodes' => '',
+	// Pure CSS URL normalization helper.
+	'_wp_normalize_relative_css_links' => '',
+	// Not suitable in isolated PHPUnit env (script/style lifecycle + runtime context dependency):
 	// 'wp_scripts_get_suffix'          => '', // why: require ABSPATH . WPINC . '/version.php' (filesystem/runtime path dependency).
 	// 'wp_default_scripts'             => '', // why: massive bootstrap registry + admin/theme runtime coupling.
 	// 'wp_default_styles'              => '', // why: massive bootstrap registry + admin/theme runtime coupling.
@@ -46,8 +50,6 @@ return [
 	// 'wp_localize_jquery_ui_datepicker'   => '', // why: editor/admin/context-sensitive localization runtime.
 	// 'wp_localize_community_events'        => '', // why: editor/admin/context-sensitive localization runtime.
 	// 'wp_maybe_inline_styles'        => '', // why: reads CSS files by absolute path (filesystem runtime dependency).
-	// 'wp_filter_out_block_nodes'     => '', // why: tied to global styles/block parser pipeline.
-	// '_wp_normalize_relative_css_links' => '', // why: tied to global styles URL normalization pipeline.
 	// 'wp_enqueue_stored_styles'      => '', // why: depends on global-styles storage/runtime.
 	// 'wp_enqueue_block_style'        => '', // why: depends on block registration + filesystem-aware URL/path args.
 	// 'wp_enqueue_classic_theme_styles' => '', // why: classic-theme runtime flow.

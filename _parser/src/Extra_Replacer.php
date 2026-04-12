@@ -16,6 +16,11 @@ class Extra_Replacer {
 		"get_site_option( 'WPLANG' )"     => "\$GLOBALS['stub_wp_options']->WPLANG",
 	];
 
+	private static array $runtime_compat = [
+		// Keep rest_is_ip_address() runtime-safe without Requests autoloader.
+		'WpOrg\\Requests\\Ipv6::check_ipv6(' => 'WP_Http__is_ip_address(',
+	];
+
 	public function __construct(
 		private readonly Config $config,
 	){
@@ -23,6 +28,7 @@ class Extra_Replacer {
 
 	public function replace_in_code( string $code_text ): string {
 		$code_text = strtr( $code_text, self::$stub_wp_options );
+		$code_text = strtr( $code_text, self::$runtime_compat );
 
 		// Replace `Class::method( >>> Class__method(` in code functions body.
 		$code_text = strtr( $code_text, $this->build_static_method_replace_array() );

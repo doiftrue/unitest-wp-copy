@@ -69,6 +69,19 @@ if( ! function_exists( '_print_scripts' ) ) :
 endif;
 
 // wp-includes/script-loader.php (WP 6.8.5)
+if( ! function_exists( 'wp_filter_out_block_nodes' ) ) :
+	function wp_filter_out_block_nodes( $nodes ) {
+		return array_filter(
+			$nodes,
+			static function ( $node ) {
+				return ! in_array( 'blocks', $node['path'], true );
+			},
+			ARRAY_FILTER_USE_BOTH
+		);
+	}
+endif;
+
+// wp-includes/script-loader.php (WP 6.8.5)
 if( ! function_exists( 'wp_sanitize_script_attributes' ) ) :
 	function wp_sanitize_script_attributes( $attributes ) {
 		$html5_script_support = ! is_admin() && ! current_theme_supports( 'html5', 'script' );
@@ -208,6 +221,39 @@ endif;
 if( ! function_exists( 'wp_print_inline_script_tag' ) ) :
 	function wp_print_inline_script_tag( $data, $attributes = array() ) {
 		echo wp_get_inline_script_tag( $data, $attributes );
+	}
+endif;
+
+// wp-includes/script-loader.php (WP 6.8.5)
+if( ! function_exists( '_wp_normalize_relative_css_links' ) ) :
+	function _wp_normalize_relative_css_links( $css, $stylesheet_url ) {
+		return preg_replace_callback(
+			'#(url\s*\(\s*[\'"]?\s*)([^\'"\)]+)#',
+			static function ( $matches ) use ( $stylesheet_url ) {
+				list( , $prefix, $url ) = $matches;
+	
+				// Short-circuit if the URL does not require normalization.
+				if (
+					str_starts_with( $url, 'http:' ) ||
+					str_starts_with( $url, 'https:' ) ||
+					str_starts_with( $url, '/' ) ||
+					str_starts_with( $url, '#' ) ||
+					str_starts_with( $url, 'data:' )
+				) {
+					return $matches[0];
+				}
+	
+				// Build the absolute URL.
+				$absolute_url = dirname( $stylesheet_url ) . '/' . $url;
+				$absolute_url = str_replace( '/./', '/', $absolute_url );
+	
+				// Convert to URL related to the site root.
+				$url = wp_make_link_relative( $absolute_url );
+	
+				return $prefix . $url;
+			},
+			$css
+		);
 	}
 endif;
 
