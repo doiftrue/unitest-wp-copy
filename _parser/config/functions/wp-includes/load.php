@@ -6,6 +6,7 @@ return [
 	'wp_doing_ajax'              => '',
 	'get_current_blog_id'        => '',
 	'get_current_network_id'     => '',
+	'is_admin'                   => '',
 	'is_ssl'                     => '',
 	'wp_convert_hr_to_bytes'     => '',
 	'wp_is_ini_value_changeable' => '',
@@ -16,7 +17,6 @@ return [
 	'timer_start'                => '',
 	'timer_stop'                 => '',
 	// Missing in config, kept for visibility because not suitable for isolated PHPUnit env:
-	// 'is_admin'                                  => '', // why: requires admin bootstrap/request context.
 	// 'is_blog_admin'                             => '', // why: requires admin bootstrap/request context.
 	// 'is_login'                                  => '', // why: requires login screen/request context.
 	// 'is_network_admin'                          => '', // why: requires multisite admin context.

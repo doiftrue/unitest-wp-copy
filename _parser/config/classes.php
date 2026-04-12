@@ -10,6 +10,14 @@ return [
 	'wp-includes/class-wp-list-util.php'                   => 'WP_List_Util',
 	// внутренняя реализация хуков; чистая логика работы со списками колбэков.
 	'wp-includes/class-wp-hook.php'                        => 'WP_Hook',
+	// Базовая модель зарегистрированной зависимости скриптов/стилей.
+	'wp-includes/class-wp-dependency.php'                  => '_WP_Dependency',
+	// Базовый менеджер зависимостей (очередь/граф deps) для скриптов/стилей.
+	'wp-includes/class-wp-dependencies.php'                => 'WP_Dependencies',
+	// Менеджер JS-ассетов поверх WP_Dependencies.
+	'wp-includes/class-wp-scripts.php'                     => 'WP_Scripts',
+	// Менеджер CSS-ассетов поверх WP_Dependencies.
+	'wp-includes/class-wp-styles.php'                      => 'WP_Styles',
 	// условно подходит: in-memory кеш, но есть function-deps (is_multisite/get_current_blog_id/wp_suspend_cache_addition).
 	// При отсутствии i18n-моков возможен заход в wp_load_translations_early() (тяжелая ветка).
 	'wp-includes/class-wp-object-cache.php'                => 'WP_Object_Cache',
