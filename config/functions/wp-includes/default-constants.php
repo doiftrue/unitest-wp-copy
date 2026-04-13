@@ -6,5 +6,10 @@ return [
 	'wp_cookie_constants'           => '',
 	'wp_ssl_constants'              => '',
 	'wp_functionality_constants'    => '',
-	// 'wp_templating_constants'       => '', // get_template_directory() dependency
 ];
+
+/*
+Not suitable in isolated PHPUnit env (templating/runtime dependency):
+
+wp_templating_constants  // why: get_template_directory() dependency
+*/

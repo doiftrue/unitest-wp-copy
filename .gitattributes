@@ -1,6 +1,8 @@
 /_parser         export-ignore
 /config          export-ignore
 /tests           export-ignore
+AGENTS.md        export-ignore
 Makefile         export-ignore
-.gitattributes   export-ignore
 composer.lock    export-ignore
+phpunit.xml      export-ignore
+.gitattributes   export-ignore

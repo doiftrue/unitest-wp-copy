@@ -59,12 +59,6 @@ return [
 	'_split_str_by_whitespace'            => '',
 	'wp_rel_callback'                     => '',
 	'wp_rel_nofollow'                     => '',
-	// 'wp_rel_nofollow_callback'            => '', // deprecated
-	// 'wp_rel_ugc'                          => '', // too many dependencies
-	// 'wp_targeted_link_rel'                => '', // deprecated
-	// 'wp_targeted_link_rel_callback'       => '', // deprecated
-	// 'wp_init_targeted_link_rel_filters'   => '', // deprecated
-	// 'wp_remove_targeted_link_rel_filters' => '', // deprecated
 	'translate_smiley'                    => '',
 	'convert_smilies'                     => '',
 	'wp_iso_descrambler'                  => '',
@@ -80,7 +74,6 @@ return [
 	'ent2ncr'                             => '',
 	'format_for_editor'                   => '',
 	'_deep_replace'                       => '',
-	// 'esc_sql'                             => '', // dependency on $wpdb
 	'esc_url'                             => '',
 	'esc_url_raw'                         => '',
 	'sanitize_url'                        => '',
@@ -92,9 +85,7 @@ return [
 	'esc_xml'                             => '',
 	'tag_escape'                          => '',
 	'wp_make_link_relative'               => '',
-	// 'sanitize_option'                     => '',
 	'map_deep'                            => '',
-	// 'wp_pre_kses_block_attributes'        => '', // why: dependency on block parser (maybe can be implemented later)
 	'wp_sprintf'                          => '',
 	'wp_sprintf_l'                        => '',
 	'wp_html_excerpt'                     => '',
@@ -119,7 +110,21 @@ return [
 	'sanitize_hex_color_no_hash'          => '',
 	'maybe_hash_hex_color'                => '',
 	'capital_P_dangit'                    => '',
-	// 'wp_enqueue_emoji_styles'             => '', // why: wp_add_inline_style dependency
-	// 'print_emoji_detection_script'        => '', // why: _print_emoji_detection_script dependency
-	// '_print_emoji_detection_script'       => '', // why: file_get_contents dependency
 ];
+
+/*
+Not suitable in isolated PHPUnit env (dependency/runtime coupling):
+
+wp_rel_ugc                          // why: too many dependencies
+wp_rel_nofollow_callback            // why: deprecated
+wp_targeted_link_rel                // why: deprecated
+wp_targeted_link_rel_callback       // why: deprecated
+wp_init_targeted_link_rel_filters   // why: deprecated
+wp_remove_targeted_link_rel_filters // why: deprecated
+esc_sql                             // why: depends on $wpdb
+sanitize_option                     // why: depends on $wpdb + options/roles/i18n runtime chain
+wp_pre_kses_block_attributes        // why: depends on block parser (maybe can be implemented later)
+wp_enqueue_emoji_styles             // why: wp_add_inline_style dependency
+print_emoji_detection_script        // why: _print_emoji_detection_script dependency
+_print_emoji_detection_script       // why: file_get_contents dependency
+*/

@@ -2,7 +2,7 @@
 
 return [
 	'wp_scripts'                        => '',
-	'_wp_scripts_maybe_doing_it_wrong' => '',
+	'_wp_scripts_maybe_doing_it_wrong'  => '',
 	'wp_print_scripts'                  => '',
 	'wp_add_inline_script'              => '',
 	'wp_register_script'                => '',
