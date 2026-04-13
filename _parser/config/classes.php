@@ -67,6 +67,9 @@ return [
 	'wp-includes/class-walker-page.php'                    => 'Walker_Page',
 	// NOT IDEAL: requires term/taxonomy dependency chain (get_term_link, get_terms, get_term, get_term_feed_link).
 	'wp-includes/class-walker-category.php'                => 'Walker_Category',
+	// Partially suitable: registry/state/options API works in memory.
+	// Render/admin integration methods still depend on wider wp-admin runtime (user options, meta boxes, current user).
+	'wp-admin/includes/class-wp-screen.php'                => 'WP_Screen',
 	// (`class-phpass.php` class) portable password hashing; pure PHP.
 	'wp-includes/class-phpass.php'                         => 'PasswordHash',
 	'wp-includes/class-wp-locale.php'                      => 'WP_Locale',

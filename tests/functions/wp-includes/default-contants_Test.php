@@ -86,7 +86,6 @@ class default_contants_Test extends \PHPUnit\Framework\TestCase {
 		$this->assertTrue( defined( 'FORCE_SSL_ADMIN' ) );
 	}
 
-	/** @runInSeparateProcess */
 	public function test__wp_functionality_constants() {
 		wp_functionality_constants();
 		$this->assertSame( 60, AUTOSAVE_INTERVAL );

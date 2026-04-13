@@ -22,6 +22,7 @@ class Bootstrap {
 	private static function load_wp_symbols( string $base_dir ): void {
 		self::require_files( [
 			...glob( "$base_dir/copy/functions/*.php" ),
+			...glob( "$base_dir/copy/functions/wp-admin/includes/*.php" ),
 			...glob( "$base_dir/copy/functions/wp-includes/*.php" ),
 			...glob( "$base_dir/copy/classes-statics/*.php" ),
 			...glob( "$base_dir/copy/classes/*.php" ),
@@ -63,6 +64,12 @@ class Bootstrap {
 
 		global $wp_locale;
 		$wp_locale = new \WP_Locale();
+
+		global $wp_post_types;
+		$wp_post_types = is_array( $wp_post_types ?? null ) ? $wp_post_types : [];
+
+		global $wp_taxonomies;
+		$wp_taxonomies = is_array( $wp_taxonomies ?? null ) ? $wp_taxonomies : [];
 	}
 
 	private static function require_files( array $files ): void {
