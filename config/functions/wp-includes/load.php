@@ -15,8 +15,8 @@ return [
 	'timer_start'                => '',
 	'timer_stop'                 => '',
 	'wp_installing'              => '', // note: in 99% is not installing, and it used as deps so add it
-	// 'is_admin'                  => '', // mocked
-	// 'is_multisite'              => '', // mocked
+	'is_admin'                   => 'mockable',
+	'is_multisite'               => 'mockable',
 ];
 
 /*

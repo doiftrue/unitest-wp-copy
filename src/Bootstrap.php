@@ -27,6 +27,7 @@ class Bootstrap {
 			...glob( "$base_dir/copy/classes-statics/*.php" ),
 			...glob( "$base_dir/copy/classes/*.php" ),
 			...glob( "$base_dir/copy/mocks/wp-includes/*.php" ),
+			...glob( "$base_dir/copy/mocks/auto/wp-includes/*.php" ),
 			"$base_dir/src/WP_Mock_Utils.php"
 		] );
 	}

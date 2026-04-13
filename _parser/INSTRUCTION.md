@@ -60,6 +60,11 @@ What `Updater` does:
 - Wraps generated code with:
   - `if( ! function_exists( '...' ) ) : ... endif;`
   - `if( ! class_exists( '...' ) ) : ... endif;`
+- For functions marked with config value `'mockable'`:
+  - copies original WP function body as-is;
+  - injects WP_Mock handler check at function start:
+    - `\Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ )`
+    - `\Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() )`.
 - Applies project-specific post-processing via `Extra_Replacer`:
   - replaces known `get_option()`/`get_site_option()` calls with `$GLOBALS['stub_wp_options']`;
   - applies static-method call replacement (`ClassName::method()` -> `ClassName__method()`) from `config/static-methods.php`.
@@ -97,13 +102,15 @@ Step-By-Step: Add More WP Core Functions
 
 2) Check compatibility with current test environment
 - Available stubs/constants/init are loaded by `zero.php`, `src/base-wp-constants.php`, `src/stub-wp-options.php`, and `copy/init-parts/*`.
-- Mocked compatibility functions are in `copy/mocks/wp-includes/*`.
+- Mocked compatibility functions are in `copy/mocks/auto/*` (parser-generated) and `copy/mocks/wp-includes/*` (manual).
 - If option access is covered by `$GLOBALS['stub_wp_options']`, function is acceptable.
 - Reject candidate if any dependency in its chain remains unresolved or requires unsupported runtime behavior.
 
 3) Update parser config
 - Add function name into `config/functions/<wp-source-file>.php` (for example `config/functions/wp-includes/formatting.php`).
 - If function exists but is not suitable for this project, keep it commented (do not delete).
+- If function should keep original WP logic but must be directly mockable via WP_Mock handler, set value in config to:
+  - `'function_name' => 'mockable'`.
 
 4) Add/adjust compatibility only when needed
 - If new function requires small safe adaptation, add it via:
@@ -153,6 +160,30 @@ Class-specific differences:
 - Dependency graph: include full minimal class/function chain needed by the class.
 - Tests: one class per file in `tests/classes/...` with `__Test.php`; methods use `test__*` without class-name duplication.
 - If class is not independent in current env, add explicit `test__not_independent_*` with `expectException( Error::class )` (see `tests/INSTRUCTIONS.md`).
+
+
+Step-By-Step: Copy Auto-Mock Functions (Original WP Logic + Handler)
+====================================================================
+
+Use this when function logic should stay identical to WP core, but direct WP_Mock handler override is needed in tests.
+
+How it works:
+- Config source: `config/functions/<wp-source-file>.php` with value `'mockable'`.
+- Destination: `copy/mocks/auto/<wp-source-file>.php`.
+- Parser copies original function code and injects handler check at function start.
+- Generated function is wrapped with `if ( ! function_exists( ... ) )`.
+
+Rules:
+- Auto-mock is for "same WP logic + handler injection only".
+- If function needs behavior changes for this project runtime, keep/manual-implement it in `copy/mocks/wp-includes/*`.
+
+Workflow:
+1) Add function to `config/functions/<wp-source-file>.php` with value `'mockable'`.
+2) `make run.parser`.
+3) Verify generated code in `copy/mocks/auto/...`.
+4) Add/update tests in `tests/mocks/...`:
+   - one test for fallback/original behavior;
+   - one test for `WP_Mock::userFunction(...)` override behavior.
 
 
 Step-By-Step: Copy Static Class Methods As Functions (Experimental)

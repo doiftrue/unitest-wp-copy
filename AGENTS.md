@@ -32,7 +32,9 @@ Entry point script: `zero.php` (includes `src/Bootstrap.php` and calls `\Unitest
     Minimal WP initialization fragments required to run some functions.
 
   - `copy/mocks/`  
-    WP functions/methods which code was changed (mocked) to work like in WP environment, but without loading WP. For example, `switch_to_blog()` is mocked to change the value of `$GLOBALS['current_blog_id']` instead of loading the new blog.
+    Mock-friendly function layer.
+    - `copy/mocks/auto/` — parser-generated copies of original WP functions with injected `WP_Mock` handler check at function start.
+    - `copy/mocks/wp-includes/` — manually maintained mocks where logic is intentionally changed for this project runtime.
 
 - `src/`  
   Stubs and environment initialization for copied functions/classes.
@@ -52,8 +54,9 @@ Entry point script: `zero.php` (includes `src/Bootstrap.php` and calls `\Unitest
 
 ### `_parser/`
   Separate part of project that creates `copy/` code copiing it from WP core code.
-  Internal generator/updater for copied functions, classes, and selected static class methods.
+  Internal generator/updater for copied functions, mockable functions, classes, and selected static class methods.
   - `config/functions/` — function lists split by WP source file path;
+    - use value `'mockable'` for symbols that should be generated into `copy/mocks/auto/*` with injected WP_Mock handler.
   - `config/classes.php` — class list;
   - `config/static-methods.php` — selected static class methods copied as plain functions;
   - `_parser/INSTRUCTION.md` — instructions for updating copied code.
@@ -84,6 +87,8 @@ Entry point script: `zero.php` (includes `src/Bootstrap.php` and calls `\Unitest
 
 - Do not manually remove or alter logic in `copy/` without understanding the impact: these files are synchronized via `_parser`.
 - When adding a new function/class/static-method shim, update the relevant `config/*.php` first, then run `_parser/run.php`.
+- Put value `'mockable'` in `config/functions/*` when you need original WP logic with injected WP_Mock handler.
+- Keep `copy/mocks/wp-includes/*` only for manual mocks with intentionally changed behavior.
 - Detailed parser workflow and class/function inclusion rules: see `_parser/INSTRUCTION.md`.
 - Detailed testing conventions (naming, file layout, class-vs-function test rules): see `tests/INSTRUCTIONS.md`.
 - Project code and code comments must be written in English.

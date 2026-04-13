@@ -126,7 +126,12 @@ $GLOBALS['stub_wp_options']->home = 'https://changed-for-test.com';
 
 Mock Functions and WP_Mock
 --------------------------
-Library also contains some Mock-friendly WP functions (from `copy/mocks/...`), for example:
+Library also contains mock-friendly WP functions from two sources:
+
+- `copy/mocks/auto/...`: copies of original WP functions with injected WP_Mock handler support.
+- `copy/mocks/wp-includes/...`: manual mocks where runtime behavior is intentionally adapted for this project.
+
+Examples:
 
 - `is_multisite()`
 - `switch_to_blog()`

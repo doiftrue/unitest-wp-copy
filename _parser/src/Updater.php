@@ -13,6 +13,7 @@ class Updater {
 	private Extra_Replacer $extra_replacer;
 
 	private readonly Config $config;
+	private readonly Copied_Lister $lister;
 
 
 	public function __construct() {
@@ -21,32 +22,29 @@ class Updater {
 
 	public function setup(): void {
 		$this->extra_replacer = new Extra_Replacer( $this->config );
+		$this->lister = new Copied_Lister( $this->config );
 	}
 
 	public function run(): void {
-		$lister = new Copied_Lister( $this->config );
-
 		/** @var File_Update_Strategy[] $strategies */
 		$strategies = [
-			new Copy_Functions( $this->config, $lister ),
-			new Copy_Classes( $this->config, $lister ),
-			new Copy_Static_Methods( $this->config, $lister ),
+			new Copy_Functions( $this->config, $this->lister ),
+			new Copy_Classes( $this->config, $this->lister ),
+			new Copy_Static_Methods( $this->config, $this->lister ),
 		];
 
 		foreach( $strategies as $strategy ){
-			foreach( $strategy->get_items() as $item ){
-				$dest_file = $strategy->get_dest_file( $item );
+			foreach( $strategy->get_items() as $items_data ){
+				$dest_file = $strategy->get_dest_file( $items_data );
+				$content = $strategy->generate_content( $items_data );
 
-				$this->run_update_pipeline(
-					$dest_file,
-					fn() => $strategy->generate_content( $item )
-				);
+				$this->run_update_pipeline( $dest_file, $content );
 
-				echo $strategy->get_log_message( $item ) . "\n";
+				echo $strategy->get_log_message( $items_data ) . "\n";
 			}
 		}
 
-		$lister->generate_list();
+		$this->lister->generate_list();
 
 		echo "DONE!\n";
 	}
@@ -55,12 +53,12 @@ class Updater {
 	 * Common file update pipeline:
 	 * read destination -> reset generated block -> append generated code -> run replacements -> write file.
 	 */
-	private function run_update_pipeline( string $dest_file, callable $content_generator ): void {
+	private function run_update_pipeline( string $dest_file, string $new_content ): void {
 		$this->check_create_dest_file( $dest_file );
 
 		$dest_content = file_get_contents( $dest_file );
 		$dest_content = $this->reset_generated_part( $dest_content );
-		$dest_content .= $content_generator();
+		$dest_content .= $new_content;
 
 		$dest_content = $this->extra_replacer->replace_in_code( $dest_content );
 

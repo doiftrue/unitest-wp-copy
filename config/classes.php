@@ -38,8 +38,8 @@ return [
 	// - wp-includes/html-api/class-wp-html-span.php
 	// - wp-includes/html-api/class-wp-html-decoder.php
 	// - wp-includes/html-api/class-wp-html-doctype-info.php
-	'wp-includes/html-api/class-wp-html-tag-processor.php' => 'WP_HTML_Tag_Processor',
-	'wp-includes/html-api/class-wp-html-attribute-token.php' => 'WP_HTML_Attribute_Token',
+	'wp-includes/html-api/class-wp-html-tag-processor.php'    => 'WP_HTML_Tag_Processor',
+	'wp-includes/html-api/class-wp-html-attribute-token.php'  => 'WP_HTML_Attribute_Token',
 	'wp-includes/html-api/class-wp-html-text-replacement.php' => 'WP_HTML_Text_Replacement',
 	'wp-includes/html-api/class-wp-html-span.php'             => 'WP_HTML_Span',
 	'wp-includes/html-api/class-wp-html-decoder.php'          => 'WP_HTML_Decoder',
