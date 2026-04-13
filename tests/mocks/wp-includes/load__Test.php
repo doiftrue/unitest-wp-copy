@@ -24,4 +24,22 @@ class load_mocks__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertTrue( is_multisite() );
 	}
 
+	public function test__is_admin() {
+		$GLOBALS['current_screen'] = new class {
+			public function in_admin() {
+				return true;
+			}
+		};
+
+		$this->assertTrue( is_admin() );
+
+		unset( $GLOBALS['current_screen'] );
+		$this->assertFalse( is_admin() );
+	}
+
+	public function test__is_admin_wp_mock_handler() {
+		\WP_Mock::userFunction( 'is_admin' )->andReturn( true );
+		$this->assertTrue( is_admin() );
+	}
+
 }

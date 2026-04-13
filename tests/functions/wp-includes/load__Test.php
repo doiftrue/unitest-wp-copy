@@ -25,19 +25,6 @@ class load__Test extends \PHPUnit\Framework\TestCase {
 		}
 	}
 
-	public function test__is_admin() {
-		$GLOBALS['current_screen'] = new class {
-			public function in_admin() {
-				return true;
-			}
-		};
-
-		$this->assertTrue( is_admin() );
-
-		unset( $GLOBALS['current_screen'] );
-		$this->assertFalse( is_admin() );
-	}
-
 	public function test__wp_convert_hr_to_bytes() {
 		$this->assertSame( 2 * MB_IN_BYTES, wp_convert_hr_to_bytes( '2M' ) );
 	}

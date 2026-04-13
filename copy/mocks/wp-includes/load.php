@@ -23,3 +23,19 @@ if ( ! function_exists( 'is_multisite' ) ) :
 		return false;
 	}
 endif;
+
+if ( ! function_exists( 'is_admin' ) ) :
+	function is_admin() {
+		if ( WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return (bool) WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+
+		if ( isset( $GLOBALS['current_screen'] ) ) {
+			return $GLOBALS['current_screen']->in_admin();
+		} elseif ( defined( 'WP_ADMIN' ) ) {
+			return WP_ADMIN;
+		}
+
+		return false;
+	}
+endif;

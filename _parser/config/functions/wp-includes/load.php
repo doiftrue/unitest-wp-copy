@@ -6,16 +6,16 @@ return [
 	'wp_doing_ajax'              => '',
 	'get_current_blog_id'        => '',
 	'get_current_network_id'     => '',
-	'is_admin'                   => '',
 	'is_ssl'                     => '',
 	'wp_convert_hr_to_bytes'     => '',
 	'wp_is_ini_value_changeable' => '',
 	'is_wp_error'                => '',
-	// 'is_multisite'               => '', // why: moved to copy/mocks to add WP_Mock handler support.
 	'absint'                     => '',
 	'timer_float'                => '',
 	'timer_start'                => '',
 	'timer_stop'                 => '',
+	// 'is_admin'                  => '', // mocked
+	// 'is_multisite'               => '', // mocked
 	// Not suitable in isolated PHPUnit env (bootstrap/request/admin runtime coupling):
 	// 'is_blog_admin'                             => '', // why: requires admin bootstrap/request context.
 	// 'is_login'                                  => '', // why: requires login screen/request context.

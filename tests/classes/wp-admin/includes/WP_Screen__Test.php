@@ -20,6 +20,10 @@ class WP_Screen__Test extends \PHPUnit\Framework\TestCase {
 	}
 
 	protected function tearDown(): void {
+		unset( $GLOBALS['current_screen'] );
+		unset( $GLOBALS['taxnow'] );
+		unset( $GLOBALS['typenow'] );
+
 		$GLOBALS['wp_filter'] = [];
 		$GLOBALS['wp_filters'] = [];
 		$GLOBALS['wp_current_filter'] = [];
