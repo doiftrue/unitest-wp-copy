@@ -9,7 +9,7 @@ use Unitest_WP_Copy\WP_Mock_Utils;
 if ( ! function_exists( 'is_multisite' ) ) :
 	function is_multisite() {
 		if ( WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
-			return (bool) WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+			return WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
 		}
 
 		if ( defined( 'MULTISITE' ) ) {

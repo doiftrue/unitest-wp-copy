@@ -4,7 +4,7 @@
 
 // wp-includes/class-wp-block-patterns-registry.php (WP 6.8.5)
 if( ! class_exists( 'WP_Block_Patterns_Registry' ) ) :
-	final class WP_Block_Patterns_Registry {
+	class WP_Block_Patterns_Registry {
 		/**
 		 * Registered block patterns array.
 		 *

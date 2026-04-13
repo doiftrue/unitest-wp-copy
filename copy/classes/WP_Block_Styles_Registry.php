@@ -4,7 +4,7 @@
 
 // wp-includes/class-wp-block-styles-registry.php (WP 6.8.5)
 if( ! class_exists( 'WP_Block_Styles_Registry' ) ) :
-	final class WP_Block_Styles_Registry {
+	class WP_Block_Styles_Registry {
 		/**
 		 * Registered block styles, as `$block_name => $block_style_name => $block_style_properties` multidimensional arrays.
 		 *
