@@ -1,7 +1,6 @@
 <?php
 
 return [
-	// hooks
 	'add_filter'                  => '',
 	'_wp_call_all_hook'           => '',
 	'apply_filters'               => '',

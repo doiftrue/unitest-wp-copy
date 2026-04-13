@@ -45,7 +45,7 @@ The parser is a whitelist-based copier of selected WordPress code, not a depende
 So dependency-chain validation is a mandatory manual step before adding anything to config.
 
 Core flow:
-- Edit lists in `_parser/config/functions/<wp-source-file>.php`, `_parser/config/classes.php`, and (when needed) `_parser/config/static-methods.php`.
+- Edit lists in `config/functions/<wp-source-file>.php`, `config/classes.php`, and (when needed) `config/static-methods.php`.
 - Run `php _parser/run.php`.
 - `run.php` creates `Updater` and passes:
   - destination folder: `copy/`
@@ -102,7 +102,7 @@ Step-By-Step: Add More WP Core Functions
 - Reject candidate if any dependency in its chain remains unresolved or requires unsupported runtime behavior.
 
 3) Update parser config
-- Add function name into `_parser/config/functions/<wp-source-file>.php` (for example `_parser/config/functions/wp-includes/formatting.php`).
+- Add function name into `config/functions/<wp-source-file>.php` (for example `config/functions/wp-includes/formatting.php`).
 - If function exists but is not suitable for this project, keep it commented (do not delete).
 
 4) Add/adjust compatibility only when needed
@@ -149,7 +149,7 @@ Use the same flow as "Step-By-Step: Add More WP Core Functions":
 
 Class-specific differences:
 - Candidate filter: prefer pure PHP/in-memory classes; skip classes requiring full WP runtime.
-- Config target: use `_parser/config/classes.php`.
+- Config target: use `config/classes.php`.
 - Dependency graph: include full minimal class/function chain needed by the class.
 - Tests: one class per file in `tests/classes/...` with `__Test.php`; methods use `test__*` without class-name duplication.
 - If class is not independent in current env, add explicit `test__not_independent_*` with `expectException( Error::class )` (see `tests/INSTRUCTIONS.md`).
@@ -174,7 +174,7 @@ How it works:
   - `ClassName::methodName(...)` -> `ClassName__methodName(...)`.
 
 Workflow:
-1) Add source class + methods in `_parser/config/static-methods.php` using explicit format:
+1) Add source class + methods in `config/static-methods.php` using explicit format:
    - `'path/to/class-file.php' => [ 'class' => 'ClassName', 'methods' => [ 'methodName' => '' ] ]`
 2) Run `php _parser/run.php` (or `make run.parser`).
 3) Verify generated function in `copy/classes-statics/ClassName.php`.

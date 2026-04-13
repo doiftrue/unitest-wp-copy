@@ -13,24 +13,25 @@ class Config {
 
 	public readonly string $wp_version;
 
-	/** @see _parser/config/functions/**.php */
+	/** @see config/functions/**.php */
 	public readonly array $funcs_data;
 
-	/** @see _parser/config/classes.php */
+	/** @see config/classes.php */
 	public readonly array $classes_data;
 
-	/** @see _parser/config/static-methods.php */
+	/** @see config/static-methods.php */
 	public readonly array $static_methods_data;
 
 	public function __construct() {
 		$parser_dir = dirname( __DIR__ );
 		$project_dir = dirname( $parser_dir );
+		$config_dir = "$project_dir/config";
 
 		$this->dest_dir = "$project_dir/copy";
 		$this->wp_core_dir = "$project_dir/wordpress";
-		$this->funcs_data = $this->build_functions_config( "$parser_dir/config/functions" );
-		$this->classes_data = include "$parser_dir/config/classes.php";
-		$this->static_methods_data = include "$parser_dir/config/static-methods.php";
+		$this->funcs_data = $this->build_functions_config( "$config_dir/functions" );
+		$this->classes_data = include "$config_dir/classes.php";
+		$this->static_methods_data = include "$config_dir/static-methods.php";
 
 		require_once "$this->wp_core_dir/wp-includes/version.php";
 		/** @var string $wp_version */

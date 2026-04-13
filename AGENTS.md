@@ -53,9 +53,9 @@ Entry point script: `zero.php` (includes `src/Bootstrap.php` and calls `\Unitest
 ### `_parser/`
   Separate part of project that creates `copy/` code copiing it from WP core code.
   Internal generator/updater for copied functions, classes, and selected static class methods.
-  - `_parser/config/functions/` — function lists split by WP source file path;
-  - `_parser/config/classes.php` — class list;
-  - `_parser/config/static-methods.php` — selected static class methods copied as plain functions;
+  - `config/functions/` — function lists split by WP source file path;
+  - `config/classes.php` — class list;
+  - `config/static-methods.php` — selected static class methods copied as plain functions;
   - `_parser/INSTRUCTION.md` — instructions for updating copied code.
   - `_parser/run.php` — update runner.
     - Should be run with `make run.parser` command.
@@ -83,7 +83,7 @@ Entry point script: `zero.php` (includes `src/Bootstrap.php` and calls `\Unitest
 ## Important notes for agents
 
 - Do not manually remove or alter logic in `copy/` without understanding the impact: these files are synchronized via `_parser`.
-- When adding a new function/class/static-method shim, update the relevant `_parser/config-*.php` first, then run `_parser/run.php`.
+- When adding a new function/class/static-method shim, update the relevant `config/*.php` first, then run `_parser/run.php`.
 - Detailed parser workflow and class/function inclusion rules: see `_parser/INSTRUCTION.md`.
 - Detailed testing conventions (naming, file layout, class-vs-function test rules): see `tests/INSTRUCTIONS.md`.
 - Project code and code comments must be written in English.
