@@ -2,9 +2,9 @@
 
 return [
 	'home_url'            => '',
-	'get_home_url'        => '',
+	'get_home_url'        => 'mockable',
 	'site_url'            => '',
-	'get_site_url'        => '',
+	'get_site_url'        => 'mockable',
 	'wp_internal_hosts'   => '',
 	'wp_is_internal_link' => '',
 	'set_url_scheme'      => '',

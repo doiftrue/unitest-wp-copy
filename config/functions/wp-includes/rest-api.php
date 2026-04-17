@@ -20,9 +20,9 @@ return [
 	'rest_sanitize_request_arg' => '',
 	'rest_parse_request_arg'    => '',
 	// Lightweight deprecation/wrong-usage header emitters.
-	'rest_handle_deprecated_function' => '',
-	'rest_handle_deprecated_argument' => '',
-	'rest_handle_doing_it_wrong'      => '',
+	'rest_handle_deprecated_function' => 'mockable',
+	'rest_handle_deprecated_argument' => 'mockable',
+	'rest_handle_doing_it_wrong'      => 'mockable',
 	// Runtime-safe IP validator (IPv6 check is adapted via parser replacer).
 	'rest_is_ip_address' => '',
 	// Primitive type sanitizers/checkers.

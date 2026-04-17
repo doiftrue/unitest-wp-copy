@@ -1,12 +1,12 @@
 <?php
 
 return [
-	'wp_get_development_mode'    => '',
-	'wp_get_environment_type'    => '',
-	'wp_doing_ajax'              => '',
+	'wp_get_development_mode'    => 'mockable',
+	'wp_get_environment_type'    => 'mockable',
+	'wp_doing_ajax'              => 'mockable',
 	'get_current_blog_id'        => '',
 	'get_current_network_id'     => '',
-	'is_ssl'                     => '',
+	'is_ssl'                     => 'mockable',
 	'wp_convert_hr_to_bytes'     => '',
 	'wp_is_ini_value_changeable' => '',
 	'is_wp_error'                => '',
@@ -14,7 +14,7 @@ return [
 	'timer_float'                => '',
 	'timer_start'                => '',
 	'timer_stop'                 => '',
-	'wp_installing'              => '', // note: in 99% is not installing, and it used as deps so add it
+	'wp_installing'              => 'mockable', // note: in 99% is not installing, and it used as deps so add it
 	'is_admin'                   => 'mockable',
 	'is_multisite'               => 'mockable',
 ];

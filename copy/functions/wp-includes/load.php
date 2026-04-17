@@ -3,94 +3,6 @@
 // ------------------auto-generated---------------------
 
 // wp-includes/load.php (WP 6.8.5)
-if( ! function_exists( 'wp_get_environment_type' ) ) :
-	function wp_get_environment_type() {
-		static $current_env = '';
-	
-		if ( ! defined( 'WP_RUN_CORE_TESTS' ) && $current_env ) {
-			return $current_env;
-		}
-	
-		$wp_environments = array(
-			'local',
-			'development',
-			'staging',
-			'production',
-		);
-	
-		// Add a note about the deprecated WP_ENVIRONMENT_TYPES constant.
-		if ( defined( 'WP_ENVIRONMENT_TYPES' ) && function_exists( '_deprecated_argument' ) ) {
-			if ( function_exists( '__' ) ) {
-				/* translators: %s: WP_ENVIRONMENT_TYPES */
-				$message = sprintf( __( 'The %s constant is no longer supported.' ), 'WP_ENVIRONMENT_TYPES' );
-			} else {
-				$message = sprintf( 'The %s constant is no longer supported.', 'WP_ENVIRONMENT_TYPES' );
-			}
-	
-			_deprecated_argument(
-				'define()',
-				'5.5.1',
-				$message
-			);
-		}
-	
-		// Check if the environment variable has been set, if `getenv` is available on the system.
-		if ( function_exists( 'getenv' ) ) {
-			$has_env = getenv( 'WP_ENVIRONMENT_TYPE' );
-			if ( false !== $has_env ) {
-				$current_env = $has_env;
-			}
-		}
-	
-		// Fetch the environment from a constant, this overrides the global system variable.
-		if ( defined( 'WP_ENVIRONMENT_TYPE' ) && WP_ENVIRONMENT_TYPE ) {
-			$current_env = WP_ENVIRONMENT_TYPE;
-		}
-	
-		// Make sure the environment is an allowed one, and not accidentally set to an invalid value.
-		if ( ! in_array( $current_env, $wp_environments, true ) ) {
-			$current_env = 'production';
-		}
-	
-		return $current_env;
-	}
-endif;
-
-// wp-includes/load.php (WP 6.8.5)
-if( ! function_exists( 'wp_get_development_mode' ) ) :
-	function wp_get_development_mode() {
-		static $current_mode = null;
-	
-		if ( ! defined( 'WP_RUN_CORE_TESTS' ) && null !== $current_mode ) {
-			return $current_mode;
-		}
-	
-		$development_mode = WP_DEVELOPMENT_MODE;
-	
-		// Exclusively for core tests, rely on the `$_wp_tests_development_mode` global.
-		if ( defined( 'WP_RUN_CORE_TESTS' ) && isset( $GLOBALS['_wp_tests_development_mode'] ) ) {
-			$development_mode = $GLOBALS['_wp_tests_development_mode'];
-		}
-	
-		$valid_modes = array(
-			'core',
-			'plugin',
-			'theme',
-			'all',
-			'',
-		);
-	
-		if ( ! in_array( $development_mode, $valid_modes, true ) ) {
-			$development_mode = '';
-		}
-	
-		$current_mode = $development_mode;
-	
-		return $current_mode;
-	}
-endif;
-
-// wp-includes/load.php (WP 6.8.5)
 if( ! function_exists( 'timer_float' ) ) :
 	function timer_float() {
 		return microtime( true ) - $_SERVER['REQUEST_TIME_FLOAT'];
@@ -164,46 +76,6 @@ if( ! function_exists( 'get_current_network_id' ) ) :
 endif;
 
 // wp-includes/load.php (WP 6.8.5)
-if( ! function_exists( 'wp_installing' ) ) :
-	function wp_installing( $is_installing = null ) {
-		static $installing = null;
-	
-		// Support for the `WP_INSTALLING` constant, defined before WP is loaded.
-		if ( is_null( $installing ) ) {
-			$installing = defined( 'WP_INSTALLING' ) && WP_INSTALLING;
-		}
-	
-		if ( ! is_null( $is_installing ) ) {
-			$old_installing = $installing;
-			$installing     = $is_installing;
-	
-			return (bool) $old_installing;
-		}
-	
-		return (bool) $installing;
-	}
-endif;
-
-// wp-includes/load.php (WP 6.8.5)
-if( ! function_exists( 'is_ssl' ) ) :
-	function is_ssl() {
-		if ( isset( $_SERVER['HTTPS'] ) ) {
-			if ( 'on' === strtolower( $_SERVER['HTTPS'] ) ) {
-				return true;
-			}
-	
-			if ( '1' === (string) $_SERVER['HTTPS'] ) {
-				return true;
-			}
-		} elseif ( isset( $_SERVER['SERVER_PORT'] ) && ( '443' === (string) $_SERVER['SERVER_PORT'] ) ) {
-			return true;
-		}
-	
-		return false;
-	}
-endif;
-
-// wp-includes/load.php (WP 6.8.5)
 if( ! function_exists( 'wp_convert_hr_to_bytes' ) ) :
 	function wp_convert_hr_to_bytes( $value ) {
 		$value = strtolower( trim( $value ) );
@@ -247,20 +119,6 @@ if( ! function_exists( 'wp_is_ini_value_changeable' ) ) :
 		}
 	
 		return false;
-	}
-endif;
-
-// wp-includes/load.php (WP 6.8.5)
-if( ! function_exists( 'wp_doing_ajax' ) ) :
-	function wp_doing_ajax() {
-		/**
-		 * Filters whether the current request is a WordPress Ajax request.
-		 *
-		 * @since 4.7.0
-		 *
-		 * @param bool $wp_doing_ajax Whether the current request is a WordPress Ajax request.
-		 */
-		return apply_filters( 'wp_doing_ajax', defined( 'DOING_AJAX' ) && DOING_AJAX );
 	}
 endif;
 

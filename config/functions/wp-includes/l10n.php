@@ -5,7 +5,7 @@ return [
 	'_nx_noop'                   => '',
 	'is_rtl'                     => '',
 	'translate_nooped_plural'    => '',
-	'get_locale'                 => '',
+	'get_locale'                 => 'mockable',
 	'wp_get_list_item_separator' => '',
 	'wp_get_word_count_type'     => '',
 	'before_last_bar'            => '',
