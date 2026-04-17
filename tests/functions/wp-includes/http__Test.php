@@ -19,4 +19,22 @@ class http__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertFalse( _wp_translate_php_url_constant_to_key( 999 ) );
 	}
 
+	public function test__wp_http_validate_url() {
+		$this->assertSame(
+			'https://unitest-wp-copy.loc/path?a=1',
+			wp_http_validate_url( 'https://unitest-wp-copy.loc/path?a=1' )
+		);
+
+		$this->assertFalse( wp_http_validate_url( 'ftp://unitest-wp-copy.loc/path' ) );
+		$this->assertFalse( wp_http_validate_url( 'https://user:pass@unitest-wp-copy.loc/path' ) );
+		$this->assertFalse( wp_http_validate_url( 'http://192.168.0.1/path' ) );
+
+		$allow_local_host = static function () {
+			return true;
+		};
+		add_filter( 'http_request_host_is_external', $allow_local_host, 10, 3 );
+		$this->assertSame( 'http://192.168.0.1/path', wp_http_validate_url( 'http://192.168.0.1/path' ) );
+		remove_filter( 'http_request_host_is_external', $allow_local_host, 10 );
+	}
+
 }

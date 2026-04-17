@@ -4,6 +4,7 @@ return [
 	'wp_parse_url' => '',
 	'_wp_translate_php_url_constant_to_key' => '',
 	'_get_component_from_parsed_url_array' => '',
+	'wp_http_validate_url' => '',
 ];
 
 /*
@@ -17,7 +18,6 @@ is_allowed_http_origin               // why: CORS/runtime dependency.
 ms_allowed_http_request_hosts        // why: multisite runtime dependency.
 send_origin_headers                  // why: sends headers/output side effects.
 wp_http_supports                     // why: transport/runtime dependency.
-wp_http_validate_url                 // why: HTTP policy/runtime dependency.
 wp_remote_get                        // why: network I/O dependency.
 wp_remote_head                       // why: network I/O dependency.
 wp_remote_post                       // why: network I/O dependency.
