@@ -60,7 +60,11 @@ What `Updater` does:
 - Wraps generated code with:
   - `if( ! function_exists( '...' ) ) : ... endif;`
   - `if( ! class_exists( '...' ) ) : ... endif;`
-- For functions marked with config value `'mockable'`:
+- Function config value format:
+  - `'function_name' => '<since-version>'`
+  - `'function_name' => '<since-version> mockable'`
+- If configured `<since-version>` is higher than current `wp_version`, parser skips that function.
+- For functions marked as `mockable`:
   - copies original WP function body as-is;
   - injects WP_Mock handler check at function start:
     - `\Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ )`
@@ -109,8 +113,9 @@ Step-By-Step: Add More WP Core Functions
 3) Update parser config
 - Add function name into `config/functions/<wp-source-file>.php` (for example `config/functions/wp-includes/formatting.php`).
 - If function exists but is not suitable for this project, keep it commented (do not delete).
-- If function should keep original WP logic but must be directly mockable via WP_Mock handler, set value in config to:
-  - `'function_name' => 'mockable'`.
+- Set config value with function "since" version:
+  - regular function: `'function_name' => '<since-version>'`
+  - mockable function: `'function_name' => '<since-version> mockable'`
 
 4) Add/adjust compatibility only when needed
 - If new function requires small safe adaptation, add it via:
@@ -168,7 +173,7 @@ Step-By-Step: Copy Auto-Mock Functions (Original WP Logic + Handler)
 Use this when function logic should stay identical to WP core, but direct WP_Mock handler override is needed in tests.
 
 How it works:
-- Config source: `config/functions/<wp-source-file>.php` with value `'mockable'`.
+- Config source: `config/functions/<wp-source-file>.php` with value `'<since-version> mockable'`.
 - Destination: `copy/mocks/auto/<wp-source-file>.php`.
 - Parser copies original function code and injects handler check at function start.
 - Generated function is wrapped with `if ( ! function_exists( ... ) )`.
@@ -178,7 +183,7 @@ Rules:
 - If function needs behavior changes for this project runtime, keep/manual-implement it in `copy/mocks/wp-includes/*`.
 
 Workflow:
-1) Add function to `config/functions/<wp-source-file>.php` with value `'mockable'`.
+1) Add function to `config/functions/<wp-source-file>.php` with value `'<since-version> mockable'`.
 2) `make run.parser`.
 3) Verify generated code in `copy/mocks/auto/...`.
 4) Add/update tests in `tests/mocks/...`:

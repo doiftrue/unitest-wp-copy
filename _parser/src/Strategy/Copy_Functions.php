@@ -25,12 +25,46 @@ class Copy_Functions extends File_Update_Strategy {
 	private function split_target_func_names( array $funcs_info ): array {
 		$split = [];
 
-		foreach( $funcs_info as $func_name => $type ){
-			$target = ( 'mockable' === $type ) ? 'mockable' : 'regular';
+		foreach( $funcs_info as $func_name => $raw_value ){
+			$meta = $this->parse_func_config_value( $raw_value );
+			if( ! $this->is_supported_for_current_wp( $meta['since'] ) ){
+				continue;
+			}
+
+			$target = $meta['mockable'] ? 'mockable' : 'regular';
 			$split[ $target ][ $func_name ] = '';
 		}
 
 		return $split;
+	}
+
+	/**
+	 * Config value format: '6.8.0'  OR  'mockable' OR  '6.8.0 mockable'
+	 *
+	 * @return array{
+	 *     since:string,
+	 *     mockable:bool
+	 * }
+	 */
+	private function parse_func_config_value( string $raw_value ): array {
+		if( ! trim( $raw_value ) ){
+			return [
+				'since' => '0.0.0',
+				'mockable' => false,
+			];
+		}
+
+		$tokens = preg_split( '~\s+~', $raw_value );
+		$tokens = array_values( array_filter( $tokens ) );
+
+		return [
+			'since' => $tokens[0] ?: '0.0.0',
+			'mockable' => (bool) ( $tokens[1] ?? '' ),
+		];
+	}
+
+	private function is_supported_for_current_wp( string $since ): bool {
+		return version_compare( $this->config->wp_version, $since, '>=' );
 	}
 
 	public function get_dest_file( array $item ): string {

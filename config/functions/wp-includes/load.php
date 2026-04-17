@@ -1,22 +1,22 @@
 <?php
 
 return [
-	'wp_get_development_mode'    => 'mockable',
-	'wp_get_environment_type'    => 'mockable',
-	'wp_doing_ajax'              => 'mockable',
-	'get_current_blog_id'        => '',
-	'get_current_network_id'     => '',
-	'is_ssl'                     => 'mockable',
-	'wp_convert_hr_to_bytes'     => '',
-	'wp_is_ini_value_changeable' => '',
-	'is_wp_error'                => '',
-	'absint'                     => '',
-	'timer_float'                => '',
-	'timer_start'                => '',
-	'timer_stop'                 => '',
-	'wp_installing'              => 'mockable', // note: in 99% is not installing, and it used as deps so add it
-	'is_admin'                   => 'mockable',
-	'is_multisite'               => 'mockable',
+	'wp_get_development_mode'    => '6.3.0 mockable',
+	'wp_get_environment_type'    => '5.5.0 mockable',
+	'wp_doing_ajax'              => '4.7.0 mockable',
+	'get_current_blog_id'        => '3.1.0',
+	'get_current_network_id'     => '4.6.0',
+	'is_ssl'                     => '2.6.0 mockable',
+	'wp_convert_hr_to_bytes'     => '2.3.0',
+	'wp_is_ini_value_changeable' => '4.6.0',
+	'is_wp_error'                => '2.1.0',
+	'absint'                     => '2.5.0',
+	'timer_float'                => '5.8.0',
+	'timer_start'                => '0.71',
+	'timer_stop'                 => '0.71',
+	'wp_installing'              => '4.4.0 mockable', // note: in 99% is not installing, and it used as deps so add it
+	'is_admin'                   => '1.5.1 mockable',
+	'is_multisite'               => '3.0.0 mockable',
 ];
 
 /*

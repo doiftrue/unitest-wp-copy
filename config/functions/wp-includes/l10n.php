@@ -1,14 +1,14 @@
 <?php
 
 return [
-	'_n_noop'                    => '',
-	'_nx_noop'                   => '',
-	'is_rtl'                     => '',
-	'translate_nooped_plural'    => '',
-	'get_locale'                 => 'mockable',
-	'wp_get_list_item_separator' => '',
-	'wp_get_word_count_type'     => '',
-	'before_last_bar'            => '',
+	'_n_noop'                    => '2.5.0',
+	'_nx_noop'                   => '2.8.0',
+	'is_rtl'                     => '3.0.0',
+	'translate_nooped_plural'    => '3.1.0',
+	'get_locale'                 => '1.5.0 mockable',
+	'wp_get_list_item_separator' => '6.0.0',
+	'wp_get_word_count_type'     => '6.2.0',
+	'before_last_bar'            => '2.8.0',
 	// '__'         => '', // mocked
 	// '_e'         => '', // mocked
 	// '_x'         => '', // mocked

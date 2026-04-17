@@ -1,15 +1,15 @@
 <?php
 
 return [
-	'get_taxonomies'                      => 'mockable',
-	'get_taxonomy'                        => 'mockable',
-	'taxonomy_exists'                     => 'mockable',
-	'is_taxonomy_hierarchical'            => 'mockable',
-	'register_taxonomy_for_object_type'   => '',
-	'unregister_taxonomy_for_object_type' => '',
-	'sanitize_term'                       => '',
-	'sanitize_term_field'                 => '',
-	'is_taxonomy_viewable'                => 'mockable',
+	'get_taxonomies'                      => '3.0.0 mockable',
+	'get_taxonomy'                        => '2.3.0 mockable',
+	'taxonomy_exists'                     => '3.0.0 mockable',
+	'is_taxonomy_hierarchical'            => '2.3.0 mockable',
+	'register_taxonomy_for_object_type'   => '3.0.0',
+	'unregister_taxonomy_for_object_type' => '3.7.0',
+	'sanitize_term'                       => '2.3.0',
+	'sanitize_term_field'                 => '2.3.0',
+	'is_taxonomy_viewable'                => '5.1.0 mockable',
 ];
 
 /*

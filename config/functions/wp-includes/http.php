@@ -1,10 +1,10 @@
 <?php
 
 return [
-	'wp_parse_url' => '',
-	'_wp_translate_php_url_constant_to_key' => '',
-	'_get_component_from_parsed_url_array' => '',
-	'wp_http_validate_url' => '',
+	'wp_parse_url'                          => '4.4.0',
+	'_wp_translate_php_url_constant_to_key' => '4.7.0',
+	'_get_component_from_parsed_url_array'  => '4.7.0',
+	'wp_http_validate_url'                  => '3.5.2',
 ];
 
 /*

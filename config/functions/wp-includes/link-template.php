@@ -1,16 +1,16 @@
 <?php
 
 return [
-	'home_url'            => '',
-	'get_home_url'        => 'mockable',
-	'site_url'            => '',
-	'get_site_url'        => 'mockable',
-	'wp_internal_hosts'   => '',
-	'wp_is_internal_link' => '',
-	'set_url_scheme'      => '',
-	'plugins_url'         => '',
-	'content_url'         => '',
-	'includes_url'        => '',
+	'home_url'            => '3.0.0',
+	'get_home_url'        => '3.0.0 mockable',
+	'site_url'            => '3.0.0',
+	'get_site_url'        => '3.0.0 mockable',
+	'wp_internal_hosts'   => '6.2.0',
+	'wp_is_internal_link' => '6.2.0',
+	'set_url_scheme'      => '3.4.0',
+	'plugins_url'         => '2.6.0',
+	'content_url'         => '2.6.0',
+	'includes_url'        => '2.6.0',
 ];
 
 /*

@@ -2,15 +2,15 @@
 
 return [
 	// Pure label map used by multiple format helpers.
-	'get_post_format_strings'          => '',
+	'get_post_format_strings'          => '3.1.0',
 	// Pure slug list derived from get_post_format_strings().
-	'get_post_format_slugs'            => '',
+	'get_post_format_slugs'            => '3.1.0',
 	// Pure label resolver for a single post format slug.
-	'get_post_format_string'           => '',
+	'get_post_format_string'           => '3.1.0',
 	// Pure term-name adaptation helpers (do not query DB by themselves).
-	'_post_format_get_term'            => '',
-	'_post_format_get_terms'           => '',
-	'_post_format_wp_get_object_terms' => '',
+	'_post_format_get_term'            => '3.1.0',
+	'_post_format_get_terms'           => '3.1.0',
+	'_post_format_wp_get_object_terms' => '3.1.0',
 
 ];
 

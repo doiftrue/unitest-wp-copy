@@ -1,11 +1,11 @@
 <?php
 
 return [
-	'wp_initial_constants'          => '',
-	'wp_plugin_directory_constants' => '',
-	'wp_cookie_constants'           => '',
-	'wp_ssl_constants'              => '',
-	'wp_functionality_constants'    => '',
+	'wp_initial_constants'          => '3.0.0',
+	'wp_plugin_directory_constants' => '3.0.0',
+	'wp_cookie_constants'           => '3.0.0',
+	'wp_ssl_constants'              => '3.0.0',
+	'wp_functionality_constants'    => '3.0.0',
 ];
 
 /*

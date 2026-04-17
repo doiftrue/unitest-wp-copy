@@ -2,16 +2,16 @@
 
 return [
 	// Required for script/style tag helpers and WP_Scripts/WP_Styles classes.
-	'current_theme_supports' => '',
+	'current_theme_supports' => '2.9.0',
 	// In-memory registry of theme-support features.
-	'add_theme_support'             => '',
-	'get_theme_support'             => '',
-	'remove_theme_support'          => '',
-	'_remove_theme_support'         => '',
-	'register_theme_feature'        => '',
-	'get_registered_theme_features' => '',
-	'get_registered_theme_feature'  => '',
-	'create_initial_theme_features' => '',
+	'add_theme_support'             => '2.9.0',
+	'get_theme_support'             => '3.1.0',
+	'remove_theme_support'          => '3.0.0',
+	'_remove_theme_support'         => '3.1.0',
+	'register_theme_feature'        => '5.5.0',
+	'get_registered_theme_features' => '5.5.0',
+	'get_registered_theme_feature'  => '5.5.0',
+	'create_initial_theme_features' => '5.5.0',
 ];
 
 /*

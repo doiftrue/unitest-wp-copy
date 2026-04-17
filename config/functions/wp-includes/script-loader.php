@@ -2,20 +2,20 @@
 
 return [
 	// Pure in-memory utility for handle reordering.
-	'wp_prototype_before_jquery' => '',
+	'wp_prototype_before_jquery' => '2.3.1',
 	// Minimal helper functions required by WP_Scripts when rendering tags.
-	'wp_sanitize_script_attributes' => '',
-	'wp_get_script_tag'             => '',
-	'wp_print_script_tag'           => '',
-	'wp_get_inline_script_tag'      => '',
-	'wp_print_inline_script_tag'    => '',
-	'_print_scripts'                => '',
+	'wp_sanitize_script_attributes' => '5.7.0',
+	'wp_get_script_tag'             => '5.7.0',
+	'wp_print_script_tag'           => '5.7.0',
+	'wp_get_inline_script_tag'      => '5.7.0',
+	'wp_print_inline_script_tag'    => '5.7.0',
+	'_print_scripts'                => '0.0.0',
 	// Pure string utility for stripping outer <script>...</script> literals.
-	'wp_remove_surrounding_empty_script_tags' => '',
+	'wp_remove_surrounding_empty_script_tags' => '6.4.0',
 	// Pure block-node filter helper.
-	'wp_filter_out_block_nodes' => '',
+	'wp_filter_out_block_nodes' => '6.1.0',
 	// Pure CSS URL normalization helper.
-	'_wp_normalize_relative_css_links' => '',
+	'_wp_normalize_relative_css_links' => '5.9.0',
 ];
 
 /*
