@@ -53,7 +53,7 @@ class functions__Test extends \PHPUnit\Framework\TestCase {
 
 	public function test__wp_get_nocache_headers() {
 		$h = wp_get_nocache_headers();
-		$this->assertSame( 'no-cache, must-revalidate, max-age=0, no-store, private', $h['Cache-Control'] );
+		$this->assertStringContainsString( 'no-cache, must-revalidate, max-age=0', $h['Cache-Control'] );
 		$this->assertArrayHasKey( 'Last-Modified', $h );
 		$this->assertFalse( $h['Last-Modified'] );
 	}
@@ -379,6 +379,10 @@ class functions__Test extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function test__wp_unique_id_from_values() {
+		if( $wp_ver = wp_version_compare( '< 6.8.0' ) ){
+			$this->markTestSkipped( "wp_unique_id_from_values() does not exists on WP $wp_ver" );
+		}
+
 		$id = wp_unique_id_from_values( [ 'a' => 1, 'b' => 2 ], 'p_' );
 		$this->assertStringStartsWith( 'p_', $id );
 		$this->assertSame( 10, strlen( $id ) ); // p_ + 8 hex

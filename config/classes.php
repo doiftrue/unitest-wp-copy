@@ -61,8 +61,8 @@ return [
 	'wp-includes/class-wp-block-styles-registry.php'       => 'WP_Block_Styles_Registry',
 	// Base abstract walker for tree structures; pure logic.
 	'wp-includes/class-wp-walker.php'                      => 'Walker',
-	// NOT IDEAL: constructor requires get_privacy_policy_url(), which pulls permalink/post-status dependencies.
-	'wp-includes/class-walker-nav-menu.php'                => 'Walker_Nav_Menu',
+	// NOT IDEAL: depends on get_privacy_policy_url() and nav-menu runtime chain; excluded from this project.
+	// 'wp-includes/class-walker-nav-menu.php'             => 'Walker_Nav_Menu',
 	// NOT IDEAL: requires post/permalink/date dependency chain (get_post, get_permalink, mysql2date, page_for_posts).
 	'wp-includes/class-walker-page.php'                    => 'Walker_Page',
 	// NOT IDEAL: requires term/taxonomy dependency chain (get_term_link, get_terms, get_term, get_term_feed_link).

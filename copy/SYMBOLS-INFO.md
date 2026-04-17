@@ -81,7 +81,6 @@ WP_Script_Modules{}
 WP_Scripts{}
 WP_Styles{}
 Walker_Category{}
-Walker_Nav_Menu{}
 Walker_Page{}
 Walker{}
 _()

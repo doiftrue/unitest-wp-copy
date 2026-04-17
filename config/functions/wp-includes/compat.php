@@ -15,8 +15,8 @@ return [
 	'str_contains'       => '',
 	'str_starts_with'    => '',
 	'str_ends_with'      => '',
-	'array_find'         => '',
-	'array_find_key'     => '',
-	'array_any'          => '',
-	'array_all'          => '',
+	'array_find'         => '6.8.0',
+	'array_find_key'     => '6.8.0',
+	'array_any'          => '6.8.0',
+	'array_all'          => '6.8.0',
 ];

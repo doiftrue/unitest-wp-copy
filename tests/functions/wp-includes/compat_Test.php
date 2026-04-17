@@ -81,24 +81,40 @@ class compat_Test extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function test__array_find() {
+		if( $wp_ver = wp_version_compare( '< 6.8.0' ) ){
+			$this->markTestSkipped( "array_find() does not exists on WP $wp_ver" );
+		}
+
 		$a = [ 1, 2, 3 ];
 		$this->assertSame( 2, array_find( $a, static fn( $v ) => 2 === $v ) );
 		$this->assertNull( array_find( $a, static fn( $v ) => 9 === $v ) );
 	}
 
 	public function test__array_find_key() {
+		if( $wp_ver = wp_version_compare( '< 6.8.0' ) ){
+			$this->markTestSkipped( "array_find_key() does not exists on WP $wp_ver" );
+		}
+
 		$a = [ 'x' => 10, 'y' => 20 ];
 		$this->assertSame( 'y', array_find_key( $a, static fn( $v ) => 20 === $v ) );
 		$this->assertNull( array_find_key( $a, static fn( $v ) => 5 === $v ) );
 	}
 
 	public function test__array_any() {
+		if( $wp_ver = wp_version_compare( '< 6.8.0' ) ){
+			$this->markTestSkipped( "array_any() does not exists on WP $wp_ver" );
+		}
+
 		$a = [ 1, 2, 3 ];
 		$this->assertTrue( array_any( $a, static fn( $v ) => $v > 2 ) );
 		$this->assertFalse( array_any( $a, static fn( $v ) => $v > 5 ) );
 	}
 
 	public function test__array_all() {
+		if( $wp_ver = wp_version_compare( '< 6.8.0' ) ){
+			$this->markTestSkipped( "array_all() does not exists on WP $wp_ver" );
+		}
+
 		$a = [ 2, 4, 6 ];
 		$this->assertTrue( array_all( $a, static fn( $v ) => 0 === ( $v % 2 ) ) );
 		$this->assertFalse( array_all( $a, static fn( $v ) => $v > 4 ) );
