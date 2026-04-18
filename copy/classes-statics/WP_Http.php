@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-http.php (WP 6.8.5)
+// wp-includes/class-wp-http.php (WP 6.9.4)
 if( ! function_exists( 'WP_Http__make_absolute_url' ) ) :
 	function WP_Http__make_absolute_url( $maybe_relative_path, $url ) {
 			if ( empty( $url ) ) {
@@ -78,7 +78,7 @@ if( ! function_exists( 'WP_Http__make_absolute_url' ) ) :
 		}
 endif;
 
-// wp-includes/class-wp-http.php (WP 6.8.5)
+// wp-includes/class-wp-http.php (WP 6.9.4)
 if( ! function_exists( 'WP_Http__is_ip_address' ) ) :
 	function WP_Http__is_ip_address( $maybe_ip ) {
 			if ( preg_match( '/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/', $maybe_ip ) ) {

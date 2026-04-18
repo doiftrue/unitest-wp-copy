@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/functions.wp-scripts.php (WP 6.8.5)
+// wp-includes/functions.wp-scripts.php (WP 6.9.4)
 if( ! function_exists( 'wp_scripts' ) ) :
 	function wp_scripts() {
 		global $wp_scripts;
@@ -15,7 +15,7 @@ if( ! function_exists( 'wp_scripts' ) ) :
 	}
 endif;
 
-// wp-includes/functions.wp-scripts.php (WP 6.8.5)
+// wp-includes/functions.wp-scripts.php (WP 6.9.4)
 if( ! function_exists( '_wp_scripts_maybe_doing_it_wrong' ) ) :
 	function _wp_scripts_maybe_doing_it_wrong( $function_name, $handle = '' ) {
 		if ( did_action( 'init' ) || did_action( 'wp_enqueue_scripts' )
@@ -48,7 +48,7 @@ if( ! function_exists( '_wp_scripts_maybe_doing_it_wrong' ) ) :
 	}
 endif;
 
-// wp-includes/functions.wp-scripts.php (WP 6.8.5)
+// wp-includes/functions.wp-scripts.php (WP 6.9.4)
 if( ! function_exists( 'wp_print_scripts' ) ) :
 	function wp_print_scripts( $handles = false ) {
 		global $wp_scripts;
@@ -76,7 +76,7 @@ if( ! function_exists( 'wp_print_scripts' ) ) :
 	}
 endif;
 
-// wp-includes/functions.wp-scripts.php (WP 6.8.5)
+// wp-includes/functions.wp-scripts.php (WP 6.9.4)
 if( ! function_exists( 'wp_add_inline_script' ) ) :
 	function wp_add_inline_script( $handle, $data, $position = 'after' ) {
 		_wp_scripts_maybe_doing_it_wrong( __FUNCTION__, $handle );
@@ -99,7 +99,7 @@ if( ! function_exists( 'wp_add_inline_script' ) ) :
 	}
 endif;
 
-// wp-includes/functions.wp-scripts.php (WP 6.8.5)
+// wp-includes/functions.wp-scripts.php (WP 6.9.4)
 if( ! function_exists( 'wp_register_script' ) ) :
 	function wp_register_script( $handle, $src, $deps = array(), $ver = false, $args = array() ) {
 		if ( ! is_array( $args ) ) {
@@ -118,11 +118,14 @@ if( ! function_exists( 'wp_register_script' ) ) :
 		if ( ! empty( $args['strategy'] ) ) {
 			$wp_scripts->add_data( $handle, 'strategy', $args['strategy'] );
 		}
+		if ( ! empty( $args['fetchpriority'] ) ) {
+			$wp_scripts->add_data( $handle, 'fetchpriority', $args['fetchpriority'] );
+		}
 		return $registered;
 	}
 endif;
 
-// wp-includes/functions.wp-scripts.php (WP 6.8.5)
+// wp-includes/functions.wp-scripts.php (WP 6.9.4)
 if( ! function_exists( 'wp_localize_script' ) ) :
 	function wp_localize_script( $handle, $object_name, $l10n ) {
 		$wp_scripts = wp_scripts();
@@ -131,7 +134,7 @@ if( ! function_exists( 'wp_localize_script' ) ) :
 	}
 endif;
 
-// wp-includes/functions.wp-scripts.php (WP 6.8.5)
+// wp-includes/functions.wp-scripts.php (WP 6.9.4)
 if( ! function_exists( 'wp_set_script_translations' ) ) :
 	function wp_set_script_translations( $handle, $domain = 'default', $path = '' ) {
 		global $wp_scripts;
@@ -145,7 +148,7 @@ if( ! function_exists( 'wp_set_script_translations' ) ) :
 	}
 endif;
 
-// wp-includes/functions.wp-scripts.php (WP 6.8.5)
+// wp-includes/functions.wp-scripts.php (WP 6.9.4)
 if( ! function_exists( 'wp_deregister_script' ) ) :
 	function wp_deregister_script( $handle ) {
 		global $pagenow;
@@ -207,7 +210,7 @@ if( ! function_exists( 'wp_deregister_script' ) ) :
 	}
 endif;
 
-// wp-includes/functions.wp-scripts.php (WP 6.8.5)
+// wp-includes/functions.wp-scripts.php (WP 6.9.4)
 if( ! function_exists( 'wp_enqueue_script' ) ) :
 	function wp_enqueue_script( $handle, $src = '', $deps = array(), $ver = false, $args = array() ) {
 		_wp_scripts_maybe_doing_it_wrong( __FUNCTION__, $handle );
@@ -231,13 +234,16 @@ if( ! function_exists( 'wp_enqueue_script' ) ) :
 			if ( ! empty( $args['strategy'] ) ) {
 				$wp_scripts->add_data( $_handle[0], 'strategy', $args['strategy'] );
 			}
+			if ( ! empty( $args['fetchpriority'] ) ) {
+				$wp_scripts->add_data( $_handle[0], 'fetchpriority', $args['fetchpriority'] );
+			}
 		}
 	
 		$wp_scripts->enqueue( $handle );
 	}
 endif;
 
-// wp-includes/functions.wp-scripts.php (WP 6.8.5)
+// wp-includes/functions.wp-scripts.php (WP 6.9.4)
 if( ! function_exists( 'wp_dequeue_script' ) ) :
 	function wp_dequeue_script( $handle ) {
 		_wp_scripts_maybe_doing_it_wrong( __FUNCTION__, $handle );
@@ -246,7 +252,7 @@ if( ! function_exists( 'wp_dequeue_script' ) ) :
 	}
 endif;
 
-// wp-includes/functions.wp-scripts.php (WP 6.8.5)
+// wp-includes/functions.wp-scripts.php (WP 6.9.4)
 if( ! function_exists( 'wp_script_is' ) ) :
 	function wp_script_is( $handle, $status = 'enqueued' ) {
 		_wp_scripts_maybe_doing_it_wrong( __FUNCTION__, $handle );
@@ -255,7 +261,7 @@ if( ! function_exists( 'wp_script_is' ) ) :
 	}
 endif;
 
-// wp-includes/functions.wp-scripts.php (WP 6.8.5)
+// wp-includes/functions.wp-scripts.php (WP 6.9.4)
 if( ! function_exists( 'wp_script_add_data' ) ) :
 	function wp_script_add_data( $handle, $key, $value ) {
 		return wp_scripts()->add_data( $handle, $key, $value );

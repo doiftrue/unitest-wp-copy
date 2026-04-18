@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-hook.php (WP 6.8.5)
+// wp-includes/class-wp-hook.php (WP 6.9.4)
 if( ! class_exists( 'WP_Hook' ) ) :
 	class WP_Hook implements Iterator, ArrayAccess {
 	
@@ -68,6 +68,10 @@ if( ! class_exists( 'WP_Hook' ) ) :
 		 * @param int      $accepted_args The number of arguments the function accepts.
 		 */
 		public function add_filter( $hook_name, $callback, $priority, $accepted_args ) {
+			if ( null === $priority ) {
+				$priority = 0;
+			}
+	
 			$idx = _wp_filter_build_unique_id( $hook_name, $callback, $priority );
 	
 			$priority_existed = isset( $this->callbacks[ $priority ] );
@@ -175,9 +179,13 @@ if( ! class_exists( 'WP_Hook' ) ) :
 		 * @return bool Whether the callback existed before it was removed.
 		 */
 		public function remove_filter( $hook_name, $callback, $priority ) {
+			if ( null === $priority ) {
+				$priority = 0;
+			}
+	
 			$function_key = _wp_filter_build_unique_id( $hook_name, $callback, $priority );
 	
-			$exists = isset( $this->callbacks[ $priority ][ $function_key ] );
+			$exists = isset( $function_key, $this->callbacks[ $priority ][ $function_key ] );
 	
 			if ( $exists ) {
 				unset( $this->callbacks[ $priority ][ $function_key ] );
@@ -203,16 +211,21 @@ if( ! class_exists( 'WP_Hook' ) ) :
 		 * that evaluates to false (e.g. 0), so use the `===` operator for testing the return value.
 		 *
 		 * @since 4.7.0
+		 * @since 6.9.0 Added the `$priority` parameter.
 		 *
 		 * @param string                      $hook_name Optional. The name of the filter hook. Default empty.
 		 * @param callable|string|array|false $callback  Optional. The callback to check for.
 		 *                                               This method can be called unconditionally to speculatively check
 		 *                                               a callback that may or may not exist. Default false.
+		 * @param int|false                   $priority  Optional. The specific priority at which to check for the callback.
+		 *                                               Default false.
 		 * @return bool|int If `$callback` is omitted, returns boolean for whether the hook has
 		 *                  anything registered. When checking a specific function, the priority
 		 *                  of that hook is returned, or false if the function is not attached.
+		 *                  If `$callback` and `$priority` are both provided, a boolean is returned
+		 *                  for whether the specific function is registered at that priority.
 		 */
-		public function has_filter( $hook_name = '', $callback = false ) {
+		public function has_filter( $hook_name = '', $callback = false, $priority = false ) {
 			if ( false === $callback ) {
 				return $this->has_filters();
 			}
@@ -223,9 +236,13 @@ if( ! class_exists( 'WP_Hook' ) ) :
 				return false;
 			}
 	
-			foreach ( $this->callbacks as $priority => $callbacks ) {
+			if ( is_int( $priority ) ) {
+				return isset( $this->callbacks[ $priority ][ $function_key ] );
+			}
+	
+			foreach ( $this->callbacks as $callback_priority => $callbacks ) {
 				if ( isset( $callbacks[ $function_key ] ) ) {
-					return $priority;
+					return $callback_priority;
 				}
 			}
 	

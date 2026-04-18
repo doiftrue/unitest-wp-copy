@@ -2,68 +2,101 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/link-template.php (WP 6.8.5)
+// wp-includes/link-template.php (WP 6.9.4)
 if( ! function_exists( 'home_url' ) ) :
 	function home_url( $path = '', $scheme = null ) {
 		return get_home_url( null, $path, $scheme );
 	}
 endif;
 
-// wp-includes/link-template.php (WP 6.8.5)
+// wp-includes/link-template.php (WP 6.9.4)
 if( ! function_exists( 'site_url' ) ) :
 	function site_url( $path = '', $scheme = null ) {
 		return get_site_url( null, $path, $scheme );
 	}
 endif;
 
-// wp-includes/link-template.php (WP 6.8.5)
-if( ! function_exists( 'includes_url' ) ) :
-	function includes_url( $path = '', $scheme = null ) {
-		$url = site_url( '/' . WPINC . '/', $scheme );
+// wp-includes/link-template.php (WP 6.9.4)
+if( ! function_exists( 'wp_internal_hosts' ) ) :
+	function wp_internal_hosts() {
+		static $internal_hosts;
 	
-		if ( $path && is_string( $path ) ) {
-			$url .= ltrim( $path, '/' );
+		if ( empty( $internal_hosts ) ) {
+			/**
+			 * Filters the array of URL hosts which are considered internal.
+			 *
+			 * @since 6.2.0
+			 *
+			 * @param string[] $internal_hosts An array of internal URL hostnames.
+			 */
+			$internal_hosts = apply_filters(
+				'wp_internal_hosts',
+				array(
+					wp_parse_url( home_url(), PHP_URL_HOST ),
+				)
+			);
+			$internal_hosts = array_unique(
+				array_map( 'strtolower', (array) $internal_hosts )
+			);
 		}
 	
-		/**
-		 * Filters the URL to the includes directory.
-		 *
-		 * @since 2.8.0
-		 * @since 5.8.0 The `$scheme` parameter was added.
-		 *
-		 * @param string      $url    The complete URL to the includes directory including scheme and path.
-		 * @param string      $path   Path relative to the URL to the wp-includes directory. Blank string
-		 *                            if no path is specified.
-		 * @param string|null $scheme Scheme to give the includes URL context. Accepts
-		 *                            'http', 'https', 'relative', or null. Default null.
-		 */
-		return apply_filters( 'includes_url', $url, $path, $scheme );
+		return $internal_hosts;
 	}
 endif;
 
-// wp-includes/link-template.php (WP 6.8.5)
-if( ! function_exists( 'content_url' ) ) :
-	function content_url( $path = '' ) {
-		$url = set_url_scheme( WP_CONTENT_URL );
-	
-		if ( $path && is_string( $path ) ) {
-			$url .= '/' . ltrim( $path, '/' );
+// wp-includes/link-template.php (WP 6.9.4)
+if( ! function_exists( 'wp_is_internal_link' ) ) :
+	function wp_is_internal_link( $link ) {
+		$link = strtolower( $link );
+		if ( in_array( wp_parse_url( $link, PHP_URL_SCHEME ), wp_allowed_protocols(), true ) ) {
+			return in_array( wp_parse_url( $link, PHP_URL_HOST ), wp_internal_hosts(), true );
 		}
-	
-		/**
-		 * Filters the URL to the content directory.
-		 *
-		 * @since 2.8.0
-		 *
-		 * @param string $url  The complete URL to the content directory including scheme and path.
-		 * @param string $path Path relative to the URL to the content directory. Blank string
-		 *                     if no path is specified.
-		 */
-		return apply_filters( 'content_url', $url, $path );
+		return false;
 	}
 endif;
 
-// wp-includes/link-template.php (WP 6.8.5)
+// wp-includes/link-template.php (WP 6.9.4)
+if( ! function_exists( 'set_url_scheme' ) ) :
+	function set_url_scheme( $url, $scheme = null ) {
+		$orig_scheme = $scheme;
+	
+		if ( ! $scheme ) {
+			$scheme = is_ssl() ? 'https' : 'http';
+		} elseif ( 'admin' === $scheme || 'login' === $scheme || 'login_post' === $scheme || 'rpc' === $scheme ) {
+			$scheme = is_ssl() || force_ssl_admin() ? 'https' : 'http';
+		} elseif ( 'http' !== $scheme && 'https' !== $scheme && 'relative' !== $scheme ) {
+			$scheme = is_ssl() ? 'https' : 'http';
+		}
+	
+		$url = trim( $url );
+		if ( str_starts_with( $url, '//' ) ) {
+			$url = 'http:' . $url;
+		}
+	
+		if ( 'relative' === $scheme ) {
+			$url = ltrim( preg_replace( '#^\w+://[^/]*#', '', $url ) );
+			if ( '' !== $url && '/' === $url[0] ) {
+				$url = '/' . ltrim( $url, "/ \t\n\r\0\x0B" );
+			}
+		} else {
+			$url = preg_replace( '#^\w+://#', $scheme . '://', $url );
+		}
+	
+		/**
+		 * Filters the resulting URL after setting the scheme.
+		 *
+		 * @since 3.4.0
+		 *
+		 * @param string      $url         The complete URL including scheme and path.
+		 * @param string      $scheme      Scheme applied to the URL. One of 'http', 'https', or 'relative'.
+		 * @param string|null $orig_scheme Scheme requested for the URL. One of 'http', 'https', 'login',
+		 *                                 'login_post', 'admin', 'relative', 'rest', 'rpc', or null.
+		 */
+		return apply_filters( 'set_url_scheme', $url, $scheme, $orig_scheme );
+	}
+endif;
+
+// wp-includes/link-template.php (WP 6.9.4)
 if( ! function_exists( 'plugins_url' ) ) :
 	function plugins_url( $path = '', $plugin = '' ) {
 	
@@ -105,83 +138,50 @@ if( ! function_exists( 'plugins_url' ) ) :
 	}
 endif;
 
-// wp-includes/link-template.php (WP 6.8.5)
-if( ! function_exists( 'set_url_scheme' ) ) :
-	function set_url_scheme( $url, $scheme = null ) {
-		$orig_scheme = $scheme;
+// wp-includes/link-template.php (WP 6.9.4)
+if( ! function_exists( 'content_url' ) ) :
+	function content_url( $path = '' ) {
+		$url = set_url_scheme( WP_CONTENT_URL );
 	
-		if ( ! $scheme ) {
-			$scheme = is_ssl() ? 'https' : 'http';
-		} elseif ( 'admin' === $scheme || 'login' === $scheme || 'login_post' === $scheme || 'rpc' === $scheme ) {
-			$scheme = is_ssl() || force_ssl_admin() ? 'https' : 'http';
-		} elseif ( 'http' !== $scheme && 'https' !== $scheme && 'relative' !== $scheme ) {
-			$scheme = is_ssl() ? 'https' : 'http';
-		}
-	
-		$url = trim( $url );
-		if ( str_starts_with( $url, '//' ) ) {
-			$url = 'http:' . $url;
-		}
-	
-		if ( 'relative' === $scheme ) {
-			$url = ltrim( preg_replace( '#^\w+://[^/]*#', '', $url ) );
-			if ( '' !== $url && '/' === $url[0] ) {
-				$url = '/' . ltrim( $url, "/ \t\n\r\0\x0B" );
-			}
-		} else {
-			$url = preg_replace( '#^\w+://#', $scheme . '://', $url );
+		if ( $path && is_string( $path ) ) {
+			$url .= '/' . ltrim( $path, '/' );
 		}
 	
 		/**
-		 * Filters the resulting URL after setting the scheme.
+		 * Filters the URL to the content directory.
 		 *
-		 * @since 3.4.0
+		 * @since 2.8.0
 		 *
-		 * @param string      $url         The complete URL including scheme and path.
-		 * @param string      $scheme      Scheme applied to the URL. One of 'http', 'https', or 'relative'.
-		 * @param string|null $orig_scheme Scheme requested for the URL. One of 'http', 'https', 'login',
-		 *                                 'login_post', 'admin', 'relative', 'rest', 'rpc', or null.
+		 * @param string $url  The complete URL to the content directory including scheme and path.
+		 * @param string $path Path relative to the URL to the content directory. Blank string
+		 *                     if no path is specified.
 		 */
-		return apply_filters( 'set_url_scheme', $url, $scheme, $orig_scheme );
+		return apply_filters( 'content_url', $url, $path );
 	}
 endif;
 
-// wp-includes/link-template.php (WP 6.8.5)
-if( ! function_exists( 'wp_internal_hosts' ) ) :
-	function wp_internal_hosts() {
-		static $internal_hosts;
+// wp-includes/link-template.php (WP 6.9.4)
+if( ! function_exists( 'includes_url' ) ) :
+	function includes_url( $path = '', $scheme = null ) {
+		$url = site_url( '/' . WPINC . '/', $scheme );
 	
-		if ( empty( $internal_hosts ) ) {
-			/**
-			 * Filters the array of URL hosts which are considered internal.
-			 *
-			 * @since 6.2.0
-			 *
-			 * @param string[] $internal_hosts An array of internal URL hostnames.
-			 */
-			$internal_hosts = apply_filters(
-				'wp_internal_hosts',
-				array(
-					wp_parse_url( home_url(), PHP_URL_HOST ),
-				)
-			);
-			$internal_hosts = array_unique(
-				array_map( 'strtolower', (array) $internal_hosts )
-			);
+		if ( $path && is_string( $path ) ) {
+			$url .= ltrim( $path, '/' );
 		}
 	
-		return $internal_hosts;
-	}
-endif;
-
-// wp-includes/link-template.php (WP 6.8.5)
-if( ! function_exists( 'wp_is_internal_link' ) ) :
-	function wp_is_internal_link( $link ) {
-		$link = strtolower( $link );
-		if ( in_array( wp_parse_url( $link, PHP_URL_SCHEME ), wp_allowed_protocols(), true ) ) {
-			return in_array( wp_parse_url( $link, PHP_URL_HOST ), wp_internal_hosts(), true );
-		}
-		return false;
+		/**
+		 * Filters the URL to the includes directory.
+		 *
+		 * @since 2.8.0
+		 * @since 5.8.0 The `$scheme` parameter was added.
+		 *
+		 * @param string      $url    The complete URL to the includes directory including scheme and path.
+		 * @param string      $path   Path relative to the URL to the wp-includes directory. Blank string
+		 *                            if no path is specified.
+		 * @param string|null $scheme Scheme to give the includes URL context. Accepts
+		 *                            'http', 'https', 'relative', or null. Default null.
+		 */
+		return apply_filters( 'includes_url', $url, $path, $scheme );
 	}
 endif;
 

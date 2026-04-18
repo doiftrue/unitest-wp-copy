@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "039d697d71beffb9b4895e27c1ad93b1",
+    "content-hash": "41fe2e558ce9bfb6fffd06230d1b7d35",
     "packages": [],
     "packages-dev": [
         {
@@ -2188,10 +2188,10 @@
         },
         {
             "name": "wordpress/wordpress",
-            "version": "6.8.5",
+            "version": "6.9.4",
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/release/wordpress-6.8.5-no-content.zip"
+                "url": "https://downloads.wordpress.org/release/wordpress-6.9.4-no-content.zip"
             },
             "type": "wordpress-dropin"
         }

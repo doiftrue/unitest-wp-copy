@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-admin/includes/class-wp-screen.php (WP 6.8.5)
+// wp-admin/includes/class-wp-screen.php (WP 6.9.4)
 if( ! class_exists( 'WP_Screen' ) ) :
 	class WP_Screen {
 		/**
@@ -975,6 +975,8 @@ if( ! class_exists( 'WP_Screen' ) ) :
 		}
 	
 		/**
+		 * @since 3.3.0
+		 *
 		 * @global array $wp_meta_boxes Global meta box state.
 		 *
 		 * @return bool

@@ -79,9 +79,22 @@ class Copy_Functions extends File_Update_Strategy {
 		$func_names = $item['func_names'];
 
 		$core_file_content = file_get_contents( "{$this->config->wp_core_dir}/$rel_file" );
-		$funcs_data = Helpers::get_class_func_code_from_php_code( $core_file_content, [ 'type' => 'func' ] );
-		$funcs_data = array_intersect_key( $funcs_data, $func_names );
-		$not_found_funcs = array_diff_key( $func_names, $funcs_data );
+		$funcs_data = [];
+		$not_found_funcs = [];
+
+		foreach( array_keys( $func_names ) as $func_name ){
+			$code_lines = Helpers::get_class_func_code_from_php_code( $core_file_content, [
+				'type' => 'func',
+				'name' => $func_name,
+			] );
+
+			if( ! $code_lines ){
+				$not_found_funcs[ $func_name ] = '';
+				continue;
+			}
+
+			$funcs_data[ $func_name ] = $code_lines;
+		}
 
 		if( $not_found_funcs ){
 			throw new RuntimeException( "WARNING: Not found funcs in `$rel_file`:\n\t" . implode( "\n\t", array_keys( $not_found_funcs ) ) . "\n" );

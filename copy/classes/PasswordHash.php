@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-phpass.php (WP 6.8.5)
+// wp-includes/class-phpass.php (WP 6.9.4)
 if( ! class_exists( 'PasswordHash' ) ) :
 	class PasswordHash {
 		var $itoa64;

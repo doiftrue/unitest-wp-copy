@@ -2,56 +2,18 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/functions.php (WP 6.8.5)
-if( ! function_exists( 'current_time' ) ) :
-	function current_time( $type, $gmt = 0 ) {
+// wp-includes/functions.php (WP 6.9.4)
+if( ! function_exists( 'is_utf8_charset' ) ) :
+	function is_utf8_charset( $blog_charset = null ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
 			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
 		}
 	
-		// Don't use non-GMT timestamp, unless you know the difference and really need to.
-		if ( 'timestamp' === $type || 'U' === $type ) {
-			return $gmt ? time() : time() + (int) ( (float) $GLOBALS['stub_wp_options']->gmt_offset * HOUR_IN_SECONDS );
-		}
-	
-		if ( 'mysql' === $type ) {
-			$type = 'Y-m-d H:i:s';
-		}
-	
-		$timezone = $gmt ? new DateTimeZone( 'UTC' ) : wp_timezone();
-		$datetime = new DateTime( 'now', $timezone );
-	
-		return $datetime->format( $type );
+		return _is_utf8_charset( $blog_charset ?? $GLOBALS['stub_wp_options']->blog_charset );
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
-if( ! function_exists( 'wp_timezone_string' ) ) :
-	function wp_timezone_string() {
-		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
-			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
-		}
-	
-		$timezone_string = $GLOBALS['stub_wp_options']->timezone_string;
-	
-		if ( $timezone_string ) {
-			return $timezone_string;
-		}
-	
-		$offset  = (float) $GLOBALS['stub_wp_options']->gmt_offset;
-		$hours   = (int) $offset;
-		$minutes = ( $offset - $hours );
-	
-		$sign      = ( $offset < 0 ) ? '-' : '+';
-		$abs_hour  = abs( $hours );
-		$abs_mins  = abs( $minutes * 60 );
-		$tz_offset = sprintf( '%s%02d:%02d', $sign, $abs_hour, $abs_mins );
-	
-		return $tz_offset;
-	}
-endif;
-
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.9.4)
 if( ! function_exists( '_deprecated_function' ) ) :
 	function _deprecated_function( $function_name, $version, $replacement = '' ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -117,7 +79,56 @@ if( ! function_exists( '_deprecated_function' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.9.4)
+if( ! function_exists( 'wp_timezone_string' ) ) :
+	function wp_timezone_string() {
+		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+	
+		$timezone_string = $GLOBALS['stub_wp_options']->timezone_string;
+	
+		if ( $timezone_string ) {
+			return $timezone_string;
+		}
+	
+		$offset  = (float) $GLOBALS['stub_wp_options']->gmt_offset;
+		$hours   = (int) $offset;
+		$minutes = ( $offset - $hours );
+	
+		$sign      = ( $offset < 0 ) ? '-' : '+';
+		$abs_hour  = abs( $hours );
+		$abs_mins  = abs( $minutes * 60 );
+		$tz_offset = sprintf( '%s%02d:%02d', $sign, $abs_hour, $abs_mins );
+	
+		return $tz_offset;
+	}
+endif;
+
+// wp-includes/functions.php (WP 6.9.4)
+if( ! function_exists( 'current_time' ) ) :
+	function current_time( $type, $gmt = false ) {
+		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+	
+		// Don't use non-GMT timestamp, unless you know the difference and really need to.
+		if ( 'timestamp' === $type || 'U' === $type ) {
+			return $gmt ? time() : time() + (int) ( (float) $GLOBALS['stub_wp_options']->gmt_offset * HOUR_IN_SECONDS );
+		}
+	
+		if ( 'mysql' === $type ) {
+			$type = 'Y-m-d H:i:s';
+		}
+	
+		$timezone = $gmt ? new DateTimeZone( 'UTC' ) : wp_timezone();
+		$datetime = new DateTime( 'now', $timezone );
+	
+		return $datetime->format( $type );
+	}
+endif;
+
+// wp-includes/functions.php (WP 6.9.4)
 if( ! function_exists( 'wp_trigger_error' ) ) :
 	function wp_trigger_error( $function_name, $message, $error_level = E_USER_NOTICE ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -167,7 +178,7 @@ if( ! function_exists( 'wp_trigger_error' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.9.4)
 if( ! function_exists( 'force_ssl_admin' ) ) :
 	function force_ssl_admin( $force = null ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -186,7 +197,7 @@ if( ! function_exists( 'force_ssl_admin' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.9.4)
 if( ! function_exists( 'wp_suspend_cache_addition' ) ) :
 	function wp_suspend_cache_addition( $suspend = null ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -200,17 +211,6 @@ if( ! function_exists( 'wp_suspend_cache_addition' ) ) :
 		}
 	
 		return $_suspend;
-	}
-endif;
-
-// wp-includes/functions.php (WP 6.8.5)
-if( ! function_exists( 'is_utf8_charset' ) ) :
-	function is_utf8_charset( $blog_charset = null ) {
-		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
-			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
-		}
-	
-		return _is_utf8_charset( $blog_charset ?? $GLOBALS['stub_wp_options']->blog_charset );
 	}
 endif;
 

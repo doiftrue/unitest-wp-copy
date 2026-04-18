@@ -2,54 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/load.php (WP 6.8.5)
-if( ! function_exists( 'timer_float' ) ) :
-	function timer_float() {
-		return microtime( true ) - $_SERVER['REQUEST_TIME_FLOAT'];
-	}
-endif;
-
-// wp-includes/load.php (WP 6.8.5)
-if( ! function_exists( 'timer_start' ) ) :
-	function timer_start() {
-		global $timestart;
-	
-		$timestart = microtime( true );
-	
-		return true;
-	}
-endif;
-
-// wp-includes/load.php (WP 6.8.5)
-if( ! function_exists( 'timer_stop' ) ) :
-	function timer_stop( $display = 0, $precision = 3 ) {
-		global $timestart, $timeend;
-	
-		$timeend   = microtime( true );
-		$timetotal = $timeend - $timestart;
-	
-		if ( function_exists( 'number_format_i18n' ) ) {
-			$r = number_format_i18n( $timetotal, $precision );
-		} else {
-			$r = number_format( $timetotal, $precision );
-		}
-	
-		if ( $display ) {
-			echo $r;
-		}
-	
-		return $r;
-	}
-endif;
-
-// wp-includes/load.php (WP 6.8.5)
-if( ! function_exists( 'absint' ) ) :
-	function absint( $maybeint ) {
-		return abs( (int) $maybeint );
-	}
-endif;
-
-// wp-includes/load.php (WP 6.8.5)
+// wp-includes/load.php (WP 6.9.4)
 if( ! function_exists( 'get_current_blog_id' ) ) :
 	function get_current_blog_id() {
 		global $blog_id;
@@ -58,7 +11,7 @@ if( ! function_exists( 'get_current_blog_id' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 6.8.5)
+// wp-includes/load.php (WP 6.9.4)
 if( ! function_exists( 'get_current_network_id' ) ) :
 	function get_current_network_id() {
 		if ( ! is_multisite() ) {
@@ -75,7 +28,7 @@ if( ! function_exists( 'get_current_network_id' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 6.8.5)
+// wp-includes/load.php (WP 6.9.4)
 if( ! function_exists( 'wp_convert_hr_to_bytes' ) ) :
 	function wp_convert_hr_to_bytes( $value ) {
 		$value = strtolower( trim( $value ) );
@@ -94,7 +47,7 @@ if( ! function_exists( 'wp_convert_hr_to_bytes' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 6.8.5)
+// wp-includes/load.php (WP 6.9.4)
 if( ! function_exists( 'wp_is_ini_value_changeable' ) ) :
 	function wp_is_ini_value_changeable( $setting ) {
 		static $ini_all;
@@ -122,7 +75,7 @@ if( ! function_exists( 'wp_is_ini_value_changeable' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 6.8.5)
+// wp-includes/load.php (WP 6.9.4)
 if( ! function_exists( 'is_wp_error' ) ) :
 	function is_wp_error( $thing ) {
 		$is_wp_error = ( $thing instanceof WP_Error );
@@ -139,6 +92,53 @@ if( ! function_exists( 'is_wp_error' ) ) :
 		}
 	
 		return $is_wp_error;
+	}
+endif;
+
+// wp-includes/load.php (WP 6.9.4)
+if( ! function_exists( 'absint' ) ) :
+	function absint( $maybeint ) {
+		return abs( (int) $maybeint );
+	}
+endif;
+
+// wp-includes/load.php (WP 6.9.4)
+if( ! function_exists( 'timer_float' ) ) :
+	function timer_float() {
+		return microtime( true ) - $_SERVER['REQUEST_TIME_FLOAT'];
+	}
+endif;
+
+// wp-includes/load.php (WP 6.9.4)
+if( ! function_exists( 'timer_start' ) ) :
+	function timer_start() {
+		global $timestart;
+	
+		$timestart = microtime( true );
+	
+		return true;
+	}
+endif;
+
+// wp-includes/load.php (WP 6.9.4)
+if( ! function_exists( 'timer_stop' ) ) :
+	function timer_stop( $display = 0, $precision = 3 ) {
+		global $timestart, $timeend;
+	
+		$timeend   = microtime( true );
+		$timetotal = $timeend - $timestart;
+	
+		if ( function_exists( 'number_format_i18n' ) ) {
+			$r = number_format_i18n( $timetotal, $precision );
+		} else {
+			$r = number_format( $timetotal, $precision );
+		}
+	
+		if ( $display ) {
+			echo $r;
+		}
+	
+		return $r;
 	}
 endif;
 

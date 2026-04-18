@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/script-loader.php (WP 6.8.5)
+// wp-includes/script-loader.php (WP 6.9.4)
 if( ! function_exists( 'wp_prototype_before_jquery' ) ) :
 	function wp_prototype_before_jquery( $js_array ) {
 		$prototype = array_search( 'prototype', $js_array, true );
@@ -29,62 +29,10 @@ if( ! function_exists( 'wp_prototype_before_jquery' ) ) :
 	}
 endif;
 
-// wp-includes/script-loader.php (WP 6.8.5)
-if( ! function_exists( '_print_scripts' ) ) :
-	function _print_scripts() {
-		global $wp_scripts, $compress_scripts;
-	
-		$zip = $compress_scripts ? 1 : 0;
-		if ( $zip && defined( 'ENFORCE_GZIP' ) && ENFORCE_GZIP ) {
-			$zip = 'gzip';
-		}
-	
-		$concat    = trim( $wp_scripts->concat, ', ' );
-		$type_attr = current_theme_supports( 'html5', 'script' ) ? '' : " type='text/javascript'";
-	
-		if ( $concat ) {
-			if ( ! empty( $wp_scripts->print_code ) ) {
-				echo "\n<script{$type_attr}>\n";
-				echo "/* <![CDATA[ */\n"; // Not needed in HTML 5.
-				echo $wp_scripts->print_code;
-				echo "/* ]]> */\n";
-				echo "</script>\n";
-			}
-	
-			$concat       = str_split( $concat, 128 );
-			$concatenated = '';
-	
-			foreach ( $concat as $key => $chunk ) {
-				$concatenated .= "&load%5Bchunk_{$key}%5D={$chunk}";
-			}
-	
-			$src = $wp_scripts->base_url . "/wp-admin/load-scripts.php?c={$zip}" . $concatenated . '&ver=' . $wp_scripts->default_version;
-			echo "<script{$type_attr} src='" . esc_attr( $src ) . "'></script>\n";
-		}
-	
-		if ( ! empty( $wp_scripts->print_html ) ) {
-			echo $wp_scripts->print_html;
-		}
-	}
-endif;
-
-// wp-includes/script-loader.php (WP 6.8.5)
-if( ! function_exists( 'wp_filter_out_block_nodes' ) ) :
-	function wp_filter_out_block_nodes( $nodes ) {
-		return array_filter(
-			$nodes,
-			static function ( $node ) {
-				return ! in_array( 'blocks', $node['path'], true );
-			},
-			ARRAY_FILTER_USE_BOTH
-		);
-	}
-endif;
-
-// wp-includes/script-loader.php (WP 6.8.5)
+// wp-includes/script-loader.php (WP 6.9.4)
 if( ! function_exists( 'wp_sanitize_script_attributes' ) ) :
 	function wp_sanitize_script_attributes( $attributes ) {
-		$html5_script_support = ! is_admin() && ! current_theme_supports( 'html5', 'script' );
+		$html5_script_support = is_admin() || current_theme_supports( 'html5', 'script' );
 		$attributes_string    = '';
 	
 		/*
@@ -94,7 +42,7 @@ if( ! function_exists( 'wp_sanitize_script_attributes' ) ) :
 		foreach ( $attributes as $attribute_name => $attribute_value ) {
 			if ( is_bool( $attribute_value ) ) {
 				if ( $attribute_value ) {
-					$attributes_string .= $html5_script_support ? sprintf( ' %1$s="%2$s"', esc_attr( $attribute_name ), esc_attr( $attribute_name ) ) : ' ' . esc_attr( $attribute_name );
+					$attributes_string .= $html5_script_support ? ' ' . esc_attr( $attribute_name ) : sprintf( ' %1$s="%2$s"', esc_attr( $attribute_name ), esc_attr( $attribute_name ) );
 				}
 			} else {
 				$attributes_string .= sprintf( ' %1$s="%2$s"', esc_attr( $attribute_name ), esc_attr( $attribute_value ) );
@@ -105,7 +53,7 @@ if( ! function_exists( 'wp_sanitize_script_attributes' ) ) :
 	}
 endif;
 
-// wp-includes/script-loader.php (WP 6.8.5)
+// wp-includes/script-loader.php (WP 6.9.4)
 if( ! function_exists( 'wp_get_script_tag' ) ) :
 	function wp_get_script_tag( $attributes ) {
 		if ( ! isset( $attributes['type'] ) && ! is_admin() && ! current_theme_supports( 'html5', 'script' ) ) {
@@ -130,14 +78,14 @@ if( ! function_exists( 'wp_get_script_tag' ) ) :
 	}
 endif;
 
-// wp-includes/script-loader.php (WP 6.8.5)
+// wp-includes/script-loader.php (WP 6.9.4)
 if( ! function_exists( 'wp_print_script_tag' ) ) :
 	function wp_print_script_tag( $attributes ) {
 		echo wp_get_script_tag( $attributes );
 	}
 endif;
 
-// wp-includes/script-loader.php (WP 6.8.5)
+// wp-includes/script-loader.php (WP 6.9.4)
 if( ! function_exists( 'wp_get_inline_script_tag' ) ) :
 	function wp_get_inline_script_tag( $data, $attributes = array() ) {
 		$is_html5 = current_theme_supports( 'html5', 'script' ) || is_admin();
@@ -217,14 +165,97 @@ if( ! function_exists( 'wp_get_inline_script_tag' ) ) :
 	}
 endif;
 
-// wp-includes/script-loader.php (WP 6.8.5)
+// wp-includes/script-loader.php (WP 6.9.4)
 if( ! function_exists( 'wp_print_inline_script_tag' ) ) :
 	function wp_print_inline_script_tag( $data, $attributes = array() ) {
 		echo wp_get_inline_script_tag( $data, $attributes );
 	}
 endif;
 
-// wp-includes/script-loader.php (WP 6.8.5)
+// wp-includes/script-loader.php (WP 6.9.4)
+if( ! function_exists( '_print_scripts' ) ) :
+	function _print_scripts() {
+		global $wp_scripts, $compress_scripts;
+	
+		$zip = $compress_scripts ? 1 : 0;
+		if ( $zip && defined( 'ENFORCE_GZIP' ) && ENFORCE_GZIP ) {
+			$zip = 'gzip';
+		}
+	
+		$concat    = trim( $wp_scripts->concat, ', ' );
+		$type_attr = current_theme_supports( 'html5', 'script' ) ? '' : " type='text/javascript'";
+	
+		if ( $concat ) {
+			if ( ! empty( $wp_scripts->print_code ) ) {
+				echo "\n<script{$type_attr}>\n";
+				echo "/* <![CDATA[ */\n"; // Not needed in HTML 5.
+				echo $wp_scripts->print_code;
+				echo sprintf( "\n//# sourceURL=%s\n", rawurlencode( 'js-inline-concat-' . $concat ) );
+				echo "/* ]]> */\n";
+				echo "</script>\n";
+			}
+	
+			$concat       = str_split( $concat, 128 );
+			$concatenated = '';
+	
+			foreach ( $concat as $key => $chunk ) {
+				$concatenated .= "&load%5Bchunk_{$key}%5D={$chunk}";
+			}
+	
+			$src = $wp_scripts->base_url . "/wp-admin/load-scripts.php?c={$zip}" . $concatenated . '&ver=' . $wp_scripts->default_version;
+			echo "<script{$type_attr} src='" . esc_attr( $src ) . "'></script>\n";
+		}
+	
+		if ( ! empty( $wp_scripts->print_html ) ) {
+			echo $wp_scripts->print_html;
+		}
+	}
+endif;
+
+// wp-includes/script-loader.php (WP 6.9.4)
+if( ! function_exists( 'wp_remove_surrounding_empty_script_tags' ) ) :
+	function wp_remove_surrounding_empty_script_tags( $contents ) {
+		$contents = trim( $contents );
+		$opener   = '<SCRIPT>';
+		$closer   = '</SCRIPT>';
+	
+		if (
+			strlen( $contents ) > strlen( $opener ) + strlen( $closer ) &&
+			strtoupper( substr( $contents, 0, strlen( $opener ) ) ) === $opener &&
+			strtoupper( substr( $contents, -strlen( $closer ) ) ) === $closer
+		) {
+			return substr( $contents, strlen( $opener ), -strlen( $closer ) );
+		} else {
+			$error_message = __( 'Expected string to start with script tag (without attributes) and end with script tag, with optional whitespace.' );
+			_doing_it_wrong( __FUNCTION__, $error_message, '6.4' );
+			return sprintf(
+				'console.error(%s)',
+				wp_json_encode(
+					sprintf(
+						/* translators: %s: wp_remove_surrounding_empty_script_tags() */
+						__( 'Function %s used incorrectly in PHP.' ),
+						'wp_remove_surrounding_empty_script_tags()'
+					) . ' ' . $error_message
+				)
+			);
+		}
+	}
+endif;
+
+// wp-includes/script-loader.php (WP 6.9.4)
+if( ! function_exists( 'wp_filter_out_block_nodes' ) ) :
+	function wp_filter_out_block_nodes( $nodes ) {
+		return array_filter(
+			$nodes,
+			static function ( $node ) {
+				return ! in_array( 'blocks', $node['path'], true );
+			},
+			ARRAY_FILTER_USE_BOTH
+		);
+	}
+endif;
+
+// wp-includes/script-loader.php (WP 6.9.4)
 if( ! function_exists( '_wp_normalize_relative_css_links' ) ) :
 	function _wp_normalize_relative_css_links( $css, $stylesheet_url ) {
 		return preg_replace_callback(
@@ -254,36 +285,6 @@ if( ! function_exists( '_wp_normalize_relative_css_links' ) ) :
 			},
 			$css
 		);
-	}
-endif;
-
-// wp-includes/script-loader.php (WP 6.8.5)
-if( ! function_exists( 'wp_remove_surrounding_empty_script_tags' ) ) :
-	function wp_remove_surrounding_empty_script_tags( $contents ) {
-		$contents = trim( $contents );
-		$opener   = '<SCRIPT>';
-		$closer   = '</SCRIPT>';
-	
-		if (
-			strlen( $contents ) > strlen( $opener ) + strlen( $closer ) &&
-			strtoupper( substr( $contents, 0, strlen( $opener ) ) ) === $opener &&
-			strtoupper( substr( $contents, -strlen( $closer ) ) ) === $closer
-		) {
-			return substr( $contents, strlen( $opener ), -strlen( $closer ) );
-		} else {
-			$error_message = __( 'Expected string to start with script tag (without attributes) and end with script tag, with optional whitespace.' );
-			_doing_it_wrong( __FUNCTION__, $error_message, '6.4' );
-			return sprintf(
-				'console.error(%s)',
-				wp_json_encode(
-					sprintf(
-						/* translators: %s: wp_remove_surrounding_empty_script_tags() */
-						__( 'Function %s used incorrectly in PHP.' ),
-						'wp_remove_surrounding_empty_script_tags()'
-					) . ' ' . $error_message
-				)
-			);
-		}
 	}
 endif;
 

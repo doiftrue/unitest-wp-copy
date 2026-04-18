@@ -2,7 +2,45 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/load.php (WP 6.8.5)
+// wp-includes/load.php (WP 6.9.4)
+if( ! function_exists( 'wp_get_development_mode' ) ) :
+	function wp_get_development_mode() {
+		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+	
+		static $current_mode = null;
+	
+		if ( ! defined( 'WP_RUN_CORE_TESTS' ) && null !== $current_mode ) {
+			return $current_mode;
+		}
+	
+		$development_mode = WP_DEVELOPMENT_MODE;
+	
+		// Exclusively for core tests, rely on the `$_wp_tests_development_mode` global.
+		if ( defined( 'WP_RUN_CORE_TESTS' ) && isset( $GLOBALS['_wp_tests_development_mode'] ) ) {
+			$development_mode = $GLOBALS['_wp_tests_development_mode'];
+		}
+	
+		$valid_modes = array(
+			'core',
+			'plugin',
+			'theme',
+			'all',
+			'',
+		);
+	
+		if ( ! in_array( $development_mode, $valid_modes, true ) ) {
+			$development_mode = '';
+		}
+	
+		$current_mode = $development_mode;
+	
+		return $current_mode;
+	}
+endif;
+
+// wp-includes/load.php (WP 6.9.4)
 if( ! function_exists( 'wp_get_environment_type' ) ) :
 	function wp_get_environment_type() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -60,73 +98,40 @@ if( ! function_exists( 'wp_get_environment_type' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 6.8.5)
-if( ! function_exists( 'wp_get_development_mode' ) ) :
-	function wp_get_development_mode() {
+// wp-includes/load.php (WP 6.9.4)
+if( ! function_exists( 'wp_doing_ajax' ) ) :
+	function wp_doing_ajax() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
 			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
 		}
 	
-		static $current_mode = null;
-	
-		if ( ! defined( 'WP_RUN_CORE_TESTS' ) && null !== $current_mode ) {
-			return $current_mode;
-		}
-	
-		$development_mode = WP_DEVELOPMENT_MODE;
-	
-		// Exclusively for core tests, rely on the `$_wp_tests_development_mode` global.
-		if ( defined( 'WP_RUN_CORE_TESTS' ) && isset( $GLOBALS['_wp_tests_development_mode'] ) ) {
-			$development_mode = $GLOBALS['_wp_tests_development_mode'];
-		}
-	
-		$valid_modes = array(
-			'core',
-			'plugin',
-			'theme',
-			'all',
-			'',
-		);
-	
-		if ( ! in_array( $development_mode, $valid_modes, true ) ) {
-			$development_mode = '';
-		}
-	
-		$current_mode = $development_mode;
-	
-		return $current_mode;
+		/**
+		 * Filters whether the current request is a WordPress Ajax request.
+		 *
+		 * @since 4.7.0
+		 *
+		 * @param bool $wp_doing_ajax Whether the current request is a WordPress Ajax request.
+		 */
+		return apply_filters( 'wp_doing_ajax', defined( 'DOING_AJAX' ) && DOING_AJAX );
 	}
 endif;
 
-// wp-includes/load.php (WP 6.8.5)
-if( ! function_exists( 'is_admin' ) ) :
-	function is_admin() {
+// wp-includes/load.php (WP 6.9.4)
+if( ! function_exists( 'is_ssl' ) ) :
+	function is_ssl() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
 			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
 		}
 	
-		if ( isset( $GLOBALS['current_screen'] ) ) {
-			return $GLOBALS['current_screen']->in_admin();
-		} elseif ( defined( 'WP_ADMIN' ) ) {
-			return WP_ADMIN;
-		}
+		if ( isset( $_SERVER['HTTPS'] ) ) {
+			if ( 'on' === strtolower( $_SERVER['HTTPS'] ) ) {
+				return true;
+			}
 	
-		return false;
-	}
-endif;
-
-// wp-includes/load.php (WP 6.8.5)
-if( ! function_exists( 'is_multisite' ) ) :
-	function is_multisite() {
-		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
-			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
-		}
-	
-		if ( defined( 'MULTISITE' ) ) {
-			return MULTISITE;
-		}
-	
-		if ( defined( 'SUBDOMAIN_INSTALL' ) || defined( 'VHOST' ) || defined( 'SUNRISE' ) ) {
+			if ( '1' === (string) $_SERVER['HTTPS'] ) {
+				return true;
+			}
+		} elseif ( isset( $_SERVER['SERVER_PORT'] ) && ( '443' === (string) $_SERVER['SERVER_PORT'] ) ) {
 			return true;
 		}
 	
@@ -134,7 +139,7 @@ if( ! function_exists( 'is_multisite' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 6.8.5)
+// wp-includes/load.php (WP 6.9.4)
 if( ! function_exists( 'wp_installing' ) ) :
 	function wp_installing( $is_installing = null ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -159,44 +164,39 @@ if( ! function_exists( 'wp_installing' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 6.8.5)
-if( ! function_exists( 'is_ssl' ) ) :
-	function is_ssl() {
+// wp-includes/load.php (WP 6.9.4)
+if( ! function_exists( 'is_admin' ) ) :
+	function is_admin() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
 			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
 		}
 	
-		if ( isset( $_SERVER['HTTPS'] ) ) {
-			if ( 'on' === strtolower( $_SERVER['HTTPS'] ) ) {
-				return true;
-			}
-	
-			if ( '1' === (string) $_SERVER['HTTPS'] ) {
-				return true;
-			}
-		} elseif ( isset( $_SERVER['SERVER_PORT'] ) && ( '443' === (string) $_SERVER['SERVER_PORT'] ) ) {
-			return true;
+		if ( isset( $GLOBALS['current_screen'] ) ) {
+			return $GLOBALS['current_screen']->in_admin();
+		} elseif ( defined( 'WP_ADMIN' ) ) {
+			return WP_ADMIN;
 		}
 	
 		return false;
 	}
 endif;
 
-// wp-includes/load.php (WP 6.8.5)
-if( ! function_exists( 'wp_doing_ajax' ) ) :
-	function wp_doing_ajax() {
+// wp-includes/load.php (WP 6.9.4)
+if( ! function_exists( 'is_multisite' ) ) :
+	function is_multisite() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
 			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
 		}
 	
-		/**
-		 * Filters whether the current request is a WordPress Ajax request.
-		 *
-		 * @since 4.7.0
-		 *
-		 * @param bool $wp_doing_ajax Whether the current request is a WordPress Ajax request.
-		 */
-		return apply_filters( 'wp_doing_ajax', defined( 'DOING_AJAX' ) && DOING_AJAX );
+		if ( defined( 'MULTISITE' ) ) {
+			return MULTISITE;
+		}
+	
+		if ( defined( 'SUBDOMAIN_INSTALL' ) || defined( 'VHOST' ) || defined( 'SUNRISE' ) ) {
+			return true;
+		}
+	
+		return false;
 	}
 endif;
 

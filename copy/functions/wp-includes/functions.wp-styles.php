@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/functions.wp-styles.php (WP 6.8.5)
+// wp-includes/functions.wp-styles.php (WP 6.9.4)
 if( ! function_exists( 'wp_styles' ) ) :
 	function wp_styles() {
 		global $wp_styles;
@@ -15,7 +15,7 @@ if( ! function_exists( 'wp_styles' ) ) :
 	}
 endif;
 
-// wp-includes/functions.wp-styles.php (WP 6.8.5)
+// wp-includes/functions.wp-styles.php (WP 6.9.4)
 if( ! function_exists( 'wp_print_styles' ) ) :
 	function wp_print_styles( $handles = false ) {
 		global $wp_styles;
@@ -45,7 +45,7 @@ if( ! function_exists( 'wp_print_styles' ) ) :
 	}
 endif;
 
-// wp-includes/functions.wp-styles.php (WP 6.8.5)
+// wp-includes/functions.wp-styles.php (WP 6.9.4)
 if( ! function_exists( 'wp_add_inline_style' ) ) :
 	function wp_add_inline_style( $handle, $data ) {
 		_wp_scripts_maybe_doing_it_wrong( __FUNCTION__, $handle );
@@ -68,7 +68,7 @@ if( ! function_exists( 'wp_add_inline_style' ) ) :
 	}
 endif;
 
-// wp-includes/functions.wp-styles.php (WP 6.8.5)
+// wp-includes/functions.wp-styles.php (WP 6.9.4)
 if( ! function_exists( 'wp_register_style' ) ) :
 	function wp_register_style( $handle, $src, $deps = array(), $ver = false, $media = 'all' ) {
 		_wp_scripts_maybe_doing_it_wrong( __FUNCTION__, $handle );
@@ -77,7 +77,7 @@ if( ! function_exists( 'wp_register_style' ) ) :
 	}
 endif;
 
-// wp-includes/functions.wp-styles.php (WP 6.8.5)
+// wp-includes/functions.wp-styles.php (WP 6.9.4)
 if( ! function_exists( 'wp_deregister_style' ) ) :
 	function wp_deregister_style( $handle ) {
 		_wp_scripts_maybe_doing_it_wrong( __FUNCTION__, $handle );
@@ -86,7 +86,7 @@ if( ! function_exists( 'wp_deregister_style' ) ) :
 	}
 endif;
 
-// wp-includes/functions.wp-styles.php (WP 6.8.5)
+// wp-includes/functions.wp-styles.php (WP 6.9.4)
 if( ! function_exists( 'wp_enqueue_style' ) ) :
 	function wp_enqueue_style( $handle, $src = '', $deps = array(), $ver = false, $media = 'all' ) {
 		_wp_scripts_maybe_doing_it_wrong( __FUNCTION__, $handle );
@@ -102,7 +102,7 @@ if( ! function_exists( 'wp_enqueue_style' ) ) :
 	}
 endif;
 
-// wp-includes/functions.wp-styles.php (WP 6.8.5)
+// wp-includes/functions.wp-styles.php (WP 6.9.4)
 if( ! function_exists( 'wp_dequeue_style' ) ) :
 	function wp_dequeue_style( $handle ) {
 		_wp_scripts_maybe_doing_it_wrong( __FUNCTION__, $handle );
@@ -111,7 +111,7 @@ if( ! function_exists( 'wp_dequeue_style' ) ) :
 	}
 endif;
 
-// wp-includes/functions.wp-styles.php (WP 6.8.5)
+// wp-includes/functions.wp-styles.php (WP 6.9.4)
 if( ! function_exists( 'wp_style_is' ) ) :
 	function wp_style_is( $handle, $status = 'enqueued' ) {
 		_wp_scripts_maybe_doing_it_wrong( __FUNCTION__, $handle );
@@ -120,7 +120,7 @@ if( ! function_exists( 'wp_style_is' ) ) :
 	}
 endif;
 
-// wp-includes/functions.wp-styles.php (WP 6.8.5)
+// wp-includes/functions.wp-styles.php (WP 6.9.4)
 if( ! function_exists( 'wp_style_add_data' ) ) :
 	function wp_style_add_data( $handle, $key, $value ) {
 		return wp_styles()->add_data( $handle, $key, $value );

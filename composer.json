@@ -6,26 +6,26 @@
   "scripts": {
     "phpunit": "phpunit"
   },
+  "require": {},
+  "require-dev": {
+    "composer/installers": "^2.3",
+    "wordpress/wordpress": "~6.9.3",
+    "phpunit/phpunit": "^9",
+    "10up/wp_mock": "*"
+  },
   "autoload": {
     "psr-4": {
       "Unitest_WP_Copy\\": "src/"
     }
   },
-  "require": {},
-  "require-dev": {
-    "composer/installers": "^2.3",
-    "wordpress/wordpress": "~6.8.3",
-    "phpunit/phpunit": "^9",
-    "10up/wp_mock": "*"
+  "extra": {
+    "installer-paths": {
+      "wordpress/": [ "wordpress/wordpress" ]
+    }
   },
   "config": {
     "allow-plugins": {
       "composer/installers": true
-    }
-  },
-  "extra": {
-    "installer-paths": {
-      "wordpress/": [ "wordpress/wordpress" ]
     }
   },
   "repositories": [

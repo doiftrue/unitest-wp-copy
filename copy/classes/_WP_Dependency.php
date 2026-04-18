@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-dependency.php (WP 6.8.5)
+// wp-includes/class-wp-dependency.php (WP 6.9.4)
 if( ! class_exists( '_WP_Dependency' ) ) :
 	class _WP_Dependency {
 		/**
@@ -37,7 +37,7 @@ if( ! class_exists( '_WP_Dependency' ) ) :
 		 * Used for cache-busting.
 		 *
 		 * @since 2.6.0
-		 * @var bool|string
+		 * @var string|false|null
 		 */
 		public $ver = false;
 	
@@ -45,7 +45,7 @@ if( ! class_exists( '_WP_Dependency' ) ) :
 		 * Additional arguments for the handle.
 		 *
 		 * @since 2.6.0
-		 * @var array
+		 * @var mixed
 		 */
 		public $args = null;  // Custom property, such as $in_footer or $media.
 	

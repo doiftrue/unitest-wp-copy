@@ -7,7 +7,7 @@ class WP_HTML_Doctype_Info__Test extends \PHPUnit\Framework\TestCase {
 
 		$this->assertInstanceOf( WP_HTML_Doctype_Info::class, $doctype );
 		$this->assertSame( 'html', $doctype->name );
-		$this->assertSame( 'no-quirks', $doctype->indicated_compatability_mode );
+		$this->assertSame( 'no-quirks', wp_version_compare( '>= 6.9' ) ? $doctype->indicated_compatibility_mode : $doctype->indicated_compatability_mode );
 
 		$this->assertNull( WP_HTML_Doctype_Info::from_doctype_token( 'html' ) );
 	}

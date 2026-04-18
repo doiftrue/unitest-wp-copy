@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-admin/includes/template.php (WP 6.8.5)
+// wp-admin/includes/template.php (WP 6.9.4)
 if( ! function_exists( 'convert_to_screen' ) ) :
 	function convert_to_screen( $hook_name ) {
 		if ( ! class_exists( 'WP_Screen' ) ) {
