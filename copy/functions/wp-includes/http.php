@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/http.php (WP 6.9.4)
+// wp-includes/http.php (WP 6.8.5)
 if( ! function_exists( 'wp_parse_url' ) ) :
 	function wp_parse_url( $url, $component = -1 ) {
 		$to_unset = array();
@@ -33,7 +33,7 @@ if( ! function_exists( 'wp_parse_url' ) ) :
 	}
 endif;
 
-// wp-includes/http.php (WP 6.9.4)
+// wp-includes/http.php (WP 6.8.5)
 if( ! function_exists( '_wp_translate_php_url_constant_to_key' ) ) :
 	function _wp_translate_php_url_constant_to_key( $constant ) {
 		$translation = array(
@@ -55,7 +55,7 @@ if( ! function_exists( '_wp_translate_php_url_constant_to_key' ) ) :
 	}
 endif;
 
-// wp-includes/http.php (WP 6.9.4)
+// wp-includes/http.php (WP 6.8.5)
 if( ! function_exists( '_get_component_from_parsed_url_array' ) ) :
 	function _get_component_from_parsed_url_array( $url_parts, $component = -1 ) {
 		if ( -1 === $component ) {
@@ -71,7 +71,7 @@ if( ! function_exists( '_get_component_from_parsed_url_array' ) ) :
 	}
 endif;
 
-// wp-includes/http.php (WP 6.9.4)
+// wp-includes/http.php (WP 6.8.5)
 if( ! function_exists( 'wp_http_validate_url' ) ) :
 	function wp_http_validate_url( $url ) {
 		if ( ! is_string( $url ) || '' === $url || is_numeric( $url ) ) {
@@ -148,8 +148,7 @@ if( ! function_exists( 'wp_http_validate_url' ) ) :
 		 *
 		 * @since 5.9.0
 		 *
-		 * @param int[]  $allowed_ports Array of integers for valid ports. Default allowed ports
-		 *                              are 80, 443, and 8080.
+		 * @param int[]  $allowed_ports Array of integers for valid ports.
 		 * @param string $host          Host name of the requested URL.
 		 * @param string $url           Requested URL.
 		 */

@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-block-parser-block.php (WP 6.9.4)
+// wp-includes/class-wp-block-parser-block.php (WP 6.8.5)
 if( ! class_exists( 'WP_Block_Parser_Block' ) ) :
 	class WP_Block_Parser_Block {
 		/**
@@ -54,7 +54,7 @@ if( ! class_exists( 'WP_Block_Parser_Block' ) ) :
 		 *   'innerContent' => array( 'Before', null, 'Inner', null, 'After' ),
 		 * )
 		 *
-		 * @since 5.0.0
+		 * @since 4.2.0
 		 * @var array
 		 */
 		public $innerContent; // phpcs:ignore WordPress.NamingConventions.ValidVariableName

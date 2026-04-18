@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/load.php (WP 6.9.4)
+// wp-includes/load.php (WP 6.8.5)
 if( ! function_exists( 'get_current_blog_id' ) ) :
 	function get_current_blog_id() {
 		global $blog_id;
@@ -11,7 +11,7 @@ if( ! function_exists( 'get_current_blog_id' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 6.9.4)
+// wp-includes/load.php (WP 6.8.5)
 if( ! function_exists( 'get_current_network_id' ) ) :
 	function get_current_network_id() {
 		if ( ! is_multisite() ) {
@@ -28,7 +28,7 @@ if( ! function_exists( 'get_current_network_id' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 6.9.4)
+// wp-includes/load.php (WP 6.8.5)
 if( ! function_exists( 'wp_convert_hr_to_bytes' ) ) :
 	function wp_convert_hr_to_bytes( $value ) {
 		$value = strtolower( trim( $value ) );
@@ -47,7 +47,7 @@ if( ! function_exists( 'wp_convert_hr_to_bytes' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 6.9.4)
+// wp-includes/load.php (WP 6.8.5)
 if( ! function_exists( 'wp_is_ini_value_changeable' ) ) :
 	function wp_is_ini_value_changeable( $setting ) {
 		static $ini_all;
@@ -75,7 +75,7 @@ if( ! function_exists( 'wp_is_ini_value_changeable' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 6.9.4)
+// wp-includes/load.php (WP 6.8.5)
 if( ! function_exists( 'is_wp_error' ) ) :
 	function is_wp_error( $thing ) {
 		$is_wp_error = ( $thing instanceof WP_Error );
@@ -95,21 +95,21 @@ if( ! function_exists( 'is_wp_error' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 6.9.4)
+// wp-includes/load.php (WP 6.8.5)
 if( ! function_exists( 'absint' ) ) :
 	function absint( $maybeint ) {
 		return abs( (int) $maybeint );
 	}
 endif;
 
-// wp-includes/load.php (WP 6.9.4)
+// wp-includes/load.php (WP 6.8.5)
 if( ! function_exists( 'timer_float' ) ) :
 	function timer_float() {
 		return microtime( true ) - $_SERVER['REQUEST_TIME_FLOAT'];
 	}
 endif;
 
-// wp-includes/load.php (WP 6.9.4)
+// wp-includes/load.php (WP 6.8.5)
 if( ! function_exists( 'timer_start' ) ) :
 	function timer_start() {
 		global $timestart;
@@ -120,7 +120,7 @@ if( ! function_exists( 'timer_start' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 6.9.4)
+// wp-includes/load.php (WP 6.8.5)
 if( ! function_exists( 'timer_stop' ) ) :
 	function timer_stop( $display = 0, $precision = 3 ) {
 		global $timestart, $timeend;

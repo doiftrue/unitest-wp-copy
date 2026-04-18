@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/load.php (WP 6.9.4)
+// wp-includes/load.php (WP 6.8.5)
 if( ! function_exists( 'wp_get_development_mode' ) ) :
 	function wp_get_development_mode() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -40,7 +40,7 @@ if( ! function_exists( 'wp_get_development_mode' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 6.9.4)
+// wp-includes/load.php (WP 6.8.5)
 if( ! function_exists( 'wp_get_environment_type' ) ) :
 	function wp_get_environment_type() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -98,7 +98,7 @@ if( ! function_exists( 'wp_get_environment_type' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 6.9.4)
+// wp-includes/load.php (WP 6.8.5)
 if( ! function_exists( 'wp_doing_ajax' ) ) :
 	function wp_doing_ajax() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -116,7 +116,7 @@ if( ! function_exists( 'wp_doing_ajax' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 6.9.4)
+// wp-includes/load.php (WP 6.8.5)
 if( ! function_exists( 'is_ssl' ) ) :
 	function is_ssl() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -139,7 +139,7 @@ if( ! function_exists( 'is_ssl' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 6.9.4)
+// wp-includes/load.php (WP 6.8.5)
 if( ! function_exists( 'wp_installing' ) ) :
 	function wp_installing( $is_installing = null ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -164,7 +164,7 @@ if( ! function_exists( 'wp_installing' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 6.9.4)
+// wp-includes/load.php (WP 6.8.5)
 if( ! function_exists( 'is_admin' ) ) :
 	function is_admin() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -181,7 +181,7 @@ if( ! function_exists( 'is_admin' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 6.9.4)
+// wp-includes/load.php (WP 6.8.5)
 if( ! function_exists( 'is_multisite' ) ) :
 	function is_multisite() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {

@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-block-parser.php (WP 6.9.4)
+// wp-includes/class-wp-block-parser.php (WP 6.8.5)
 if( ! class_exists( 'WP_Block_Parser' ) ) :
 	class WP_Block_Parser {
 		/**
@@ -27,7 +27,7 @@ if( ! class_exists( 'WP_Block_Parser' ) ) :
 		 * List of parsed blocks
 		 *
 		 * @since 5.0.0
-		 * @var array[]
+		 * @var WP_Block_Parser_Block[]
 		 */
 		public $output;
 	
@@ -294,7 +294,7 @@ if( ! class_exists( 'WP_Block_Parser' ) ) :
 		 * Returns a new block object for freeform HTML
 		 *
 		 * @internal
-		 * @since 5.0.0
+		 * @since 3.9.0
 		 *
 		 * @param string $inner_html HTML content of block.
 		 * @return WP_Block_Parser_Block freeform block object.

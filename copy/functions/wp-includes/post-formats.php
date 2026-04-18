@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/post-formats.php (WP 6.9.4)
+// wp-includes/post-formats.php (WP 6.8.5)
 if( ! function_exists( 'get_post_format_strings' ) ) :
 	function get_post_format_strings() {
 		$strings = array(
@@ -21,7 +21,7 @@ if( ! function_exists( 'get_post_format_strings' ) ) :
 	}
 endif;
 
-// wp-includes/post-formats.php (WP 6.9.4)
+// wp-includes/post-formats.php (WP 6.8.5)
 if( ! function_exists( 'get_post_format_slugs' ) ) :
 	function get_post_format_slugs() {
 		$slugs = array_keys( get_post_format_strings() );
@@ -29,7 +29,7 @@ if( ! function_exists( 'get_post_format_slugs' ) ) :
 	}
 endif;
 
-// wp-includes/post-formats.php (WP 6.9.4)
+// wp-includes/post-formats.php (WP 6.8.5)
 if( ! function_exists( 'get_post_format_string' ) ) :
 	function get_post_format_string( $slug ) {
 		$strings = get_post_format_strings();
@@ -41,7 +41,7 @@ if( ! function_exists( 'get_post_format_string' ) ) :
 	}
 endif;
 
-// wp-includes/post-formats.php (WP 6.9.4)
+// wp-includes/post-formats.php (WP 6.8.5)
 if( ! function_exists( '_post_format_get_term' ) ) :
 	function _post_format_get_term( $term ) {
 		if ( isset( $term->slug ) ) {
@@ -51,7 +51,7 @@ if( ! function_exists( '_post_format_get_term' ) ) :
 	}
 endif;
 
-// wp-includes/post-formats.php (WP 6.9.4)
+// wp-includes/post-formats.php (WP 6.8.5)
 if( ! function_exists( '_post_format_get_terms' ) ) :
 	function _post_format_get_terms( $terms, $taxonomies, $args ) {
 		if ( in_array( 'post_format', (array) $taxonomies, true ) ) {
@@ -71,7 +71,7 @@ if( ! function_exists( '_post_format_get_terms' ) ) :
 	}
 endif;
 
-// wp-includes/post-formats.php (WP 6.9.4)
+// wp-includes/post-formats.php (WP 6.8.5)
 if( ! function_exists( '_post_format_wp_get_object_terms' ) ) :
 	function _post_format_wp_get_object_terms( $terms ) {
 		foreach ( (array) $terms as $order => $term ) {
