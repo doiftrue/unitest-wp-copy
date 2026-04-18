@@ -1,20 +1,23 @@
 <?php
 
-function config(): \Parser\Config {
-	static $c;
-	if( ! $c ){
-		require_once dirname( __DIR__ ) . '/_parser/src/Config.php';
-		$c = new \Parser\Config();
+/**
+ * First call will set up the wp_version and cache it for subsequent calls.
+ */
+function wp_version( string $wp_dir = '' ): string {
+	static $wp_version;
+	if( ! $wp_version ){
+		// INFO: declare $wp_version var
+		require_once "$wp_dir/wp-includes/version.php";
 	}
-	return $c;
+	return $wp_version;
 }
 
 /**
- * @param string $wp_version_compare Eg: '< 6.8.0'
+ * @param string $to_compare  Eg: '< 6.8.0'
  *
  * @return string wp_version if condition is true or empty string.
  */
-function wp_version_compare( string $wp_version_compare ): string{
-	[ $operator, $version ] = explode( ' ', $wp_version_compare, 2 );
-	return version_compare( config()->wp_version, $version, $operator ) ? config()->wp_version : '';
+function wp_version_compare( string $to_compare ): string {
+	[ $operator, $version ] = explode( ' ', $to_compare, 2 );
+	return version_compare( wp_version(), $version, $operator ) ? wp_version() : '';
 }
