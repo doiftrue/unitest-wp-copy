@@ -33,7 +33,7 @@ Release is prepared from `main` and published to a line branch.
 8. Create release tag.
 
 This flow is implemented in:
-- `wp-releaser/release-artifact.sh`
+- `_releaser/release-artifact.sh`
 
 ## Makefile Entry Point
 

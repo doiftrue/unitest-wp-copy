@@ -67,7 +67,7 @@ run_php "composer update wordpress/wordpress"
 return # skip for now
 
 cecho cyan "[4/6] Update ${ARTIFACT_BRANCH}, commit and tag ${RELEASE_TAG}"
-WORKTREE_DIR="$(mktemp -d "/tmp/wp-releaser-${WP_LINE}-XXXXXX")"
+WORKTREE_DIR="$(mktemp -d "/tmp/release-${WP_LINE}-XXXXXX")"
 git worktree add --force "${WORKTREE_DIR}" "${ARTIFACT_BRANCH}" >/dev/null
 rm -rf "${WORKTREE_DIR}/zero.php" "${WORKTREE_DIR}/wp-runtime"
 cp -a "${ARTIFACT_DIR}/zero.php" "${ARTIFACT_DIR}/wp-runtime" "${WORKTREE_DIR}/"

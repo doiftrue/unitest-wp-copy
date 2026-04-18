@@ -70,7 +70,7 @@ class Copy_Functions extends File_Update_Strategy {
 	public function get_dest_file( array $item ): string {
 		return match ( $item['target'] ) {
 			'regular'  => "{$this->config->dest_dir}/functions/{$item['rel_file']}",
-			'mockable' => "{$this->config->dest_dir}/mocks/auto/{$item['rel_file']}",
+			'mockable' => "{$this->config->dest_dir}/mockable/{$item['rel_file']}",
 		};
 	}
 

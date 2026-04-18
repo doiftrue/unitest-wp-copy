@@ -22,4 +22,4 @@ run.parser:
 	$(call php_run, , php _parser/run.php)
 
 release:
-	WP_LINE="$(WP_LINE)" RELEASE_TAG="$(RELEASE_TAG)" bash wp-releaser/release-artifact.sh
+	WP_LINE="$(WP_LINE)" RELEASE_TAG="$(RELEASE_TAG)" bash _releaser/release-artifact.sh

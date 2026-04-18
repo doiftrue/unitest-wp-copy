@@ -135,7 +135,7 @@ Before adding any function/class/static-method to parser configs, validate the f
 
 Hard rule:
 - A function/class/static-method is allowed only if every dependency in the chain is:
-  - already available in this project (`wp-runtime/copy/`, `wp-runtime/copy/mocks/`, `wp-runtime/copy/init-parts/`, `wp-runtime/src/*`), or
+  - already available in this project - see `wp-runtime/copy/SYMBOLS-INFO.md`, or
   - added in the same change and passes the same dependency-chain rule recursively.
 - If dependency A requires dependency B, B must be checked with the same strict criteria, recursively until chain end.
 - If at least one dependency in the chain is incompatible with this project ideology (DB-bound runtime, full WP bootstrap, network I/O, unsupported filesystem/runtime coupling, etc.), then the top-level function/class/static-method is not allowed.
@@ -154,8 +154,8 @@ Step-By-Step: Add More WP Core Functions
 - Candidate is valid only if whole chain can be satisfied by existing project symbols or by symbols that are also valid to add now.
 
 2) Check compatibility with current test environment
-- Available stubs/constants/init are loaded by `zero.php`, `wp-runtime/src/base-wp-constants.php`, `wp-runtime/src/stub-wp-options.php`, and `wp-runtime/copy/init-parts/*`.
-- Mocked compatibility functions are in `wp-runtime/copy/mocks/auto/*` (parser-generated) and `wp-runtime/copy/mocks/wp-includes/*` (manual).
+- Available stubs/constants/init are loaded by `zero.php`, `wp-runtime/base-wp-constants.php`, `wp-runtime/stub-wp-options.php`, and `wp-runtime/init-parts/*`.
+- Mocked compatibility functions are in `wp-runtime/copy/mockable/*` (parser-generated) and `wp-runtime/copy/mocks/*` (manual).
 - If option access is covered by `$GLOBALS['stub_wp_options']`, function is acceptable.
 - Reject candidate if any dependency in its chain remains unresolved or requires unsupported runtime behavior.
 
@@ -232,7 +232,7 @@ How it works:
   - newest line: `config/functions/<wp-source-file>.php`;
   - older lines: `config/<wp-line>/functions/<wp-source-file>.php`;
   with value `'<since-version> mockable'`.
-- Destination: `wp-runtime/copy/mocks/auto/<wp-source-file>.php`.
+- Destination: `wp-runtime/copy/mockable/<wp-source-file>.php`.
 - Parser copies original function code and injects handler check at function start.
 - Generated function is wrapped with `if ( ! function_exists( ... ) )`.
 
@@ -245,7 +245,7 @@ Workflow:
    - `config/functions/<wp-source-file>.php` (newest line), or
    - `config/<wp-line>/functions/<wp-source-file>.php` (older line override).
 2) `make run.parser`.
-3) Verify generated code in `wp-runtime/copy/mocks/auto/...`.
+3) Verify generated code in `wp-runtime/copy/mockable/...`.
 4) Add/update tests in `tests/mocks/...`:
    - one test for fallback/original behavior;
    - one test for `WP_Mock::userFunction(...)` override behavior.

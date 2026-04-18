@@ -10,12 +10,12 @@ The project includes:
 - tests that verify basic behavior of included functions.
 
 Main bootstrap API: `\Unitest_WP_Copy\Bootstrap::init()`.
-Entry point script: `zero.php` (includes `wp-runtime/src/Bootstrap.php` and calls `\Unitest_WP_Copy\Bootstrap::init()`).
+Entry point script: `zero.php` (includes `wp-runtime/Bootstrap.php` and calls `\Unitest_WP_Copy\Bootstrap::init()`).
 
 ## Project structure
 
 - `zero.php`  
-  Library entry point. Includes `wp-runtime/src/Bootstrap.php` and calls `\Unitest_WP_Copy\Bootstrap::init()`.
+  Library entry point. Includes `wp-runtime/Bootstrap.php` and calls `\Unitest_WP_Copy\Bootstrap::init()`.
 
 - `wp-runtime/copy/`  
   Copied WordPress functions/classes.
@@ -28,24 +28,22 @@ Entry point script: `zero.php` (includes `wp-runtime/src/Bootstrap.php` and call
     Naming rule: `ClassName::methodName()` -> `ClassName__methodName()`.
     Used when whole class is not suitable for this project, but utility-like static method is needed as dependency.
 
-  - `wp-runtime/copy/init-parts/`  
-    Minimal WP initialization fragments required to run some functions.
+  - Mock-friendly function layer.
+    - `wp-runtime/copy/mockable/` — parser-generated copies of original WP functions with injected `WP_Mock` handler check at function start.
+    - `wp-runtime/copy/mocks/` — manually maintained mocks where logic is intentionally changed for this project runtime.
 
-  - `wp-runtime/copy/mocks/`  
-    Mock-friendly function layer.
-    - `wp-runtime/copy/mocks/auto/` — parser-generated copies of original WP functions with injected `WP_Mock` handler check at function start.
-    - `wp-runtime/copy/mocks/wp-includes/` — manually maintained mocks where logic is intentionally changed for this project runtime.
+- `wp-runtime/init-parts/`
+  Minimal WP initialization fragments required to run some functions.
 
-- `wp-runtime/src/`  
-  Stubs and environment initialization for copied functions/classes.
+- Environment initialization for copied functions/classes.
 
-  - `wp-runtime/src/Bootstrap.php`  
+  - `wp-runtime/Bootstrap.php`  
     Main bootstrap implementation. Loads copies from `wp-runtime/copy/`, stubs from `wp-runtime/src/`, and initializes base WP-like globals/constants.
 
-  - `wp-runtime/src/stub-wp-options.php`  
+  - `wp-runtime/stub-wp-options.php`  
     Stub for `get_option()`-like calls via `$GLOBALS['stub_wp_options']`. Some kinds mock of DB-stored options, some just return hardcoded values.
 
-  - `wp-runtime/src/base-wp-constants.php`  
+  - `wp-runtime/base-wp-constants.php`  
     Base WP constants and environment values for test execution.
   
 - `wordpress/`  
@@ -56,7 +54,7 @@ Entry point script: `zero.php` (includes `wp-runtime/src/Bootstrap.php` and call
   Separate part of project that creates `wp-runtime/copy/` code copiing it from WP core code.
   Internal generator/updater for copied functions, mockable functions, classes, and selected static class methods.
   - `config/functions/` — function lists split by WP source file path;
-    - use value `'mockable'` for symbols that should be generated into `wp-runtime/copy/mocks/auto/*` with injected WP_Mock handler.
+    - use value `'mockable'` for symbols that should be generated into `wp-runtime/copy/mockable/*` with injected WP_Mock handler.
   - `config/classes.php` — class list;
   - `config/static-methods.php` — selected static class methods copied as plain functions;
   - `_parser/INSTRUCTION.md` — instructions for updating copied code.
@@ -68,7 +66,7 @@ Entry point script: `zero.php` (includes `wp-runtime/src/Bootstrap.php` and call
   - `tests/functions/` — function tests.
   - `tests/classes-statics/` — tests for static class methods copied as plain functions (`wp-runtime/copy/classes-statics/`).
   - `tests/classes/` — class tests.
-  - `tests/mocks/` — tests for mock implementations from `wp-runtime/copy/mocks/` (including WP_Mock-handler behavior).
+  - `tests/mocks/` — tests for mockable/manual mock implementations from `wp-runtime/copy/mockable/` and `wp-runtime/copy/mocks/` (including WP_Mock-handler behavior).
   It tests how the copied functions/classes work in the provided environment. The current WP-like test env loaded as if it used on another project as phpunit test WP environment, and all WP functions/classes are tested if they work correctly without real WP environment (without DB, external services, etc).
 
 
