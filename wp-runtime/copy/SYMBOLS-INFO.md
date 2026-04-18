@@ -1,21 +1,10 @@
 The following functions and classes are available in this (unit test) environment. Symbols are copied from WordPress 6.9.4.
 
-Mock-friendly functions (override their behavior in tests when needed):
-__()
+Mockable copied functions (can be overridden via WP_Mock):
 _deprecated_function()
-_e()
-_n()
-_nx()
-_x()
 balanceTags()
 convert_smilies()
 current_time()
-esc_attr__()
-esc_attr_e()
-esc_attr_x()
-esc_html__()
-esc_html_e()
-esc_html_x()
 force_ssl_admin()
 get_home_url()
 get_locale()
@@ -37,8 +26,6 @@ post_type_exists()
 rest_handle_deprecated_argument()
 rest_handle_deprecated_function()
 rest_handle_doing_it_wrong()
-restore_current_blog()
-switch_to_blog()
 taxonomy_exists()
 wp_doing_ajax()
 wp_get_development_mode()
@@ -48,6 +35,21 @@ wp_installing()
 wp_suspend_cache_addition()
 wp_timezone_string()
 wp_trigger_error()
+
+Mockable changed functions (not full copies) (can be overridden via WP_Mock):
+__()
+_e()
+_n()
+_nx()
+_x()
+esc_attr__()
+esc_attr_e()
+esc_attr_x()
+esc_html__()
+esc_html_e()
+esc_html_x()
+restore_current_blog()
+switch_to_blog()
 
 Functions and classes available as-is:
 PasswordHash{}

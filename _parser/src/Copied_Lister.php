@@ -11,6 +11,9 @@ class Copied_Lister {
 	/**
 	 * List of generated function/class names.
 	 * Used to store the list of copied functions.
+	 *
+	 * Example:
+	 *  [  ]
 	 */
 	public array $names = [];
 
@@ -19,7 +22,10 @@ class Copied_Lister {
 	private string $content = <<<MD
 		The following functions and classes are available in this (unit test) environment. Symbols are copied from WordPress {WP_VERSION}.
 		
-		Mock-friendly functions (override their behavior in tests when needed):
+		Mockable copied functions (can be overridden via WP_Mock):
+		{MOCKABLE_LIST}
+		
+		Mockable changed functions (not full copies) (can be overridden via WP_Mock):
 		{MOCKS_LIST}
 		
 		Functions and classes available as-is:
@@ -33,26 +39,38 @@ class Copied_Lister {
 	}
 
 	public function generate_list(): void {
-		$mock_names = $this->get_mock_function_names();
-		$mock_names = array_values( array_unique( $mock_names ) );
-		asort( $mock_names );
+		$config = $this->config;
+
+		$mockable_names = $this->get_mock_function_names( "$config->dest_dir/mockable" );
+		$mockable_names = array_values( array_unique( $mockable_names ) );
+		asort( $mockable_names );
+
+		$mocks_names = $this->get_mock_function_names( "$config->dest_dir/mocks" );
+		$mocks_names = array_values( array_unique( $mocks_names ) );
+		asort( $mocks_names );
+
+		$excluded_names = array_values( array_unique( array_merge( $mockable_names, $mocks_names ) ) );
 
 		$copied_names = array_values( array_unique( $this->names ) );
-		$copied_names = array_values( array_diff( $copied_names, $mock_names ) );
+		$copied_names = array_values( array_diff( $copied_names, $excluded_names ) );
 		asort( $copied_names );
 
 		$this->content = strtr( $this->content, [
-			'{WP_VERSION}' => $this->config->wp_version,
-			'{MOCKS_LIST}' => $mock_names ? implode( "\n", $mock_names ) : '(none)',
-			'{COPIED_LIST}' => $copied_names ? implode( "\n", $copied_names ) : '(none)',
+			'{WP_VERSION}'    => $config->wp_version,
+			'{MOCKABLE_LIST}' => $mockable_names ? implode( "\n", $mockable_names ) : '(none)',
+			'{MOCKS_LIST}'    => $mocks_names ? implode( "\n", $mocks_names ) : '(none)',
+			'{COPIED_LIST}'   => $copied_names ? implode( "\n", $copied_names ) : '(none)',
 		] );
 
-		file_put_contents( "{$this->config->dest_dir}/$this->doc_file_name", $this->content );
+		file_put_contents( "$config->dest_dir/$this->doc_file_name", $this->content );
 	}
 
-	private function get_mock_function_names(): array {
-		$mocks_dir = "{$this->config->dest_dir}/mocks";
-		$mock_names = [];
+	private function get_mock_function_names( string $mocks_dir ): array {
+		if( ! is_dir( $mocks_dir ) ){
+			return [];
+		}
+
+		$names = [];
 
 		$iterator = new RecursiveIteratorIterator(
 			new RecursiveDirectoryIterator( $mocks_dir, FilesystemIterator::SKIP_DOTS ),
@@ -68,11 +86,11 @@ class Copied_Lister {
 			$func_names = array_keys( Helpers::get_class_func_code_from_php_code( $file_content, [ 'type' => 'func' ] ) );
 
 			foreach( $func_names as $func_name ){
-				$mock_names[] = "$func_name()";
+				$names[] = "$func_name()";
 			}
 		}
 
-		return $mock_names;
+		return $names;
 	}
 
 }

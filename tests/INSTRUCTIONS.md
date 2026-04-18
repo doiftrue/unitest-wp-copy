@@ -9,7 +9,7 @@ Instructions:
 - For class tests, method names must start with `test__` but should NOT include the class name in the method name. Example for `WP_Error__Test.php`: use `test__public_methods`, not `test__WP_Error__public_methods`.
 - Put class tests in `tests/classes/...` and keep one class per test file.
 - Put copied core function tests in `tests/functions/...`.
-- Put tests for functions implemented in `wp-runtime/copy/mocks/...` (both `wp-runtime/copy/mocks/auto/...` and manual `wp-runtime/copy/mocks/wp-includes/...`) in `tests/mocks/...` with the same WP-path structure (for example `tests/mocks/wp-includes/...`).
+- Put tests for functions implemented in `wp-runtime/copy/mockable/...` and `wp-runtime/copy/mocks/...` in `tests/mocks/...` with the same WP-path structure (for example `tests/mocks/wp-includes/...`).
 - For class tests, verify independent runtime behavior in this project environment:
   - If class is independent: add positive smoke tests for constructor/basic public methods.
   - If class has unavoidable external dependency in current project setup: add explicit `test__not_independent_*` test with `expectException( Error::class )` to document this limitation.

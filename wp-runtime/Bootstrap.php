@@ -13,8 +13,7 @@ class Bootstrap {
 
 		self::$initialized = true;
 
-		$base_dir = dirname( __DIR__ );
-
+		$base_dir = __DIR__;
 		self::load_wp_symbols( $base_dir );
 		self::load_wp_runtime( $base_dir );
 	}
@@ -27,18 +26,18 @@ class Bootstrap {
 			...glob( "$base_dir/copy/classes-statics/*.php" ),
 			...glob( "$base_dir/copy/classes/*.php" ),
 			...glob( "$base_dir/copy/mocks/wp-includes/*.php" ),
-			...glob( "$base_dir/copy/mocks/auto/wp-includes/*.php" ),
+			...glob( "$base_dir/copy/mockable/wp-includes/*.php" ),
 		] );
 	}
 
 	private static function load_wp_runtime( string $base_dir ): void {
-		require_once "$base_dir/src/WP_Mock_Utils.php";
-		require_once "$base_dir/src/base-wp-constants.php";
-		require_once "$base_dir/src/stub-wp-options.php";
+		require_once "$base_dir/WP_Mock_Utils.php";
+		require_once "$base_dir/base-wp-constants.php";
+		require_once "$base_dir/stub-wp-options.php";
 
 		self::setup_wp_constants();
 		self::require_files( [
-			...glob( "$base_dir/copy/init-parts/wp-includes/*.php" ),
+			...glob( "$base_dir/init-parts/wp-includes/*.php" ),
 		] );
 		self::setup_wp_globals();
 	}
