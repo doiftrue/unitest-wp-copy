@@ -2,6 +2,8 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "${SCRIPT_DIR}/_utils.sh"
+
 REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 cd "${REPO_ROOT}"
 
@@ -9,17 +11,17 @@ WP_LINE="${WP_LINE:-}"          # 6.8
 RELEASE_TAG="${RELEASE_TAG:-}"  # 6.8.x
 
 if [[ -z "${WP_LINE}" ]]; then
-	echo "[STOP] Set required env var: WP_LINE (example: 6.8)" >&2
+	cecho red "[STOP] Set required env var: WP_LINE (example: 6.8)" >&2
 	exit 1
 fi
 
 if [[ -z "${RELEASE_TAG}" ]]; then
-	echo "[STOP] Set required env var: RELEASE_TAG (example: 6.8.5.10)" >&2
+	cecho red "[STOP] Set required env var: RELEASE_TAG (example: 6.8.5.10)" >&2
 	exit 1
 fi
 
 if [[ -n "$(git status --porcelain --untracked-files=all)" ]]; then
-	echo "[STOP] Commit changes before starting the flow." >&2
+	cecho red "[STOP] Commit changes before starting the flow." >&2
 	exit 1
 fi
 
@@ -27,12 +29,12 @@ ARTIFACT_DIR="tmp/wp-${WP_LINE}"
 ARTIFACT_BRANCH="wp-${WP_LINE}"
 
 if ! git rev-parse --verify --quiet "refs/heads/${ARTIFACT_BRANCH}" >/dev/null; then
-	echo "[STOP] Branch ${ARTIFACT_BRANCH} not found" >&2
+	cecho red "[STOP] Branch ${ARTIFACT_BRANCH} not found" >&2
 	exit 1
 fi
 
 if git rev-parse --verify --quiet "refs/tags/${RELEASE_TAG}" >/dev/null; then
-	echo "[STOP] Tag ${RELEASE_TAG} already exists" >&2
+	cecho "[STOP] Tag ${RELEASE_TAG} already exists" >&2
 	exit 1
 fi
 
@@ -43,39 +45,28 @@ run_php() {
 		composer sh -c "${cmd}"
 }
 
-echo "[1/4] Switch wordpress/wordpress to ~${WP_LINE}.0"
-run_php "composer require --dev wordpress/wordpress:~${WP_LINE}.0 --no-update --no-interaction"
-run_php "composer update wordpress/wordpress --with-dependencies --no-interaction"
+cecho cyan "[1/6] Switch wordpress/wordpress to ~${WP_LINE}.0"
+run_php "composer require --dev wordpress/wordpress:~${WP_LINE}.0   --no-interaction --no-update"
+run_php "composer update wordpress/wordpress   --no-interaction --with-dependencies"
 
-echo "[2/4] Run parser and tests"
+cecho cyan "[2/6] Run parser"
 run_php "php _parser/run.php"
+cecho cyan "[2/6] Run tests"
 run_php "composer run phpunit -- --colors=always"
 
-echo "[3/4] Build artifact in ${ARTIFACT_DIR}"
+cecho cyan "[3/6] Build artifact in ${ARTIFACT_DIR}"
 rm -rf "${ARTIFACT_DIR}"
 mkdir -p "${ARTIFACT_DIR}"
 cp -a   zero.php copy src   "${ARTIFACT_DIR}/"
 
-
+cecho cyan "[3/6] Reset all changes made for artifact creation"
+git reset --hard HEAD
+run_php "composer update wordpress/wordpress"
 
 
 return # skip for now
 
-WORKTREE_DIR=""
-cleanup() {
-	local status=$?
-	set +e
-
-	if [[ -n "${WORKTREE_DIR}" ]]; then
-		git worktree remove --force "${WORKTREE_DIR}" >/dev/null 2>&1 || true
-		rm -rf "${WORKTREE_DIR}" >/dev/null 2>&1 || true
-	fi
-
-	exit "${status}"
-}
-trap cleanup EXIT INT TERM
-
-echo "[4/4] Update ${ARTIFACT_BRANCH}, commit and tag ${RELEASE_TAG}"
+cecho cyan "[4/6] Update ${ARTIFACT_BRANCH}, commit and tag ${RELEASE_TAG}"
 WORKTREE_DIR="$(mktemp -d "/tmp/wp-releaser-${WP_LINE}-XXXXXX")"
 git worktree add --force "${WORKTREE_DIR}" "${ARTIFACT_BRANCH}" >/dev/null
 rm -rf "${WORKTREE_DIR}/zero.php" "${WORKTREE_DIR}/copy" "${WORKTREE_DIR}/src"

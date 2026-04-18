@@ -1,4 +1,5 @@
 /vendor/
 /wordpress/
-/tmp/
 /__*
+/tmp/*
+!/tmp/.gitkeep
