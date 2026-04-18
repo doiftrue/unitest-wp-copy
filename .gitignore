@@ -2,3 +2,13 @@
 /wordpress/
 /tmp/
 /__*
+
+/_parser/
+/config/
+/tests/
+/AGENTS.md
+/Makefile
+/phpunit.xml
+/README.md
+/TODO*
+/composer.lock
