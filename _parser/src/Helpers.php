@@ -29,7 +29,9 @@ class Helpers {
 	 *                            - 'type' - The type of data received: 'class', 'method' (class methods), 'func' (function).
 	 *                            - 'name' - Get a specified class or function (by name).
 	 *
-	 * @return array The data of the found classes|functions. Will return such an array:
+	 * @return array<string, array<int,string>> The data of the found classes|functions.
+	 *                                          If a file contains duplicate declarations with the same name,
+	 *                                          only the first declaration is collected.
 	 *
 	 *     Array(
 	 *         [WP_Dependencies] => Array(
@@ -40,7 +42,7 @@ class Helpers {
 	 *         [_WP_Dependency] => Array( ... )
 	 *     )
 	 *
-	 * @version 1.0
+	 * @version 1.1.0
 	 */
 	public static function get_class_func_code_from_php_code( & $lines, $args = [] ): array {
 
@@ -79,6 +81,7 @@ class Helpers {
 		$_open_braket_level = 0;  // open brackets counter { after
 		$_in_process = 0;  // 1 when inside the class
 		$_elem_name = ''; // name of function, class
+		$_skip_elem = false; // true when declaration with the same name was already collected
 
 
 		$inside_script = $inside_style = $inside_comments = false;
@@ -156,9 +159,12 @@ class Helpers {
 			){
 				$_in_process = 1;
 				$_elem_name = $mm[1];
+				$_skip_elem = isset( $code_lines[ $_elem_name ] );
 
 				// add the string to the return
-				$code_lines[ $_elem_name ][ $line_num ] = $line;
+				if( ! $_skip_elem ){
+					$code_lines[ $_elem_name ][ $line_num ] = $line;
+				}
 				// delete the string that belongs to the class
 				if( $rg->cut ){
 					unset( $lines[ $line_num ] );
@@ -167,6 +173,7 @@ class Helpers {
 				// a method can be without brackets at all. Example: 'abstract public function load();'
 				if( preg_match( '/; *$/', $clear_line ) ){
 					$_in_process = 0;
+					$_skip_elem = false;
 
 					// if we were looking for a specific name, the loop can be terminated
 					if( $rg->name ){
@@ -198,6 +205,7 @@ class Helpers {
 
 						if( $_open_braket_level === 0 ){
 							$_in_process = 0;
+							$_skip_elem = false;
 
 							// if we were looking for a specific name, the loop can be terminated
 							if( $rg->name ){
@@ -223,7 +231,9 @@ class Helpers {
 					}
 				}
 
-				$code_lines[ $_elem_name ][ $line_num ] = $line;
+				if( ! $_skip_elem ){
+					$code_lines[ $_elem_name ][ $line_num ] = $line;
+				}
 				// delete the line belonging to the class
 				if( $rg->cut ){
 					unset( $lines[ $line_num ] );
@@ -232,6 +242,7 @@ class Helpers {
 				if( $_open_braket_level === 0 ){
 					// function or class was closed.
 					$_in_process = 0;
+					$_skip_elem = false;
 
 					// if we were looking for a specific name, the loop can be interrupted
 					if( $rg->name ){
