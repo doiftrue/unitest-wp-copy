@@ -3,13 +3,6 @@
   "description": "Collection of WordPress core functions and classes that can be used in unit tests to simulate WordPress environment.",
   "type": "library",
   "license": "MIT",
-  "authors": [
-    {
-      "name": "Timur Kamaev",
-      "email": "tnkamaev@gmail.com",
-      "homepage": "https://github.com/doiftrue/unitest-wp-copy"
-    }
-  ],
   "scripts": {
     "phpunit": "phpunit"
   },
@@ -39,6 +32,13 @@
     {
       "type": "composer",
       "url": "https://raw.githubusercontent.com/doiftrue/wordpress-composer-repo/main/repo/no-content"
+    }
+  ],
+  "authors": [
+    {
+      "name": "Timur Kamaev",
+      "email": "tnkamaev@gmail.com",
+      "homepage": "https://github.com/doiftrue/unitest-wp-copy"
     }
   ]
 }

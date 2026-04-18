@@ -1,213 +1,121 @@
-# TODO: Packagist Strategy (One Package, Dist Branches Per WP Line)
+# TODO: Multi-WP Version Packaging (Base Config + Version Overrides)
 
-## Decision (Locked)
+## Decision
 
-Use this exact model for now:
+Use one canonical parser config for the latest supported WordPress line, plus small per-line override configs for older lines.
 
-- one public package on Packagist: `doiftrue/unitest-wp-copy`;
-- one source repository for development;
-- one development branch: `main`;
-- publish-only branches per WP line: `dist/wp61`, `dist/wp62`, ..., `dist/wp69`;
-- tags are created on `dist/wp*` commits and represent installable package versions.
-
-No multiple long-lived development branches per WP version.
+- Canonical config lives in top-level `config/`.
+- Line-specific patches live in `config/<wp-line>/` (for example `config/6.7/`).
+- Parser builds one effective config by merging base + line override.
 
 
-## Why this model
+## Why This Model
 
-- keeps parser/runtime/tests in one place (`main`);
-- avoids manual branch synchronization for shared code;
-- stays compatible with free `packagist.org` requirements (VCS + tags);
-- allows consumers to lock to one WP line (`~6.8.0`) and not jump to another line.
-
-
-## Packagist Constraints (Important)
-
-For free `packagist.org`, package versions come from Git tags in a public VCS repository.
-
-- Packagist does not work like an artifact upload registry.
-- To publish a new version, a tagged commit must exist in Git.
-- Therefore release content for each WP line must exist in a branch and be tagged.
+- Avoids full config duplication per WP line.
+- Keeps latest WP support simple: update one canonical config first.
+- Makes backport support explicit and reviewable (only deltas are stored).
+- Supports symbol moves/removals between WP lines without branching parser logic.
 
 
-## Repository Layout (Development)
-
-Development code lives in `main`:
+## Config Layout
 
 ```text
-/
-  _parser/
-  src/
-  tests/
-  zero.php
-  Makefile
-  versions/
-    wp-6.1/{config,copy}
-    wp-6.2/{config,copy}
+config/
+  WP-VERSION-LINE
+  functions/
+    wp-includes/formatting.php
+    wp-includes/functions.php
     ...
-    wp-6.9/{config,copy}
+  classes.php
+  static-methods.php
+
+  6.7/
+    functions/
+      wp-includes/formatting.php
+      wp-includes/some-other-file.php
+    classes.php
+    static-methods.php
 ```
 
-Notes:
+Rules:
+- Top-level `config/*` is always for the newest supported WP line.
+- `config/<wp-line>/*` contains only overrides for that line.
+- Override files use the same structure as base config files.
+- `config/WP-VERSION-LINE` stores the target WP minor line (`major.minor`) for the base config.
+- Effective WP line is derived dynamically from parser runtime version (`\Parser\Config::$wp_version`).
 
-- `src`, `_parser`, and `tests` are shared.
-- version-specific data is stored in `versions/wp-*/`.
 
+## Merge Rules
 
-## Publish Branch Layout
+Merge order:
+1. Load base config from `config/*`.
+2. Detect current WP line (`major.minor`) from `wordpress/wp-includes/version.php`.
+3. If `config/<wp-line>/*` exists, apply it as patch on top of base config.
 
-Each `dist/wpXY` branch contains only package-ready files for that WP line.
+Patch semantics:
+- `'symbol_name' => false` means "remove this symbol from effective config".
+- `'symbol_name' => '6.5.0'` (or `'6.5.0 mockable'`) means add/replace symbol value.
+- Nested arrays are merged recursively (`functions/*`, `static-methods.php` methods list, etc.).
+- Empty nodes after deletion are removed.
 
-Example `dist/wp68` tree:
+Example (function introduced in WP 6.8, removed for 6.7 build):
 
-```text
-/
-  composer.json
-  zero.php
-  src/
-  copy/      <- generated from versions/wp-6.8/copy
+```php
+// config/6.7/functions/wp-includes/formatting.php
+return [
+	'new_68_function' => false,
+];
 ```
 
-Not included in `dist/*`:
+Example (function moved between files):
 
-- `_parser/`
-- `tests/`
-- other `versions/wp-*` directories
-- WordPress source mirror
+```php
+// config/6.7/functions/wp-includes/new-file.php
+return [
+	'moved_function' => false,
+];
 
-
-## Versioning Convention
-
-Use package versions aligned to WP line:
-
-- WP 6.8 line uses package versions `6.8.x` (`6.8.0`, `6.8.1`, `6.8.2`, ...).
-- WP 6.9 line uses package versions `6.9.x`.
-
-This enables consumer constraints:
-
-- project on WP 6.8: require `doiftrue/unitest-wp-copy:~6.8.0`.
-- project on WP 6.9: require `doiftrue/unitest-wp-copy:~6.9.0`.
+// config/6.7/functions/wp-includes/old-file.php
+return [
+	'moved_function' => '1.0.0',
+];
+```
 
 
-## Release Workflow (Per Line)
+## Base Config Lifecycle
 
-### 1. Develop in `main`
+Base config always tracks the newest supported WP line.
 
-- make code/config/parser changes in `main`;
-- regenerate target line copy (example: `WP_VERSION=6.8 make run.parser`);
-- commit updates in `main`.
-
-### 2. Test in `main` before release
-
-- run shared test matrix against supported lines;
-- minimally ensure target line passes;
-- if shared code changed, run all lines.
-
-### 3. Build publish tree for target line
-
-For line `6.8`, CI creates package content:
-
-- copy shared runtime files (`src`, `zero.php`, package metadata);
-- map `versions/wp-6.8/copy` to root `copy/`;
-- remove dev-only files.
-
-### 4. Validate publish tree before tagging
-
-In CI, validate package content:
-
-- `composer validate`;
-- smoke bootstrap test:
-  - autoload package
-  - run `\Unitest_WP_Copy\Bootstrap::init()`
-  - execute several known functions/classes
-
-### 5. Publish commit + tag
-
-- push generated tree to `dist/wp68`;
-- create tag `v6.8.N` on that exact commit;
-- push tag.
-
-Packagist reads the new tag and exposes it as a new installable version.
+When a new WP line is released:
+1. Update top-level `config/*` to the new latest line.
+2. Update `config/WP-VERSION-LINE` to the new target WP minor line (`major.minor`).
+3. Create `config/<previous-line>/` with only rollback/relocation overrides needed to reproduce previous line behavior.
+4. Keep existing older line override folders as-is (update only if needed).
 
 
-## CI Automation Plan
+## Parser Behavior Requirements
 
-Create two workflow types.
-
-### A) Continuous test workflow (`main`)
-
-Trigger: push/PR to `main`.
-
-- detect changed paths;
-- run parser/test matrix as needed;
-- fail on test failures or unexpected parser diffs.
-
-### B) Release workflow (`workflow_dispatch`)
-
-Inputs:
-
-- `wp_line` (example: `6.8`);
-- `release_type` (`patch` now, optional `minor/major` later);
-- optional explicit `version` override.
-
-Steps:
-
-1. checkout `main`;
-2. regenerate selected line;
-3. build publish tree;
-4. run validation/smoke checks;
-5. update `dist/wpXY` branch;
-6. create and push tag `vX.Y.Z`;
-7. trigger Packagist update webhook (or wait for polling).
+- Parser must use current WP version from `wordpress/wp-includes/version.php`.
+- It must derive version line as `major.minor` (for example `6.8`).
+- It must merge base config with optional `config/<major.minor>/` overrides.
+- Existing function-level `since-version` filter remains active after merge.
+- If no line override exists, parser uses base config only.
 
 
-## Branch Policy
+## Operational Notes
 
-- `main`: only branch for development.
-- `dist/wp*`: publish artifacts only; never edited manually.
-- short-lived feature branches are allowed, then merged to `main`.
-
-
-## Change Impact Rules
-
-How to decide what to release:
-
-1. If only `versions/wp-6.8/*` changed, release only `6.8.x`.
-2. If shared runtime/parser changed (`src`, `_parser`, bootstrap behavior), re-test all lines and release affected lines.
-3. If parser output changed for multiple lines, release each changed line separately.
+- Do not copy full base config into `config/<wp-line>/`.
+- Put only changed keys into line override files.
+- Use `false` only where deletion from effective config is intended.
+- For symbol moves, always do both sides:
+  - remove from old location (`false`);
+  - add to new location with target value.
 
 
-## Consumer Documentation (to add in README)
+## Migration Checklist
 
-- Explain that package versions are WP-line specific.
-- Provide explicit constraints:
-  - WP 6.8 -> `~6.8.0`
-  - WP 6.9 -> `~6.9.0`
-- State that users must not use broad constraints like `^6.0` if they want to stay on one WP line.
-
-
-## Migration TODO (from current state)
-
-1. Introduce `versions/wp-6.8/` as first line and move current `config/copy` there.
-2. Make parser version-aware (`WP_VERSION` input).
-3. Add bootstrap option to select active line in dev mode (env var).
-4. Add initial `dist/wp68` generation script.
-5. Add CI: test matrix + release workflow.
-6. Register/update package on Packagist and configure webhook.
-7. Backfill other lines (`6.1..6.9`) gradually.
-
-
-## Open Technical Questions
-
-- exact tag naming: `v6.8.3` vs `6.8.3` (both possible; choose one and keep consistent);
-- whether `dist/wp*` history should be squash-like (clean) or full;
-- how to auto-bump patch version safely in CI.
-
-
-## Definition of Done
-
-- `main` is the single source of truth for development.
-- each WP line has reproducible publish branch `dist/wp*`.
-- releases are created only by CI and tagged per line (`6.X.Y`).
-- Packagist shows installable versions per WP line.
-- consumers can reliably lock one WP line via Composer constraint.
+1. Keep canonical config aligned with latest WP line.
+2. Keep `config/WP-VERSION-LINE` synced with the latest supported WP minor line for base config.
+3. Add `config/<wp-line>/` patches only for differences from canonical.
+4. Run parser and tests for each supported line during release process.
+5. Ensure published artifacts for each line are generated from merged effective config.
