@@ -87,7 +87,7 @@ class compat_Test extends \PHPUnit\Framework\TestCase {
 
 	public function test__array_find() {
 		if( $wp_ver = wp_version_compare( '< 6.8.0' ) ){
-			$this->markTestSkipped( "array_find() does not exists on WP $wp_ver" );
+			$this->markTestSkipped( "array_find() not exists on WP $wp_ver" );
 		}
 
 		$a = [ 1, 2, 3 ];
@@ -97,7 +97,7 @@ class compat_Test extends \PHPUnit\Framework\TestCase {
 
 	public function test__array_find_key() {
 		if( $wp_ver = wp_version_compare( '< 6.8.0' ) ){
-			$this->markTestSkipped( "array_find_key() does not exists on WP $wp_ver" );
+			$this->markTestSkipped( "array_find_key() not exists on WP $wp_ver" );
 		}
 
 		$a = [ 'x' => 10, 'y' => 20 ];
@@ -107,7 +107,7 @@ class compat_Test extends \PHPUnit\Framework\TestCase {
 
 	public function test__array_any() {
 		if( $wp_ver = wp_version_compare( '< 6.8.0' ) ){
-			$this->markTestSkipped( "array_any() does not exists on WP $wp_ver" );
+			$this->markTestSkipped( "array_any() not exists on WP $wp_ver" );
 		}
 
 		$a = [ 1, 2, 3 ];
@@ -117,7 +117,7 @@ class compat_Test extends \PHPUnit\Framework\TestCase {
 
 	public function test__array_all() {
 		if( $wp_ver = wp_version_compare( '< 6.8.0' ) ){
-			$this->markTestSkipped( "array_all() does not exists on WP $wp_ver" );
+			$this->markTestSkipped( "array_all() not exists on WP $wp_ver" );
 		}
 
 		$a = [ 2, 4, 6 ];

@@ -380,7 +380,7 @@ class functions__Test extends \PHPUnit\Framework\TestCase {
 
 	public function test__wp_unique_id_from_values() {
 		if( $wp_ver = wp_version_compare( '< 6.8.0' ) ){
-			$this->markTestSkipped( "wp_unique_id_from_values() does not exists on WP $wp_ver" );
+			$this->markTestSkipped( "wp_unique_id_from_values() not exists on WP $wp_ver" );
 		}
 
 		$id = wp_unique_id_from_values( [ 'a' => 1, 'b' => 2 ], 'p_' );
