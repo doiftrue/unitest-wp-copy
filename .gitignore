@@ -12,3 +12,5 @@
 /README.md
 /TODO*
 /composer.lock
+/.gitattributes
+/VERSION

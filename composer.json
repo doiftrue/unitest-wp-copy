@@ -3,37 +3,11 @@
   "description": "Collection of WordPress core functions and classes that can be used in unit tests to simulate WordPress environment.",
   "type": "library",
   "license": "MIT",
-  "scripts": {
-    "phpunit": "phpunit"
-  },
-  "require": {},
-  "require-dev": {
-    "composer/installers": "^2.3",
-    "wordpress/wordpress": "~6.8.5",
-    "phpunit/phpunit": "^9",
-    "10up/wp_mock": "*"
-  },
   "autoload": {
     "psr-4": {
       "Unitest_WP_Copy\\": "src/"
     }
   },
-  "extra": {
-    "installer-paths": {
-      "wordpress/": [ "wordpress/wordpress" ]
-    }
-  },
-  "config": {
-    "allow-plugins": {
-      "composer/installers": true
-    }
-  },
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://raw.githubusercontent.com/doiftrue/wordpress-composer-repo/main/repo/no-content"
-    }
-  ],
   "authors": [
     {
       "name": "Timur Kamaev",
