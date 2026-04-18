@@ -4,26 +4,11 @@ Parser Instructions
 Collect a list of WordPress PHP functions from the provided file that can be used directly in PHPUnit tests without relying on external libraries or database calls.
 Only include functions that can run in a plain PHP environment, so they can be used in PHPUnit without bootstrapping full WordPress.
 
-Also take into account that my PHPUnit environment uses mocks for the following WordPress functions:
+Also take into account that PHPUnit environment uses already collected WordPress functions & mocks from `copy/SYMBOLS-INFO.md` For example:
 - add_action()
 - do_action()
-- add_filter()
-- apply_filters()
 - __()
 - _e()
-- _x()
-- _n()
-- esc_html__()
-- esc_html_e()
-- esc_html_x()
-- esc_attr__()
-- esc_attr_e()
-- esc_attr_x()
-- esc_html()
-- esc_attr()
-- esc_url()
-- esc_url_raw()
-- esc_js()
 - esc_textarea()
 - And effective parser configs merged from:
   - base config files in `config/*`;
@@ -36,7 +21,6 @@ Important: if code uses options from `stub-wp-options.php`, then this function/m
 
 When updating parser configs:
 - Base latest-line config files are:
-  - `config/WP-VERSION-LINE` (base config metadata, target WP minor line `major.minor`, e.g. `6.8`)
   - `config/functions/<wp-source-file>.php`
   - `config/classes.php`
   - `config/static-methods.php`
@@ -53,7 +37,6 @@ Versioned Config Merge Model (Base + Overrides)
 ===============================================
 
 The project keeps one canonical config for the newest supported WP line in top-level `config/*`.
-The target WP minor line for this base config is stored in `config/WP-VERSION-LINE`.
 WP line (`major.minor`) is always derived dynamically from parser runtime WP version.
 
 For older lines, use small override configs in `config/<wp-line>/*` with the same file structure.
@@ -75,13 +58,6 @@ Function move rule (between WP lines):
 - add symbol into the target file in the same override line config.
 
 This will reflect changes for old WP-line config without copying all config.
-
-Lifecycle rule:
-- Base config always tracks newest supported WP line.
-- When new WP line is adopted:
-  - update `config/WP-VERSION-LINE` with new WP minor line (`major.minor`);
-  - update top-level `config/*` for new line;
-  - create `config/<previous-line>/` with only rollback differences.
 
 
 How Parser Works In This Project

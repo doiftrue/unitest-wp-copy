@@ -13,6 +13,8 @@ class Config {
 
 	public readonly string $wp_version;
 
+	public readonly string $wp_version_line;
+
 	public readonly string $config_dir;
 
 	public readonly string $line_config_dir;
@@ -37,8 +39,8 @@ class Config {
 		require_once "$this->wp_core_dir/wp-includes/version.php";
 		/** @var string $wp_version */
 		$this->wp_version = $wp_version;
-		$version_line = $this->parse_version_line( $this->wp_version );
-		$this->line_config_dir = "$this->config_dir/$version_line";
+		$this->wp_version_line = $this->parse_version_line( $this->wp_version );
+		$this->line_config_dir = "$this->config_dir/$this->wp_version_line";
 
 		// load configs
 		$this->funcs_data = $this->load_functions_config();
@@ -47,7 +49,7 @@ class Config {
 	}
 
 	private function load_functions_config(): array {
-		$base_config = $this->build_functions_config( "$this->config_dir/functions" );
+		$base_config    = $this->build_functions_config( "$this->config_dir/functions" );
 		$version_config = $this->build_functions_config( "$this->line_config_dir/functions" );
 
 		return $this->merge_config_with_overrides( $base_config, $version_config );
@@ -55,7 +57,7 @@ class Config {
 
 	private function load_config_file( string $file_name ): array {
 		$base_config = $this->load_php_array_file( "$this->config_dir/$file_name", true );
-		$ver_config = $this->load_php_array_file( "$this->line_config_dir/$file_name", false );
+		$ver_config  = $this->load_php_array_file( "$this->line_config_dir/$file_name", false );
 
 		return $this->merge_config_with_overrides( $base_config, $ver_config );
 	}
