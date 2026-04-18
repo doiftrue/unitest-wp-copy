@@ -57,7 +57,7 @@ run_php "composer run phpunit -- --colors=always"
 cecho cyan "[3/6] Build artifact in ${ARTIFACT_DIR}"
 rm -rf "${ARTIFACT_DIR}"
 mkdir -p "${ARTIFACT_DIR}"
-cp -a   zero.php copy src   "${ARTIFACT_DIR}/"
+cp -a zero.php wp-runtime "${ARTIFACT_DIR}/"
 
 cecho cyan "[3/6] Reset all changes made for artifact creation"
 git reset --hard HEAD
@@ -69,9 +69,9 @@ return # skip for now
 cecho cyan "[4/6] Update ${ARTIFACT_BRANCH}, commit and tag ${RELEASE_TAG}"
 WORKTREE_DIR="$(mktemp -d "/tmp/wp-releaser-${WP_LINE}-XXXXXX")"
 git worktree add --force "${WORKTREE_DIR}" "${ARTIFACT_BRANCH}" >/dev/null
-rm -rf "${WORKTREE_DIR}/zero.php" "${WORKTREE_DIR}/copy" "${WORKTREE_DIR}/src"
-cp -a "${ARTIFACT_DIR}/zero.php" "${ARTIFACT_DIR}/copy" "${ARTIFACT_DIR}/src" "${WORKTREE_DIR}/"
-git -C "${WORKTREE_DIR}" add zero.php copy src
+rm -rf "${WORKTREE_DIR}/zero.php" "${WORKTREE_DIR}/wp-runtime"
+cp -a "${ARTIFACT_DIR}/zero.php" "${ARTIFACT_DIR}/wp-runtime" "${WORKTREE_DIR}/"
+git -C "${WORKTREE_DIR}" add zero.php wp-runtime
 
 if git -C "${WORKTREE_DIR}" diff --cached --quiet; then
 	echo "No artifact changes to commit on ${ARTIFACT_BRANCH}."

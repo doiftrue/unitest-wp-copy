@@ -33,7 +33,7 @@ class Config {
 		$project_dir = dirname( $parser_dir );
 
 		$this->config_dir = "$project_dir/config";
-		$this->dest_dir = "$project_dir/copy";
+		$this->dest_dir = "$project_dir/wp-runtime/copy";
 		$this->wp_core_dir = "$project_dir/wordpress";
 
 		require_once "$this->wp_core_dir/wp-includes/version.php";

@@ -10,42 +10,42 @@ The project includes:
 - tests that verify basic behavior of included functions.
 
 Main bootstrap API: `\Unitest_WP_Copy\Bootstrap::init()`.
-Entry point script: `zero.php` (includes `src/Bootstrap.php` and calls `\Unitest_WP_Copy\Bootstrap::init()`).
+Entry point script: `zero.php` (includes `wp-runtime/src/Bootstrap.php` and calls `\Unitest_WP_Copy\Bootstrap::init()`).
 
 ## Project structure
 
 - `zero.php`  
-  Library entry point. Includes `src/Bootstrap.php` and calls `\Unitest_WP_Copy\Bootstrap::init()`.
+  Library entry point. Includes `wp-runtime/src/Bootstrap.php` and calls `\Unitest_WP_Copy\Bootstrap::init()`.
 
-- `copy/`  
+- `wp-runtime/copy/`  
   Copied WordPress functions/classes.
 
-  - `copy/SYMBOLS-INFO.md`  
-    Reference list of symbols included in `copy/` (functions/classes/statics/mocks) for quick lookup.
+  - `wp-runtime/copy/SYMBOLS-INFO.md`  
+    Reference list of symbols included in `wp-runtime/copy/` (functions/classes/statics/mocks) for quick lookup.
 
-  - `copy/classes-statics/`  
+  - `wp-runtime/copy/classes-statics/`  
     Experimental compatibility layer for selected static class methods copied as plain functions.
     Naming rule: `ClassName::methodName()` -> `ClassName__methodName()`.
     Used when whole class is not suitable for this project, but utility-like static method is needed as dependency.
 
-  - `copy/init-parts/`  
+  - `wp-runtime/copy/init-parts/`  
     Minimal WP initialization fragments required to run some functions.
 
-  - `copy/mocks/`  
+  - `wp-runtime/copy/mocks/`  
     Mock-friendly function layer.
-    - `copy/mocks/auto/` — parser-generated copies of original WP functions with injected `WP_Mock` handler check at function start.
-    - `copy/mocks/wp-includes/` — manually maintained mocks where logic is intentionally changed for this project runtime.
+    - `wp-runtime/copy/mocks/auto/` — parser-generated copies of original WP functions with injected `WP_Mock` handler check at function start.
+    - `wp-runtime/copy/mocks/wp-includes/` — manually maintained mocks where logic is intentionally changed for this project runtime.
 
-- `src/`  
+- `wp-runtime/src/`  
   Stubs and environment initialization for copied functions/classes.
 
-  - `src/Bootstrap.php`  
-    Main bootstrap implementation. Loads copies from `copy/`, stubs from `src/`, and initializes base WP-like globals/constants.
+  - `wp-runtime/src/Bootstrap.php`  
+    Main bootstrap implementation. Loads copies from `wp-runtime/copy/`, stubs from `wp-runtime/src/`, and initializes base WP-like globals/constants.
 
-  - `src/stub-wp-options.php`  
+  - `wp-runtime/src/stub-wp-options.php`  
     Stub for `get_option()`-like calls via `$GLOBALS['stub_wp_options']`. Some kinds mock of DB-stored options, some just return hardcoded values.
 
-  - `src/base-wp-constants.php`  
+  - `wp-runtime/src/base-wp-constants.php`  
     Base WP constants and environment values for test execution.
   
 - `wordpress/`  
@@ -53,10 +53,10 @@ Entry point script: `zero.php` (includes `src/Bootstrap.php` and calls `\Unitest
 
 
 ### `_parser/`
-  Separate part of project that creates `copy/` code copiing it from WP core code.
+  Separate part of project that creates `wp-runtime/copy/` code copiing it from WP core code.
   Internal generator/updater for copied functions, mockable functions, classes, and selected static class methods.
   - `config/functions/` — function lists split by WP source file path;
-    - use value `'mockable'` for symbols that should be generated into `copy/mocks/auto/*` with injected WP_Mock handler.
+    - use value `'mockable'` for symbols that should be generated into `wp-runtime/copy/mocks/auto/*` with injected WP_Mock handler.
   - `config/classes.php` — class list;
   - `config/static-methods.php` — selected static class methods copied as plain functions;
   - `_parser/INSTRUCTION.md` — instructions for updating copied code.
@@ -66,9 +66,9 @@ Entry point script: `zero.php` (includes `src/Bootstrap.php` and calls `\Unitest
 - `tests/`  
   PHPUnit tests for whole project.
   - `tests/functions/` — function tests.
-  - `tests/classes-statics/` — tests for static class methods copied as plain functions (`copy/classes-statics/`).
+  - `tests/classes-statics/` — tests for static class methods copied as plain functions (`wp-runtime/copy/classes-statics/`).
   - `tests/classes/` — class tests.
-  - `tests/mocks/` — tests for mock implementations from `copy/mocks/` (including WP_Mock-handler behavior).
+  - `tests/mocks/` — tests for mock implementations from `wp-runtime/copy/mocks/` (including WP_Mock-handler behavior).
   It tests how the copied functions/classes work in the provided environment. The current WP-like test env loaded as if it used on another project as phpunit test WP environment, and all WP functions/classes are tested if they work correctly without real WP environment (without DB, external services, etc).
 
 
@@ -85,10 +85,10 @@ Entry point script: `zero.php` (includes `src/Bootstrap.php` and calls `\Unitest
 
 ## Important notes for agents
 
-- Do not manually remove or alter logic in `copy/` without understanding the impact: these files are synchronized via `_parser`.
+- Do not manually remove or alter logic in `wp-runtime/copy/` without understanding the impact: these files are synchronized via `_parser`.
 - When adding a new function/class/static-method shim, update the relevant `config/*.php` first, then run `_parser/run.php`.
 - Put value `'mockable'` in `config/functions/*` when you need original WP logic with injected WP_Mock handler.
-- Keep `copy/mocks/wp-includes/*` only for manual mocks with intentionally changed behavior.
+- Keep `wp-runtime/copy/mocks/wp-includes/*` only for manual mocks with intentionally changed behavior.
 - Detailed parser workflow and class/function inclusion rules: see `_parser/INSTRUCTION.md`.
 - Detailed testing conventions (naming, file layout, class-vs-function test rules): see `tests/INSTRUCTIONS.md`.
 - Project code and code comments must be written in English.

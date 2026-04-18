@@ -76,7 +76,7 @@ If you do not define them, defaults are used.
 
 Available Symbols Reference
 ---------------------------
-Use [`copy/SYMBOLS-INFO.md`](copy/SYMBOLS-INFO.md) as a quick index of all symbols available in this package version.
+Use [`wp-runtime/copy/SYMBOLS-INFO.md`](wp-runtime/copy/SYMBOLS-INFO.md) as a quick index of all symbols available in this package version.
 
 It includes:
 
@@ -128,8 +128,8 @@ Mock Functions and WP_Mock
 --------------------------
 Library also contains mock-friendly WP functions from two sources:
 
-- `copy/mocks/auto/...`: copies of original WP functions with injected WP_Mock handler support.
-- `copy/mocks/wp-includes/...`: manual mocks where runtime behavior is intentionally adapted for this project.
+- `wp-runtime/copy/mocks/auto/...`: copies of original WP functions with injected WP_Mock handler support.
+- `wp-runtime/copy/mocks/wp-includes/...`: manual mocks where runtime behavior is intentionally adapted for this project.
 
 Examples:
 

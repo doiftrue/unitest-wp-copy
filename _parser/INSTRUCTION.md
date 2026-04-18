@@ -4,7 +4,7 @@ Parser Instructions
 Collect a list of WordPress PHP functions from the provided file that can be used directly in PHPUnit tests without relying on external libraries or database calls.
 Only include functions that can run in a plain PHP environment, so they can be used in PHPUnit without bootstrapping full WordPress.
 
-Also take into account that PHPUnit environment uses already collected WordPress functions & mocks from `copy/SYMBOLS-INFO.md` For example:
+Also take into account that PHPUnit environment uses already collected WordPress functions & mocks from `wp-runtime/copy/SYMBOLS-INFO.md` For example:
 - add_action()
 - do_action()
 - __()
@@ -72,7 +72,7 @@ Core flow:
   - older line: `config/<wp-line>/*` override files (only changed keys).
 - Run `php _parser/run.php`.
 - `run.php` creates `Updater` and passes:
-  - destination folder: `copy/`
+  - destination folder: `wp-runtime/copy/`
   - WP core source folder: `wordpress`
   - merged function/class/static-method configs.
 
@@ -100,7 +100,7 @@ What `Updater` does:
   - applies static-method call replacement (`ClassName::method()` -> `ClassName__method()`) from merged static-method config.
 
 Important constraints:
-- Files in `copy/` are generated; avoid manual edits there unless adaptation is intentional.
+- Files in `wp-runtime/copy/` are generated; avoid manual edits there unless adaptation is intentional.
 - Parser only copies symbols listed in config files.
 - If a configured function is missing in source file, parser throws an exception.
 
@@ -135,7 +135,7 @@ Before adding any function/class/static-method to parser configs, validate the f
 
 Hard rule:
 - A function/class/static-method is allowed only if every dependency in the chain is:
-  - already available in this project (`copy/`, `copy/mocks/`, `copy/init-parts/`, `src/*`), or
+  - already available in this project (`wp-runtime/copy/`, `wp-runtime/copy/mocks/`, `wp-runtime/copy/init-parts/`, `wp-runtime/src/*`), or
   - added in the same change and passes the same dependency-chain rule recursively.
 - If dependency A requires dependency B, B must be checked with the same strict criteria, recursively until chain end.
 - If at least one dependency in the chain is incompatible with this project ideology (DB-bound runtime, full WP bootstrap, network I/O, unsupported filesystem/runtime coupling, etc.), then the top-level function/class/static-method is not allowed.
@@ -154,8 +154,8 @@ Step-By-Step: Add More WP Core Functions
 - Candidate is valid only if whole chain can be satisfied by existing project symbols or by symbols that are also valid to add now.
 
 2) Check compatibility with current test environment
-- Available stubs/constants/init are loaded by `zero.php`, `src/base-wp-constants.php`, `src/stub-wp-options.php`, and `copy/init-parts/*`.
-- Mocked compatibility functions are in `copy/mocks/auto/*` (parser-generated) and `copy/mocks/wp-includes/*` (manual).
+- Available stubs/constants/init are loaded by `zero.php`, `wp-runtime/src/base-wp-constants.php`, `wp-runtime/src/stub-wp-options.php`, and `wp-runtime/copy/init-parts/*`.
+- Mocked compatibility functions are in `wp-runtime/copy/mocks/auto/*` (parser-generated) and `wp-runtime/copy/mocks/wp-includes/*` (manual).
 - If option access is covered by `$GLOBALS['stub_wp_options']`, function is acceptable.
 - Reject candidate if any dependency in its chain remains unresolved or requires unsupported runtime behavior.
 
@@ -179,7 +179,7 @@ Step-By-Step: Add More WP Core Functions
 5) Regenerate copied code
 - Run:
   - `php _parser/run.php`
-- Confirm target file in `copy/functions/...` was updated and no parser warnings/errors occurred.
+- Confirm target file in `wp-runtime/copy/functions/...` was updated and no parser warnings/errors occurred.
 
 6) Add tests
 - Add/update PHPUnit tests in `tests/functions/...`.
@@ -196,7 +196,7 @@ Step-By-Step: Add More WP Core Functions
   - revert function from active config (leave commented note).
 
 8) Final review before commit
-- Ensure generated `copy/` changes correspond only to intended functions.
+- Ensure generated `wp-runtime/copy/` changes correspond only to intended functions.
 - Ensure comments in config explain why entries are commented out (if any).
 
 
@@ -232,20 +232,20 @@ How it works:
   - newest line: `config/functions/<wp-source-file>.php`;
   - older lines: `config/<wp-line>/functions/<wp-source-file>.php`;
   with value `'<since-version> mockable'`.
-- Destination: `copy/mocks/auto/<wp-source-file>.php`.
+- Destination: `wp-runtime/copy/mocks/auto/<wp-source-file>.php`.
 - Parser copies original function code and injects handler check at function start.
 - Generated function is wrapped with `if ( ! function_exists( ... ) )`.
 
 Rules:
 - Auto-mock is for "same WP logic + handler injection only".
-- If function needs behavior changes for this project runtime, keep/manual-implement it in `copy/mocks/wp-includes/*`.
+- If function needs behavior changes for this project runtime, keep/manual-implement it in `wp-runtime/copy/mocks/wp-includes/*`.
 
 Workflow:
 1) Add function to target-line config with value `'<since-version> mockable'`:
    - `config/functions/<wp-source-file>.php` (newest line), or
    - `config/<wp-line>/functions/<wp-source-file>.php` (older line override).
 2) `make run.parser`.
-3) Verify generated code in `copy/mocks/auto/...`.
+3) Verify generated code in `wp-runtime/copy/mocks/auto/...`.
 4) Add/update tests in `tests/mocks/...`:
    - one test for fallback/original behavior;
    - one test for `WP_Mock::userFunction(...)` override behavior.
@@ -254,7 +254,7 @@ Workflow:
 Step-By-Step: Copy Static Class Methods As Functions (Experimental)
 ===================================================================
 
-This is an in-progress compatibility mechanism used in `copy/classes-statics/`.
+This is an in-progress compatibility mechanism used in `wp-runtime/copy/classes-statics/`.
 Use it only when whole class copy is not suitable, but one utility-like static method is needed by another copied symbol.
 
 When to use:
@@ -265,7 +265,7 @@ When to use:
 How it works:
 - Source: `ClassName::methodName()`.
 - Copied symbol: plain function `ClassName__methodName()`.
-- Parser stores such functions in `copy/classes-statics/ClassName.php`.
+- Parser stores such functions in `wp-runtime/copy/classes-statics/ClassName.php`.
 - During parser replace phase, calls are rewritten:
   - `ClassName::methodName(...)` -> `ClassName__methodName(...)`.
 
@@ -276,7 +276,7 @@ Workflow:
    using explicit format:
    - `'path/to/class-file.php' => [ 'class' => 'ClassName', 'methods' => [ 'methodName' => '' ] ]`
 2) Run `php _parser/run.php` (or `make run.parser`).
-3) Verify generated function in `copy/classes-statics/ClassName.php`.
+3) Verify generated function in `wp-runtime/copy/classes-statics/ClassName.php`.
 4) Verify call replacement happened in copied code.
 5) Add/update tests for the behavior that depends on this method.
 

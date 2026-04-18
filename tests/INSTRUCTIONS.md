@@ -9,13 +9,13 @@ Instructions:
 - For class tests, method names must start with `test__` but should NOT include the class name in the method name. Example for `WP_Error__Test.php`: use `test__public_methods`, not `test__WP_Error__public_methods`.
 - Put class tests in `tests/classes/...` and keep one class per test file.
 - Put copied core function tests in `tests/functions/...`.
-- Put tests for functions implemented in `copy/mocks/...` (both `copy/mocks/auto/...` and manual `copy/mocks/wp-includes/...`) in `tests/mocks/...` with the same WP-path structure (for example `tests/mocks/wp-includes/...`).
+- Put tests for functions implemented in `wp-runtime/copy/mocks/...` (both `wp-runtime/copy/mocks/auto/...` and manual `wp-runtime/copy/mocks/wp-includes/...`) in `tests/mocks/...` with the same WP-path structure (for example `tests/mocks/wp-includes/...`).
 - For class tests, verify independent runtime behavior in this project environment:
   - If class is independent: add positive smoke tests for constructor/basic public methods.
   - If class has unavoidable external dependency in current project setup: add explicit `test__not_independent_*` test with `expectException( Error::class )` to document this limitation.
 - Tests should be simple - no need to fully cover function/method logic we only need to test that all logics of function works without WordPress environment.
 - Each function must have its own separate test. Do not combine multiple functions into a single test.
-- Do not add ad-hoc stubs for WP function mocks in tests. For `copy/mocks/...` tests, use installed `10up/wp_mock` only when you need to validate WP_Mock handler behavior.
+- Do not add ad-hoc stubs for WP function mocks in tests. For `wp-runtime/copy/mocks/...` tests, use installed `10up/wp_mock` only when you need to validate WP_Mock handler behavior.
 - For private/protected property or method access in tests, prefer closure scope binding over Reflection APIs.
   - Preferred: `Closure::call()`, `Closure::bind()`, or `bindTo( $instance, $scope )`.
   - Use Reflection (`ReflectionObject`, `ReflectionMethod`, `ReflectionProperty`) only as a fallback when closure binding is not practical.

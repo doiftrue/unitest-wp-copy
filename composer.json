@@ -15,7 +15,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Unitest_WP_Copy\\": "src/"
+      "Unitest_WP_Copy\\": "wp-runtime/src/"
     }
   },
   "extra": {
