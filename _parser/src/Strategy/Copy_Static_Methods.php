@@ -28,7 +28,7 @@ class Copy_Static_Methods extends File_Update_Strategy {
 	}
 
 	public function get_dest_file( array $item ): string {
-		return "{$this->config->dest_dir}/classes-statics/{$item['class_name']}.php";
+		return "{$this->config->copy_dir}/classes-statics/{$item['class_name']}.php";
 	}
 
 	public function generate_content( array $item ): string {

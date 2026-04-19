@@ -7,7 +7,9 @@ use RecursiveIteratorIterator;
 
 class Config {
 
-	public readonly string $dest_dir;
+	public readonly string $runtime_dir;
+
+	public readonly string $copy_dir;
 
 	public readonly string $wp_core_dir;
 
@@ -32,8 +34,9 @@ class Config {
 		$parser_dir = dirname( __DIR__ );
 		$project_dir = dirname( $parser_dir );
 
-		$this->config_dir = "$project_dir/config";
-		$this->dest_dir = "$project_dir/wp-runtime/copy";
+		$this->config_dir  = "$project_dir/config";
+		$this->runtime_dir = "$project_dir/wp-runtime";
+		$this->copy_dir    = "$this->runtime_dir/copy";
 		$this->wp_core_dir = "$project_dir/wp-core";
 
 		require_once "$this->wp_core_dir/wp-includes/version.php";

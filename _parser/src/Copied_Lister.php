@@ -41,12 +41,11 @@ class Copied_Lister {
 	public function generate_list(): void {
 		$config = $this->config;
 
-		$mockable_names = $this->get_mock_function_names( "$config->dest_dir/mockable" );
+		$mockable_names = $this->get_mock_function_names( "$config->copy_dir/mockable" );
 		$mockable_names = array_values( array_unique( $mockable_names ) );
 		asort( $mockable_names );
 
-		$runtime_dir = dirname( $config->dest_dir );
-		$mocks_names = $this->get_mock_function_names( "$runtime_dir/mocks" );
+		$mocks_names = $this->get_mock_function_names( "$config->runtime_dir/mocks" );
 		$mocks_names = array_values( array_unique( $mocks_names ) );
 		asort( $mocks_names );
 
@@ -63,7 +62,7 @@ class Copied_Lister {
 			'{COPIED_LIST}'   => $copied_names ? implode( "\n", $copied_names ) : '(none)',
 		] );
 
-		file_put_contents( dirname( $config->dest_dir ) . "/$this->doc_file_name", $this->content );
+		file_put_contents( "$config->runtime_dir/$this->doc_file_name", $this->content );
 	}
 
 	private function get_mock_function_names( string $mocks_dir ): array {
