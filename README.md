@@ -180,3 +180,14 @@ This is not a full WordPress runtime.
 - Only selected functions/classes are included.
 - DB/network/filesystem-heavy/full-bootstrap behavior is intentionally out of scope.
 - Some edge cases may still require extra project-specific stubs/mocks.
+
+
+Maintainer Documentation
+------------------------
+Maintainer and agent-facing instructions are documented in `_docs/*.md`:
+
+- Runtime internals: [`_docs/runtime.md`](./_docs/runtime.md)
+- Parser workflow: [`_docs/parser.md`](./_docs/parser.md)
+- Config model and merge rules: [`_docs/config.md`](./_docs/config.md)
+- Test conventions: [`_docs/tests.md`](./_docs/tests.md)
+- Release workflow: [`_docs/releaser.md`](./_docs/releaser.md)
