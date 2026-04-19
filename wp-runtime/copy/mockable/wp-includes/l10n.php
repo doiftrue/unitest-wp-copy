@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/l10n.php (WP 6.8.5)
+// wp-includes/l10n.php (WP 6.7.5)
 if( ! function_exists( 'get_locale' ) ) :
 	function get_locale() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {

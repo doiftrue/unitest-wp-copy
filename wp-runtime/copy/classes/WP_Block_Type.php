@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-block-type.php (WP 6.8.5)
+// wp-includes/class-wp-block-type.php (WP 6.7.5)
 if( ! class_exists( 'WP_Block_Type' ) ) :
 	class WP_Block_Type {
 	

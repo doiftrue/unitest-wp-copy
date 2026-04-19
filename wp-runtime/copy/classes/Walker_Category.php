@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-walker-category.php (WP 6.8.5)
+// wp-includes/class-walker-category.php (WP 6.7.5)
 if( ! class_exists( 'Walker_Category' ) ) :
 	class Walker_Category extends Walker {
 	

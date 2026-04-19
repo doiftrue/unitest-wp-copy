@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-script-modules.php (WP 6.8.5)
+// wp-includes/class-wp-script-modules.php (WP 6.7.5)
 if( ! class_exists( 'WP_Script_Modules' ) ) :
 	class WP_Script_Modules {
 		/**
@@ -398,15 +398,14 @@ if( ! class_exists( 'WP_Script_Modules' ) ) :
 				 * initialization or immediately on page load. It does not replace the REST API or
 				 * fetching data from the client.
 				 *
-				 * Example:
-				 *
-				 *     add_filter(
-				 *         'script_module_data_MyScriptModuleID',
-				 *         function ( array $data ): array {
-				 *             $data['dataForClient'] = 'ok';
-				 *             return $data;
-				 *         }
-				 *     );
+				 * @example
+				 *   add_filter(
+				 *     'script_module_data_MyScriptModuleID',
+				 *     function ( array $data ): array {
+				 *       $data['script-needs-this-data'] = 'ok';
+				 *       return $data;
+				 *     }
+				 *   );
 				 *
 				 * If the filter returns no data (an empty array), nothing will be embedded in the page.
 				 *
@@ -415,17 +414,15 @@ if( ! class_exists( 'WP_Script_Modules' ) ) :
 				 *
 				 * The data can be read on the client with a pattern like this:
 				 *
-				 * Example:
-				 *
-				 *     const dataContainer = document.getElementById( 'wp-script-module-data-MyScriptModuleID' );
-				 *     let data = {};
-				 *     if ( dataContainer ) {
-				 *         try {
-				 *             data = JSON.parse( dataContainer.textContent );
-				 *         } catch {}
-				 *     }
-				 *     // data.dataForClient === 'ok';
-				 *     initMyScriptModuleWithData( data );
+				 * @example
+				 *   const dataContainer = document.getElementById( 'wp-script-module-data-MyScriptModuleID' );
+				 *   let data = {};
+				 *   if ( dataContainer ) {
+				 *     try {
+				 *       data = JSON.parse( dataContainer.textContent );
+				 *     } catch {}
+				 *   }
+				 *   initMyScriptModuleWithData( data );
 				 *
 				 * @since 6.7.0
 				 *

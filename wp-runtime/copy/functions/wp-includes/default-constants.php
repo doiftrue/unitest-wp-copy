@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/default-constants.php (WP 6.8.5)
+// wp-includes/default-constants.php (WP 6.7.5)
 if( ! function_exists( 'wp_initial_constants' ) ) :
 	function wp_initial_constants() {
 		global $blog_id, $wp_version;
@@ -154,7 +154,7 @@ if( ! function_exists( 'wp_initial_constants' ) ) :
 	}
 endif;
 
-// wp-includes/default-constants.php (WP 6.8.5)
+// wp-includes/default-constants.php (WP 6.7.5)
 if( ! function_exists( 'wp_plugin_directory_constants' ) ) :
 	function wp_plugin_directory_constants() {
 		if ( ! defined( 'WP_CONTENT_URL' ) ) {
@@ -219,7 +219,7 @@ if( ! function_exists( 'wp_plugin_directory_constants' ) ) :
 	}
 endif;
 
-// wp-includes/default-constants.php (WP 6.8.5)
+// wp-includes/default-constants.php (WP 6.7.5)
 if( ! function_exists( 'wp_cookie_constants' ) ) :
 	function wp_cookie_constants() {
 		/**
@@ -323,7 +323,7 @@ if( ! function_exists( 'wp_cookie_constants' ) ) :
 	}
 endif;
 
-// wp-includes/default-constants.php (WP 6.8.5)
+// wp-includes/default-constants.php (WP 6.7.5)
 if( ! function_exists( 'wp_ssl_constants' ) ) :
 	function wp_ssl_constants() {
 		/**
@@ -348,7 +348,7 @@ if( ! function_exists( 'wp_ssl_constants' ) ) :
 	}
 endif;
 
-// wp-includes/default-constants.php (WP 6.8.5)
+// wp-includes/default-constants.php (WP 6.7.5)
 if( ! function_exists( 'wp_functionality_constants' ) ) :
 	function wp_functionality_constants() {
 		/**

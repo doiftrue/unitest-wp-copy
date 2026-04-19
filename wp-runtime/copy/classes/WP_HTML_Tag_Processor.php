@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/html-api/class-wp-html-tag-processor.php (WP 6.8.5)
+// wp-includes/html-api/class-wp-html-tag-processor.php (WP 6.7.5)
 if( ! class_exists( 'WP_HTML_Tag_Processor' ) ) :
 	class WP_HTML_Tag_Processor {
 		/**
@@ -2145,15 +2145,6 @@ if( ! class_exists( 'WP_HTML_Tag_Processor' ) ) :
 					'6.2.0'
 				);
 				return false;
-			}
-	
-			$existing_bookmark = $this->bookmarks[ $bookmark_name ];
-	
-			if (
-				$this->token_starts_at === $existing_bookmark->start &&
-				$this->token_length === $existing_bookmark->length
-			) {
-				return true;
 			}
 	
 			if ( ++$this->seek_count > static::MAX_SEEK_OPS ) {

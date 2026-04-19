@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/link-template.php (WP 6.8.5)
+// wp-includes/link-template.php (WP 6.7.5)
 if( ! function_exists( 'get_home_url' ) ) :
 	function get_home_url( $blog_id = null, $path = '', $scheme = null ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -48,7 +48,7 @@ if( ! function_exists( 'get_home_url' ) ) :
 	}
 endif;
 
-// wp-includes/link-template.php (WP 6.8.5)
+// wp-includes/link-template.php (WP 6.7.5)
 if( ! function_exists( 'get_site_url' ) ) :
 	function get_site_url( $blog_id = null, $path = '', $scheme = null ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {

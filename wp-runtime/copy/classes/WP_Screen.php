@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-admin/includes/class-wp-screen.php (WP 6.8.5)
+// wp-admin/includes/class-wp-screen.php (WP 6.7.5)
 if( ! class_exists( 'WP_Screen' ) ) :
 	class WP_Screen {
 		/**

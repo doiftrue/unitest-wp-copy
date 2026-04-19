@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-locale.php (WP 6.8.5)
+// wp-includes/class-wp-locale.php (WP 6.7.5)
 if( ! class_exists( 'WP_Locale' ) ) :
 	class WP_Locale {
 		/**
@@ -305,14 +305,10 @@ if( ! class_exists( 'WP_Locale' ) ) :
 		 * @since 2.1.0
 		 *
 		 * @param string|int $month_number '01' through '12'.
-		 * @return string Translated full month name. If the month number is not found, an empty string is returned.
+		 * @return string Translated full month name.
 		 */
 		public function get_month( $month_number ) {
-			$month_number = zeroise( $month_number, 2 );
-			if ( ! isset( $this->month[ $month_number ] ) ) {
-				return '';
-			}
-			return $this->month[ $month_number ];
+			return $this->month[ zeroise( $month_number, 2 ) ];
 		}
 	
 		/**
@@ -328,26 +324,6 @@ if( ! class_exists( 'WP_Locale' ) ) :
 		 */
 		public function get_month_abbrev( $month_name ) {
 			return $this->month_abbrev[ $month_name ];
-		}
-	
-		/**
-		 * Retrieves translated version of month genitive string.
-		 *
-		 * The $month_number parameter has to be a string
-		 * because it must have the '0' in front of any number
-		 * that is less than 10. Starts from '01' and ends at
-		 * '12'.
-		 *
-		 * You can use an integer instead and it will add the
-		 * '0' before the numbers less than 10 for you.
-		 *
-		 * @since 6.8.0
-		 *
-		 * @param string|int $month_number '01' through '12'.
-		 * @return string Translated genitive month name.
-		 */
-		public function get_month_genitive( $month_number ) {
-			return $this->month_genitive[ zeroise( $month_number, 2 ) ];
 		}
 	
 		/**

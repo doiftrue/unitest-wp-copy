@@ -1,4 +1,4 @@
-The following functions and classes are available in this (unit test) environment. Symbols are copied from WordPress 6.8.5.
+The following functions and classes are available in this (unit test) environment. Symbols are copied from WordPress 6.7.5.
 
 Mockable copied functions (can be overridden via WP_Mock):
 _deprecated_function()
@@ -160,10 +160,6 @@ antispambot()
 apply_filters()
 apply_filters_deprecated()
 apply_filters_ref_array()
-array_all()
-array_any()
-array_find()
-array_find_key()
 array_is_list()
 array_key_first()
 array_key_last()
@@ -515,7 +511,6 @@ wp_timezone()
 wp_trim_excerpt()
 wp_trim_words()
 wp_unique_id()
-wp_unique_id_from_values()
 wp_unique_prefixed_id()
 wp_unslash()
 wp_untrash_post_set_previous_status()
