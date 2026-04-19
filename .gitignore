@@ -1,5 +1,6 @@
 /vendor/
 /wordpress/
+/worktrees/
 /__*
 /tmp/*
 !/tmp/.gitkeep

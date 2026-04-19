@@ -26,31 +26,28 @@ Release is prepared from `main` and published to a line branch.
 1. Pin `wordpress/wordpress` to the target line.
 2. Run parser.
 3. Run full tests.
-4. Build artifact in `tmp/wp-<line>/`.
-5. Update `wp-<line>` in temporary worktree.
-6. Replace `zero.php`, `wp-runtime/` from artifact.
-7. Commit changes.
-8. Create release tag.
+4. Create or reuse worktree for `wp-<line>`.
+5. Copy `zero.php` and `wp-runtime/` directly into that worktree.
+6. Commit changes on `wp-<line>`.
+7. Create release tag.
+
+No intermediate artifact directory is used.
 
 This flow is implemented in:
-- `_releaser/release-artifact.sh`
+- `_releaser/release.sh`
 
-## Makefile Entry Point
-
-Current entry point for line `6.8`:
+## HOW to Create release
 
 ```bash
 make release WP_LINE=6.8 RELEASE_TAG=6.8.5.1
 ```
 
-## Script Input Variables
+Input Variables:
 
-The script accepts env vars:
+- `WP_LINE` (required) - example `6.8` 
+- `RELEASE_TAG` (required) - example `6.8.5.1`
 
-- `WP_LINE` (required, set by `Makefile`, example `6.8`)
-- `RELEASE_TAG` (required, example `6.8.5.1`)
-
-## Tag Rules
+Tag Rules:
 
 - Artifact-only change on same WP patch increments revision:
   - `6.8.5.1` -> `6.8.5.2`

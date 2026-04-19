@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -euo pipefail # Fail fast on errors, unset vars, and pipeline failures.
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "${SCRIPT_DIR}/_utils.sh"
@@ -25,11 +25,11 @@ if [[ -n "$(git status --porcelain --untracked-files=all)" ]]; then
 	exit 1
 fi
 
-ARTIFACT_DIR="tmp/wp-${WP_LINE}"
-ARTIFACT_BRANCH="wp-${WP_LINE}"
+WP_LINE_BRANCH="wp-${WP_LINE}"
+WORKTREE_DIR="worktrees/${WP_LINE_BRANCH}"
 
-if ! git rev-parse --verify --quiet "refs/heads/${ARTIFACT_BRANCH}" >/dev/null; then
-	cecho red "[STOP] Branch ${ARTIFACT_BRANCH} not found" >&2
+if ! git rev-parse --verify --quiet "refs/heads/${WP_LINE_BRANCH}" >/dev/null; then
+	cecho red "[STOP] Branch ${WP_LINE_BRANCH} not found" >&2
 	exit 1
 fi
 
@@ -45,36 +45,41 @@ run_php() {
 		composer sh -c "${cmd}"
 }
 
-cecho cyan "[1/6] Switch wordpress/wordpress to ~${WP_LINE}.0"
-run_php "composer require --dev wordpress/wordpress:~${WP_LINE}.0   --no-interaction --no-update"
+cecho cyan "[STEP] Switch wordpress/wordpress to ${WP_LINE}.*"
+run_php "composer require --dev wordpress/wordpress:${WP_LINE}.*   --no-interaction --no-update"
 run_php "composer update wordpress/wordpress   --no-interaction --with-dependencies"
 
-cecho cyan "[2/6] Run parser"
+cecho cyan "[STEP] Run parser"
 run_php "php _parser/run.php"
-cecho cyan "[2/6] Run tests"
+
+cecho cyan "[STEP] Run tests"
 run_php "composer run phpunit -- --colors=always"
 
-cecho cyan "[3/6] Build artifact in ${ARTIFACT_DIR}"
-rm -rf "${ARTIFACT_DIR}"
-mkdir -p "${ARTIFACT_DIR}"
-cp -a zero.php wp-runtime "${ARTIFACT_DIR}/"
+cecho cyan "[STEP] Create or reuse WORKTREE ${WORKTREE_DIR}"
+git worktree prune --expire now >/dev/null 2>&1
+if git worktree list --porcelain | grep -Fqx "worktree ${WORKTREE_DIR}"; then
+	worktree_branch="$(git -C "${WORKTREE_DIR}" rev-parse --abbrev-ref HEAD)"
+	if [[ "${worktree_branch}" != "${WP_LINE_BRANCH}" ]]; then
+		cecho red "[STOP] Existing worktree ${WORKTREE_DIR} is on branch ${worktree_branch}, expected ${WP_LINE_BRANCH}" >&2
+		exit 1
+	fi
+else
+	git worktree add "${WORKTREE_DIR}" "${WP_LINE_BRANCH}" >/dev/null
+fi
 
-cecho cyan "[3/6] Reset all changes made for artifact creation"
+cecho cyan "[STEP] Copy to ${WORKTREE_DIR}"
+rm -rf "${WORKTREE_DIR}/wp-runtime"
+cp -a zero.php wp-runtime "${WORKTREE_DIR}/"
+
+cecho cyan "[STEP] Reset all changes in current branch"
 git reset --hard HEAD
 run_php "composer update wordpress/wordpress"
 
-
-return # skip for now
-
-cecho cyan "[4/6] Update ${ARTIFACT_BRANCH}, commit and tag ${RELEASE_TAG}"
-WORKTREE_DIR="$(mktemp -d "/tmp/release-${WP_LINE}-XXXXXX")"
-git worktree add --force "${WORKTREE_DIR}" "${ARTIFACT_BRANCH}" >/dev/null
-rm -rf "${WORKTREE_DIR}/zero.php" "${WORKTREE_DIR}/wp-runtime"
-cp -a "${ARTIFACT_DIR}/zero.php" "${ARTIFACT_DIR}/wp-runtime" "${WORKTREE_DIR}/"
+cecho cyan "[STEP] Commit to ${WORKTREE_DIR} and add tag ${RELEASE_TAG}"
 git -C "${WORKTREE_DIR}" add zero.php wp-runtime
 
 if git -C "${WORKTREE_DIR}" diff --cached --quiet; then
-	echo "No artifact changes to commit on ${ARTIFACT_BRANCH}."
+	echo "No artifact changes to commit on ${WP_LINE_BRANCH}."
 else
 	git -C "${WORKTREE_DIR}" commit -m "Release ${RELEASE_TAG}"
 	git -C "${WORKTREE_DIR}" tag "${RELEASE_TAG}"
