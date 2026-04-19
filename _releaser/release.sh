@@ -77,5 +77,6 @@ if git -C "${WORKTREE_DIR}" diff --cached --quiet; then
 else
 	git -C "${WORKTREE_DIR}" commit -m "Release ${RELEASE_TAG}"
 	git -C "${WORKTREE_DIR}" tag "${RELEASE_TAG}"
+	git -C "${WORKTREE_DIR}" push --atomic origin "${WP_LINE_BRANCH}" "refs/tags/${RELEASE_TAG}"
 	echo "Release tag created: ${RELEASE_TAG}"
 fi
