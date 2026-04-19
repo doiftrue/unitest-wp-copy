@@ -66,7 +66,7 @@ cp -a zero.php wp-runtime "${WORKTREE_DIR}/"
 
 cecho cyan "[STEP] Reset all changes in current branch"
 git reset --hard HEAD
-run_php "composer update wordpress/wordpress"
+run_php "composer reinstall wordpress/wordpress"
 
 cecho cyan "[STEP] Commit to WORKTREE ${WORKTREE_DIR_REL} and add TAG ${RELEASE_TAG}"
 git -C "${WORKTREE_DIR}" add zero.php wp-runtime
