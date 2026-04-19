@@ -39,7 +39,7 @@ Release is prepared from `main` and published to a line branch.
 1. Pin `wordpress/wordpress` to the target line.
 2. Run parser.
 3. Run full tests.
-4. Create or reuse worktree for `wp-<line>`.
+4. Create/Reuse worktree for `wp-<line>`.
 5. Copy `zero.php` and `wp-runtime/` directly into that worktree.
 6. Commit changes on `wp-<line>`.
 7. Create release tag.

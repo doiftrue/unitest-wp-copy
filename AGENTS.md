@@ -46,7 +46,7 @@ Entry point script: `zero.php` (includes `wp-runtime/Bootstrap.php` and calls `\
   - `wp-runtime/base-wp-constants.php`  
     Base WP constants and environment values for test execution.
   
-- `wordpress/`  
+- `wp-core/`  
   WordPress core code, used as source for copied functions/classes. Not loaded in runtime, only for reference and copy.
 
 
@@ -68,6 +68,9 @@ Entry point script: `zero.php` (includes `wp-runtime/Bootstrap.php` and calls `\
   - `tests/classes/` — class tests.
   - `tests/mocks/` — tests for mockable/manual mock implementations from `wp-runtime/copy/mockable/` and `wp-runtime/copy/mocks/` (including WP_Mock-handler behavior).
   It tests how the copied functions/classes work in the provided environment. The current WP-like test env loaded as if it used on another project as phpunit test WP environment, and all WP functions/classes are tested if they work correctly without real WP environment (without DB, external services, etc).
+  
+- `worktrees`
+  - Artifact directory for release branches (`wp-6.8`, `wp-6.9`, etc). Not loaded in runtime, only for storing release.
 
 
 ## Quick workflow
@@ -84,6 +87,7 @@ Entry point script: `zero.php` (includes `wp-runtime/Bootstrap.php` and calls `\
 ## Important notes for agents
 
 - Do not manually remove or alter logic in `wp-runtime/copy/` without understanding the impact: these files are synchronized via `_parser`.
+- Never works with `worktrees` treat it as an artifact directory for releases only.
 - When adding a new function/class/static-method shim, update the relevant `config/*.php` first, then run `_parser/run.php`.
 - Put value `'mockable'` in `config/functions/*` when you need original WP logic with injected WP_Mock handler.
 - Keep `wp-runtime/copy/mocks/wp-includes/*` only for manual mocks with intentionally changed behavior.

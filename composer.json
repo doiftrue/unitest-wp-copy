@@ -9,7 +9,7 @@
   "require": {},
   "require-dev": {
     "composer/installers": "^2.3",
-    "wordpress/wordpress": "~6.9.3",
+    "wordpress/wordpress": "6.9.*",
     "phpunit/phpunit": "^9",
     "10up/wp_mock": "*"
   },
@@ -20,7 +20,7 @@
   },
   "extra": {
     "installer-paths": {
-      "wordpress/": [ "wordpress/wordpress" ]
+      "wp-core/": [ "wordpress/wordpress" ]
     }
   },
   "config": {

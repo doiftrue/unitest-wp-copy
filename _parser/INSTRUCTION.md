@@ -43,7 +43,7 @@ For older lines, use small override configs in `config/<wp-line>/*` with the sam
 Example: `config/6.7/functions/wp-includes/formatting.php`.
 
 Parser merge behavior:
-- Parser reads current WP version from `wordpress/wp-includes/version.php`.
+- Parser reads current WP version from `wp-core/wp-includes/version.php`.
 - Parser derives WP line as `major.minor` (for example `6.8`).
 - Parser loads base config from `config/*`.
 - If folder `config/<major.minor>/` exists, parser merges it into base config.
@@ -73,7 +73,7 @@ Core flow:
 - Run `php _parser/run.php`.
 - `run.php` creates `Updater` and passes:
   - destination folder: `wp-runtime/copy/`
-  - WP core source folder: `wordpress`
+  - WP core source folder: `wp-core`
   - merged function/class/static-method configs.
 
 What `Updater` does:
@@ -147,7 +147,7 @@ Step-By-Step: Add More WP Core Functions
 ========================================
 
 1) Select candidate functions
-- Start from a specific WP core file. Find it in `wordpress`.
+- Start from a specific WP core file. Find it in `wp-core`.
 - Choose functions that are pure PHP or depend only on already available copied functions/classes/mocks/init.
 - If function needs DB/filesystem/network/full runtime, usually skip it.
 - Build dependency chain for each candidate (direct + transitive calls).

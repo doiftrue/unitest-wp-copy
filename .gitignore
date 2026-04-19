@@ -1,5 +1,5 @@
 /vendor/
-/wordpress/
+/wp-core/
 /worktrees/
 /__*
 /tmp/*

@@ -34,7 +34,7 @@ class Config {
 
 		$this->config_dir = "$project_dir/config";
 		$this->dest_dir = "$project_dir/wp-runtime/copy";
-		$this->wp_core_dir = "$project_dir/wordpress";
+		$this->wp_core_dir = "$project_dir/wp-core";
 
 		require_once "$this->wp_core_dir/wp-includes/version.php";
 		/** @var string $wp_version */
