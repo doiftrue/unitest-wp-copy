@@ -56,7 +56,14 @@ class Config {
 
 	private function build_funcs_config(): array {
 		$base_config = $this->load_nested_config_files( "$this->config_dir/functions" );
+		$moved_data  = $this->load_php_config_file( "$this->config_dir/symbols-moved.php", false );
 		$ver_config  = $this->load_nested_config_files( "$this->line_config_dir/functions" );
+
+		$base_config = $this->apply_moves_config(
+			$base_config,
+			$moved_data['functions'] ?? [],
+			$this->wp_version_line
+		);
 
 		return $this->merge_nested_configs( $base_config, $ver_config );
 	}
@@ -112,6 +119,42 @@ class Config {
 		}
 
 		return require $file;
+	}
+
+	/**
+	 * Move function config between source files by WP line.
+	 *
+	 * Config format (config/symbols-moved.php):
+	 * [
+	 *   'functions' => [
+	 *     'func_name' => [
+	 *       'moved_in' => '6.7',
+	 *       'from'    => 'wp-includes/functions.php',
+	 *       'to'      => 'wp-includes/load.php',
+	 *     ],
+	 *   ],
+	 * ]
+	 *
+	 * For versions `< moved_in`, symbol should be in `from`.
+	 * For versions `>= moved_in`, symbol should be in `to`.
+	 */
+	private function apply_moves_config( array $base_config, array $moves_config, string $wp_line ): array {
+		foreach( $moves_config as $func_name => $mv_data ){
+			$from = $mv_data['from'];
+			$to   = $mv_data['to'];
+
+			$target_file = version_compare( $wp_line, $mv_data['moved_in'], '<' ) ? $from : $to;
+			$other_file  = $target_file === $from ? $to : $from;
+
+			if( isset( $base_config[ $target_file ][ $func_name ] ) ){
+				continue;
+			}
+
+			$base_config[ $target_file ][ $func_name ] = $base_config[ $other_file ][ $func_name ];
+			unset( $base_config[ $other_file ][ $func_name ] );
+		}
+
+		return $base_config;
 	}
 
 	/**

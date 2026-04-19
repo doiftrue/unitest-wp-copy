@@ -10,6 +10,7 @@ Parser flow details are in [parser.md](parser.md).
 
 Base (latest supported WP line):
 - `config/functions/<wp-source-file>.php`
+- `config/symbols-moved.php`
 - `config/classes.php`
 - `config/static-methods.php`
 
@@ -33,10 +34,9 @@ Merge rules:
 - Flat config (`static-methods.php`):
   - scalar/array value adds/replaces file metadata;
   - `false` on a file key removes inherited file config.
-
-Function/class move between files for one WP line:
-1. Remove inherited key with `false` in old file path override.
-2. Add the same key in new file path override.
+- Versioned symbol moves (`symbols-moved.php`):
+  - parser applies moves to inherited base config before version override merge;
+  - move rule format is `moved_in/from/to` and parser decides target file by current WP line.
 
 
 ## Value Formats
@@ -45,6 +45,14 @@ Functions:
 - regular: `'function_name' => '<since-version>'`
 - mockable: `'function_name' => '<since-version> mockable'`
 - remove inherited in override: `'function_name' => false`
+
+Symbols moved (`config/symbols-moved.php`):
+- structure:
+  `'functions' => [ 'function_name' => [ 'moved_in' => '6.7', 'from' => 'wp-includes/functions.php', 'to' => 'wp-includes/load.php' ] ]`
+- semantics:
+  - `moved_in` means: symbol was moved from `from` to `to` in this WP line;
+  - if current WP line is lower than `moved_in`, parser keeps function in `from`;
+  - otherwise parser keeps function in `to`.
 
 Classes:
 - include: `'path/to/class-file.php' => [ 'ClassName' => '<since-version>' ]`

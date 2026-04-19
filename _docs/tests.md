@@ -46,14 +46,12 @@ For class tests:
 
 - Do not add ad-hoc WP function stubs directly in tests.
 - For mock handler behavior checks, use installed `10up/wp_mock` (`WP_Mock`) only when needed.
-- For private/protected member access, prefer closure binding:
+- For private/protected member access, prefer closure binding instead of Reflection:
   - `Closure::call()`
   - `Closure::bind()`
   - `bindTo( $instance, $scope )`
-- Use Reflection only when closure binding is not practical.
 
-
-## Examples
+#### Closure Binding Example
 
 Property access:
 ```php
@@ -62,8 +60,15 @@ return (array) ( fn() => $this->queue )->call( wp_script_modules() );
 
 Method call:
 ```php
-$counter = new Counter();
-
-$call = Closure::bind( fn( $url ) => $this->is_file( $url ), $counter, Counter::class );
+$call = Closure::bind( fn( $url ) => $this->is_file( $url ), new Counter(), Counter::class );
 $call( 'https://ex.com/file.pdf' );
+```
+
+Method call (and skip constructor - for methods that no need class state):
+```php
+$result = Closure::bind(
+    fn() => $this->apply_moves_config( $base_config, $mv_config, $wp_line ),
+    new ReflectionClass( Config::class )->newInstanceWithoutConstructor(),
+    Config::class
+)();
 ```
