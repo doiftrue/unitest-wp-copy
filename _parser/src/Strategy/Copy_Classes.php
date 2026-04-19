@@ -8,14 +8,43 @@ class Copy_Classes extends File_Update_Strategy {
 	public function get_items(): array {
 		$items = [];
 
-		foreach( $this->config->classes_data as $rel_file => $class_name ){
-			$items[] = [
-				'rel_file' => $rel_file,
-				'class_name' => $class_name,
-			];
+		foreach( $this->config->classes_data as $rel_file => $data ){
+			foreach( $data as $class_name => $info ){
+				$meta = $this->parse_class_info( $info );
+				if( ! $this->is_supported_for_current_wp( $meta['since'] ) ){
+					continue;
+				}
+
+				$items[] = [
+					'rel_file' => $rel_file,
+					'class_name' => $class_name,
+				];
+			}
 		}
 
 		return $items;
+	}
+
+	/**
+	 * Config value format: '6.8.0'
+	 *
+	 * @return array{
+	 *     since:string,
+	 * }
+	 */
+	private function parse_class_info( string $info ): array {
+		if( ! trim( $info ) ){
+			return [
+				'since' => '0.0.0',
+			];
+		}
+
+		$tokens = preg_split( '~\s+~', $info );
+		$tokens = array_values( array_filter( $tokens ) );
+
+		return [
+			'since' => $tokens[0] ?: '0.0.0',
+		];
 	}
 
 	public function get_dest_file( array $item ): string {

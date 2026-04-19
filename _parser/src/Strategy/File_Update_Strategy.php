@@ -26,4 +26,9 @@ abstract class File_Update_Strategy {
 	abstract public function generate_content( array $item ): string;
 
 	abstract public function get_log_message( array $item ): string;
+
+	protected function is_supported_for_current_wp( string $since ): bool {
+		return version_compare( $this->config->wp_version, $since, '>=' );
+	}
+
 }

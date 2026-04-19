@@ -49,9 +49,12 @@ Parser merge behavior:
 - If folder `config/<major.minor>/` exists, parser merges it into base config.
 
 Merge rules:
-- scalar override value: add/replace value in merged config;
-- array override value: merge recursively;
-- `false` override value: remove this key from merged config.
+- for nested symbol config (`functions/*`, `classes.php`):
+  - scalar override value: add/replace symbol metadata in merged config;
+  - `false` override value on symbol key: remove this symbol from merged config;
+- for flat config (`static-methods.php`):
+  - scalar/array override value: add/replace file config in merged config;
+  - `false` override value on file key: remove this file config from merged config.
 
 Function move rule (between WP lines):
 - remove symbol from file where it exists in base config via `false`;
@@ -78,7 +81,7 @@ Core flow:
 
 What `Updater` does:
 - For each configured source file, reads original WP file.
-- Extracts only selected top-level functions or one class using `Helpers::get_class_func_code_from_php_code()`.
+- Extracts only selected top-level functions or configured class names using `Helpers::get_class_func_code_from_php_code()`.
 - Rebuilds destination file content only after separator:
   - `// ------------------auto-generated---------------------`
 - Wraps generated code with:
@@ -89,7 +92,11 @@ What `Updater` does:
   - `'function_name' => '<since-version> mockable'`
 - In WP-line override files, you can remove an inherited function with:
   - `'function_name' => false`
-- If configured `<since-version>` is higher than current `wp_version`, parser skips that function.
+- Class config value format:
+  - `'path/to/class-file.php' => [ 'ClassName' => '<since-version>' ]`
+- In WP-line override files, you can remove an inherited class with:
+  - `'path/to/class-file.php' => [ 'ClassName' => false ]`
+- If configured `<since-version>` is higher than current `wp_version`, parser skips that function/class.
 - For functions marked as `mockable`:
   - copies original WP function body as-is;
   - injects WP_Mock handler check at function start:
@@ -120,8 +127,8 @@ Rules:
 Example of what to avoid unless truly required by design:
 
 ```php
-private function build_functions_config( string $base_dir ): array {
-	if( ! is_dir( $base_dir ) ){
+private function some_method( string $dir ): array {
+	if( ! is_dir( $dir ) ){
 		return [];
 	}
 }
@@ -217,6 +224,10 @@ Class-specific differences:
 - Config target:
   - newest line: `config/classes.php`;
   - older lines: `config/<wp-line>/classes.php`.
+- Class config format:
+  - `'path/to/class-file.php' => [ 'ClassName' => '<since-version>' ]`
+- Remove inherited class in WP-line override:
+  - `'path/to/class-file.php' => [ 'ClassName' => false ]`
 - Dependency graph: include full minimal class/function chain needed by the class.
 - Tests: one class per file in `tests/classes/...` with `__Test.php`; methods use `test__*` without class-name duplication.
 - If class is not independent in current env, add explicit `test__not_independent_*` with `expectException( Error::class )` (see `tests/INSTRUCTIONS.md`).

@@ -9,8 +9,8 @@ class Copy_Functions extends File_Update_Strategy {
 	public function get_items(): array {
 		$items = [];
 
-		foreach( $this->config->funcs_data as $rel_file => $funcs_info ){
-			foreach( $this->split_target_func_names( $funcs_info ) as $target => $func_names ){
+		foreach( $this->config->funcs_data as $rel_file => $funcs_data ){
+			foreach( $this->split_target_func_names( $funcs_data ) as $target => $func_names ){
 				$items[] = [
 					'target'     => $target,
 					'rel_file'   => $rel_file,
@@ -22,11 +22,11 @@ class Copy_Functions extends File_Update_Strategy {
 		return $items;
 	}
 
-	private function split_target_func_names( array $funcs_info ): array {
+	private function split_target_func_names( array $funcs_data ): array {
 		$split = [];
 
-		foreach( $funcs_info as $func_name => $raw_value ){
-			$meta = $this->parse_func_config_value( $raw_value );
+		foreach( $funcs_data as $func_name => $info ){
+			$meta = $this->parse_func_info( $info );
 			if( ! $this->is_supported_for_current_wp( $meta['since'] ) ){
 				continue;
 			}
@@ -46,25 +46,21 @@ class Copy_Functions extends File_Update_Strategy {
 	 *     mockable:bool
 	 * }
 	 */
-	private function parse_func_config_value( string $raw_value ): array {
-		if( ! trim( $raw_value ) ){
+	private function parse_func_info( string $info ): array {
+		if( ! trim( $info ) ){
 			return [
 				'since' => '0.0.0',
 				'mockable' => false,
 			];
 		}
 
-		$tokens = preg_split( '~\s+~', $raw_value );
+		$tokens = preg_split( '~\s+~', $info );
 		$tokens = array_values( array_filter( $tokens ) );
 
 		return [
 			'since' => $tokens[0] ?: '0.0.0',
 			'mockable' => (bool) ( $tokens[1] ?? '' ),
 		];
-	}
-
-	private function is_supported_for_current_wp( string $since ): bool {
-		return version_compare( $this->config->wp_version, $since, '>=' );
 	}
 
 	public function get_dest_file( array $item ): string {
