@@ -20,6 +20,10 @@ class compat_Test extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function test___is_utf8_charset() {
+		if( $wp_ver = wp_version_compare( '< 6.6.1' ) ){
+			$this->markTestSkipped( "_is_utf8_charset() not exists on WP $wp_ver" );
+		}
+
 		$this->assertTrue( _is_utf8_charset( 'UTF-8' ) );
 		$this->assertTrue( _is_utf8_charset( 'utf8' ) );
 		$this->assertFalse( _is_utf8_charset( 'latin1' ) );

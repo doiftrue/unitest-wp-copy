@@ -72,9 +72,12 @@ class default_contants_Test extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( md5( $GLOBALS['stub_wp_options']->siteurl ), COOKIEHASH );
 		$this->assertSame( 'wordpress_' . COOKIEHASH, AUTH_COOKIE );
 		$this->assertSame( 'wordpress_logged_in_' . COOKIEHASH, LOGGED_IN_COOKIE );
-		$this->assertSame( '', COOKIE_DOMAIN );
 		$this->assertStringEndsWith( '/wp-admin', ADMIN_COOKIE_PATH );
 		$this->assertStringEndsWith( '/wp-content/plugins', PLUGINS_COOKIE_PATH );
+
+		wp_version_compare( '< 6.6.0' )
+			? $this->assertSame( false, COOKIE_DOMAIN )
+			: $this->assertSame( '', COOKIE_DOMAIN );
 	}
 
 	public function test__wp_ssl_constants__https() {

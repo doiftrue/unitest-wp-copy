@@ -28,7 +28,7 @@ class Copied_Lister {
 		Mockable changed functions (not full copies) (can be overridden via WP_Mock):
 		{MOCKS_LIST}
 		
-		Functions and classes available as-is:
+		Not mockable full copies of WP Core:
 		{COPIED_LIST}
 		MD;
 
