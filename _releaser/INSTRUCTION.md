@@ -4,6 +4,18 @@ This directory contains the release workflow for supporting multiple WordPress v
 
 Supported lines are branches with `wp-` prefix (example: `wp-6.8`).
 
+
+## HOW to Create release
+
+```bash
+make release WP_LINE=6.8 RELEASE_TAG=6.8.5.1
+```
+
+Input Variables:
+
+- `WP_LINE` (required) - example `6.8`
+- `RELEASE_TAG` (required) - example `6.8.0.5`
+
 ## Branch and Tag Model
 
 - Main development branch: `main`.
@@ -12,12 +24,12 @@ Supported lines are branches with `wp-` prefix (example: `wp-6.8`).
   - `zero.php`
   - `wp-runtime/`
 - Release tag format:
-  - `<wp-major>.<wp-minor>.<wp-patch>.<artifact-revision>`
-  - example: `6.8.5.1`
+  - `<wp-major>.<wp-minor>.<script-major>.<script-minor>`
+  - example: `6.9.0.26`
 
-Meaning of `6.8.5.1`:
-- WordPress version: `6.8.5`
-- Artifact revision for this WP patch: `1`
+Meaning of `6.9.0.26`:
+- WordPress minor line: `6.9`
+- Current script version: `0.26` (`0` is script major, `26` is script minor)
 
 ## Release Flow
 
@@ -35,22 +47,3 @@ No intermediate artifact directory is used.
 
 This flow is implemented in:
 - `_releaser/release.sh`
-
-## HOW to Create release
-
-```bash
-make release WP_LINE=6.8 RELEASE_TAG=6.8.5.1
-```
-
-Input Variables:
-
-- `WP_LINE` (required) - example `6.8` 
-- `RELEASE_TAG` (required) - example `6.8.5.1`
-
-Tag Rules:
-
-- Artifact-only change on same WP patch increments revision:
-  - `6.8.5.1` -> `6.8.5.2`
-- WP patch update resets artifact revision to `1`:
-  - `6.8.5.2` -> `6.8.6.1`
-- Existing tags must not be reused.

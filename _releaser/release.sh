@@ -16,7 +16,7 @@ if [[ -z "${WP_LINE}" ]]; then
 fi
 
 if [[ -z "${RELEASE_TAG}" ]]; then
-	cecho red "[STOP] Set required env var: RELEASE_TAG (example: 6.8.5.10)" >&2
+	cecho red "[STOP] Set required env var: RELEASE_TAG (example: 6.9.0.26)" >&2
 	exit 1
 fi
 
