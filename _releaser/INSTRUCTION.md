@@ -8,13 +8,14 @@ Supported lines are branches with `wp-` prefix (example: `wp-6.8`).
 ## HOW to Create release
 
 ```bash
-make release WP_LINE=6.8 RELEASE_TAG=6.8.5.1
+make release WP_LINE=6.8
 ```
 
 Input Variables:
 
 - `WP_LINE` (required) - example `6.8`
-- `RELEASE_TAG` (required) - example `6.8.0.5`
+- `RELEASE_TAG` is auto-generated as `<WP_LINE>.<last VERSION part #1>.<last VERSION part #2>`
+  - example with `WP_LINE=6.8` and `VERSION=6.9.0.26`: `6.8.0.26`
 
 ## Branch and Tag Model
 

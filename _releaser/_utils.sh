@@ -30,3 +30,64 @@ function cecho(){
 
     echo -e "\033[${color_code}m${message}\033[0m"
 }
+
+# Build release tag from WP line and VERSION file.
+#
+# Parameters:
+#   $1 (wp_line):      Target WordPress line (example: 6.8).
+#   $2 (version_file): Path to VERSION file.
+#
+# Output:
+#   Prints generated release tag to stdout.
+#
+# Returns:
+#   0 on success, non-zero on validation error.
+#
+function build_release_tag(){
+    local wp_line="$1"
+    local version_file="$2"
+    local version_value
+    local -a version_parts
+    local part
+    local version_suffix
+    local release_tag
+
+    if [[ -z "${wp_line}" ]]; then
+        cecho red "[STOP] Set required env var: WP_LINE (example: 6.8)" >&2
+        return 1
+    fi
+
+    if [[ ! -f "${version_file}" ]]; then
+        cecho red "[STOP] VERSION file not found: ${version_file}" >&2
+        return 1
+    fi
+
+    version_value="$(tr -d '[:space:]' < "${version_file}")"
+    if [[ -z "${version_value}" ]]; then
+        cecho red "[STOP] VERSION file is empty" >&2
+        return 1
+    fi
+
+    IFS='.' read -r -a version_parts <<< "${version_value}"
+    if (( ${#version_parts[@]} < 2 )); then
+        cecho red "[STOP] VERSION must contain at least two dot-separated numbers (got: ${version_value})" >&2
+        return 1
+    fi
+
+    for part in "${version_parts[@]}"; do
+        if [[ ! "${part}" =~ ^[0-9]+$ ]]; then
+            cecho red "[STOP] VERSION must contain numbers only (got: ${version_value})" >&2
+            return 1
+        fi
+    done
+
+    version_suffix="${version_parts[$((${#version_parts[@]} - 2))]}.${version_parts[$((${#version_parts[@]} - 1))]}"
+    release_tag="${wp_line}.${version_suffix}"
+
+    if [[ ! "${release_tag}" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+        cecho red "[STOP] RELEASE_TAG format is invalid: ${release_tag}" >&2
+        return 1
+    fi
+
+    echo "${release_tag}"
+}

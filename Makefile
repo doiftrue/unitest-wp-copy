@@ -21,6 +21,6 @@ phpunit:
 run.parser:
 	$(call php_run, , php _parser/run.php)
 
-# make release WP_LINE=6.8 RELEASE_TAG=6.8.0.26
+# make release WP_LINE=6.8
 release:
-	WP_LINE="$(WP_LINE)" RELEASE_TAG="$(RELEASE_TAG)" bash _releaser/release.sh
+	WP_LINE="$(WP_LINE)" bash _releaser/release.sh

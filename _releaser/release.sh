@@ -8,17 +8,10 @@ REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 cd "${REPO_ROOT}"
 
 WP_LINE="${WP_LINE:-}"          # 6.8
-RELEASE_TAG="${RELEASE_TAG:-}"  # 6.8.x
+VERSION_FILE="${REPO_ROOT}/VERSION"
+RELEASE_TAG="$(build_release_tag "${WP_LINE}" "${VERSION_FILE}")" || exit 1
 
-if [[ -z "${WP_LINE}" ]]; then
-	cecho red "[STOP] Set required env var: WP_LINE (example: 6.8)" >&2
-	exit 1
-fi
-
-if [[ -z "${RELEASE_TAG}" ]]; then
-	cecho red "[STOP] Set required env var: RELEASE_TAG (example: 6.9.0.26)" >&2
-	exit 1
-fi
+cecho cyan "[INFO] RELEASE_TAG: ${RELEASE_TAG}"
 
 if [[ -n "$(git status --porcelain --untracked-files=all)" ]]; then
 	cecho red "[STOP] Commit changes before starting the flow." >&2
