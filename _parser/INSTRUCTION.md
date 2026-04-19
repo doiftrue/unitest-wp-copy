@@ -244,7 +244,7 @@ Workflow:
 1) Add function to target-line config with value `'<since-version> mockable'`:
    - `config/functions/<wp-source-file>.php` (newest line), or
    - `config/<wp-line>/functions/<wp-source-file>.php` (older line override).
-2) `make run.parser`.
+2) `make parser.run`.
 3) Verify generated code in `wp-runtime/copy/mockable/...`.
 4) Add/update tests in `tests/mocks/...`:
    - one test for fallback/original behavior;
@@ -275,7 +275,7 @@ Workflow:
    - older lines: `config/<wp-line>/static-methods.php`;
    using explicit format:
    - `'path/to/class-file.php' => [ 'class' => 'ClassName', 'methods' => [ 'methodName' => '' ] ]`
-2) Run `php _parser/run.php` (or `make run.parser`).
+2) Run `php _parser/run.php` (or `make parser.run`).
 3) Verify generated function in `wp-runtime/copy/classes-statics/ClassName.php`.
 4) Verify call replacement happened in copied code.
 5) Add/update tests for the behavior that depends on this method.

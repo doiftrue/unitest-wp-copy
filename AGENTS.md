@@ -59,7 +59,7 @@ Entry point script: `zero.php` (includes `wp-runtime/Bootstrap.php` and calls `\
   - `config/static-methods.php` — selected static class methods copied as plain functions;
   - `_parser/INSTRUCTION.md` — instructions for updating copied code.
   - `_parser/run.php` — update runner.
-    - Should be run with `make run.parser` command.
+    - Should be run with `make parser.run` command.
 
 - `tests/`  
   PHPUnit tests for whole project.
@@ -80,7 +80,7 @@ Entry point script: `zero.php` (includes `wp-runtime/Bootstrap.php` and calls `\
 2. Run tests:
    `make phpunit`
 3. If you need to refresh copied functions/classes:
-   `make run.parser`
+   `make parser.run`
 4. Always rerun tests after refreshing copies.
 
 
