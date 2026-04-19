@@ -4,7 +4,7 @@ Parser Instructions
 Collect a list of WordPress PHP functions from the provided file that can be used directly in PHPUnit tests without relying on external libraries or database calls.
 Only include functions that can run in a plain PHP environment, so they can be used in PHPUnit without bootstrapping full WordPress.
 
-Also take into account that PHPUnit environment uses already collected WordPress functions & mocks from `wp-runtime/copy/SYMBOLS-INFO.md` For example:
+Also take into account that PHPUnit environment uses already collected WordPress functions & mocks from `wp-runtime/SYMBOLS-INFO.md` For example:
 - add_action()
 - do_action()
 - __()
@@ -135,7 +135,7 @@ Before adding any function/class/static-method to parser configs, validate the f
 
 Hard rule:
 - A function/class/static-method is allowed only if every dependency in the chain is:
-  - already available in this project - see `wp-runtime/copy/SYMBOLS-INFO.md`, or
+  - already available in this project - see `wp-runtime/SYMBOLS-INFO.md`, or
   - added in the same change and passes the same dependency-chain rule recursively.
 - If dependency A requires dependency B, B must be checked with the same strict criteria, recursively until chain end.
 - If at least one dependency in the chain is incompatible with this project ideology (DB-bound runtime, full WP bootstrap, network I/O, unsupported filesystem/runtime coupling, etc.), then the top-level function/class/static-method is not allowed.

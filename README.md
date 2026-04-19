@@ -76,7 +76,7 @@ If you do not define them, defaults are used.
 
 Available Symbols Reference
 ---------------------------
-Use [`wp-runtime/copy/SYMBOLS-INFO.md`](wp-runtime/copy/SYMBOLS-INFO.md) as a quick index of all symbols available in this package version.
+Use [`wp-runtime/SYMBOLS-INFO.md`](wp-runtime/SYMBOLS-INFO.md) as a quick index of all symbols available in this package version.
 
 It includes:
 

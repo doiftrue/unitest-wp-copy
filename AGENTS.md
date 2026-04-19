@@ -20,7 +20,7 @@ Entry point script: `zero.php` (includes `wp-runtime/Bootstrap.php` and calls `\
 - `wp-runtime/copy/`  
   Copied WordPress functions/classes.
 
-  - `wp-runtime/copy/SYMBOLS-INFO.md`  
+  - `wp-runtime/SYMBOLS-INFO.md`  
     Reference list of symbols included in `wp-runtime/copy/` (functions/classes/statics/mocks) for quick lookup.
 
   - `wp-runtime/copy/classes-statics/`  

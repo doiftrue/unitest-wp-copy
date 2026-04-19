@@ -55,7 +55,7 @@ run_php "php _parser/run.php"
 cecho cyan "[STEP] Run tests"
 run_php "composer run phpunit -- --colors=always"
 
-cecho cyan "[STEP] Create or reuse WORKTREE ${WORKTREE_DIR}"
+cecho cyan "[STEP] Create/Reuse WORKTREE ${WORKTREE_DIR}"
 git worktree prune --expire now >/dev/null 2>&1
 if git worktree list --porcelain | grep -Fqx "worktree ${WORKTREE_DIR}"; then
 	worktree_branch="$(git -C "${WORKTREE_DIR}" rev-parse --abbrev-ref HEAD)"

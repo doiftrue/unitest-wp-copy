@@ -62,7 +62,7 @@ class Copied_Lister {
 			'{COPIED_LIST}'   => $copied_names ? implode( "\n", $copied_names ) : '(none)',
 		] );
 
-		file_put_contents( "$config->dest_dir/$this->doc_file_name", $this->content );
+		file_put_contents( dirname( $config->dest_dir ) . "/$this->doc_file_name", $this->content );
 	}
 
 	private function get_mock_function_names( string $mocks_dir ): array {
