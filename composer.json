@@ -8,7 +8,7 @@
   },
   "require-dev": {
     "composer/installers": "*",
-    "wordpress/wordpress": "6.8.*"
+    "wordpress/wordpress": "6.7.*"
   },
   "extra": {
     "installer-paths": {
