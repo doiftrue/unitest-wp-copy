@@ -27,6 +27,7 @@ fi
 
 WP_LINE_BRANCH="wp-${WP_LINE}"
 WORKTREE_DIR="worktrees/${WP_LINE_BRANCH}"
+WORKTREE_DIR="$(realpath -m "${WORKTREE_DIR}")"
 
 if ! git rev-parse --verify --quiet "refs/heads/${WP_LINE_BRANCH}" >/dev/null; then
 	cecho red "[STOP] Branch ${WP_LINE_BRANCH} not found" >&2
