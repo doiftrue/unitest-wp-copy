@@ -10,38 +10,37 @@ cd "${REPO_ROOT}"
 WP_LINE="${WP_LINE:-}"          # 6.8
 VERSION_FILE="${REPO_ROOT}/VERSION"
 RELEASE_TAG="$(build_release_tag "${WP_LINE}" "${VERSION_FILE}")" || exit 1
+WP_LINE_BRANCH="wp-${WP_LINE}"
+WORKTREE_DIR_REL="worktrees/${WP_LINE_BRANCH}"
+WORKTREE_DIR="$(realpath -m "${WORKTREE_DIR_REL}")"
 
 cecho cyan "[INFO] RELEASE_TAG: ${RELEASE_TAG}"
 
-if [[ -n "$(git status --porcelain --untracked-files=all)" ]]; then
-	cecho red "[STOP] Commit changes before starting the flow." >&2
+### CHECKS
+
+# Tag exists
+if git rev-parse --verify --quiet "refs/tags/${RELEASE_TAG}" >/dev/null; then
+	cecho red "[STOP] Tag ${RELEASE_TAG} already exists" >&2
 	exit 1
 fi
 
-WP_LINE_BRANCH="wp-${WP_LINE}"
-WORKTREE_DIR="worktrees/${WP_LINE_BRANCH}"
-WORKTREE_DIR="$(realpath -m "${WORKTREE_DIR}")"
-
+# No branch
 if ! git rev-parse --verify --quiet "refs/heads/${WP_LINE_BRANCH}" >/dev/null; then
 	cecho red "[STOP] Branch ${WP_LINE_BRANCH} not found" >&2
 	exit 1
 fi
 
-if git rev-parse --verify --quiet "refs/tags/${RELEASE_TAG}" >/dev/null; then
-	cecho "[STOP] Tag ${RELEASE_TAG} already exists" >&2
+# Uncommitted changes
+if [[ -n "$(git status --porcelain --untracked-files=all)" ]]; then
+	cecho red "[STOP] Commit changes before starting the flow." >&2
 	exit 1
 fi
 
-run_php() {
-	local cmd="$1"
-	docker run --rm --name UNITEST_WP_COPY__php --user 1000:1000 \
-		-v "${REPO_ROOT}:/app" -w /app \
-		composer sh -c "${cmd}"
-}
+### MAIN FLOW
 
-cecho cyan "[STEP] Switch wordpress/wordpress to ${WP_LINE}.*"
-run_php "composer require --dev wordpress/wordpress:${WP_LINE}.*   --no-interaction --no-update"
-run_php "composer update wordpress/wordpress   --no-interaction --with-dependencies"
+cecho cyan "[STEP] Switch WP to ${WP_LINE}.*"
+run_php "composer require --dev wordpress/wordpress:${WP_LINE}.*  --no-interaction --no-update"
+run_php "composer update wordpress/wordpress  --no-interaction --with-dependencies"
 
 cecho cyan "[STEP] Run parser"
 run_php "php _parser/run.php"
@@ -49,7 +48,7 @@ run_php "php _parser/run.php"
 cecho cyan "[STEP] Run tests"
 run_php "composer run phpunit -- --colors=always"
 
-cecho cyan "[STEP] Create/Reuse WORKTREE ${WORKTREE_DIR}"
+cecho cyan "[STEP] Create/Reuse WORKTREE ${WORKTREE_DIR_REL}"
 git worktree prune --expire now >/dev/null 2>&1
 if git worktree list --porcelain | grep -Fqx "worktree ${WORKTREE_DIR}"; then
 	worktree_branch="$(git -C "${WORKTREE_DIR}" rev-parse --abbrev-ref HEAD)"
@@ -61,7 +60,7 @@ else
 	git worktree add "${WORKTREE_DIR}" "${WP_LINE_BRANCH}" >/dev/null
 fi
 
-cecho cyan "[STEP] Copy to ${WORKTREE_DIR}"
+cecho cyan "[STEP] Copy to WORKTREE ${WORKTREE_DIR_REL}"
 rm -rf "${WORKTREE_DIR}/wp-runtime"
 cp -a zero.php wp-runtime "${WORKTREE_DIR}/"
 
@@ -69,14 +68,14 @@ cecho cyan "[STEP] Reset all changes in current branch"
 git reset --hard HEAD
 run_php "composer update wordpress/wordpress"
 
-cecho cyan "[STEP] Commit to ${WORKTREE_DIR} and add tag ${RELEASE_TAG}"
+cecho cyan "[STEP] Commit to WORKTREE ${WORKTREE_DIR_REL} and add TAG ${RELEASE_TAG}"
 git -C "${WORKTREE_DIR}" add zero.php wp-runtime
 
 if git -C "${WORKTREE_DIR}" diff --cached --quiet; then
-	echo "No artifact changes to commit on ${WP_LINE_BRANCH}."
+	cecho yellow "Nothing to commit on ${WP_LINE_BRANCH}."
 else
 	git -C "${WORKTREE_DIR}" commit -m "Release ${RELEASE_TAG}"
 	git -C "${WORKTREE_DIR}" tag "${RELEASE_TAG}"
 	git -C "${WORKTREE_DIR}" push --atomic origin "${WP_LINE_BRANCH}" "refs/tags/${RELEASE_TAG}"
-	echo "Release tag created: ${RELEASE_TAG}"
+	cecho green "Pushed with tag: ${RELEASE_TAG}"
 fi
