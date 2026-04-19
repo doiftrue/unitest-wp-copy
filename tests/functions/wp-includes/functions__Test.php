@@ -374,6 +374,11 @@ class functions__Test extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function test__wp_is_heic_image_mime_type() {
+		if( $wp_ver = wp_version_compare( '< 6.7' ) ){
+			$this->markTestSkipped( "wp_is_heic_image_mime_type() not exists on WP $wp_ver" );
+			return;
+		}
+
 		$this->assertTrue( wp_is_heic_image_mime_type( 'image/heic' ) );
 		$this->assertFalse( wp_is_heic_image_mime_type( 'image/png' ) );
 	}

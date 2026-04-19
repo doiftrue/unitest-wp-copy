@@ -3,6 +3,11 @@
 class WP_HTML_Doctype_Info__Test extends \PHPUnit\Framework\TestCase {
 
 	public function test__from_doctype_token() {
+		if( $wp_ver = wp_version_compare( '< 6.7' ) ){
+			$this->markTestSkipped( "WP_HTML_Doctype_Info{} not exists on WP $wp_ver" );
+			return;
+		}
+
 		$doctype = WP_HTML_Doctype_Info::from_doctype_token( '<!DOCTYPE html>' );
 
 		$this->assertInstanceOf( WP_HTML_Doctype_Info::class, $doctype );

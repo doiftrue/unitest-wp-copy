@@ -43,23 +43,23 @@ class Config {
 		$this->line_config_dir = "$this->config_dir/$this->wp_version_line";
 
 		// load configs
-		$this->funcs_data = $this->load_functions_config();
+		$this->funcs_data = $this->load_funcs_config();
 		$this->classes_data = $this->load_config_file( 'classes.php' );
 		$this->static_methods_data = $this->load_config_file( 'static-methods.php' );
 	}
 
-	private function load_functions_config(): array {
-		$base_config    = $this->build_functions_config( "$this->config_dir/functions" );
-		$version_config = $this->build_functions_config( "$this->line_config_dir/functions" );
+	private function load_funcs_config(): array {
+		$base_config = $this->build_functions_config( "$this->config_dir/functions" );
+		$ver_config  = $this->build_functions_config( "$this->line_config_dir/functions" );
 
-		return $this->merge_config_with_overrides( $base_config, $version_config );
+		return $this->merge_funcs_configs( $base_config, $ver_config );
 	}
 
 	private function load_config_file( string $file_name ): array {
 		$base_config = $this->load_php_array_file( "$this->config_dir/$file_name", true );
 		$ver_config  = $this->load_php_array_file( "$this->line_config_dir/$file_name", false );
 
-		return $this->merge_config_with_overrides( $base_config, $ver_config );
+		return $this->merge_flat_configs( $base_config, $ver_config );
 	}
 
 	private function build_functions_config( string $base_dir ): array {
@@ -108,20 +108,49 @@ class Config {
 	}
 
 	/**
-	 * Merges base config with version overrides.
+	 * Merges config with flat array data: [ rel_file => name ] See: classes.php, static-methods.php
 	 *
 	 * Override rules:
-	 * - false deletes key from merged result.
-	 * - scalar value replaces/creates key;
+	 * - false value deletes array element.
+	 * - scalar value replaces/creates element;
 	 */
-	private function merge_config_with_overrides( array $base_config, array $version_config ): array {
-		foreach( $version_config as $key => $value ){
+	private function merge_flat_configs( array $base_config, array $ver_config ): array {
+		foreach( $ver_config as $rel_file => $value ){
 			if( false === $value ){
-				unset( $base_config[ $key ] );
+				unset( $base_config[ $rel_file ] );
 				continue;
 			}
 
-			$base_config[ $key ] = $value;
+			$base_config[ $rel_file ] = $value;
+		}
+
+		return $base_config;
+	}
+
+	/**
+	 * Merges nested arrays config. Example:
+	 *
+	 *     [
+	 *         [wp-includes/compat.php] => [
+	 *             [function_name]   => '4.9.6 mockable'
+	 *             [function_name_2] => '5.9.0'
+	 *         ]
+	 *     ]
+	 *
+	 * Override rules:
+	 * - false value deletes array element.
+	 * - scalar value replaces/creates element;
+	 */
+	private function merge_funcs_configs( array $base_config, array $ver_config ): array {
+		foreach( $ver_config as $rel_file => $data ){
+			foreach( $data as $name => $info ){
+				if( false === $info ){
+					unset( $base_config[ $rel_file ][ $name ] );
+					continue;
+				}
+
+				$base_config[ $rel_file ][ $name ] = $info;
+			}
 		}
 
 		return $base_config;

@@ -8,7 +8,7 @@ class WP_HTML_Tag_Processor__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertTrue( $p->next_tag() );
 		$this->assertSame( 'DIV', $p->get_tag() );
 		$this->assertTrue( $p->has_class( 'a' ) );
-		$this->assertSame( 'html', $p->get_namespace() );
+		wp_version_compare( '>= 6.7' ) && $this->assertSame( 'html', $p->get_namespace() );
 
 		$this->assertTrue( $p->set_bookmark( 'x' ) );
 		$this->assertTrue( $p->has_bookmark( 'x' ) );
