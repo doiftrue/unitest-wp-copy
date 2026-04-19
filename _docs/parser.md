@@ -70,7 +70,7 @@ Use auto-mock only for "original WP logic + handler injection":
   - default fallback behavior;
   - `WP_Mock::userFunction(...)` override behavior.
 
-If runtime behavior must diverge from WP core, implement manual mock in `wp-runtime/copy/mocks/wp-includes/*` instead.
+If runtime behavior must diverge from WP core, implement manual mock in `wp-runtime/mocks/*` instead.
 
 
 ## Workflow: Static Class Methods Compatibility

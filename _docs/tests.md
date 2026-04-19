@@ -22,7 +22,7 @@ Parser-specific flow is described in [parser.md](parser.md).
 - Class tests: `tests/classes/...` (one class per file)
 - Static-class-method compatibility tests: `tests/classes-statics/...`
 - Mock/mockable function tests:
-  - source files in `wp-runtime/copy/mockable/...` and `wp-runtime/copy/mocks/...`
+  - source files in `wp-runtime/copy/mockable/...` and `wp-runtime/mocks/...`
   - tests in `tests/mocks/...` with the same WP-path structure
 
 

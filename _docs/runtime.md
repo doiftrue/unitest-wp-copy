@@ -21,7 +21,7 @@ It does not describe parser config workflow or release flow.
 - `wp-runtime/copy/functions/*`: parser-generated copied functions.
 - `wp-runtime/copy/classes/*`: parser-generated copied classes.
 - `wp-runtime/copy/mockable/*`: parser-generated functions with WP_Mock handler injection.
-- `wp-runtime/copy/mocks/*`: manual runtime-adapted mocks.
+- `wp-runtime/mocks/*`: manual runtime-adapted mocks.
 - `wp-runtime/mocks-extra/*`: WP-line specific mock overlays copied symbols.
 - `wp-runtime/copy/classes-statics/*`: parser-generated static-method compatibility functions.
 - `wp-runtime/SYMBOLS-INFO.md`: index of available copied symbols.

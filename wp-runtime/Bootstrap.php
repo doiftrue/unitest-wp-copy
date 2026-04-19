@@ -39,8 +39,8 @@ class Bootstrap {
 			...glob( "$base_dir/copy/functions/wp-includes/*.php" ),
 			...glob( "$base_dir/copy/classes-statics/*.php" ),
 			...glob( "$base_dir/copy/classes/*.php" ),
-			...glob( "$base_dir/copy/mocks/wp-includes/*.php" ),
 			...glob( "$base_dir/copy/mockable/wp-includes/*.php" ),
+			...glob( "$base_dir/mocks/wp-includes/*.php" ),
 		] );
 	}
 

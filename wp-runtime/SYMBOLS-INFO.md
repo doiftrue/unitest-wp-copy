@@ -51,7 +51,7 @@ esc_html_x()
 restore_current_blog()
 switch_to_blog()
 
-Functions and classes available as-is:
+Not mockable full copies of WP Core:
 PasswordHash{}
 WP_Block_Parser_Block{}
 WP_Block_Parser_Frame{}

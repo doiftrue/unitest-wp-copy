@@ -147,7 +147,7 @@ Mock Functions and WP_Mock
 Library also contains mock-friendly WP functions from two sources:
 
 - `wp-runtime/copy/mockable/...`: copies of original WP functions with injected WP_Mock handler support.
-- `wp-runtime/copy/mocks/wp-includes/...`: manual mocks where runtime behavior is intentionally adapted for this project.
+- `wp-runtime/mocks/wp-includes/...`: manual mocks where runtime behavior is intentionally adapted for this project.
 
 Examples:
 
