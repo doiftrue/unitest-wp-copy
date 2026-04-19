@@ -1,3 +1,4 @@
-/vendor/
-/wp-core/
-/composer.lock
+/*
+!/wp-runtime/
+!/zero.php
+!/composer.json
