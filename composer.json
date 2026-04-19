@@ -16,9 +16,8 @@
     }
   },
   "config": {
-    "allow-plugins": {
-      "composer/installers": true
-    }
+    "allow-plugins": { "composer/installers": true },
+    "lock": false
   },
   "repositories": [
     {
