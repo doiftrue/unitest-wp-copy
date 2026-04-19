@@ -18,7 +18,21 @@ class Bootstrap {
 		self::load_wp_runtime( $base_dir );
 	}
 
+	/**
+	 * Gets WP version of current runtime copied code.
+	 *
+	 * @return string Eg: 6.5
+	 */
+	private static function detect_wp_line(): string {
+		$content = file_get_contents( __DIR__ . '/SYMBOLS-INFO.md', false, null, 0, 8 * 512 );
+		preg_match( '~WordPress (\d+\.\d+)~m', $content, $m );
+		return $m[1] ?? '';
+	}
+
 	private static function load_wp_symbols( string $base_dir ): void {
+		// NOTE: Before runtime files to override copies
+		include_once sprintf( "$base_dir/mocks-extra/wp-%s.php", self::detect_wp_line() );
+
 		self::require_files( [
 			...glob( "$base_dir/copy/functions/*.php" ),
 			...glob( "$base_dir/copy/functions/wp-admin/includes/*.php" ),
