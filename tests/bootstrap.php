@@ -2,6 +2,13 @@
 
 require_once __DIR__ . '/functions.php';
 
-$base_dir = dirname( __DIR__ );
+$wp_line = getenv( 'WP_LINE' ) ?: 'Current';
+$root = dirname( __DIR__ );
+$base_dir = "$root/worktrees/wp-$wp_line";
+$base_dir = is_dir( $base_dir ) ? $base_dir : $root;
+
 wp_version( "$base_dir/wp-core" );
 require_once "$base_dir/zero.php";
+
+$cian = ["\033[36m", "\033[0m"];
+echo "$cian[0]Run for WP: $wp_line$cian[1]\n";

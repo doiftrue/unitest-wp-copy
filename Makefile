@@ -15,8 +15,9 @@ composer.install:
 composer.update:
 	$(call php_run, , composer update  $(filter-out $@,$(MAKECMDGOALS)))
 
+# $ make phpunit WP_LINE=6.8
 phpunit:
-	$(call php_run, , composer run phpunit -- --colors=always)
+	$(call php_run, -e WP_LINE="$(WP_LINE)", composer run phpunit -- --colors=always)
 
 run.parser:
 	$(call php_run, , php _parser/run.php)
