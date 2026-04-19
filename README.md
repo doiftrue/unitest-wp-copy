@@ -1,18 +1,17 @@
 About
 =====
-Helper library for PHPUnit tests.
-It provides selected WordPress core functions/classes that can run without full WordPress bootstrap, database, or external services.
+Helper library for PHPUnit tests. It provides selected WordPress core functions/classes that can run without full WordPress bootstrap (database or external services).
 
 This helps test real WP logic (pure-PHP parts) instead of mocking everything.
 
 
 Quick Example (Why This Helps)
 ------------------------------
-Suppose your code builds preview URLs using real WordPress helpers:
+Suppose your code builds preview URLs like this:
 
 ```php
 function build_preview_url( string $title ): string {
-	return add_query_arg(
+	return add_query_arg( 
 		[
 			'preview' => '1',
 			'slug'    => sanitize_title( $title ),
@@ -23,6 +22,7 @@ function build_preview_url( string $title ): string {
 ```
 
 Without this library, tests often mock `sanitize_title()` and `add_query_arg()`, so they do not validate real WordPress behavior.
+
 With this library, the same test can run real implementations in plain PHPUnit:
 
 ```php
@@ -36,19 +36,24 @@ $this->assertSame(
 ```
 
 
+Available Classes and Functions Reference
+-----------------------------------------
+For quick index of all symbols available in this package see:
+[`wp-runtime/SYMBOLS-INFO.md`](wp-runtime/SYMBOLS-INFO.md)
+
+Check this file first when you need to know whether a specific WP symbol is already available in the test environment.
+
+
+
 Installation
 ------------
 Install as a dev dependency:
 
 ```shell
-composer require --dev doiftrue/unitest-wp-copy
+composer require --dev doiftrue/unitest-wp-copy:6.8.*
 ```
 
-If you want to test WP_Mock handler behavior for mock functions, also install:
-
-```shell
-composer require --dev 10up/wp_mock
-```
+Where `6.8` is neede for you WP version. This lib supports multiple WP versions: `6.6`, `6.7`, `6.8`, `6.9`
 
 
 Usage
@@ -60,7 +65,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 \Unitest_WP_Copy\Bootstrap::init();
 ```
 
-You can optionally define your own constants:
+You can optionally re-define default constants:
 
 ```php
 define( 'ABSPATH', '/path/to/wp/' );
@@ -71,19 +76,32 @@ require_once __DIR__ . '/vendor/autoload.php';
 \Unitest_WP_Copy\Bootstrap::init();
 ```
 
-If you do not define them, defaults are used.
+### Mocking with WP_Mock
+
+If you need to mock WP functions, install `10up/wp_mock`:
+
+```shell
+composer require --dev 10up/wp_mock
+```
+
+Then bootstrap WP_Mock before this library:
+
+```php
+require_once __DIR__ . '/vendor/autoload.php';
+\Unitest_WP_Copy\Bootstrap::init();
+\WP_Mock::bootstrap();
+```
+
+Use `\WP_Mock::userFunction()` to mock functions:
+
+```php
+\WP_Mock::userFunction( 'is_multisite' )->andReturn( true );
+$this->assertTrue( is_multisite() );
+```
+
+See: https://github.com/10up/wp_mock 
 
 
-Available Symbols Reference
----------------------------
-Use [`wp-runtime/SYMBOLS-INFO.md`](wp-runtime/SYMBOLS-INFO.md) as a quick index of all symbols available in this package version.
-
-It includes:
-
-- mock-friendly functions (easy to override in tests);
-- functions/classes available as-is.
-
-Check this file first when you need to know whether a specific WP symbol is already available in the test environment.
 
 
 What bootstrap initializes

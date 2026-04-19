@@ -1,5 +1,8 @@
 <?php
 
+define( 'PROJECT_ROOT_DIR', dirname( __DIR__ ) );
+define( 'PROJECT_TMP_DIR', dirname( __DIR__ ) . '/tmp' );
+
 require_once __DIR__ . '/functions.php';
 
 $wp_line = getenv( 'WP_LINE' ) ?: 'Current';
