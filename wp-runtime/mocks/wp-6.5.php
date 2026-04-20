@@ -1,9 +1,10 @@
 <?php
 
 /**
- * INFO: This mock change `wp_load_alloption()` with `$GLOBALS['stub_wp_options']->blog_charset`
+ * INFO: This mock change `wp_load_alloption()` with `$GLOBALS['stub_wp_options']->blog_charset`.
+ *
+ * See: wp-includes/formatting.php (WP 6.5.8)
  */
-// wp-includes/formatting.php (WP 6.5.8)
 if( ! function_exists( '_wp_specialchars' ) ) :
 	function _wp_specialchars( $text, $quote_style = ENT_NOQUOTES, $charset = false, $double_encode = false ) {
 		$text = (string) $text;
