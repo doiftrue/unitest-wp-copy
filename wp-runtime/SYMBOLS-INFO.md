@@ -41,6 +41,7 @@ __()
 _e()
 _n()
 _nx()
+_wp_specialchars()
 _x()
 esc_attr__()
 esc_attr_e()
@@ -51,7 +52,7 @@ esc_html_x()
 restore_current_blog()
 switch_to_blog()
 
-Functions and classes available as-is:
+Not mockable full copies of WP Core:
 PasswordHash{}
 WP_Block_Parser_Block{}
 WP_Block_Parser_Frame{}
@@ -144,7 +145,6 @@ _wp_kses_split_callback()
 _wp_normalize_relative_css_links()
 _wp_privacy_statuses()
 _wp_scripts_maybe_doing_it_wrong()
-_wp_specialchars()
 _wp_to_kebab_case()
 _wp_translate_php_url_constant_to_key()
 _wptexturize_pushpop_element()
