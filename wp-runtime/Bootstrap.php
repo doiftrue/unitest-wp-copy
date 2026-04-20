@@ -31,7 +31,10 @@ class Bootstrap {
 
 	private static function load_wp_symbols( string $base_dir ): void {
 		// NOTE: Before runtime files to override copies
-		include_once sprintf( "$base_dir/mocks-extra/wp-%s.php", self::detect_wp_line() );
+		$line_file = sprintf( "$base_dir/mocks/wp-%s.php", self::detect_wp_line() );
+		if ( is_file( $line_file ) ) {
+			include_once $line_file;
+		}
 
 		self::require_files( [
 			...glob( "$base_dir/copy/functions/*.php" ),
@@ -39,8 +42,8 @@ class Bootstrap {
 			...glob( "$base_dir/copy/functions/wp-includes/*.php" ),
 			...glob( "$base_dir/copy/classes-statics/*.php" ),
 			...glob( "$base_dir/copy/classes/*.php" ),
-			...glob( "$base_dir/copy/mocks/wp-includes/*.php" ),
 			...glob( "$base_dir/copy/mockable/wp-includes/*.php" ),
+			...glob( "$base_dir/mocks/wp-includes/*.php" ),
 		] );
 	}
 
