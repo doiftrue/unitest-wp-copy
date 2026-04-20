@@ -1,6 +1,7 @@
 The following functions and classes are available in this (unit test) environment. Symbols are copied from WordPress 6.9.4.
 
 Mockable copied functions (can be overridden via WP_Mock):
+```
 _deprecated_function()
 balanceTags()
 convert_smilies()
@@ -35,12 +36,15 @@ wp_installing()
 wp_suspend_cache_addition()
 wp_timezone_string()
 wp_trigger_error()
+```
 
 Mockable changed functions (not full copies) (can be overridden via WP_Mock):
+```
 __()
 _e()
 _n()
 _nx()
+_wp_specialchars()
 _x()
 esc_attr__()
 esc_attr_e()
@@ -50,8 +54,10 @@ esc_html_e()
 esc_html_x()
 restore_current_blog()
 switch_to_blog()
+```
 
 Not mockable full copies of WP Core:
+```
 PasswordHash{}
 WP_Block_Parser_Block{}
 WP_Block_Parser_Frame{}
@@ -148,7 +154,6 @@ _wp_privacy_statuses()
 _wp_scan_utf8()
 _wp_scripts_maybe_doing_it_wrong()
 _wp_scrub_utf8_fallback()
-_wp_specialchars()
 _wp_to_kebab_case()
 _wp_translate_php_url_constant_to_key()
 _wp_utf8_codepoint_count()
@@ -535,3 +540,4 @@ wpautop()
 wptexturize()
 wptexturize_primes()
 zeroise()
+```
