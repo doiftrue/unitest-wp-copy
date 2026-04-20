@@ -88,6 +88,11 @@ class Copied_Lister {
 				continue;
 			}
 
+			// INFO: Skip WP-Line specific mocks ovverlaps. Eg: `wp-6.5.php`
+			if( preg_match( '~^wp-\d+\.\d+\.php$~', $file_info->getBasename() ) ){
+				continue;
+			}
+
 			$file_content = file_get_contents( $file_info->getPathname() );
 			$func_names = array_keys( Helpers::get_class_func_code_from_php_code( $file_content, [ 'type' => 'func' ] ) );
 

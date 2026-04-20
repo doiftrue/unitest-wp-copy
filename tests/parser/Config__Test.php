@@ -1,9 +1,10 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
 use Parser\Config;
 
-class Config__Test extends TestCase {
+require_once __DIR__ . '/Parser_TestCase.php';
+
+class Config__Test extends Parser_TestCase {
 
 	use Config__Test_Utils;
 
@@ -304,20 +305,6 @@ class Config__Test extends TestCase {
 
 trait Config__Test_Utils {
 
-	private array $tmp_dirs = [];
-
-	public static function setUpBeforeClass(): void {
-		require_once dirname( __DIR__, 2 ) . '/_parser/autoload.php';
-	}
-
-	protected function tearDown(): void {
-		foreach( $this->tmp_dirs as $dir ){
-			$this->remove_dir( $dir );
-		}
-
-		$this->tmp_dirs = [];
-	}
-
 	private function call_private_method( string $method, array $args = [], ?Config $config = null ) {
 		$config ??= new ReflectionClass( Config::class )->newInstanceWithoutConstructor();
 
@@ -328,29 +315,6 @@ trait Config__Test_Utils {
 		)();
 	}
 
-	private function make_config( array $props ): Config {
-		$config = new ReflectionClass( Config::class )->newInstanceWithoutConstructor();
-
-		Closure::bind(
-			function() use ( $props ) {
-				foreach( $props as $name => $value ){
-					$this->$name = $value;
-				}
-			},
-			$config,
-			Config::class
-		)();
-
-		return $config;
-	}
-
-	private function make_temp_dir(): string {
-		$dir = PROJECT_TMP_DIR . '/config-test-' . uniqid( '', true );
-		mkdir( $dir, 0777, true );
-		$this->tmp_dirs[] = $dir;
-		return $dir;
-	}
-
 	private function write_config_data_to_file( string $file, array $data ): void {
 		$dir = dirname( $file );
 		if( ! is_dir( $dir ) ){
@@ -358,28 +322,6 @@ trait Config__Test_Utils {
 		}
 
 		file_put_contents( $file, "<?php\nreturn " . var_export( $data, true ) . ";\n" );
-	}
-
-	private function remove_dir( string $dir ): void {
-		if( ! is_dir( $dir ) ){
-			return;
-		}
-
-		$iterator = new RecursiveIteratorIterator(
-			new RecursiveDirectoryIterator( $dir, FilesystemIterator::SKIP_DOTS ),
-			RecursiveIteratorIterator::CHILD_FIRST
-		);
-
-		foreach( $iterator as $item ){
-			if( $item->isDir() ){
-				rmdir( $item->getPathname() );
-				continue;
-			}
-
-			unlink( $item->getPathname() );
-		}
-
-		rmdir( $dir );
 	}
 
 }
