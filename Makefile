@@ -25,6 +25,14 @@ parser.run:
 # make release WP_LINE=6.8
 release:
 	WP_LINE="$(WP_LINE)" bash _releaser/release.sh
+release.all:
+	@status=0; \
+	for wp_line in 6.5 6.6 6.7 6.8 6.9; do \
+		echo "== release $$wp_line =="; \
+		$(MAKE) release WP_LINE="$$wp_line" || status=1; \
+		echo; \
+	done; \
+	exit $$status
 
 # make worktrees.run cmd="git status --short"
 WORKTREE_DIRS := $(sort $(wildcard worktrees/wp-*))
