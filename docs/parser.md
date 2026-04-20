@@ -17,12 +17,12 @@ It is not a dependency analyzer.
 
 Run parser with:
 - `make parser.run`
-- or `php _parser/run.php`
+- or `php parser/run.php`
 
 
 ## What Parser Generates
 
-`_parser/run.php` builds `Updater`, which:
+`parser/run.php` builds `Updater`, which:
 - reads configured WP source files/classes/methods;
 - extracts selected top-level functions/classes;
 - updates generated content after `// ------------------auto-generated---------------------`;
@@ -89,7 +89,7 @@ Config format is defined in [config.md](config.md).
 
 ## Parser Code Style
 
-When editing `_parser/src/*`:
+When editing `parser/src/*`:
 - keep implementation strict and simple;
 - avoid defensive branches for invalid states that should fail fast;
 - prefer direct logic with minimal branching.

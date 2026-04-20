@@ -8,7 +8,7 @@ abstract class Parser_TestCase extends TestCase {
 	private array $tmp_dirs = [];
 
 	public static function setUpBeforeClass(): void {
-		require_once PROJECT_ROOT_DIR . '/_parser/autoload.php';
+		require_once PROJECT_ROOT_DIR . '/parser/autoload.php';
 	}
 
 	protected function tearDown(): void {

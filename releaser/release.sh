@@ -43,7 +43,7 @@ run_php "composer require --dev wordpress/wordpress:${WP_LINE}.*  --no-interacti
 run_php "composer update wordpress/wordpress  --no-interaction --with-dependencies"
 
 cecho cyan "[STEP] Run parser"
-run_php "php _parser/run.php"
+run_php "php parser/run.php"
 
 cecho cyan "[STEP] Run tests"
 run_php "composer run phpunit -- --colors=always"

@@ -20,11 +20,11 @@ phpunit:
 	$(call php_run, -e WP_LINE="$(WP_LINE)", composer run phpunit -- --colors=always)
 
 parser.run:
-	$(call php_run, , php _parser/run.php)
+	$(call php_run, , php parser/run.php)
 
 # make release WP_LINE=6.8
 release:
-	WP_LINE="$(WP_LINE)" bash _releaser/release.sh
+	WP_LINE="$(WP_LINE)" bash releaser/release.sh
 release.all:
 	@status=0; \
 	for wp_line in 6.5 6.6 6.7 6.8 6.9; do \

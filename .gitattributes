@@ -1,4 +1,4 @@
-/_parser         export-ignore
+/parser          export-ignore
 /config          export-ignore
 /tests           export-ignore
 AGENTS.md        export-ignore

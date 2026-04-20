@@ -2,7 +2,7 @@
 
 ## Scope
 
-This document describes multi-WP-line release workflow implemented by `_releaser/release.sh`.
+This document describes multi-WP-line release workflow implemented by `releaser/release.sh`.
 
 Dependencies:
 - Parser regeneration flow: [parser.md](parser.md)
