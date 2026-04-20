@@ -18,13 +18,13 @@ User-facing usage belongs to `README.md`.
 
 ## Maintainer Docs
 
-All maintainer instructions are centralized under `_docs/`:
+All maintainer instructions are centralized under `docs/`:
 
-- Runtime and bootstrap internals: `_docs/runtime.md`
-- Parser workflow: `_docs/parser.md`
-- Config model and merge rules: `_docs/config.md`
-- Test conventions: `_docs/tests.md`
-- Release workflow: `_docs/releaser.md`
+- Runtime and bootstrap internals: `docs/runtime.md`
+- Parser workflow: `docs/parser.md`
+- Config model and merge rules: `docs/config.md`
+- Test conventions: `docs/tests.md`
+- Release workflow: `docs/releaser.md`
 
 
 ## Quick Commands

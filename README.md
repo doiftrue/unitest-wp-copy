@@ -232,4 +232,4 @@ See also: https://github.com/10up/wp_mock
 
 Maintainers
 -----------
-If you maintain this repository, see the docs in [`_docs/`](./_docs/) (runtime, parser, config, tests, release flow).
+If you maintain this repository, see the docs in [`docs/`](./docs/) (runtime, parser, config, tests, release flow).
