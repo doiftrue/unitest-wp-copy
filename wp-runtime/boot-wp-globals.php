@@ -1,0 +1,21 @@
+<?php
+
+smilies_init();
+
+$GLOBALS['timestart'] = microtime( true );
+$_SERVER['HTTP_HOST'] = parse_url( $GLOBALS['stub_wp_options']->home, PHP_URL_HOST );
+
+global $wp_plugin_paths;
+$wp_plugin_paths || $wp_plugin_paths = [];
+
+global $shortcode_tags;
+$shortcode_tags = [];
+
+global $wp_locale;
+$wp_locale = new \WP_Locale();
+
+global $wp_post_types;
+$wp_post_types = is_array( $wp_post_types ?? null ) ? $wp_post_types : [];
+
+global $wp_taxonomies;
+$wp_taxonomies = is_array( $wp_taxonomies ?? null ) ? $wp_taxonomies : [];
