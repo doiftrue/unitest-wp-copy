@@ -62,6 +62,11 @@ return [
 	// (`class-phpass.php` class) portable password hashing; pure PHP.
 	'wp-includes/class-phpass.php'                     => [ 'PasswordHash' => '2.5.0' ],
 	'wp-includes/class-wp-locale.php'                  => [ 'WP_Locale' => '4.6.0' ],
+	// Sitemap registry/base/index helpers and XML builder.
+	'wp-includes/sitemaps/class-wp-sitemaps-registry.php' => [ 'WP_Sitemaps_Registry' => '5.5.0' ],
+	'wp-includes/sitemaps/class-wp-sitemaps-provider.php' => [ 'WP_Sitemaps_Provider' => '5.5.0' ],
+	'wp-includes/sitemaps/class-wp-sitemaps-index.php'    => [ 'WP_Sitemaps_Index' => '5.5.0' ],
+	'wp-includes/sitemaps/class-wp-sitemaps-renderer.php' => [ 'WP_Sitemaps_Renderer' => '5.5.0' ],
 ];
 
 /*
@@ -71,4 +76,8 @@ WP_Block_Patterns_Registry  // why: NOT IDEAL: depends on block-hooks runtime (a
 Walker_Page  // why: NOT IDEAL: requires post/permalink/date dependency chain (get_post/get_permalink/mysql2date/page_for_posts).
 Walker_Category  // why: NOT IDEAL: requires term/taxonomy dependency chain (get_term_link/get_terms/get_term/get_term_feed_link).
 Walker_Nav_Menu  // why: NOT IDEAL: depends on get_privacy_policy_url() and nav-menu runtime chain.
+WP_Sitemaps_Posts  // why: depends on WP_Query/get_permalink and post-query runtime chain.
+WP_Sitemaps_Taxonomies  // why: depends on WP_Term_Query/get_term_link/wp_count_terms runtime chain.
+WP_Sitemaps_Users  // why: depends on WP_User_Query/get_author_posts_url runtime chain.
+WP_Sitemaps_Stylesheet  // why: depends on get_language_attributes() and HTTP output lifecycle.
 */

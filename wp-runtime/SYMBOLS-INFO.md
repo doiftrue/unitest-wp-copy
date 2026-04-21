@@ -85,6 +85,10 @@ WP_Object_Cache{}
 WP_Screen{}
 WP_Script_Modules{}
 WP_Scripts{}
+WP_Sitemaps_Index{}
+WP_Sitemaps_Provider{}
+WP_Sitemaps_Registry{}
+WP_Sitemaps_Renderer{}
 WP_Styles{}
 Walker{}
 _()
@@ -512,6 +516,7 @@ wp_script_modules()
 wp_scripts()
 wp_scrub_utf8()
 wp_set_script_translations()
+wp_sitemaps_get_max_urls()
 wp_slash()
 wp_spaces_regexp()
 wp_specialchars_decode()
