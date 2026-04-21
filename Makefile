@@ -23,8 +23,9 @@ parser.run:
 	$(call php_run, , php parser/run.php)
 
 # make release WP_LINE=6.8
+# make release WP_LINE=6.8 NOT_PUSH=1
 release:
-	WP_LINE="$(WP_LINE)" bash releaser/release.sh
+	WP_LINE="$(WP_LINE)" NOT_PUSH="$(NOT_PUSH)" bash releaser/release.sh
 release.all:
 	@status=0; \
 	for wp_line in 6.5 6.6 6.7 6.8 6.9; do \

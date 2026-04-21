@@ -25,12 +25,15 @@ Dependencies:
 
 ```bash
 make release WP_LINE=6.8
+# preview mode (no commit/tag/push):
+make release WP_LINE=6.8 NOT_PUSH=1
 ```
 
 Inputs:
 - `WP_LINE` is required
 - `RELEASE_TAG` is auto-generated as `<WP_LINE>.<last VERSION part #1>.<last VERSION part #2>`
   - example: if `WP_LINE=6.8` and `VERSION=6.9.0.26`, then tag is `6.8.0.26`
+- optional `NOT_PUSH=1` runs all release steps but skips commit/tag/push
 
 
 ## Release Flow
