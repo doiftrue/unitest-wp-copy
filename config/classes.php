@@ -61,8 +61,6 @@ return [
 	'wp-includes/class-wp-block-styles-registry.php'   => [ 'WP_Block_Styles_Registry' => '5.3.0' ],
 	// Base abstract walker for tree structures; pure logic.
 	'wp-includes/class-wp-walker.php'                  => [ 'Walker' => '2.1.0' ],
-	// NOT IDEAL: depends on get_privacy_policy_url() and nav-menu runtime chain; excluded from this project.
-	// 'wp-includes/class-walker-nav-menu.php' => [ 'Walker_Nav_Menu' => '4.6.0' ],
 	// NOT IDEAL: requires post/permalink/date dependency chain (get_post, get_permalink, mysql2date, page_for_posts).
 	'wp-includes/class-walker-page.php'                => [ 'Walker_Page' => '4.4.0' ],
 	// NOT IDEAL: requires term/taxonomy dependency chain (get_term_link, get_terms, get_term, get_term_feed_link).
@@ -74,3 +72,9 @@ return [
 	'wp-includes/class-phpass.php'                     => [ 'PasswordHash' => '2.5.0' ],
 	'wp-includes/class-wp-locale.php'                  => [ 'WP_Locale' => '4.6.0' ],
 ];
+
+/*
+Not suitable in isolated PHPUnit env:
+
+Walker_Nav_Menu, // why: NOT IDEAL: depends on get_privacy_policy_url() and nav-menu runtime chain; excluded from this project.
+*/

@@ -13,7 +13,7 @@ return [
 ];
 
 /*
-Not suitable in isolated PHPUnit env (full taxonomy runtime / DB / missing chain):
+Not suitable in isolated PHPUnit env:
 
 create_initial_taxonomies                // why: requires WP_Taxonomy class + full taxonomy registration bootstrap.
 get_object_taxonomies                    // why: attachment-object path depends on get_attachment_taxonomies() chain not included.

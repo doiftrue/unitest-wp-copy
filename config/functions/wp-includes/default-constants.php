@@ -9,7 +9,7 @@ return [
 ];
 
 /*
-Not suitable in isolated PHPUnit env (templating/runtime dependency):
+Not suitable in isolated PHPUnit env:
 
 wp_templating_constants  // why: get_template_directory() dependency
 */

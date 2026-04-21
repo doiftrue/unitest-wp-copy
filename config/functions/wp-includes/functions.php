@@ -94,7 +94,8 @@ return [
 ];
 
 /*
-Not suitable in isolated PHPUnit env (DB/filesystem/request/bootstrap runtime coupling):
+Not suitable in isolated PHPUnit env:
+
 is_php_version_compatible                    // why: better to leave mockable.
 is_wp_version_compatible                     // why: better to leave mockable.
 wp_fast_hash                                 // why: requires sodium.

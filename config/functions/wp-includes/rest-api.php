@@ -66,7 +66,7 @@ return [
 ];
 
 /*
-Not suitable in isolated PHPUnit env (REST server/full runtime coupling):
+Not suitable in isolated PHPUnit env:
 
 register_rest_route                       // why: depends on rest_get_server() + WP_REST_Server runtime.
 rest_api_init                             // why: depends on full WP query/rewrite runtime.

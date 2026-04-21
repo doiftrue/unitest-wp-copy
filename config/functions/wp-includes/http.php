@@ -8,7 +8,7 @@ return [
 ];
 
 /*
-Not suitable in isolated PHPUnit env (network/CORS/runtime coupling):
+Not suitable in isolated PHPUnit env:
 
 _wp_http_get_object                  // why: requires WP_HTTP class stack/runtime.
 allowed_http_request_hosts           // why: HTTP policy/runtime dependency.

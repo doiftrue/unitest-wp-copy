@@ -14,7 +14,7 @@ return [
 ];
 
 /*
-Not suitable in isolated PHPUnit env (query/template/admin runtime coupling):
+Not suitable in isolated PHPUnit env:
 
 _get_page_link                   // why: requires WP query/post permalink runtime.
 _navigation_markup               // why: depends on theme/template rendering context.

@@ -23,9 +23,9 @@ return [
 ];
 
 /*
-Not suitable in isolated PHPUnit env (i18n registry/filesystem runtime dependency):
+Not suitable in isolated PHPUnit env:
 
-determine_locale                        // why: depends on is_admin() runtime context.
+determine_locale                      // why: depends on is_admin() runtime context.
 _ex                                   // why: i18n runtime dependency (context translation).
 _load_textdomain_just_in_time         // why: textdomain loading/filesystem/runtime dependency.
 get_available_languages               // why: language pack filesystem dependency.

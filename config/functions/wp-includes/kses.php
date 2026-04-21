@@ -44,7 +44,7 @@ return [
 ];
 
 /*
-Not suitable in isolated PHPUnit env (capability/runtime dependency):
+Not suitable in isolated PHPUnit env:
 
 kses_init                  // why: depends on current_user_can() runtime capability checks.
 kses_init_filters          // why: depends on current_user_can() runtime capability checks.

@@ -15,7 +15,7 @@ return [
 ];
 
 /*
-Not suitable in isolated PHPUnit env (theme discovery/filesystem/runtime coupling):
+Not suitable in isolated PHPUnit env:
 
 wp_get_themes                                             // why: theme discovery + filesystem scan/runtime cache.
 wp_get_theme                                              // why: theme discovery + filesystem scan/runtime cache.

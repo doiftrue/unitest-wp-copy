@@ -19,7 +19,7 @@ return [
 ];
 
 /*
-Not suitable in isolated PHPUnit env (script/style lifecycle + runtime context dependency):
+Not suitable in isolated PHPUnit env:
 
 wp_scripts_get_suffix                           // why: require ABSPATH . WPINC . '/version.php' (filesystem/runtime path dependency).
 wp_default_scripts                              // why: massive bootstrap registry + admin/theme runtime coupling.

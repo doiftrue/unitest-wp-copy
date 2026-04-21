@@ -15,7 +15,7 @@ return [
 ];
 
 /*
-Not suitable in isolated PHPUnit env (post/term DB-bound runtime chain):
+Not suitable in isolated PHPUnit env:
 
 get_post_format       // why: requires get_post(), post_type_supports(), get_the_terms().
 has_post_format       // why: depends on has_term()/taxonomy runtime.

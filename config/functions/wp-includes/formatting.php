@@ -113,7 +113,7 @@ return [
 ];
 
 /*
-Not suitable in isolated PHPUnit env (dependency/runtime coupling):
+Not suitable in isolated PHPUnit env:
 
 wp_rel_ugc                          // why: too many dependencies
 wp_rel_nofollow_callback            // why: deprecated

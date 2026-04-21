@@ -35,7 +35,7 @@ return [
 ];
 
 /*
-Not suitable in isolated PHPUnit env (full WP runtime / DB / request / filesystem coupling):
+Not suitable in isolated PHPUnit env:
 
 create_initial_post_types                      // why: requires WP_Post_Type + register_post_type initialization chain.
 get_attached_file                              // why: attachment meta/uploads runtime dependency.

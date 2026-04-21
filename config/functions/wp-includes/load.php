@@ -20,7 +20,8 @@ return [
 ];
 
 /*
-Not suitable in isolated PHPUnit env (bootstrap/request/admin runtime coupling):
+Not suitable in isolated PHPUnit env:
+
 is_blog_admin                                     // why: requires admin bootstrap/request context.
 is_login                                          // why: requires login screen/request context.
 is_network_admin                                  // why: requires multisite admin context.

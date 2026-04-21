@@ -22,18 +22,18 @@ class Copied_Lister {
 	private string $content = <<<MD
 		The following functions and classes are available in this (unit test) environment. Symbols are copied from WordPress {WP_VERSION}.
 		
-		Mockable copied functions (can be overridden via WP_Mock):
-		```
-		{MOCKABLE_LIST}
-		```
-		
-		Mockable changed functions (not full copies) (can be overridden via WP_Mock):
-		```
+		Changed (not full copies) symbols (Mockable - can be overridden via WP_Mock):
+		```text
 		{MOCKS_LIST}
 		```
 		
-		Not mockable full copies of WP Core:
+		Copied symbols (Mockable - can be overridden via WP_Mock):
+		```text
+		{MOCKABLE_LIST}
 		```
+		
+		Full copies symbols of WP Core (not mockable):
+		```text
 		{COPIED_LIST}
 		```
 		MD;

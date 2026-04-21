@@ -8,7 +8,7 @@ return [
 ];
 
 /*
-Not suitable in isolated PHPUnit env (user/meta runtime dependency):
+Not suitable in isolated PHPUnit env:
 
 get_hidden_columns    // why: depends on get_user_option() user/meta runtime.
 meta_box_prefs        // why: depends on get_hidden_meta_boxes() and current user/meta runtime.
