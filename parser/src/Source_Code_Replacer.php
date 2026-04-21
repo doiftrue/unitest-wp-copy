@@ -1,7 +1,7 @@
 <?php
 namespace Parser;
 
-class Extra_Replacer {
+class Source_Code_Replacer {
 
 	private static array $stub_wp_options = [
 		"get_option( 'blog_charset' )"    => "\$GLOBALS['stub_wp_options']->blog_charset",
