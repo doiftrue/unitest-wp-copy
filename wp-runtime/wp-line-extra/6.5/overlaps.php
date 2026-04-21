@@ -1,4 +1,8 @@
 <?php
+/**
+ * This file contains adapted-functions that overlaps wp-core-copied
+ * functions for current wp version.
+ */
 
 /**
  * INFO: This mock change `wp_load_alloption()` with `$GLOBALS['stub_wp_options']->blog_charset`.
