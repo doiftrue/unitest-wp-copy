@@ -1,86 +1,31 @@
 <?php
 namespace Parser;
 
-use Parser\BaseStrats\Classes_Copier;
-use Parser\BaseStrats\Functions_Copier;
-use Parser\BaseStrats\Static_Methods_Copier;
-use Parser\BaseStrats\Symbols_Copy_Strategy;
+use Parser\BaseStrats\Symbols_Copier;
+use Parser\ExtraStrats\Files_Copier;
 
 class Updater {
 
-	private const SEP = '// ------------------auto-generated---------------------';
-
-	private Source_Code_Replacer $extra_replacer;
-	private Extra_Copier $extra_copier;
+	private Files_Copier $files_copier;
+	private Symbols_Copier $symbols_copier;
 
 	private readonly Config $config;
-	private readonly Copied_Lister $lister;
-
 
 	public function __construct() {
-		$this->config = config();
+		$this->config = new Config();
 	}
 
 	public function setup(): void {
-		$this->extra_replacer = new Source_Code_Replacer( $this->config );
-		$this->extra_copier = new Extra_Copier( $this->config );
-		$this->lister = new Copied_Lister( $this->config );
+		$this->files_copier = new Files_Copier( $this->config );
+		$this->symbols_copier = new Symbols_Copier( $this->config, new Symbols_Lister( $this->config ) );
 	}
 
 	public function run(): void {
-		/** @var Symbols_Copy_Strategy[] $strategies */
-		$strategies = [
-			new Functions_Copier( $this->config, $this->lister ),
-			new Classes_Copier( $this->config, $this->lister ),
-			new Static_Methods_Copier( $this->config, $this->lister ),
-		];
+		$this->symbols_copier->run();
 
-		foreach( $strategies as $strategy ){
-			foreach( $strategy->get_items() as $items_data ){
-				$dest_file = $strategy->get_dest_file( $items_data );
-				$content = $strategy->generate_content( $items_data );
-
-				$this->run_update_pipeline( $dest_file, $content );
-
-				echo $strategy->get_log_message( $items_data ) . "\n";
-			}
-		}
-
-		$this->extra_copier->run();
-		$this->lister->generate_list();
+		$this->files_copier->run();
 
 		echo "DONE!\n";
-	}
-
-	/**
-	 * Common file update pipeline:
-	 * read destination -> reset generated block -> append generated code -> run replacements -> write file.
-	 */
-	private function run_update_pipeline( string $dest_file, string $new_content ): void {
-		$this->check_create_dest_file( $dest_file );
-
-		$dest_content = file_get_contents( $dest_file );
-		$dest_content = $this->reset_generated_part( $dest_content );
-		$dest_content .= $new_content;
-
-		$dest_content = $this->extra_replacer->replace_in_code( $dest_content );
-
-		file_put_contents( $dest_file, $dest_content );
-	}
-
-	private function reset_generated_part( string $dest_content ): string {
-		if( ! str_contains( $dest_content, self::SEP ) ){
-			return "<?php\n\n" . self::SEP . "\n\n";
-		}
-
-		$prefix = explode( self::SEP, $dest_content )[0];
-		return rtrim( $prefix ) . "\n\n" . self::SEP . "\n\n";
-	}
-
-	private function check_create_dest_file( string $file ): void {
-	    if( ! file_exists( $file ) ){
-			file_put_contents( $file, "<?php\n\n" );
-	    }
 	}
 
 }

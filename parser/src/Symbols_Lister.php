@@ -6,7 +6,7 @@ use FilesystemIterator;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
-class Copied_Lister {
+class Symbols_Lister {
 
 	/**
 	 * List of generated function/class names.

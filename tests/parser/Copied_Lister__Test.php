@@ -1,6 +1,6 @@
 <?php
 
-use Parser\Copied_Lister;
+use Parser\Symbols_Lister;
 
 require_once TESTS_ROOT_DIR . '/Project_TestCase.php';
 
@@ -26,7 +26,7 @@ class Copied_Lister__Test extends Project_TestCase {
 			"<?php\nfunction copied_mockable_symbol() {}\n"
 		);
 
-		$lister = new Copied_Lister( $this->make_config( [
+		$lister = new Symbols_Lister( $this->make_config( [
 			'runtime_dir' => $runtime_dir,
 			'copy_dir' => $copy_dir,
 			'wp_version' => '6.9.4',

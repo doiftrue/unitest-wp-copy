@@ -1,10 +1,10 @@
 <?php
 
-use Parser\Extra_Copier;
+use Parser\ExtraStrats\Files_Copier;
 
 require_once TESTS_ROOT_DIR . '/Project_TestCase.php';
 
-class Extra_Copier__Test extends Project_TestCase {
+class Files_Copier__Test extends Project_TestCase {
 
 	public function test__run__copies_version_file_to_current_wp_line_dir(): void {
 		$tmp_dir = $this->make_temp_dir( 'extra-copier-test' );
@@ -34,7 +34,7 @@ class Extra_Copier__Test extends Project_TestCase {
 			'wp_version_line' => '9.9',
 		] );
 
-		$copier = new Extra_Copier( $config );
+		$copier = new Files_Copier( $config );
 		$copier->run();
 
 		$dest_file = "$runtime_dir/wp-line-extra/9.9/wp-includes/version.php";
@@ -75,7 +75,7 @@ class Extra_Copier__Test extends Project_TestCase {
 		$this->expectException( RuntimeException::class );
 		$this->expectExceptionMessage( 'Not found first function in extra file `wp-includes/kses.php`' );
 
-		$copier = new Extra_Copier( $config );
+		$copier = new Files_Copier( $config );
 		$copier->run();
 	}
 

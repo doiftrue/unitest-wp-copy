@@ -1,15 +1,13 @@
 <?php
 
-namespace Parser;
+namespace Parser\ExtraStrats;
 
-use Parser\ExtraStrats\File_Head_Init_Copy;
-use Parser\ExtraStrats\File_Copy;
-use Parser\ExtraStrats\Files_Copy_Strategy;
+use Parser\Config;
 
 /**
  * This class is responsible for copying extra files from `wp-core` to runtime extra destinations.
  */
-class Extra_Copier {
+class Files_Copier {
 
 	public function __construct(
 		private readonly Config $config,
@@ -19,8 +17,8 @@ class Extra_Copier {
 	public function run(): void {
 		/** @var Files_Copy_Strategy[] $strategies */
 		$strategies = [
-			new File_Copy( $this->config ),
-			new File_Head_Init_Copy( $this->config ),
+			new Files_Full( $this->config ),
+			new Files_Head_Init( $this->config ),
 		];
 
 		foreach( $strategies as $strategy ){

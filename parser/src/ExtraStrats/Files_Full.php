@@ -1,12 +1,10 @@
 <?php
 namespace Parser\ExtraStrats;
 
-use RuntimeException;
-
 /**
  * Copy source files without modification.
  */
-class File_Copy extends Files_Copy_Strategy {
+class Files_Full extends Files_Copy_Strategy {
 
 	/**
 	 * `wp-core => destination` files map to be copied

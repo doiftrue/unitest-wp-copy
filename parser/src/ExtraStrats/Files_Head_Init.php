@@ -7,7 +7,7 @@ use RuntimeException;
  * Copies head part of the file (before first function code)
  * to `init-parts` dir, which is used for runtime initialization.
  */
-class File_Head_Init_Copy extends Files_Copy_Strategy {
+class Files_Head_Init extends Files_Copy_Strategy {
 
 	protected array $files_map = [
 		'wp-includes/kses.php' => 'wp-includes/kses.php',

@@ -2,13 +2,13 @@
 namespace Parser\BaseStrats;
 
 use Parser\Config;
-use Parser\Copied_Lister;
+use Parser\Symbols_Lister;
 
 abstract class Symbols_Copy_Strategy {
 
 	public function __construct(
 		protected readonly Config $config,
-		protected readonly Copied_Lister $lister,
+		protected readonly Symbols_Lister $lister,
 	){
 	}
 
