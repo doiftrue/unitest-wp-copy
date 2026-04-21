@@ -1,10 +1,10 @@
 <?php
-namespace Parser\Strategy;
+namespace Parser\BaseStrats;
 
 use Parser\Helpers;
 use RuntimeException;
 
-class Copy_Static_Methods extends Base_Copier_Strategy {
+class Static_Methods_Copier extends Symbols_Copy_Strategy {
 
 	public function get_items(): array {
 		$items = [];

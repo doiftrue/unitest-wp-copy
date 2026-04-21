@@ -1,10 +1,10 @@
 <?php
 namespace Parser;
 
-use Parser\Strategy\Copy_Classes;
-use Parser\Strategy\Copy_Functions;
-use Parser\Strategy\Copy_Static_Methods;
-use Parser\Strategy\Base_Copier_Strategy;
+use Parser\BaseStrats\Classes_Copier;
+use Parser\BaseStrats\Functions_Copier;
+use Parser\BaseStrats\Static_Methods_Copier;
+use Parser\BaseStrats\Symbols_Copy_Strategy;
 
 class Updater {
 
@@ -28,11 +28,11 @@ class Updater {
 	}
 
 	public function run(): void {
-		/** @var Base_Copier_Strategy[] $strategies */
+		/** @var Symbols_Copy_Strategy[] $strategies */
 		$strategies = [
-			new Copy_Functions( $this->config, $this->lister ),
-			new Copy_Classes( $this->config, $this->lister ),
-			new Copy_Static_Methods( $this->config, $this->lister ),
+			new Functions_Copier( $this->config, $this->lister ),
+			new Classes_Copier( $this->config, $this->lister ),
+			new Static_Methods_Copier( $this->config, $this->lister ),
 		];
 
 		foreach( $strategies as $strategy ){

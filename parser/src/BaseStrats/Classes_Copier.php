@@ -1,9 +1,9 @@
 <?php
-namespace Parser\Strategy;
+namespace Parser\BaseStrats;
 
 use Parser\Helpers;
 
-class Copy_Classes extends Base_Copier_Strategy {
+class Classes_Copier extends Symbols_Copy_Strategy {
 
 	public function get_items(): array {
 		$items = [];

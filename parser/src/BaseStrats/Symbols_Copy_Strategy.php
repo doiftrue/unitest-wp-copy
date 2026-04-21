@@ -1,10 +1,10 @@
 <?php
-namespace Parser\Strategy;
+namespace Parser\BaseStrats;
 
 use Parser\Config;
 use Parser\Copied_Lister;
 
-abstract class Base_Copier_Strategy {
+abstract class Symbols_Copy_Strategy {
 
 	public function __construct(
 		protected readonly Config $config,
