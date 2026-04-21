@@ -46,3 +46,16 @@ worktrees.run:
 		sh -c 'cd "$$1" && $(cmd)' -- "$$dir"; \
 		echo; \
 	done
+
+# $ make php.run code='include "wp-core/wp-includes/version.php"; echo $wp_version, "\n";'
+php.run:
+	@if [ -z "$(strip $(value code))" ]; then \
+		echo 'Use: make php.run code='\''include "wp-core/wp-includes/version.php"; echo $$wp_version, "\\n";'\'''; \
+		exit 1; \
+	fi
+	$(file >tmp/.phprun.php,<?php)
+	$(file >>tmp/.phprun.php,$(value code))
+	@status=0; \
+	$(call php_run, , php tmp/.phprun.php) || status=$$?; \
+	rm -f tmp/.phprun.php; \
+	exit $$status
