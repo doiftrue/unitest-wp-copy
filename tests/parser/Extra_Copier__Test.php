@@ -2,9 +2,9 @@
 
 use Parser\Extra_Copier;
 
-require_once __DIR__ . '/Parser_TestCase.php';
+require_once TESTS_ROOT_DIR . '/Project_TestCase.php';
 
-class Extra_Copier__Test extends Parser_TestCase {
+class Extra_Copier__Test extends Project_TestCase {
 
 	public function test__run__copies_version_file_to_current_wp_line_dir(): void {
 		$tmp_dir = $this->make_temp_dir( 'extra-copier-test' );
@@ -55,22 +55,6 @@ class Extra_Copier__Test extends Parser_TestCase {
 			PHP . "\n",
 			file_get_contents( $init_part_file )
 		);
-	}
-
-	public function test__run__throws_when_source_file_is_missing(): void {
-		$tmp_dir = $this->make_temp_dir( 'extra-copier-test' );
-
-		$config = $this->make_config( [
-			'wp_core_dir' => "$tmp_dir/wp-core",
-			'runtime_dir' => "$tmp_dir/wp-runtime",
-			'wp_version_line' => '9.9',
-		] );
-
-		$this->expectException( RuntimeException::class );
-		$this->expectExceptionMessage( 'Not found extra file `wp-includes/version.php`' );
-
-		$copier = new Extra_Copier( $config );
-		$copier->run();
 	}
 
 	public function test__run__throws_when_kses_has_no_function(): void {

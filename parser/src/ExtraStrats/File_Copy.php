@@ -1,6 +1,8 @@
 <?php
 namespace Parser\ExtraStrats;
 
+use RuntimeException;
+
 /**
  * Copy source files without modification.
  */

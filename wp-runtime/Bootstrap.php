@@ -4,7 +4,7 @@ namespace Unitest_WP_Copy;
 
 class Bootstrap {
 
-	private string $over_dir;
+	private string $line_extra_dir;
 	private string $base_dir;
 
 	public static function init(): self {
@@ -18,7 +18,7 @@ class Bootstrap {
 
 	public function __construct() {
 		$this->base_dir = __DIR__;
-		$this->over_dir = sprintf( "$this->base_dir/wp-line-extra/%s", $this->detect_wp_line() );
+		$this->line_extra_dir = sprintf( "$this->base_dir/wp-line-extra/%s", $this->detect_wp_line() );
 	}
 
 	private function load(): void {
@@ -39,7 +39,7 @@ class Bootstrap {
 
 	private function load_wp_symbols(): void {
 		// NOTE: Before runtime files to override copies
-		if ( is_file( $file = "$this->over_dir/mocks/overlaps.php" ) ) {
+		if ( is_file( $file = "$this->line_extra_dir/mocks/overlaps.php" ) ) {
 			include_once $file;
 		}
 
@@ -56,19 +56,34 @@ class Bootstrap {
 
 	private function load_wp_runtime(): void {
 		require_once "$this->base_dir/WP_Mock_Utils.php";
-		require_once "$this->base_dir/base-wp-constants.php";
-		require_once "$this->base_dir/stub-wp-options.php";
+		require_once "$this->base_dir/boot-wp-options.php";
 
+		require_once "$this->base_dir/boot-wp-constants.php";
 		$this->setup_wp_constants();
+
+		require_once "$this->base_dir/boot-wp-globals.php";
 		$this->load_init_parts();
-		$this->setup_wp_globals();
 	}
 
 	private function load_init_parts(): void {
-		require_once "$this->over_dir/wp-includes/version.php";
+		require_once "$this->line_extra_dir/wp-includes/version.php";
 		$this->require_files( [
-			...glob( "$this->base_dir/init-parts/wp-includes/*.php" ),
+			...array_map(
+				fn( string $file ) => $this->resolve_wp_line_extra_file( $file ),
+				glob( "$this->base_dir/init-parts/wp-includes/*.php" )
+			),
 		] );
+	}
+
+	private function resolve_wp_line_extra_file( string $file ): string {
+		$base_path = "$this->base_dir/";
+		if ( ! str_starts_with( $file, $base_path ) ) {
+			return $file;
+		}
+
+		$new_file = str_replace( $base_path, "$this->line_extra_dir/", $file );
+
+		return is_file( $new_file ) ? $new_file : $file;
 	}
 
 	private function setup_wp_constants(): void {
@@ -77,28 +92,6 @@ class Bootstrap {
 		wp_cookie_constants();
 		wp_ssl_constants();
 		wp_functionality_constants();
-	}
-
-	private function setup_wp_globals(): void {
-		smilies_init();
-
-		$GLOBALS['timestart'] = microtime( true );
-		$_SERVER['HTTP_HOST'] = parse_url( $GLOBALS['stub_wp_options']->home, PHP_URL_HOST );
-
-		global $wp_plugin_paths;
-		$wp_plugin_paths || $wp_plugin_paths = [];
-
-		global $shortcode_tags;
-		$shortcode_tags = [];
-
-		global $wp_locale;
-		$wp_locale = new \WP_Locale();
-
-		global $wp_post_types;
-		$wp_post_types = is_array( $wp_post_types ?? null ) ? $wp_post_types : [];
-
-		global $wp_taxonomies;
-		$wp_taxonomies = is_array( $wp_taxonomies ?? null ) ? $wp_taxonomies : [];
 	}
 
 	private function require_files( array $files ): void {

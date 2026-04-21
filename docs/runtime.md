@@ -14,8 +14,9 @@ This document describes the WP-like runtime used by tests that will use code of 
 ## Runtime Layout
 
 - `wp-runtime/Bootstrap.php`: loads copied code, stubs, and base globals/constants.
-- `wp-runtime/base-wp-constants.php`: base WP-like constants/environment values.
-- `wp-runtime/stub-wp-options.php`: option-like source via `$GLOBALS['stub_wp_options']`.
+- `wp-runtime/boot-wp-constants.php`: base WP-like constants/environment values.
+- `wp-runtime/boot-wp-globals.php`: WP PHP globals variables initialization.
+- `wp-runtime/boot-wp-options.php`: option-like source via `$GLOBALS['stub_wp_options']`.
 - `wp-runtime/init-parts/*`: extra init fragments required by some copied symbols.
 - `wp-runtime/copy/functions/*`: parser-generated copied functions.
 - `wp-runtime/copy/classes/*`: parser-generated copied classes.

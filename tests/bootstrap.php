@@ -1,14 +1,14 @@
 <?php
 
+define( 'TESTS_ROOT_DIR', __DIR__ );
 define( 'PROJECT_ROOT_DIR', dirname( __DIR__ ) );
 define( 'PROJECT_TMP_DIR', dirname( __DIR__ ) . '/tmp' );
 
 require_once __DIR__ . '/functions.php';
 
 $wp_line = getenv( 'WP_LINE' ) ?: 'Current';
-$root = dirname( __DIR__ );
-$base_dir = "$root/worktrees/wp-$wp_line";
-$base_dir = is_dir( $base_dir ) ? $base_dir : $root;
+$base_dir = PROJECT_ROOT_DIR . "/worktrees/wp-$wp_line";
+$base_dir = is_dir( $base_dir ) ? $base_dir : PROJECT_ROOT_DIR;
 
 wp_version( "$base_dir/wp-core" );
 require_once "$base_dir/zero.php";

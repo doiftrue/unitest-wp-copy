@@ -2,9 +2,9 @@
 
 use Parser\Copied_Lister;
 
-require_once __DIR__ . '/Parser_TestCase.php';
+require_once TESTS_ROOT_DIR . '/Project_TestCase.php';
 
-class Copied_Lister__Test extends Parser_TestCase {
+class Copied_Lister__Test extends Project_TestCase {
 
 	public function test__generate_list(): void {
 		$tmp_dir = $this->make_temp_dir( 'copied-lister-test' );

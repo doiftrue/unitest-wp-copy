@@ -3,7 +3,7 @@
 use Parser\Config;
 use PHPUnit\Framework\TestCase;
 
-abstract class Parser_TestCase extends TestCase {
+abstract class Project_TestCase extends TestCase {
 
 	private array $tmp_dirs = [];
 

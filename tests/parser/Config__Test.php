@@ -2,11 +2,11 @@
 
 use Parser\Config;
 
-require_once __DIR__ . '/Parser_TestCase.php';
+require_once TESTS_ROOT_DIR . '/Project_TestCase.php';
 
-class Config__Test extends Parser_TestCase {
+class Config__Test extends Project_TestCase {
 
-	use Config__Test_Utils;
+	use Parser_Config__Test_Utils;
 
 	public function test__parse_version_line__extracts_major_minor() {
 		$result = $this->call_private_method( 'parse_version_line', [ '6.8.1-alpha' ] );
@@ -303,7 +303,7 @@ class Config__Test extends Parser_TestCase {
 
 }
 
-trait Config__Test_Utils {
+trait Parser_Config__Test_Utils {
 
 	private function call_private_method( string $method, array $args = [], ?Config $config = null ) {
 		$config ??= new ReflectionClass( Config::class )->newInstanceWithoutConstructor();
