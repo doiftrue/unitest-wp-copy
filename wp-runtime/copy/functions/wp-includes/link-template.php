@@ -185,3 +185,104 @@ if( ! function_exists( 'includes_url' ) ) :
 	}
 endif;
 
+// wp-includes/link-template.php (WP 6.5.8)
+if( ! function_exists( 'get_theme_file_uri' ) ) :
+	function get_theme_file_uri( $file = '' ) {
+		$file = ltrim( $file, '/' );
+	
+		$stylesheet_directory = get_stylesheet_directory();
+	
+		if ( empty( $file ) ) {
+			$url = get_stylesheet_directory_uri();
+		} elseif ( get_template_directory() !== $stylesheet_directory && file_exists( $stylesheet_directory . '/' . $file ) ) {
+			$url = get_stylesheet_directory_uri() . '/' . $file;
+		} else {
+			$url = get_template_directory_uri() . '/' . $file;
+		}
+	
+		/**
+		 * Filters the URL to a file in the theme.
+		 *
+		 * @since 4.7.0
+		 *
+		 * @param string $url  The file URL.
+		 * @param string $file The requested file to search for.
+		 */
+		return apply_filters( 'theme_file_uri', $url, $file );
+	}
+endif;
+
+// wp-includes/link-template.php (WP 6.5.8)
+if( ! function_exists( 'get_parent_theme_file_uri' ) ) :
+	function get_parent_theme_file_uri( $file = '' ) {
+		$file = ltrim( $file, '/' );
+	
+		if ( empty( $file ) ) {
+			$url = get_template_directory_uri();
+		} else {
+			$url = get_template_directory_uri() . '/' . $file;
+		}
+	
+		/**
+		 * Filters the URL to a file in the parent theme.
+		 *
+		 * @since 4.7.0
+		 *
+		 * @param string $url  The file URL.
+		 * @param string $file The requested file to search for.
+		 */
+		return apply_filters( 'parent_theme_file_uri', $url, $file );
+	}
+endif;
+
+// wp-includes/link-template.php (WP 6.5.8)
+if( ! function_exists( 'get_theme_file_path' ) ) :
+	function get_theme_file_path( $file = '' ) {
+		$file = ltrim( $file, '/' );
+	
+		$stylesheet_directory = get_stylesheet_directory();
+		$template_directory   = get_template_directory();
+	
+		if ( empty( $file ) ) {
+			$path = $stylesheet_directory;
+		} elseif ( $stylesheet_directory !== $template_directory && file_exists( $stylesheet_directory . '/' . $file ) ) {
+			$path = $stylesheet_directory . '/' . $file;
+		} else {
+			$path = $template_directory . '/' . $file;
+		}
+	
+		/**
+		 * Filters the path to a file in the theme.
+		 *
+		 * @since 4.7.0
+		 *
+		 * @param string $path The file path.
+		 * @param string $file The requested file to search for.
+		 */
+		return apply_filters( 'theme_file_path', $path, $file );
+	}
+endif;
+
+// wp-includes/link-template.php (WP 6.5.8)
+if( ! function_exists( 'get_parent_theme_file_path' ) ) :
+	function get_parent_theme_file_path( $file = '' ) {
+		$file = ltrim( $file, '/' );
+	
+		if ( empty( $file ) ) {
+			$path = get_template_directory();
+		} else {
+			$path = get_template_directory() . '/' . $file;
+		}
+	
+		/**
+		 * Filters the path to a file in the parent theme.
+		 *
+		 * @since 4.7.0
+		 *
+		 * @param string $path The file path.
+		 * @param string $file The requested file to search for.
+		 */
+		return apply_filters( 'parent_theme_file_path', $path, $file );
+	}
+endif;
+
