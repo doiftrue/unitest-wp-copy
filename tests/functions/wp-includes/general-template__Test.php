@@ -57,9 +57,9 @@ class general_template__Test extends \PHPUnit\Framework\TestCase {
 		);
 
 		$this->assertStringContainsString( '<form', $form );
-		$this->assertStringContainsString( 'required="required"', $form );
 		$this->assertStringContainsString( 'name="redirect_to" value="https://example.test/next"', $form );
 		$this->assertStringNotContainsString( 'login-remember', $form );
+		wp_version_compare( '>= 6.6' ) && $this->assertStringContainsString( 'required="required"', $form );
 	}
 
 	public function test__wp_meta() {
