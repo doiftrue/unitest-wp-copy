@@ -69,11 +69,6 @@ Static methods compatibility:
 
 - If a function/class is not suitable, keep it commented in config; do not delete it.
 - In comments, list exact symbol names (for example `wp_get_theme`), not wildcard masks.
-- Add a short reason when symbol is disabled because of an incompatible dependency chain. Add it as a comment starting with `// why:`.
+- For both function and class configs, keep checked but unused/disabled symbols in a dedicated block comment (`/* ... */`) under the array (at file end), in format `SymbolName  // why: <reason>`.
+- Keep the reason short and specific to the incompatible dependency/runtime chain.
 
-
-## Related Docs
-
-- Parser workflow: [parser.md](parser.md)
-- Runtime constraints: [runtime.md](runtime.md)
-- Test conventions for new symbols: [tests.md](tests.md)

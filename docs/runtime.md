@@ -2,8 +2,7 @@
 
 ## Scope
 
-This document describes the WP-like runtime used by tests and copied symbols.
-It does not describe parser config workflow or release flow.
+This document describes the WP-like runtime used by tests that will use code of this project to write it's unit tests. How this code (runtime) loads and what it contains.
 
 
 ## Entry Points
@@ -46,4 +45,3 @@ This is not full WordPress:
 - DB/network/full bootstrap behavior is out of scope;
 - some symbols require targeted stubs/mocks/adaptations.
 
-For parser eligibility rules and dependency-chain policy, see [parser.md](parser.md).

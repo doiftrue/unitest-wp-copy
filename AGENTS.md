@@ -19,9 +19,11 @@ User-facing usage belongs to `README.md`.
 ## Maintainer Docs
 
 All maintainer instructions are centralized under `docs/`:
+- At the start of each task in this repository, the agent must read all maintainer docs listed below before making changes.
 
 - Runtime and bootstrap internals: `docs/runtime.md`
 - Parser workflow: `docs/parser.md`
+- Symbol suitability rules (pre-parser analysis): `docs/symbol-eligibility.md`
 - Config model and merge rules: `docs/config.md`
 - Test conventions: `docs/tests.md`
 - Release workflow: `docs/releaser.md`
