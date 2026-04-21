@@ -1,6 +1,33 @@
 <?php
 /**
- * This file is copied part of WordPress 6.9.4 'wp-includes/kses.php' to define the default allowable HTML tags.
+ * kses 0.2.2 - HTML/XHTML filter that only allows some elements and attributes
+ * Copyright (C) 2002, 2003, 2005  Ulf Harnhammar
+ *
+ * This program is free software and open source software; you can redistribute
+ * it and/or modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of the License,
+ * or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
+ * http://www.gnu.org/licenses/gpl.html
+ *
+ * [kses strips evil scripts!]
+ *
+ * Added wp_ prefix to avoid conflicts with existing kses users
+ *
+ * @version 0.2.2
+ * @copyright (C) 2002, 2003, 2005
+ * @author Ulf Harnhammar <http://advogato.org/person/metaur/>
+ *
+ * @package External
+ * @subpackage KSES
  */
 
 /**
@@ -894,7 +921,7 @@ if ( ! CUSTOM_TAGS ) {
 		_doing_it_wrong(
 			'wp_kses_allowed_html',
 			sprintf(
-			/* translators: 1: CUSTOM_TAGS, 2: Global variable names. */
+				/* translators: 1: CUSTOM_TAGS, 2: Global variable names. */
 				__( 'When using the %1$s constant, make sure to set these globals to an array: %2$s.' ),
 				'<code>CUSTOM_TAGS</code>',
 				implode( ', ', $missing_kses_globals )
@@ -906,3 +933,25 @@ if ( ! CUSTOM_TAGS ) {
 	$allowedtags     = wp_kses_array_lc( $allowedtags );
 	$allowedposttags = wp_kses_array_lc( $allowedposttags );
 }
+
+/**
+ * Filters text content and strips out disallowed HTML.
+ *
+ * This function makes sure that only the allowed HTML element names, attribute
+ * names, attribute values, and HTML entities will occur in the given text string.
+ *
+ * This function expects unslashed data.
+ *
+ * @see wp_kses_post() for specifically filtering post content and fields.
+ * @see wp_allowed_protocols() for the default allowed protocols in link URLs.
+ *
+ * @since 1.0.0
+ *
+ * @param string         $content           Text content to filter.
+ * @param array[]|string $allowed_html      An array of allowed HTML elements and attributes,
+ *                                          or a context name such as 'post'. See wp_kses_allowed_html()
+ *                                          for the list of accepted context names.
+ * @param string[]       $allowed_protocols Optional. Array of allowed URL protocols.
+ *                                          Defaults to the result of wp_allowed_protocols().
+ * @return string Filtered content containing only the allowed HTML.
+ */

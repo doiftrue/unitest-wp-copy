@@ -1,6 +1,24 @@
 The following functions and classes are available in this (unit test) environment. Symbols are copied from WordPress 6.5.8.
 
-Mockable copied functions (can be overridden via WP_Mock):
+Changed (not full copies) symbols (Mockable - can be overridden via WP_Mock):
+```text
+__()
+_e()
+_n()
+_nx()
+_x()
+esc_attr__()
+esc_attr_e()
+esc_attr_x()
+esc_html__()
+esc_html_e()
+esc_html_x()
+restore_current_blog()
+switch_to_blog()
+```
+
+Copied symbols (Mockable - can be overridden via WP_Mock):
+```text
 _deprecated_function()
 balanceTags()
 convert_smilies()
@@ -34,29 +52,14 @@ wp_installing()
 wp_suspend_cache_addition()
 wp_timezone_string()
 wp_trigger_error()
+```
 
-Mockable changed functions (not full copies) (can be overridden via WP_Mock):
-__()
-_e()
-_n()
-_nx()
-_wp_specialchars()
-_x()
-esc_attr__()
-esc_attr_e()
-esc_attr_x()
-esc_html__()
-esc_html_e()
-esc_html_x()
-restore_current_blog()
-switch_to_blog()
-
-Not mockable full copies of WP Core:
+Full copies symbols of WP Core (not mockable):
+```text
 PasswordHash{}
 WP_Block_Parser_Block{}
 WP_Block_Parser_Frame{}
 WP_Block_Parser{}
-WP_Block_Patterns_Registry{}
 WP_Block_Styles_Registry{}
 WP_Block_Type{}
 WP_Dependencies{}
@@ -79,8 +82,6 @@ WP_Screen{}
 WP_Script_Modules{}
 WP_Scripts{}
 WP_Styles{}
-Walker_Category{}
-Walker_Page{}
 Walker{}
 _()
 _WP_Dependency{}
@@ -140,6 +141,7 @@ _wp_kses_split_callback()
 _wp_normalize_relative_css_links()
 _wp_privacy_statuses()
 _wp_scripts_maybe_doing_it_wrong()
+_wp_specialchars()
 _wp_to_kebab_case()
 _wp_translate_php_url_constant_to_key()
 _wptexturize_pushpop_element()
@@ -513,3 +515,4 @@ wpautop()
 wptexturize()
 wptexturize_primes()
 zeroise()
+```

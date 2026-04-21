@@ -1,6 +1,33 @@
 <?php
 /**
- * This file is copied part of WordPress 6.9.4 'wp-includes/kses.php' to define the default allowable HTML tags.
+ * kses 0.2.2 - HTML/XHTML filter that only allows some elements and attributes
+ * Copyright (C) 2002, 2003, 2005  Ulf Harnhammar
+ *
+ * This program is free software and open source software; you can redistribute
+ * it and/or modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of the License,
+ * or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
+ * http://www.gnu.org/licenses/gpl.html
+ *
+ * [kses strips evil scripts!]
+ *
+ * Added wp_ prefix to avoid conflicts with existing kses users
+ *
+ * @version 0.2.2
+ * @copyright (C) 2002, 2003, 2005
+ * @author Ulf Harnhammar <http://advogato.org/person/metaur/>
+ *
+ * @package External
+ * @subpackage KSES
  */
 
 /**
@@ -82,13 +109,10 @@ if ( ! CUSTOM_TAGS ) {
 		),
 		'br'         => array(),
 		'button'     => array(
-			'disabled'            => true,
-			'name'                => true,
-			'type'                => true,
-			'value'               => true,
-			'popovertarget'       => true,
-			'popovertargetaction' => true,
-			'aria-haspopup'       => true,
+			'disabled' => true,
+			'name'     => true,
+			'type'     => true,
+			'value'    => true,
 		),
 		'caption'    => array(
 			'align' => true,
@@ -111,9 +135,6 @@ if ( ! CUSTOM_TAGS ) {
 			'valign'  => true,
 			'width'   => true,
 		),
-		'data'       => array(
-			'value' => true,
-		),
 		'del'        => array(
 			'datetime' => true,
 		),
@@ -122,16 +143,9 @@ if ( ! CUSTOM_TAGS ) {
 		'details'    => array(
 			'align' => true,
 			'open'  => true,
-			'name'  => true,
 		),
 		'div'        => array(
-			'align'   => true,
-			'popover' => true,
-		),
-		'dialog'     => array(
-			'closedby' => true,
-			'open'     => true,
-			'popover'  => true,
+			'align' => true,
 		),
 		'dl'         => array(),
 		'dt'         => array(),
@@ -220,14 +234,6 @@ if ( ! CUSTOM_TAGS ) {
 		'menu'       => array(
 			'type' => true,
 		),
-		'meter'      => array(
-			'high'    => true,
-			'low'     => true,
-			'max'     => true,
-			'min'     => true,
-			'optimum' => true,
-			'value'   => true,
-		),
 		'nav'        => array(
 			'align' => true,
 		),
@@ -247,10 +253,6 @@ if ( ! CUSTOM_TAGS ) {
 		'pre'        => array(
 			'width' => true,
 		),
-		'progress'   => array(
-			'max'   => true,
-			'value' => true,
-		),
 		'q'          => array(
 			'cite' => true,
 		),
@@ -261,7 +263,6 @@ if ( ! CUSTOM_TAGS ) {
 		'ruby'       => array(),
 		's'          => array(),
 		'samp'       => array(),
-		'search'     => array(),
 		'span'       => array(
 			'align' => true,
 		),
@@ -343,9 +344,6 @@ if ( ! CUSTOM_TAGS ) {
 			'charoff' => true,
 			'valign'  => true,
 		),
-		'time'       => array(
-			'datetime' => true,
-		),
 		'title'      => array(),
 		'tr'         => array(
 			'align'   => true,
@@ -364,9 +362,7 @@ if ( ! CUSTOM_TAGS ) {
 		'tt'         => array(),
 		'u'          => array(),
 		'ul'         => array(
-			'type'    => true,
-			'popover' => true,
-			'role'    => true,
+			'type' => true,
 		),
 		'ol'         => array(
 			'start'    => true,
@@ -386,186 +382,6 @@ if ( ! CUSTOM_TAGS ) {
 			'src'         => true,
 			'width'       => true,
 		),
-		'wbr'        => array(),
-	);
-
-	// https://www.w3.org/TR/mathml-core/#global-attributes
-	// Except common attributes added by _wp_add_global_attributes.
-	$math_global_attributes = array(
-		'displaystyle'   => true,
-		'scriptlevel'    => true,
-		'mathbackground' => true,
-		'mathcolor'      => true,
-		'mathsize'       => true,
-		// Common attributes also defined by _wp_add_global_attributes.
-		// We do not want to add all those global attributes though.
-		'class'          => true,
-		'data-*'         => true,
-		'dir'            => true,
-		'id'             => true,
-		'style'          => true,
-	);
-
-	$math_overunder_attributes = array(
-		'accentunder' => true,
-		'accent'      => true,
-	);
-
-	$allowedposttags = array_merge(
-		$allowedposttags,
-		array(
-			// https://www.w3.org/TR/mathml-core/#the-top-level-math-element
-			'math'          => array_merge(
-				$math_global_attributes,
-				array(
-					'display' => true,
-				)
-			),
-
-			// https://www.w3.org/TR/mathml-core/#token-elements
-			// https://www.w3.org/TR/mathml-core/#text-mtext
-			'mtext'         => $math_global_attributes,
-			// https://www.w3.org/TR/mathml-core/#the-mi-element
-			'mi'            => array_merge(
-				$math_global_attributes,
-				array(
-					'mathvariant' => true,
-				)
-			),
-			// https://www.w3.org/TR/mathml-core/#number-mn
-			'mn'            => $math_global_attributes,
-			// https://www.w3.org/TR/mathml-core/#operator-fence-separator-or-accent-mo
-			'mo'            => array_merge(
-				$math_global_attributes,
-				array(
-					'form'          => true,
-					'fence'         => true,
-					'separator'     => true,
-					'lspace'        => true,
-					'rspace'        => true,
-					'stretchy'      => true,
-					'symmetric'     => true,
-					'maxsize'       => true,
-					'minsize'       => true,
-					'largeop'       => true,
-					'movablelimits' => true,
-				)
-			),
-			// https://www.w3.org/TR/mathml-core/#space-mspace
-			'mspace'        => array_merge(
-				$math_global_attributes,
-				array(
-					'width'  => true,
-					'height' => true,
-					'depth'  => true,
-				)
-			),
-			// https://www.w3.org/TR/mathml-core/#string-literal-ms
-			'ms'            => $math_global_attributes,
-
-			// https://www.w3.org/TR/mathml-core/#general-layout-schemata
-			// https://www.w3.org/TR/mathml-core/#horizontally-group-sub-expressions-mrow
-			'mrow'          => $math_global_attributes,
-			// https://www.w3.org/TR/mathml-core/#fractions-mfrac
-			'mfrac'         => array_merge(
-				$math_global_attributes,
-				array(
-					'linethickness' => true,
-				)
-			),
-			// https://www.w3.org/TR/mathml-core/#radicals-msqrt-mroot
-			'msqrt'         => $math_global_attributes,
-			'mroot'         => $math_global_attributes,
-			// https://www.w3.org/TR/mathml-core/#style-change-mstyle
-			'mstyle'        => $math_global_attributes,
-			// https://www.w3.org/TR/mathml-core/#error-message-merror
-			'merror'        => $math_global_attributes,
-			// https://www.w3.org/TR/mathml-core/#adjust-space-around-content-mpadded
-			'mpadded'       => array_merge(
-				$math_global_attributes,
-				array(
-					'width'   => true,
-					'height'  => true,
-					'depth'   => true,
-					'lspace'  => true,
-					'voffset' => true,
-				)
-			),
-			// https://www.w3.org/TR/mathml-core/#making-sub-expressions-invisible-mphantom
-			'mphantom'      => $math_global_attributes,
-
-			// https://www.w3.org/TR/mathml-core/#script-and-limit-schemata
-			// https://www.w3.org/TR/mathml-core/#subscripts-and-superscripts-msub-msup-msubsup
-			'msub'          => $math_global_attributes,
-			'msup'          => $math_global_attributes,
-			'msubsup'       => $math_global_attributes,
-			// https://www.w3.org/TR/mathml-core/#underscripts-and-overscripts-munder-mover-munderover
-			'munder'        => array_merge( $math_global_attributes, $math_overunder_attributes ),
-			'mover'         => array_merge( $math_global_attributes, $math_overunder_attributes ),
-			'munderover'    => array_merge( $math_global_attributes, $math_overunder_attributes ),
-			// https://www.w3.org/TR/mathml-core/#prescripts-and-tensor-indices-mmultiscripts
-			'mmultiscripts' => $math_global_attributes,
-			'mprescripts'   => $math_global_attributes,
-
-			// https://www.w3.org/TR/mathml-core/#tabular-math
-			// https://www.w3.org/TR/mathml-core/#table-or-matrix-mtable
-			'mtable'        => array_merge(
-				$math_global_attributes,
-				array(
-					// Non-standard, used by temml/katex.
-					// https://developer.mozilla.org/en-US/docs/Web/MathML/Reference/Element/mtable
-					'columnalign'   => true,
-					'rowspacing'    => true,
-					'columnspacing' => true,
-					'align'         => true,
-					'rowalign'      => true,
-					'columnlines'   => true,
-					'rowlines'      => true,
-					'frame'         => true,
-					'framespacing'  => true,
-					'width'         => true,
-				)
-			),
-			// https://www.w3.org/TR/mathml-core/#row-in-table-or-matrix-mtr
-			'mtr'           => array_merge(
-				$math_global_attributes,
-				array(
-					// Non-standard, used by temml/katex.
-					// https://developer.mozilla.org/en-US/docs/Web/MathML/Reference/Element/mtr
-					'columnalign' => true,
-					'rowalign'    => true,
-				)
-			),
-			// https://www.w3.org/TR/mathml-core/#entry-in-table-or-matrix-mtd
-			'mtd'           => array_merge(
-				$math_global_attributes,
-				array(
-					'columnspan'  => true,
-					'rowspan'     => true,
-					// Non-standard, used by temml/katex.
-					// https://developer.mozilla.org/en-US/docs/Web/MathML/Reference/Element/mtd
-					'columnalign' => true,
-					'rowalign'    => true,
-				)
-			),
-
-			// https://www.w3.org/TR/mathml-core/#semantics-and-presentation
-			'semantics'     => $math_global_attributes,
-			'annotation'    => array_merge(
-				$math_global_attributes,
-				array(
-					'encoding' => true,
-				)
-			),
-
-			// Non-standard but widely supported, used by temml/katex.
-			'menclose'      => array_merge(
-				$math_global_attributes,
-				array(
-					'notation' => true,
-				)
-			),
-		)
 	);
 
 	/**
@@ -894,7 +710,7 @@ if ( ! CUSTOM_TAGS ) {
 		_doing_it_wrong(
 			'wp_kses_allowed_html',
 			sprintf(
-			/* translators: 1: CUSTOM_TAGS, 2: Global variable names. */
+				/* translators: 1: CUSTOM_TAGS, 2: Global variable names. */
 				__( 'When using the %1$s constant, make sure to set these globals to an array: %2$s.' ),
 				'<code>CUSTOM_TAGS</code>',
 				implode( ', ', $missing_kses_globals )
@@ -906,3 +722,25 @@ if ( ! CUSTOM_TAGS ) {
 	$allowedtags     = wp_kses_array_lc( $allowedtags );
 	$allowedposttags = wp_kses_array_lc( $allowedposttags );
 }
+
+/**
+ * Filters text content and strips out disallowed HTML.
+ *
+ * This function makes sure that only the allowed HTML element names, attribute
+ * names, attribute values, and HTML entities will occur in the given text string.
+ *
+ * This function expects unslashed data.
+ *
+ * @see wp_kses_post() for specifically filtering post content and fields.
+ * @see wp_allowed_protocols() for the default allowed protocols in link URLs.
+ *
+ * @since 1.0.0
+ *
+ * @param string         $content           Text content to filter.
+ * @param array[]|string $allowed_html      An array of allowed HTML elements and attributes,
+ *                                          or a context name such as 'post'. See wp_kses_allowed_html()
+ *                                          for the list of accepted context names.
+ * @param string[]       $allowed_protocols Optional. Array of allowed URL protocols.
+ *                                          Defaults to the result of wp_allowed_protocols().
+ * @return string Filtered content containing only the allowed HTML.
+ */
