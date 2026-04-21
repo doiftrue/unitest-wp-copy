@@ -12,7 +12,19 @@ return [
 	'get_registered_theme_features' => '5.5.0',
 	'get_registered_theme_feature'  => '5.5.0',
 	'create_initial_theme_features' => '5.5.0',
+	'get_stylesheet'                => '1.5.0',
+	'get_template'                  => '1.5.0',
+	'get_stylesheet_uri'            => '1.5.0',
+	'get_locale_stylesheet_uri'     => '2.1.0',
 ];
+
+/*
+Custom mocks:
+get_stylesheet_directory                                  // why: mocked
+get_stylesheet_directory_uri                              // why: mocked
+get_template_directory                                    // why: mocked
+get_template_directory_uri                                // why: mocked
+*/
 
 /*
 Not suitable in isolated PHPUnit env:
@@ -21,14 +33,6 @@ wp_get_themes                                             // why: theme discover
 wp_get_theme                                              // why: theme discovery + filesystem scan/runtime cache.
 wp_clean_themes_cache                                     // why: theme discovery + filesystem scan/runtime cache.
 is_child_theme                                            // why: path/theme discovery runtime dependency.
-get_stylesheet                                            // why: path/theme discovery runtime dependency.
-get_stylesheet_directory                                  // why: path/url resolution tied to real theme directories/filesystem.
-get_stylesheet_directory_uri                              // why: path/url resolution tied to real theme directories/filesystem.
-get_stylesheet_uri                                        // why: path/url resolution tied to real theme directories/filesystem.
-get_locale_stylesheet_uri                                 // why: path/url resolution tied to real theme directories/filesystem.
-get_template                                              // why: path/theme discovery runtime dependency.
-get_template_directory                                    // why: path/url resolution tied to real theme directories/filesystem.
-get_template_directory_uri                                // why: path/url resolution tied to real theme directories/filesystem.
 get_theme_roots                                           // why: path/theme discovery runtime dependency.
 register_theme_directory                                  // why: theme directory registration/runtime filesystem dependency.
 search_theme_directories                                  // why: filesystem scan dependency.

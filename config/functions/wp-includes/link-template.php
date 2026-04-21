@@ -11,6 +11,10 @@ return [
 	'plugins_url'         => '2.6.0',
 	'content_url'         => '2.6.0',
 	'includes_url'        => '2.6.0',
+	'get_theme_file_uri'        => '4.7.0',
+	'get_parent_theme_file_uri' => '4.7.0',
+	'get_theme_file_path'        => '4.7.0',
+	'get_parent_theme_file_path' => '4.7.0',
 ];
 
 /*
@@ -57,8 +61,6 @@ get_next_posts_link              // why: query pagination runtime dependency.
 get_next_posts_page_link         // why: query pagination runtime dependency.
 get_page_link                    // why: post/query permalink runtime dependency.
 get_pagenum_link                 // why: query/request runtime dependency.
-get_parent_theme_file_path       // why: theme filesystem/runtime dependency.
-get_parent_theme_file_uri        // why: theme filesystem/runtime dependency.
 get_permalink                    // why: post/query permalink runtime dependency.
 get_post_comments_feed_link      // why: post/comment query runtime dependency.
 get_post_permalink               // why: post/query permalink runtime dependency.
@@ -84,8 +86,6 @@ get_the_post_navigation          // why: post loop/runtime dependency.
 get_the_posts_navigation         // why: query/template runtime dependency.
 get_the_posts_pagination         // why: query/template runtime dependency.
 get_the_privacy_policy_link      // why: options/page/template runtime dependency.
-get_theme_file_path              // why: theme filesystem/runtime dependency.
-get_theme_file_uri               // why: theme filesystem/runtime dependency.
 get_year_link                    // why: rewrite/query runtime dependency.
 is_avatar_comment_type           // why: avatar/comment runtime dependency chain.
 network_admin_url                // why: multisite admin runtime dependency.

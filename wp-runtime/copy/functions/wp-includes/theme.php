@@ -964,3 +964,74 @@ if( ! function_exists( 'create_initial_theme_features' ) ) :
 	}
 endif;
 
+// wp-includes/theme.php (WP 6.9.4)
+if( ! function_exists( 'get_stylesheet' ) ) :
+	function get_stylesheet() {
+		/**
+		 * Filters the name of current stylesheet.
+		 *
+		 * @since 1.5.0
+		 *
+		 * @param string $stylesheet Name of the current stylesheet.
+		 */
+		return apply_filters( 'stylesheet', $GLOBALS['stub_wp_options']->stylesheet );
+	}
+endif;
+
+// wp-includes/theme.php (WP 6.9.4)
+if( ! function_exists( 'get_template' ) ) :
+	function get_template() {
+		/**
+		 * Filters the name of the active theme.
+		 *
+		 * @since 1.5.0
+		 *
+		 * @param string $template active theme's directory name.
+		 */
+		return apply_filters( 'template', $GLOBALS['stub_wp_options']->template );
+	}
+endif;
+
+// wp-includes/theme.php (WP 6.9.4)
+if( ! function_exists( 'get_stylesheet_uri' ) ) :
+	function get_stylesheet_uri() {
+		$stylesheet_dir_uri = get_stylesheet_directory_uri();
+		$stylesheet_uri     = $stylesheet_dir_uri . '/style.css';
+		/**
+		 * Filters the URI of the active theme stylesheet.
+		 *
+		 * @since 1.5.0
+		 *
+		 * @param string $stylesheet_uri     Stylesheet URI for the active theme/child theme.
+		 * @param string $stylesheet_dir_uri Stylesheet directory URI for the active theme/child theme.
+		 */
+		return apply_filters( 'stylesheet_uri', $stylesheet_uri, $stylesheet_dir_uri );
+	}
+endif;
+
+// wp-includes/theme.php (WP 6.9.4)
+if( ! function_exists( 'get_locale_stylesheet_uri' ) ) :
+	function get_locale_stylesheet_uri() {
+		global $wp_locale;
+		$stylesheet_dir_uri = get_stylesheet_directory_uri();
+		$dir                = get_stylesheet_directory();
+		$locale             = get_locale();
+		if ( file_exists( "$dir/$locale.css" ) ) {
+			$stylesheet_uri = "$stylesheet_dir_uri/$locale.css";
+		} elseif ( ! empty( $wp_locale->text_direction ) && file_exists( "$dir/{$wp_locale->text_direction}.css" ) ) {
+			$stylesheet_uri = "$stylesheet_dir_uri/{$wp_locale->text_direction}.css";
+		} else {
+			$stylesheet_uri = '';
+		}
+		/**
+		 * Filters the localized stylesheet URI.
+		 *
+		 * @since 2.1.0
+		 *
+		 * @param string $stylesheet_uri     Localized stylesheet URI.
+		 * @param string $stylesheet_dir_uri Stylesheet directory URI.
+		 */
+		return apply_filters( 'locale_stylesheet_uri', $stylesheet_uri, $stylesheet_dir_uri );
+	}
+endif;
+

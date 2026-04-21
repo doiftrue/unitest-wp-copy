@@ -96,14 +96,19 @@ define( 'WP_ENVIRONMENT_TYPE', 'development' );
 define( 'WP_DEBUG', true );
 
 $GLOBALS['stub_wp_options'] = (object) [
-	'home'            => 'https://tests.example',
-	'siteurl'         => 'https://tests.example',
-	'timezone_string' => 'Europe/Berlin',
-	'blog_charset'    => 'UTF-8',
-	'gmt_offset' 	  => 2,
-	'use_smilies' 	  => false,
+	'home'            => 'https://unitest-wp-copy.loc',
+	'siteurl'         => 'https://unitest-wp-copy.loc',
+	'gmt_offset'      => 0,
+	'timezone_string' => 'UTC',
+	'language'        => 'en-US',
+	'blogdescription' => 'unitest-wp-copy runtime',
+	'admin_email'     => 'admin@unitest-wp-copy.loc',
+	'stylesheet'      => 'unitest-wp-copy',
+	'use_smilies'     => true,
 	'use_balanceTags' => true,
-	'WPLANG' 		  => 'en_US',
+	'WPLANG'          => '',
+	'blog_charset'    => 'UTF-8',
+	'html_type'       => 'text/html',
 ];
 
 require_once __DIR__ . '/vendor/autoload.php';

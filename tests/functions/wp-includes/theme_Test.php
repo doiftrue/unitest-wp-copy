@@ -2,6 +2,8 @@
 
 class theme_Test extends \PHPUnit\Framework\TestCase {
 
+	private array $tmp_dirs = [];
+
 	protected function setUp(): void {
 		parent::setUp();
 		$GLOBALS['_wp_theme_features'] = [];
@@ -10,6 +12,33 @@ class theme_Test extends \PHPUnit\Framework\TestCase {
 		$GLOBALS['wp_actions'] = [];
 		$GLOBALS['wp_filters'] = [];
 		$GLOBALS['wp_current_filter'] = [];
+	}
+
+	protected function tearDown(): void {
+		foreach ( $this->tmp_dirs as $dir ) {
+			if ( ! is_dir( $dir ) ) {
+				continue;
+			}
+
+			$items = new RecursiveIteratorIterator(
+				new RecursiveDirectoryIterator( $dir, FilesystemIterator::SKIP_DOTS ),
+				RecursiveIteratorIterator::CHILD_FIRST
+			);
+
+			foreach ( $items as $item ) {
+				if ( $item->isDir() ) {
+					rmdir( $item->getPathname() );
+					continue;
+				}
+				unlink( $item->getPathname() );
+			}
+
+			rmdir( $dir );
+		}
+
+		$this->tmp_dirs = [];
+
+		parent::tearDown();
 	}
 
 	public function test__current_theme_supports() {
@@ -87,6 +116,33 @@ class theme_Test extends \PHPUnit\Framework\TestCase {
 
 		$this->assertArrayHasKey( 'title-tag', get_registered_theme_features() );
 		$this->assertArrayHasKey( 'post-formats', get_registered_theme_features() );
+	}
+
+	public function test__get_stylesheet_and_get_template() {
+		$GLOBALS['stub_wp_options']->stylesheet = 'child-theme';
+		$GLOBALS['stub_wp_options']->template   = 'parent-theme';
+
+		$this->assertSame( 'child-theme', get_stylesheet() );
+		$this->assertSame( 'parent-theme', get_template() );
+	}
+
+	public function test__get_stylesheet_uri() {
+		$GLOBALS['stub_wp_options']->stylesheet = 'child-theme';
+
+		$this->assertStringContainsString( '/wp-content/themes/child-theme/style.css', get_stylesheet_uri() );
+	}
+
+	public function test__get_locale_stylesheet_uri() {
+		$tmp_dir = sys_get_temp_dir() . '/unitest-wp-copy-theme-' . uniqid( '', true );
+		mkdir( $tmp_dir, 0777, true );
+		$this->tmp_dirs[] = $tmp_dir;
+
+		file_put_contents( "$tmp_dir/en_US.css", '/* locale */' );
+
+		add_filter( 'stylesheet_directory', static fn() => $tmp_dir );
+		add_filter( 'stylesheet_directory_uri', static fn() => 'https://example.test/theme' );
+
+		$this->assertSame( 'https://example.test/theme/en_US.css', get_locale_stylesheet_uri() );
 	}
 
 }
