@@ -39,7 +39,7 @@ class Bootstrap {
 
 	private function load_wp_symbols(): void {
 		// NOTE: Before runtime files to override copies
-		if ( is_file( $file = "$this->line_extra_dir/mocks/overlaps.php" ) ) {
+		if ( is_file( $file = "$this->line_extra_dir/overlaps.php" ) ) {
 			include_once $file;
 		}
 
