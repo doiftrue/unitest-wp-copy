@@ -4,18 +4,26 @@ namespace Unitest_WP_Copy;
 
 class Bootstrap {
 
-	private static bool $initialized = false;
+	private string $over_dir;
+	private string $base_dir;
 
-	public static function init(): void {
-		if ( self::$initialized ) {
-			return;
+	public static function init(): self {
+		static $inst;
+		if ( ! $inst ) {
+			$inst = new self();
+			$inst->load();
 		}
+		return $inst;
+	}
 
-		self::$initialized = true;
+	public function __construct() {
+		$this->base_dir = __DIR__;
+		$this->over_dir = sprintf( "$this->base_dir/wp-line-extra/%s", $this->detect_wp_line() );
+	}
 
-		$base_dir = __DIR__;
-		self::load_wp_symbols( $base_dir );
-		self::load_wp_runtime( $base_dir );
+	private function load(): void {
+		$this->load_wp_symbols();
+		$this->load_wp_runtime();
 	}
 
 	/**
@@ -23,43 +31,47 @@ class Bootstrap {
 	 *
 	 * @return string Eg: 6.5
 	 */
-	private static function detect_wp_line(): string {
-		$content = file_get_contents( __DIR__ . '/SYMBOLS-INFO.md', false, null, 0, 8 * 512 );
+	private function detect_wp_line(): string {
+		$content = file_get_contents( "$this->base_dir/SYMBOLS-INFO.md", false, null, 0, 8 * 512 );
 		preg_match( '~WordPress (\d+\.\d+)~m', $content, $m );
 		return $m[1] ?? '';
 	}
 
-	private static function load_wp_symbols( string $base_dir ): void {
+	private function load_wp_symbols(): void {
 		// NOTE: Before runtime files to override copies
-		$line_file = sprintf( "$base_dir/mocks/wp-%s.php", self::detect_wp_line() );
-		if ( is_file( $line_file ) ) {
-			include_once $line_file;
+		if ( is_file( $file = "$this->over_dir/mocks/overlaps.php" ) ) {
+			include_once $file;
 		}
 
-		self::require_files( [
-			...glob( "$base_dir/copy/functions/*.php" ),
-			...glob( "$base_dir/copy/functions/wp-admin/includes/*.php" ),
-			...glob( "$base_dir/copy/functions/wp-includes/*.php" ),
-			...glob( "$base_dir/copy/classes-statics/*.php" ),
-			...glob( "$base_dir/copy/classes/*.php" ),
-			...glob( "$base_dir/copy/mockable/wp-includes/*.php" ),
-			...glob( "$base_dir/mocks/wp-includes/*.php" ),
+		$this->require_files( [
+			...glob( "$this->base_dir/copy/functions/*.php" ),
+			...glob( "$this->base_dir/copy/functions/wp-admin/includes/*.php" ),
+			...glob( "$this->base_dir/copy/functions/wp-includes/*.php" ),
+			...glob( "$this->base_dir/copy/classes-statics/*.php" ),
+			...glob( "$this->base_dir/copy/classes/*.php" ),
+			...glob( "$this->base_dir/copy/mockable/wp-includes/*.php" ),
+			...glob( "$this->base_dir/mocks/wp-includes/*.php" ),
 		] );
 	}
 
-	private static function load_wp_runtime( string $base_dir ): void {
-		require_once "$base_dir/WP_Mock_Utils.php";
-		require_once "$base_dir/base-wp-constants.php";
-		require_once "$base_dir/stub-wp-options.php";
+	private function load_wp_runtime(): void {
+		require_once "$this->base_dir/WP_Mock_Utils.php";
+		require_once "$this->base_dir/base-wp-constants.php";
+		require_once "$this->base_dir/stub-wp-options.php";
 
-		self::setup_wp_constants();
-		self::require_files( [
-			...glob( "$base_dir/init-parts/wp-includes/*.php" ),
-		] );
-		self::setup_wp_globals();
+		$this->setup_wp_constants();
+		$this->load_init_parts();
+		$this->setup_wp_globals();
 	}
 
-	private static function setup_wp_constants(): void {
+	private function load_init_parts(): void {
+		require_once "$this->over_dir/wp-includes/version.php";
+		$this->require_files( [
+			...glob( "$this->base_dir/init-parts/wp-includes/*.php" ),
+		] );
+	}
+
+	private function setup_wp_constants(): void {
 		wp_initial_constants();
 		wp_plugin_directory_constants();
 		wp_cookie_constants();
@@ -67,7 +79,7 @@ class Bootstrap {
 		wp_functionality_constants();
 	}
 
-	private static function setup_wp_globals(): void {
+	private function setup_wp_globals(): void {
 		smilies_init();
 
 		$GLOBALS['timestart'] = microtime( true );
@@ -89,7 +101,7 @@ class Bootstrap {
 		$wp_taxonomies = is_array( $wp_taxonomies ?? null ) ? $wp_taxonomies : [];
 	}
 
-	private static function require_files( array $files ): void {
+	private function require_files( array $files ): void {
 		foreach ( $files as $file ) {
 			require_once $file;
 		}
