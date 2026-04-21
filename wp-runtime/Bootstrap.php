@@ -66,7 +66,6 @@ class Bootstrap {
 	}
 
 	private function load_init_parts(): void {
-		require_once "$this->line_extra_dir/wp-includes/version.php";
 		$this->require_files( [
 			...array_map(
 				fn( string $file ) => $this->resolve_wp_line_extra_file( $file ),
