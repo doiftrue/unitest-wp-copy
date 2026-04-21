@@ -4,7 +4,7 @@ namespace Parser\Strategy;
 use Parser\Helpers;
 use RuntimeException;
 
-class Copy_Static_Methods extends File_Update_Strategy {
+class Copy_Static_Methods extends Base_Copier_Strategy {
 
 	public function get_items(): array {
 		$items = [];

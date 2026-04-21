@@ -4,7 +4,7 @@ namespace Parser;
 use Parser\Strategy\Copy_Classes;
 use Parser\Strategy\Copy_Functions;
 use Parser\Strategy\Copy_Static_Methods;
-use Parser\Strategy\File_Update_Strategy;
+use Parser\Strategy\Base_Copier_Strategy;
 
 class Updater {
 
@@ -28,7 +28,7 @@ class Updater {
 	}
 
 	public function run(): void {
-		/** @var File_Update_Strategy[] $strategies */
+		/** @var Base_Copier_Strategy[] $strategies */
 		$strategies = [
 			new Copy_Functions( $this->config, $this->lister ),
 			new Copy_Classes( $this->config, $this->lister ),

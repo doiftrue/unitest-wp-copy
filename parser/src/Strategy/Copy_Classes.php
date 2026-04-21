@@ -3,7 +3,7 @@ namespace Parser\Strategy;
 
 use Parser\Helpers;
 
-class Copy_Classes extends File_Update_Strategy {
+class Copy_Classes extends Base_Copier_Strategy {
 
 	public function get_items(): array {
 		$items = [];

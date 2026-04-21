@@ -4,7 +4,7 @@ namespace Parser\Strategy;
 use Parser\Config;
 use Parser\Copied_Lister;
 
-abstract class File_Update_Strategy {
+abstract class Base_Copier_Strategy {
 
 	public function __construct(
 		protected readonly Config $config,
