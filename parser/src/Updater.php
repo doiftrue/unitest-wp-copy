@@ -11,6 +11,7 @@ class Updater {
 	private const SEP = '// ------------------auto-generated---------------------';
 
 	private Source_Code_Replacer $extra_replacer;
+	private Extra_Copier $extra_copier;
 
 	private readonly Config $config;
 	private readonly Copied_Lister $lister;
@@ -22,6 +23,7 @@ class Updater {
 
 	public function setup(): void {
 		$this->extra_replacer = new Source_Code_Replacer( $this->config );
+		$this->extra_copier = new Extra_Copier( $this->config );
 		$this->lister = new Copied_Lister( $this->config );
 	}
 
@@ -44,6 +46,7 @@ class Updater {
 			}
 		}
 
+		$this->extra_copier->run();
 		$this->lister->generate_list();
 
 		echo "DONE!\n";

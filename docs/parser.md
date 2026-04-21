@@ -25,11 +25,17 @@ Run parser with:
 - updates generated content after `// ------------------auto-generated---------------------`;
 - wraps copied symbols with `function_exists`/`class_exists` guards;
 - skips symbols whose `<since-version>` is higher than current `wp_version`;
-- applies post-processing via `Extra_Replacer`:
+- applies post-processing via `Source_Code_Replacer`:
   - option-call rewrites to `$GLOBALS['stub_wp_options']`;
   - static method call rewrite (`Class::method()` -> `Class__method()`).
 
 If configured symbol is missing in source file, parser throws.
+
+
+## How `wp-line-extra` should be used
+
+All inside `wp-runtime/wp-line-extra/6.8/*` should override `wp-runtime/*` if relative path matches. 
+Example: `wp-runtime/wp-line-extra/6.8/init-parts/wp-includes/kses.php` overrides `wp-runtime/init-parts/wp-includes/kses.php` for WP 6.8 line.
 
 
 ## Parser Code Style
