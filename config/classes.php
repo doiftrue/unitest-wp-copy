@@ -32,12 +32,12 @@ return [
 	// Env/constant parsing for proxy settings; no network calls.
 	'wp-includes/class-wp-http-proxy.php'      => [ 'WP_HTTP_Proxy' => '4.4.0' ],
 	// Dependency chain for WP_HTML_Tag_Processor (HTML API).
-	// These classes must be included together for the Tag Processor to work correctly.
-	// - wp-includes/html-api/class-wp-html-attribute-token.php
-	// - wp-includes/html-api/class-wp-html-text-replacement.php
-	// - wp-includes/html-api/class-wp-html-span.php
-	// - wp-includes/html-api/class-wp-html-decoder.php
-	// - wp-includes/html-api/class-wp-html-doctype-info.php
+	// These classes must be included together for the WP_HTML_Tag_Processor to work correctly:
+	// - WP_HTML_Attribute_Token
+	// - WP_HTML_Text_Replacement
+	// - WP_HTML_Span
+	// - WP_HTML_Decoder
+	// - WP_HTML_Doctype_Info
 	'wp-includes/html-api/class-wp-html-tag-processor.php'    => [ 'WP_HTML_Tag_Processor' => '6.2.0' ],
 	'wp-includes/html-api/class-wp-html-attribute-token.php'  => [ 'WP_HTML_Attribute_Token' => '6.2.0' ],
 	'wp-includes/html-api/class-wp-html-text-replacement.php' => [ 'WP_HTML_Text_Replacement' => '6.2.0' ],
@@ -45,27 +45,18 @@ return [
 	'wp-includes/html-api/class-wp-html-decoder.php'          => [ 'WP_HTML_Decoder' => '6.6.0' ],
 	'wp-includes/html-api/class-wp-html-doctype-info.php'     => [ 'WP_HTML_Doctype_Info' => '6.7.0' ],
 	// Dependency chain for WP_Block_Parser.
-	// These classes must be included together; otherwise, the block parser cannot build internal structures.
-	// - wp-includes/class-wp-block-parser-block.php
-	// - wp-includes/class-wp-block-parser-frame.php
+	// These classes must be included together for the WP_Block_Parser to work correctly:
+	// - WP_Block_Parser_Block
+	// - WP_Block_Parser_Frame
 	'wp-includes/class-wp-block-parser.php'       => [ 'WP_Block_Parser' => '5.0.0' ],
 	'wp-includes/class-wp-block-parser-block.php' => [ 'WP_Block_Parser_Block' => '5.0.0' ],
 	'wp-includes/class-wp-block-parser-frame.php' => [ 'WP_Block_Parser_Frame' => '5.0.0' ],
-	// NOT IDEAL: pulls REST schema validation (rest_validate_value_from_schema and helper chain).
-	// Dependencies can be added, but the chain is large and already outside the "minimal plain PHP" profile.
-	'wp-includes/class-wp-block-type.php'              => [ 'WP_Block_Type' => '5.0.0' ],
-	// NOT IDEAL: depends on block-hooks runtime (apply_block_hooks_to_content, get_hooked_blocks, registries)
-	// and uses include file paths for pattern content.
-	'wp-includes/class-wp-block-patterns-registry.php' => [ 'WP_Block_Patterns_Registry' => '5.5.0' ],
+	'wp-includes/class-wp-block-type.php'         => [ 'WP_Block_Type' => '5.0.0' ],
 	// Block styles registry; in-memory.
 	'wp-includes/class-wp-block-styles-registry.php'   => [ 'WP_Block_Styles_Registry' => '5.3.0' ],
 	// Base abstract walker for tree structures; pure logic.
 	'wp-includes/class-wp-walker.php'                  => [ 'Walker' => '2.1.0' ],
-	// NOT IDEAL: requires post/permalink/date dependency chain (get_post, get_permalink, mysql2date, page_for_posts).
-	'wp-includes/class-walker-page.php'                => [ 'Walker_Page' => '4.4.0' ],
-	// NOT IDEAL: requires term/taxonomy dependency chain (get_term_link, get_terms, get_term, get_term_feed_link).
-	'wp-includes/class-walker-category.php'            => [ 'Walker_Category' => '4.4.0' ],
-	// Partially suitable: registry/state/options API works in memory.
+	// NOT IDEAL: registry/state/options API works in memory.
 	// Render/admin integration methods still depend on wider wp-admin runtime (user options, meta boxes, current user).
 	'wp-admin/includes/class-wp-screen.php'            => [ 'WP_Screen' => '4.4.0' ],
 	// (`class-phpass.php` class) portable password hashing; pure PHP.
@@ -76,5 +67,8 @@ return [
 /*
 Not suitable in isolated PHPUnit env:
 
-Walker_Nav_Menu, // why: NOT IDEAL: depends on get_privacy_policy_url() and nav-menu runtime chain; excluded from this project.
+WP_Block_Patterns_Registry  // why: NOT IDEAL: depends on block-hooks runtime (apply_block_hooks_to_content/get_hooked_blocks) and pattern file include paths.
+Walker_Page  // why: NOT IDEAL: requires post/permalink/date dependency chain (get_post/get_permalink/mysql2date/page_for_posts).
+Walker_Category  // why: NOT IDEAL: requires term/taxonomy dependency chain (get_term_link/get_terms/get_term/get_term_feed_link).
+Walker_Nav_Menu  // why: NOT IDEAL: depends on get_privacy_policy_url() and nav-menu runtime chain.
 */

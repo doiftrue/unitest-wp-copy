@@ -61,7 +61,6 @@ PasswordHash{}
 WP_Block_Parser_Block{}
 WP_Block_Parser_Frame{}
 WP_Block_Parser{}
-WP_Block_Patterns_Registry{}
 WP_Block_Styles_Registry{}
 WP_Block_Type{}
 WP_Dependencies{}
@@ -87,8 +86,6 @@ WP_Screen{}
 WP_Script_Modules{}
 WP_Scripts{}
 WP_Styles{}
-Walker_Category{}
-Walker_Page{}
 Walker{}
 _()
 _WP_Dependency{}

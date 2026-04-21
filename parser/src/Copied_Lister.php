@@ -88,7 +88,7 @@ class Copied_Lister {
 				continue;
 			}
 
-			// INFO: Skip WP-Line specific mocks ovverlaps. Eg: `wp-6.5.php`
+			// INFO: Skip WP-Line specific mocks overlaps. Eg: `wp-6.5.php`
 			if( preg_match( '~^wp-\d+\.\d+\.php$~', $file_info->getBasename() ) ){
 				continue;
 			}
