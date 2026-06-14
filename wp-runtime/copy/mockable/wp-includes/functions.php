@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/functions.php (WP 6.9.4)
+// wp-includes/functions.php (WP 7.0)
 if( ! function_exists( 'is_utf8_charset' ) ) :
 	function is_utf8_charset( $blog_charset = null ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -13,7 +13,7 @@ if( ! function_exists( 'is_utf8_charset' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.9.4)
+// wp-includes/functions.php (WP 7.0)
 if( ! function_exists( '_deprecated_function' ) ) :
 	function _deprecated_function( $function_name, $version, $replacement = '' ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -79,7 +79,7 @@ if( ! function_exists( '_deprecated_function' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.9.4)
+// wp-includes/functions.php (WP 7.0)
 if( ! function_exists( 'wp_timezone_string' ) ) :
 	function wp_timezone_string() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -105,7 +105,7 @@ if( ! function_exists( 'wp_timezone_string' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.9.4)
+// wp-includes/functions.php (WP 7.0)
 if( ! function_exists( 'current_time' ) ) :
 	function current_time( $type, $gmt = false ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -128,13 +128,39 @@ if( ! function_exists( 'current_time' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.9.4)
+// wp-includes/functions.php (WP 7.0)
 if( ! function_exists( 'wp_trigger_error' ) ) :
 	function wp_trigger_error( $function_name, $message, $error_level = E_USER_NOTICE ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
 			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
 		}
 	
+		/**
+		 * Always fires when the given function triggers a user-level error/warning/notice/deprecation message.
+		 *
+		 * Can be used to attach custom error handlers even if WP_DEBUG is not truthy.
+		 *
+		 * @since 7.0.0
+		 *
+		 * @param string $function_name The function that triggered the error.
+		 * @param string $message       The message explaining the error.
+		 * @param int    $error_level   The designated error type for this error.
+		 */
+		do_action( 'wp_trigger_error_always_run', $function_name, $message, $error_level );
+	
+		/**
+		 * Filters whether to trigger an error.
+		 *
+		 * @since 7.0.0
+		 *
+		 * @param bool   $trigger       Whether to trigger the error. Default true.
+		 * @param string $function_name The function that triggered the error.
+		 * @param string $message       The message explaining the error.
+		 * @param int    $error_level   The designated error type for this error.
+		 */
+		if ( ! apply_filters( 'wp_trigger_error_trigger_error', true, $function_name, $message, $error_level ) ) {
+			return;
+		}
 	
 		// Bail out if WP_DEBUG is not turned on.
 		if ( ! WP_DEBUG ) {
@@ -148,8 +174,8 @@ if( ! function_exists( 'wp_trigger_error' ) ) :
 		 *
 		 * @since 6.4.0
 		 *
-		 * @param string $function_name The function that was called.
-		 * @param string $message       A message explaining what has been done incorrectly.
+		 * @param string $function_name The function that triggered the error.
+		 * @param string $message       The message explaining the error.
 		 * @param int    $error_level   The designated error type for this error.
 		 */
 		do_action( 'wp_trigger_error_run', $function_name, $message, $error_level );
@@ -178,7 +204,7 @@ if( ! function_exists( 'wp_trigger_error' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.9.4)
+// wp-includes/functions.php (WP 7.0)
 if( ! function_exists( 'force_ssl_admin' ) ) :
 	function force_ssl_admin( $force = null ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -197,7 +223,7 @@ if( ! function_exists( 'force_ssl_admin' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.9.4)
+// wp-includes/functions.php (WP 7.0)
 if( ! function_exists( 'wp_suspend_cache_addition' ) ) :
 	function wp_suspend_cache_addition( $suspend = null ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {

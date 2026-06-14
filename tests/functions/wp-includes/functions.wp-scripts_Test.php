@@ -19,6 +19,23 @@ class functions_wp_scripts_Test extends \PHPUnit\Framework\TestCase {
 		$this->assertInstanceOf( WP_Scripts::class, wp_scripts() );
 	}
 
+	public function test___wp_scripts_add_args_data() {
+		$wp_scripts = new WP_Scripts();
+		$wp_scripts->add( 'script-args', '/assets/args.js' );
+
+		_wp_scripts_add_args_data( $wp_scripts, 'script-args', [
+			'in_footer'           => true,
+			'strategy'            => 'defer',
+			'fetchpriority'       => 'high',
+			'module_dependencies' => [ 'module-a' ],
+		] );
+
+		$this->assertSame( 1, $wp_scripts->get_data( 'script-args', 'group' ) );
+		$this->assertSame( 'defer', $wp_scripts->get_data( 'script-args', 'strategy' ) );
+		$this->assertSame( 'high', $wp_scripts->get_data( 'script-args', 'fetchpriority' ) );
+		$this->assertSame( [ 'module-a' ], $wp_scripts->get_data( 'script-args', 'module_dependencies' ) );
+	}
+
 	public function test___wp_scripts_maybe_doing_it_wrong() {
 		_wp_scripts_maybe_doing_it_wrong( __FUNCTION__ );
 		$this->assertTrue( true );

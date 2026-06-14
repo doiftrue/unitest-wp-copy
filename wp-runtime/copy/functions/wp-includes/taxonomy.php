@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/taxonomy.php (WP 6.9.4)
+// wp-includes/taxonomy.php (WP 7.0)
 if( ! function_exists( 'register_taxonomy_for_object_type' ) ) :
 	function register_taxonomy_for_object_type( $taxonomy, $object_type ) {
 		global $wp_taxonomies;
@@ -36,7 +36,7 @@ if( ! function_exists( 'register_taxonomy_for_object_type' ) ) :
 	}
 endif;
 
-// wp-includes/taxonomy.php (WP 6.9.4)
+// wp-includes/taxonomy.php (WP 7.0)
 if( ! function_exists( 'unregister_taxonomy_for_object_type' ) ) :
 	function unregister_taxonomy_for_object_type( $taxonomy, $object_type ) {
 		global $wp_taxonomies;
@@ -70,14 +70,14 @@ if( ! function_exists( 'unregister_taxonomy_for_object_type' ) ) :
 	}
 endif;
 
-// wp-includes/taxonomy.php (WP 6.9.4)
+// wp-includes/taxonomy.php (WP 7.0)
 if( ! function_exists( 'sanitize_term' ) ) :
 	function sanitize_term( $term, $taxonomy, $context = 'display' ) {
 		$fields = array( 'term_id', 'name', 'description', 'slug', 'count', 'parent', 'term_group', 'term_taxonomy_id', 'object_id' );
 	
 		$do_object = is_object( $term );
 	
-		$term_id = $do_object ? $term->term_id : ( isset( $term['term_id'] ) ? $term['term_id'] : 0 );
+		$term_id = $do_object ? ( $term->term_id ?? 0 ) : ( $term['term_id'] ?? 0 );
 	
 		foreach ( (array) $fields as $field ) {
 			if ( $do_object ) {
@@ -101,7 +101,7 @@ if( ! function_exists( 'sanitize_term' ) ) :
 	}
 endif;
 
-// wp-includes/taxonomy.php (WP 6.9.4)
+// wp-includes/taxonomy.php (WP 7.0)
 if( ! function_exists( 'sanitize_term_field' ) ) :
 	function sanitize_term_field( $field, $value, $term_id, $taxonomy, $context ) {
 		$int_fields = array( 'parent', 'term_id', 'count', 'term_group', 'term_taxonomy_id', 'object_id' );

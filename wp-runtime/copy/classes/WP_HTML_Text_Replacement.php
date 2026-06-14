@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/html-api/class-wp-html-text-replacement.php (WP 6.9.4)
+// wp-includes/html-api/class-wp-html-text-replacement.php (WP 7.0)
 if( ! class_exists( 'WP_HTML_Text_Replacement' ) ) :
 	class WP_HTML_Text_Replacement {
 		/**

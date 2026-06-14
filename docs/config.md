@@ -11,6 +11,7 @@ Parser flow details are in [parser.md](parser.md).
 Base (latest supported WP line):
 - `config/functions/<wp-source-file>.php`
 - `config/symbols-moved.php`
+- `config/symbols-removed.php`
 - `config/classes.php`
 - `config/static-methods.php`
 
@@ -36,7 +37,8 @@ Merge rules:
   - `false` on a file key removes inherited file config.
 - Versioned symbol moves (`symbols-moved.php`):
   - parser applies moves to inherited base config before version override merge;
-  - move rule format is `moved_in/from/to` and parser decides target file by current WP line.
+- Versioned symbol removals (`symbols-removed.php`):
+  - parser applies removals after moves and before version override merge;
 
 
 ## Value Formats
@@ -53,6 +55,14 @@ Symbols moved (`config/symbols-moved.php`):
   - `moved_in` means: symbol was moved from `from` to `to` in this WP line;
   - if current WP line is lower than `moved_in`, parser keeps function in `from`;
   - otherwise parser keeps function in `to`.
+
+Symbols removed (`config/symbols-removed.php`):
+- structure:
+  `'functions' => [ 'function_name' => [ 'removed_in' => '7.0', 'file' => 'wp-includes/compat.php' ] ]`
+- semantics:
+  - `removed_in` means: symbol was removed from WordPress core in this WP line;
+  - if current WP line is lower than `removed_in`, parser keeps the function configured in `file`;
+  - otherwise parser removes the function from the inherited config.
 
 Classes:
 - include: `'path/to/class-file.php' => [ 'ClassName' => '<since-version>' ]`

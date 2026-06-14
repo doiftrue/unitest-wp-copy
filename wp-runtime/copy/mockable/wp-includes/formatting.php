@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/formatting.php (WP 6.9.4)
+// wp-includes/formatting.php (WP 7.0)
 if( ! function_exists( 'balanceTags' ) ) :
 	function balanceTags( $text, $force = false ) {  // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -17,7 +17,7 @@ if( ! function_exists( 'balanceTags' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 6.9.4)
+// wp-includes/formatting.php (WP 7.0)
 if( ! function_exists( 'convert_smilies' ) ) :
 	function convert_smilies( $text ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {

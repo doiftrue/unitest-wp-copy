@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-block-parser.php (WP 6.9.4)
+// wp-includes/class-wp-block-parser.php (WP 7.0)
 if( ! class_exists( 'WP_Block_Parser' ) ) :
 	class WP_Block_Parser {
 		/**
@@ -309,7 +309,7 @@ if( ! class_exists( 'WP_Block_Parser' ) ) :
 		 *
 		 * @internal
 		 * @since 5.0.0
-		 * @param null $length how many bytes of document text to output.
+		 * @param null|int $length How many bytes of document text to output.
 		 */
 		public function add_freeform( $length = null ) {
 			$length = $length ? $length : strlen( $this->document ) - $this->offset;

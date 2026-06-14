@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-hook.php (WP 6.9.4)
+// wp-includes/class-wp-hook.php (WP 7.0)
 if( ! class_exists( 'WP_Hook' ) ) :
 	class WP_Hook implements Iterator, ArrayAccess {
 	
@@ -480,7 +480,7 @@ if( ! class_exists( 'WP_Hook' ) ) :
 		 */
 		#[ReturnTypeWillChange]
 		public function offsetGet( $offset ) {
-			return isset( $this->callbacks[ $offset ] ) ? $this->callbacks[ $offset ] : null;
+			return $this->callbacks[ $offset ] ?? null;
 		}
 	
 		/**

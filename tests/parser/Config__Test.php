@@ -9,6 +9,7 @@ class Config__Test extends Project_TestCase {
 	use Parser_Config__Test_Utils;
 
 	public function test__parse_version_line__extracts_major_minor() {
+		/** @see Config::parse_version_line() */
 		$result = $this->call_private_method( 'parse_version_line', [ '6.8.1-alpha' ] );
 		$this->assertSame( '6.8', $result );
 	}
@@ -31,7 +32,10 @@ class Config__Test extends Project_TestCase {
 			],
 		];
 
-		$result = $this->call_private_method( 'apply_moves_config', [ $base_config, $mv_config, '6.6' ] );
+		/** @see Config::apply_moves_config() */
+		$config ??= new ReflectionClass( Config::class )->newInstanceWithoutConstructor();
+		(fn() => $this->wp_version_line = '6.6' )->call( $config );
+		$result = $this->call_private_method( 'apply_moves_config', [ $base_config, $mv_config ], $config );
 
 		// should be moved
 		$this->assertArrayNotHasKey( 'absint', $result['wp-includes/load.php'] );
@@ -57,12 +61,59 @@ class Config__Test extends Project_TestCase {
 			],
 		];
 
-		$result = $this->call_private_method( 'apply_moves_config', [ $base_config, $mv_config, '6.8' ] );
+		/** @see Config::apply_moves_config() */
+		$config ??= new ReflectionClass( Config::class )->newInstanceWithoutConstructor();
+		(fn() => $this->wp_version_line = '6.8' )->call( $config );
+		$result = $this->call_private_method( 'apply_moves_config', [ $base_config, $mv_config, '6.8' ], $config );
 
 		// should stay as it was
 		$this->assertArrayNotHasKey( 'absint', $result['wp-includes/functions.php'] );
 		$this->assertSame( '2.5.0', $result['wp-includes/load.php']['absint'] );
 		$this->assertSame( '2.5.0', $result['wp-includes/functions.php']['path_is_absolute'] );
+	}
+
+	public function test__apply_removals_config__keeps_symbol_for_older_version() {
+		$base_config = [
+			'wp-includes/compat.php' => [
+				'is_countable' => '4.9.6',
+			],
+		];
+		$rm_config = [
+			'is_countable' => [
+				'removed_in' => '7.0',
+				'file'       => 'wp-includes/compat.php',
+			],
+		];
+
+		/** @see Config::apply_removals_config() */
+		$config ??= new ReflectionClass( Config::class )->newInstanceWithoutConstructor();
+		(fn() => $this->wp_version_line = '6.9' )->call( $config );
+		$result = $this->call_private_method( 'apply_removals_config', [ $base_config, $rm_config ], $config );
+
+		$this->assertSame( '4.9.6', $result['wp-includes/compat.php']['is_countable'] );
+	}
+
+	public function test__apply_removals_config__removes_symbol_for_current_and_newer_versions() {
+		$base_config = [
+			'wp-includes/compat.php' => [
+				'is_countable' => '4.9.6',
+				'array_is_list' => '6.5.0',
+			],
+		];
+		$rm_config = [
+			'is_countable' => [
+				'removed_in' => '7.0',
+				'file'       => 'wp-includes/compat.php',
+			],
+		];
+
+		/** @see Config::apply_removals_config() */
+		$config ??= new ReflectionClass( Config::class )->newInstanceWithoutConstructor();
+		(fn() => $this->wp_version_line = '7.0' )->call( $config );
+		$result = $this->call_private_method( 'apply_removals_config', [ $base_config, $rm_config ], $config );
+
+		$this->assertArrayNotHasKey( 'is_countable', $result['wp-includes/compat.php'] );
+		$this->assertSame( '6.5.0', $result['wp-includes/compat.php']['array_is_list'] );
 	}
 
 	public function test__load_php_config_file__returns_empty_for_missing_optional_file() {
@@ -247,7 +298,7 @@ class Config__Test extends Project_TestCase {
 		);
 	}
 
-	public function test__build_funcs_config__applies_moves_and_version_override() {
+	public function test__build_funcs_config__applies_moves_removals_and_version_override() {
 		$tmp_dir    = $this->make_temp_dir();
 		$config_dir = "$tmp_dir/config";
 		$line_dir   = "$config_dir/6.6";
@@ -277,9 +328,21 @@ class Config__Test extends Project_TestCase {
 			]
 		);
 		$this->write_config_data_to_file(
+			"$config_dir/symbols-removed.php",
+			[
+				'functions' => [
+					'path_is_absolute' => [
+						'removed_in' => '6.6',
+						'file'       => 'wp-includes/functions.php',
+					],
+				],
+			]
+		);
+		$this->write_config_data_to_file(
 			"$line_dir/functions/wp-includes/functions.php",
 			[
 				'absint' => '2.5.0 mockable',
+				'path_is_absolute' => '2.5.0 mockable',
 			]
 		);
 		$this->write_config_data_to_file(
@@ -296,7 +359,7 @@ class Config__Test extends Project_TestCase {
 		] );
 		$result = $this->call_private_method( 'build_funcs_config', [], $config );
 
-		$this->assertSame( '2.5.0', $result['wp-includes/functions.php']['path_is_absolute'] );
+		$this->assertSame( '2.5.0 mockable', $result['wp-includes/functions.php']['path_is_absolute'] );
 		$this->assertSame( '2.5.0 mockable', $result['wp-includes/functions.php']['absint'] );
 		$this->assertArrayNotHasKey( 'absint', $result['wp-includes/load.php'] );
 	}

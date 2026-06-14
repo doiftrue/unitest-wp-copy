@@ -18,7 +18,7 @@ class script_loader_Test extends \PHPUnit\Framework\TestCase {
 			'id'    => 'test-id',
 		] );
 
-		$this->assertStringContainsString( 'async="async"', $attrs );
+		$this->assertMatchesRegularExpression( '/ async(?:="async")?/', $attrs );
 		$this->assertStringContainsString( 'id="test-id"', $attrs );
 	}
 

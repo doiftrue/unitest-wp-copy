@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-locale.php (WP 6.9.4)
+// wp-includes/class-wp-locale.php (WP 7.0)
 if( ! class_exists( 'WP_Locale' ) ) :
 	class WP_Locale {
 		/**
@@ -440,7 +440,7 @@ if( ! class_exists( 'WP_Locale' ) ) :
 			 * enter 'characters_excluding_spaces' or 'characters_including_spaces'. Otherwise, enter 'words'.
 			 * Do not translate into your own language.
 			 */
-			$word_count_type = is_null( $this->word_count_type ) ? _x( 'words', 'Word count type. Do not translate!' ) : $this->word_count_type;
+			$word_count_type = $this->word_count_type ?? _x( 'words', 'Word count type. Do not translate!' );
 	
 			// Check for valid types.
 			if ( 'characters_excluding_spaces' !== $word_count_type && 'characters_including_spaces' !== $word_count_type ) {

@@ -1,4 +1,4 @@
-The following functions and classes are available in this (unit test) environment. Symbols are copied from WordPress 6.9.4.
+The following functions and classes are available in this (unit test) environment. Symbols are copied from WordPress 7.0.
 
 Changed (not full copies) symbols (Mockable - can be overridden via WP_Mock):
 ```text
@@ -159,6 +159,7 @@ _wp_kses_split_callback()
 _wp_normalize_relative_css_links()
 _wp_privacy_statuses()
 _wp_scan_utf8()
+_wp_scripts_add_args_data()
 _wp_scripts_maybe_doing_it_wrong()
 _wp_scrub_utf8_fallback()
 _wp_specialchars()
@@ -187,8 +188,6 @@ array_any()
 array_find()
 array_find_key()
 array_is_list()
-array_key_first()
-array_key_last()
 backslashit()
 before_last_bar()
 bloginfo()
@@ -272,7 +271,6 @@ htmlentities2()
 human_readable_duration()
 human_time_diff()
 includes_url()
-is_countable()
 is_email()
 is_rtl()
 is_serialized()

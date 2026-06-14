@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/functions.wp-scripts.php (WP 6.9.4)
+// wp-includes/functions.wp-scripts.php (WP 7.0)
 if( ! function_exists( 'wp_scripts' ) ) :
 	function wp_scripts() {
 		global $wp_scripts;
@@ -15,7 +15,69 @@ if( ! function_exists( 'wp_scripts' ) ) :
 	}
 endif;
 
-// wp-includes/functions.wp-scripts.php (WP 6.9.4)
+// wp-includes/functions.wp-scripts.php (WP 7.0)
+if( ! function_exists( '_wp_scripts_add_args_data' ) ) :
+	function _wp_scripts_add_args_data( WP_Scripts $wp_scripts, string $handle, array $args ): void {
+		$allowed_keys = array( 'strategy', 'in_footer', 'fetchpriority', 'module_dependencies' );
+		$unknown_keys = array_diff( array_keys( $args ), $allowed_keys );
+		if ( ! empty( $unknown_keys ) ) {
+			$trace         = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS, 2 );
+			$function_name = ( $trace[1]['class'] ?? '' ) . ( $trace[1]['type'] ?? '' ) . ( $trace[1]['function'] ?? __FUNCTION__ );
+			_doing_it_wrong(
+				$function_name,
+				sprintf(
+					/* translators: 1: $args, 2: List of unrecognized keys, 3: List of supported keys. */
+					__( 'Unrecognized key(s) in the %1$s param: %2$s. Supported keys: %3$s' ),
+					'$args',
+					implode( wp_get_list_item_separator(), $unknown_keys ),
+					implode( wp_get_list_item_separator(), $allowed_keys )
+				),
+				'7.0.0'
+			);
+		}
+	
+		$in_footer = ! empty( $args['in_footer'] );
+		if ( $in_footer ) {
+			$wp_scripts->add_data( $handle, 'group', 1 );
+		}
+		if ( ! empty( $args['strategy'] ) ) {
+			$wp_scripts->add_data( $handle, 'strategy', $args['strategy'] );
+		}
+		if ( ! empty( $args['fetchpriority'] ) ) {
+			$wp_scripts->add_data( $handle, 'fetchpriority', $args['fetchpriority'] );
+		}
+		if ( ! empty( $args['module_dependencies'] ) ) {
+			$wp_scripts->add_data( $handle, 'module_dependencies', $args['module_dependencies'] );
+	
+			/*
+			 * A classic script with module dependencies must either be printed in the
+			 * footer or use the 'defer' loading strategy. Otherwise, the script may be
+			 * evaluated before the script modules import map is printed, causing
+			 * dynamic imports to fail with a "Failed to resolve module specifier" error.
+			 */
+			$is_deferred = 'defer' === ( $args['strategy'] ?? null );
+			if ( ! $in_footer && ! $is_deferred ) {
+				$trace         = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS, 2 );
+				$function_name = ( $trace[1]['class'] ?? '' ) . ( $trace[1]['type'] ?? '' ) . ( $trace[1]['function'] ?? __FUNCTION__ );
+				_doing_it_wrong(
+					$function_name,
+					sprintf(
+						/* translators: 1: 'module_dependencies', 2: Script handle, 3: 'in_footer', 4: 'strategy', 5: 'defer'. */
+						__( 'When the %1$s arg is provided, the "%2$s" script must either be printed in the footer (%3$s set to true) or use a deferred loading %4$s (%5$s) so that the import map is printed before the script is evaluated.' ),
+						'<code>module_dependencies</code>',
+						$handle,
+						'<code>in_footer</code>',
+						'<code>strategy</code>',
+						'<code>defer</code>'
+					),
+					'7.0.0'
+				);
+			}
+		}
+	}
+endif;
+
+// wp-includes/functions.wp-scripts.php (WP 7.0)
 if( ! function_exists( '_wp_scripts_maybe_doing_it_wrong' ) ) :
 	function _wp_scripts_maybe_doing_it_wrong( $function_name, $handle = '' ) {
 		if ( did_action( 'init' ) || did_action( 'wp_enqueue_scripts' )
@@ -48,7 +110,7 @@ if( ! function_exists( '_wp_scripts_maybe_doing_it_wrong' ) ) :
 	}
 endif;
 
-// wp-includes/functions.wp-scripts.php (WP 6.9.4)
+// wp-includes/functions.wp-scripts.php (WP 7.0)
 if( ! function_exists( 'wp_print_scripts' ) ) :
 	function wp_print_scripts( $handles = false ) {
 		global $wp_scripts;
@@ -76,7 +138,7 @@ if( ! function_exists( 'wp_print_scripts' ) ) :
 	}
 endif;
 
-// wp-includes/functions.wp-scripts.php (WP 6.9.4)
+// wp-includes/functions.wp-scripts.php (WP 7.0)
 if( ! function_exists( 'wp_add_inline_script' ) ) :
 	function wp_add_inline_script( $handle, $data, $position = 'after' ) {
 		_wp_scripts_maybe_doing_it_wrong( __FUNCTION__, $handle );
@@ -92,14 +154,14 @@ if( ! function_exists( 'wp_add_inline_script' ) ) :
 				),
 				'4.5.0'
 			);
-			$data = trim( preg_replace( '#<script[^>]*>(.*)</script>#is', '$1', $data ) );
+			$data = trim( (string) preg_replace( '#<script[^>]*>(.*)</script>#is', '$1', $data ) );
 		}
 	
 		return wp_scripts()->add_inline_script( $handle, $data, $position );
 	}
 endif;
 
-// wp-includes/functions.wp-scripts.php (WP 6.9.4)
+// wp-includes/functions.wp-scripts.php (WP 7.0)
 if( ! function_exists( 'wp_register_script' ) ) :
 	function wp_register_script( $handle, $src, $deps = array(), $ver = false, $args = array() ) {
 		if ( ! is_array( $args ) ) {
@@ -112,20 +174,13 @@ if( ! function_exists( 'wp_register_script' ) ) :
 		$wp_scripts = wp_scripts();
 	
 		$registered = $wp_scripts->add( $handle, $src, $deps, $ver );
-		if ( ! empty( $args['in_footer'] ) ) {
-			$wp_scripts->add_data( $handle, 'group', 1 );
-		}
-		if ( ! empty( $args['strategy'] ) ) {
-			$wp_scripts->add_data( $handle, 'strategy', $args['strategy'] );
-		}
-		if ( ! empty( $args['fetchpriority'] ) ) {
-			$wp_scripts->add_data( $handle, 'fetchpriority', $args['fetchpriority'] );
-		}
+		_wp_scripts_add_args_data( $wp_scripts, $handle, $args );
+	
 		return $registered;
 	}
 endif;
 
-// wp-includes/functions.wp-scripts.php (WP 6.9.4)
+// wp-includes/functions.wp-scripts.php (WP 7.0)
 if( ! function_exists( 'wp_localize_script' ) ) :
 	function wp_localize_script( $handle, $object_name, $l10n ) {
 		$wp_scripts = wp_scripts();
@@ -134,7 +189,7 @@ if( ! function_exists( 'wp_localize_script' ) ) :
 	}
 endif;
 
-// wp-includes/functions.wp-scripts.php (WP 6.9.4)
+// wp-includes/functions.wp-scripts.php (WP 7.0)
 if( ! function_exists( 'wp_set_script_translations' ) ) :
 	function wp_set_script_translations( $handle, $domain = 'default', $path = '' ) {
 		global $wp_scripts;
@@ -148,7 +203,7 @@ if( ! function_exists( 'wp_set_script_translations' ) ) :
 	}
 endif;
 
-// wp-includes/functions.wp-scripts.php (WP 6.9.4)
+// wp-includes/functions.wp-scripts.php (WP 7.0)
 if( ! function_exists( 'wp_deregister_script' ) ) :
 	function wp_deregister_script( $handle ) {
 		global $pagenow;
@@ -210,7 +265,7 @@ if( ! function_exists( 'wp_deregister_script' ) ) :
 	}
 endif;
 
-// wp-includes/functions.wp-scripts.php (WP 6.9.4)
+// wp-includes/functions.wp-scripts.php (WP 7.0)
 if( ! function_exists( 'wp_enqueue_script' ) ) :
 	function wp_enqueue_script( $handle, $src = '', $deps = array(), $ver = false, $args = array() ) {
 		_wp_scripts_maybe_doing_it_wrong( __FUNCTION__, $handle );
@@ -218,6 +273,7 @@ if( ! function_exists( 'wp_enqueue_script' ) ) :
 		$wp_scripts = wp_scripts();
 	
 		if ( $src || ! empty( $args ) ) {
+			/** @var array{ 0: non-empty-string, 1?: string } $_handle */
 			$_handle = explode( '?', $handle );
 			if ( ! is_array( $args ) ) {
 				$args = array(
@@ -228,14 +284,8 @@ if( ! function_exists( 'wp_enqueue_script' ) ) :
 			if ( $src ) {
 				$wp_scripts->add( $_handle[0], $src, $deps, $ver );
 			}
-			if ( ! empty( $args['in_footer'] ) ) {
-				$wp_scripts->add_data( $_handle[0], 'group', 1 );
-			}
-			if ( ! empty( $args['strategy'] ) ) {
-				$wp_scripts->add_data( $_handle[0], 'strategy', $args['strategy'] );
-			}
-			if ( ! empty( $args['fetchpriority'] ) ) {
-				$wp_scripts->add_data( $_handle[0], 'fetchpriority', $args['fetchpriority'] );
+			if ( ! empty( $args ) ) {
+				_wp_scripts_add_args_data( $wp_scripts, $_handle[0], $args );
 			}
 		}
 	
@@ -243,7 +293,7 @@ if( ! function_exists( 'wp_enqueue_script' ) ) :
 	}
 endif;
 
-// wp-includes/functions.wp-scripts.php (WP 6.9.4)
+// wp-includes/functions.wp-scripts.php (WP 7.0)
 if( ! function_exists( 'wp_dequeue_script' ) ) :
 	function wp_dequeue_script( $handle ) {
 		_wp_scripts_maybe_doing_it_wrong( __FUNCTION__, $handle );
@@ -252,7 +302,7 @@ if( ! function_exists( 'wp_dequeue_script' ) ) :
 	}
 endif;
 
-// wp-includes/functions.wp-scripts.php (WP 6.9.4)
+// wp-includes/functions.wp-scripts.php (WP 7.0)
 if( ! function_exists( 'wp_script_is' ) ) :
 	function wp_script_is( $handle, $status = 'enqueued' ) {
 		_wp_scripts_maybe_doing_it_wrong( __FUNCTION__, $handle );
@@ -261,7 +311,7 @@ if( ! function_exists( 'wp_script_is' ) ) :
 	}
 endif;
 
-// wp-includes/functions.wp-scripts.php (WP 6.9.4)
+// wp-includes/functions.wp-scripts.php (WP 7.0)
 if( ! function_exists( 'wp_script_add_data' ) ) :
 	function wp_script_add_data( $handle, $key, $value ) {
 		return wp_scripts()->add_data( $handle, $key, $value );

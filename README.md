@@ -67,20 +67,21 @@ Use the package line that matches your WP version:
 
 | WordPress line | Composer constraint              |
 |----------------|----------------------------------|
-| 6.5            | `doiftrue/unitest-wp-copy:6.5.*` |
-| 6.6            | `doiftrue/unitest-wp-copy:6.6.*` |
-| 6.7            | `doiftrue/unitest-wp-copy:6.7.*` |
-| 6.8            | `doiftrue/unitest-wp-copy:6.8.*` |
+| 7.0            | `doiftrue/unitest-wp-copy:7.0.*` |
 | 6.9            | `doiftrue/unitest-wp-copy:6.9.*` |
+| 6.8            | `doiftrue/unitest-wp-copy:6.8.*` |
+| 6.7            | `doiftrue/unitest-wp-copy:6.7.*` |
+| 6.6            | `doiftrue/unitest-wp-copy:6.6.*` |
+| 6.5            | `doiftrue/unitest-wp-copy:6.5.*` |
 
-Real release tags use 4 numbers, for example `6.9.0.27`:
-- `6.9` is the target WordPress version line;
-- `0.27` is this repository's release-script version for that line.
+Real release tags use 4 numbers, for example `7.0.2.0`:
+- `7.0` is the target WordPress version line;
+- `2.0` is this repository's release-script version for that line.
 
 In Composer, use:
-- `6.9.0.27` - pin one exact release
-- `~6.9.0.27` - allow conservative updates starting from this build (usually small runtime fixes)
-- `6.9.*` - allow any update in the WP `6.9` line (new copied functions/classes may appear and affect existing tests)
+- `7.0.2.0` - pin one exact release
+- `~7.0.2.0` - allow conservative updates starting from this build (usually small runtime fixes)
+- `7.0.*` - allow any update in the WP `7.0` line (new copied functions/classes may appear and affect existing tests)
 
 
 Bootstrap Overrides and Shared State
@@ -138,7 +139,7 @@ Runtime globals initialized or updated by bootstrap (shared in one PHP process):
 
 If a test mutates these globals/options, restore them in `setUp()` / `tearDown()`.
 
-Constants you can predefine before bootstrap (WP `6.9` line):
+Constants you can predefine before bootstrap:
 
 ```txt
 ABSPATH

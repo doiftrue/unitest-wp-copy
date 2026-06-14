@@ -54,7 +54,7 @@ class general_template_mocks__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertStringContainsString( '/wp-content/themes/child-theme', get_bloginfo( 'stylesheet_directory' ) );
 		$this->assertStringContainsString( '/wp-content/themes/parent-theme', get_bloginfo( 'template_directory' ) );
 		$this->assertStringContainsString( '/wp-content/themes/parent-theme', get_bloginfo( 'template_url' ) );
-		$this->assertMatchesRegularExpression( '/\d.\d.\d/', get_bloginfo( 'version' ) );
+		$this->assertMatchesRegularExpression( '/^\d+\.\d+(?:\.\d+)?/', get_bloginfo( 'version' ) );
 	}
 
 	public function test__get_bloginfo_display_filters() {
@@ -89,7 +89,7 @@ class general_template_mocks__Test extends \PHPUnit\Framework\TestCase {
 			$this->markTestSkipped( "wp_version_compare() not exists on WP $wp_ver" );
 		}
 
-		$this->assertMatchesRegularExpression( '/\d.\d.\d/', wp_get_wp_version() );
+		$this->assertMatchesRegularExpression( '/^\d+\.\d+(?:\.\d+)?/', wp_get_wp_version() );
 	}
 
 	public function test__wp_get_wp_version_wp_mock_handler() {
