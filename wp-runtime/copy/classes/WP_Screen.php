@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-admin/includes/class-wp-screen.php (WP 6.9.4)
+// wp-admin/includes/class-wp-screen.php (WP 7.0)
 if( ! class_exists( 'WP_Screen' ) ) :
 	class WP_Screen {
 		/**
@@ -166,8 +166,10 @@ if( ! class_exists( 'WP_Screen' ) ) :
 		/**
 		 * Stores the result of the public show_screen_options function.
 		 *
+		 * Set when calling {@see self::show_screen_options()} for the first time.
+		 *
 		 * @since 3.3.0
-		 * @var bool
+		 * @var ?bool
 		 */
 		private $_show_screen_options;
 	
@@ -536,17 +538,14 @@ if( ! class_exists( 'WP_Screen' ) ) :
 		 * @param string       $option Option name.
 		 * @param string|false $key    Optional. Specific array key for when the option is an array.
 		 *                             Default false.
-		 * @return string The option value if set, null otherwise.
+		 * @return ?string The option value if set, null otherwise.
 		 */
 		public function get_option( $option, $key = false ) {
 			if ( ! isset( $this->_options[ $option ] ) ) {
 				return null;
 			}
 			if ( $key ) {
-				if ( isset( $this->_options[ $option ][ $key ] ) ) {
-					return $this->_options[ $option ][ $key ];
-				}
-				return null;
+				return $this->_options[ $option ][ $key ] ?? null;
 			}
 			return $this->_options[ $option ];
 		}
@@ -589,7 +588,7 @@ if( ! class_exists( 'WP_Screen' ) ) :
 		 * @since 3.4.0
 		 *
 		 * @param string $id Help Tab ID.
-		 * @return array Help tab arguments.
+		 * @return ?array Help tab arguments, or null if no help tabs added.
 		 */
 		public function get_help_tab( $id ) {
 			if ( ! isset( $this->_help_tabs[ $id ] ) ) {
@@ -724,7 +723,7 @@ if( ! class_exists( 'WP_Screen' ) ) :
 		 * @since 4.4.0
 		 *
 		 * @param string $key Screen reader text array named key.
-		 * @return string Screen reader text string.
+		 * @return ?string Screen reader text string, or null if no text is associated with the key.
 		 */
 		public function get_screen_reader_text( $key ) {
 			if ( ! isset( $this->_screen_reader_content[ $key ] ) ) {
@@ -797,7 +796,7 @@ if( ! class_exists( 'WP_Screen' ) ) :
 				'get_current_screen()->add_help_tab(), get_current_screen()->remove_help_tab()'
 			);
 	
-			$old_help = isset( self::$_old_compat_help[ $this->id ] ) ? self::$_old_compat_help[ $this->id ] : '';
+			$old_help = self::$_old_compat_help[ $this->id ] ?? '';
 	
 			/**
 			 * Filters the legacy contextual help text.
@@ -940,8 +939,9 @@ if( ! class_exists( 'WP_Screen' ) ) :
 			if ( $this->get_option( 'layout_columns' ) ) {
 				$this->columns = (int) get_user_option( "screen_layout_$this->id" );
 	
-				if ( ! $this->columns && $this->get_option( 'layout_columns', 'default' ) ) {
-					$this->columns = $this->get_option( 'layout_columns', 'default' );
+				$layout_columns = (int) $this->get_option( 'layout_columns', 'default' );
+				if ( ! $this->columns && $layout_columns ) {
+					$this->columns = $layout_columns;
 				}
 			}
 			$GLOBALS['screen_layout_columns'] = $this->columns; // Set the global for back-compat.
@@ -979,7 +979,7 @@ if( ! class_exists( 'WP_Screen' ) ) :
 		 *
 		 * @global array $wp_meta_boxes Global meta box state.
 		 *
-		 * @return bool
+		 * @return bool Whether to show the Screen Options tab for the current screen.
 		 */
 		public function show_screen_options() {
 			global $wp_meta_boxes;
@@ -1245,7 +1245,7 @@ if( ! class_exists( 'WP_Screen' ) ) :
 			}
 	
 			if ( 'edit_comments_per_page' === $option ) {
-				$comment_status = isset( $_REQUEST['comment_status'] ) ? $_REQUEST['comment_status'] : 'all';
+				$comment_status = $_REQUEST['comment_status'] ?? 'all';
 	
 				/** This filter is documented in wp-admin/includes/class-wp-comments-list-table.php */
 				$per_page = apply_filters( 'comments_per_page', $per_page, $comment_status );
@@ -1271,7 +1271,7 @@ if( ! class_exists( 'WP_Screen' ) ) :
 			<legend><?php _e( 'Pagination' ); ?></legend>
 				<?php if ( $per_page_label ) : ?>
 					<label for="<?php echo esc_attr( $option ); ?>"><?php echo $per_page_label; ?></label>
-					<input type="number" step="1" min="1" max="999" class="screen-per-page" name="wp_screen_options[value]"
+					<input type="number" step="1" min="1" max="999" class="screen-per-page small-text" name="wp_screen_options[value]"
 						id="<?php echo esc_attr( $option ); ?>"
 						value="<?php echo esc_attr( $per_page ); ?>" />
 				<?php endif; ?>

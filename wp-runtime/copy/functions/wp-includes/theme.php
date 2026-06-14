@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/theme.php (WP 6.9.4)
+// wp-includes/theme.php (WP 7.0)
 if( ! function_exists( 'current_theme_supports' ) ) :
 	function current_theme_supports( $feature, ...$args ) {
 		global $_wp_theme_features;
@@ -68,7 +68,7 @@ if( ! function_exists( 'current_theme_supports' ) ) :
 	}
 endif;
 
-// wp-includes/theme.php (WP 6.9.4)
+// wp-includes/theme.php (WP 7.0)
 if( ! function_exists( 'add_theme_support' ) ) :
 	function add_theme_support( $feature, ...$args ) {
 		global $_wp_theme_features;
@@ -323,7 +323,7 @@ if( ! function_exists( 'add_theme_support' ) ) :
 	}
 endif;
 
-// wp-includes/theme.php (WP 6.9.4)
+// wp-includes/theme.php (WP 7.0)
 if( ! function_exists( 'get_theme_support' ) ) :
 	function get_theme_support( $feature, ...$args ) {
 		global $_wp_theme_features;
@@ -340,10 +340,7 @@ if( ! function_exists( 'get_theme_support' ) ) :
 			case 'custom-logo':
 			case 'custom-header':
 			case 'custom-background':
-				if ( isset( $_wp_theme_features[ $feature ][0][ $args[0] ] ) ) {
-					return $_wp_theme_features[ $feature ][0][ $args[0] ];
-				}
-				return false;
+				return $_wp_theme_features[ $feature ][0][ $args[0] ] ?? false;
 	
 			default:
 				return $_wp_theme_features[ $feature ];
@@ -351,7 +348,7 @@ if( ! function_exists( 'get_theme_support' ) ) :
 	}
 endif;
 
-// wp-includes/theme.php (WP 6.9.4)
+// wp-includes/theme.php (WP 7.0)
 if( ! function_exists( 'remove_theme_support' ) ) :
 	function remove_theme_support( $feature ) {
 		// Do not remove internal registrations that are not used directly by themes.
@@ -363,7 +360,7 @@ if( ! function_exists( 'remove_theme_support' ) ) :
 	}
 endif;
 
-// wp-includes/theme.php (WP 6.9.4)
+// wp-includes/theme.php (WP 7.0)
 if( ! function_exists( '_remove_theme_support' ) ) :
 	function _remove_theme_support( $feature ) {
 		global $_wp_theme_features;
@@ -374,7 +371,7 @@ if( ! function_exists( '_remove_theme_support' ) ) :
 					return false;
 				}
 				add_theme_support( 'custom-header', array( 'uploads' => false ) );
-				return; // Do not continue - custom-header-uploads no longer exists.
+				return true; // Do not continue - custom-header-uploads no longer exists.
 		}
 	
 		if ( ! isset( $_wp_theme_features[ $feature ] ) ) {
@@ -415,7 +412,7 @@ if( ! function_exists( '_remove_theme_support' ) ) :
 	}
 endif;
 
-// wp-includes/theme.php (WP 6.9.4)
+// wp-includes/theme.php (WP 7.0)
 if( ! function_exists( 'register_theme_feature' ) ) :
 	function register_theme_feature( $feature, $args = array() ) {
 		global $_wp_registered_theme_features;
@@ -525,7 +522,7 @@ if( ! function_exists( 'register_theme_feature' ) ) :
 	}
 endif;
 
-// wp-includes/theme.php (WP 6.9.4)
+// wp-includes/theme.php (WP 7.0)
 if( ! function_exists( 'get_registered_theme_features' ) ) :
 	function get_registered_theme_features() {
 		global $_wp_registered_theme_features;
@@ -538,7 +535,7 @@ if( ! function_exists( 'get_registered_theme_features' ) ) :
 	}
 endif;
 
-// wp-includes/theme.php (WP 6.9.4)
+// wp-includes/theme.php (WP 7.0)
 if( ! function_exists( 'get_registered_theme_feature' ) ) :
 	function get_registered_theme_feature( $feature ) {
 		global $_wp_registered_theme_features;
@@ -547,11 +544,11 @@ if( ! function_exists( 'get_registered_theme_feature' ) ) :
 			return null;
 		}
 	
-		return isset( $_wp_registered_theme_features[ $feature ] ) ? $_wp_registered_theme_features[ $feature ] : null;
+		return $_wp_registered_theme_features[ $feature ] ?? null;
 	}
 endif;
 
-// wp-includes/theme.php (WP 6.9.4)
+// wp-includes/theme.php (WP 7.0)
 if( ! function_exists( 'create_initial_theme_features' ) ) :
 	function create_initial_theme_features() {
 		register_theme_feature(
@@ -964,7 +961,7 @@ if( ! function_exists( 'create_initial_theme_features' ) ) :
 	}
 endif;
 
-// wp-includes/theme.php (WP 6.9.4)
+// wp-includes/theme.php (WP 7.0)
 if( ! function_exists( 'get_stylesheet' ) ) :
 	function get_stylesheet() {
 		/**
@@ -978,7 +975,7 @@ if( ! function_exists( 'get_stylesheet' ) ) :
 	}
 endif;
 
-// wp-includes/theme.php (WP 6.9.4)
+// wp-includes/theme.php (WP 7.0)
 if( ! function_exists( 'get_template' ) ) :
 	function get_template() {
 		/**
@@ -992,7 +989,7 @@ if( ! function_exists( 'get_template' ) ) :
 	}
 endif;
 
-// wp-includes/theme.php (WP 6.9.4)
+// wp-includes/theme.php (WP 7.0)
 if( ! function_exists( 'get_stylesheet_uri' ) ) :
 	function get_stylesheet_uri() {
 		$stylesheet_dir_uri = get_stylesheet_directory_uri();
@@ -1009,7 +1006,7 @@ if( ! function_exists( 'get_stylesheet_uri' ) ) :
 	}
 endif;
 
-// wp-includes/theme.php (WP 6.9.4)
+// wp-includes/theme.php (WP 7.0)
 if( ! function_exists( 'get_locale_stylesheet_uri' ) ) :
 	function get_locale_stylesheet_uri() {
 		global $wp_locale;

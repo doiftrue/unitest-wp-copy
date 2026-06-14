@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/general-template.php (WP 6.9.4)
+// wp-includes/general-template.php (WP 7.0)
 if( ! function_exists( 'wp_login_url' ) ) :
 	function wp_login_url( $redirect = '', $force_reauth = false ) {
 		$login_url = site_url( 'wp-login.php', 'login' );
@@ -29,7 +29,7 @@ if( ! function_exists( 'wp_login_url' ) ) :
 	}
 endif;
 
-// wp-includes/general-template.php (WP 6.9.4)
+// wp-includes/general-template.php (WP 7.0)
 if( ! function_exists( 'wp_registration_url' ) ) :
 	function wp_registration_url() {
 		/**
@@ -43,7 +43,7 @@ if( ! function_exists( 'wp_registration_url' ) ) :
 	}
 endif;
 
-// wp-includes/general-template.php (WP 6.9.4)
+// wp-includes/general-template.php (WP 7.0)
 if( ! function_exists( 'wp_login_form' ) ) :
 	function wp_login_form( $args = array() ) {
 		$defaults = array(
@@ -117,6 +117,8 @@ if( ! function_exists( 'wp_login_form' ) ) :
 		 */
 		$login_form_bottom = apply_filters( 'login_form_bottom', '', $args );
 	
+		$direction_style = is_rtl() ? ' style="direction: ltr;"' : '';
+	
 		$form =
 			sprintf(
 				'<form name="%1$s" id="%1$s" action="%2$s" method="post">',
@@ -127,21 +129,23 @@ if( ! function_exists( 'wp_login_form' ) ) :
 			sprintf(
 				'<p class="login-username">
 					<label for="%1$s">%2$s</label>
-					<input type="text" name="log" id="%1$s" autocomplete="username" class="input" value="%3$s" size="20"%4$s />
+					<input type="text" name="log" id="%1$s" autocomplete="username" class="input" value="%3$s" size="20"%4$s%5$s />
 				</p>',
 				esc_attr( $args['id_username'] ),
 				esc_html( $args['label_username'] ),
 				esc_attr( $args['value_username'] ),
-				( $args['required_username'] ? ' required="required"' : '' )
+				( $args['required_username'] ? ' required="required"' : '' ),
+				$direction_style
 			) .
 			sprintf(
 				'<p class="login-password">
 					<label for="%1$s">%2$s</label>
-					<input type="password" name="pwd" id="%1$s" autocomplete="current-password" spellcheck="false" class="input" value="" size="20"%3$s />
+					<input type="password" name="pwd" id="%1$s" autocomplete="current-password" spellcheck="false" class="input" value="" size="20"%3$s%4$s />
 				</p>',
 				esc_attr( $args['id_password'] ),
 				esc_html( $args['label_password'] ),
-				( $args['required_password'] ? ' required="required"' : '' )
+				( $args['required_password'] ? ' required="required"' : '' ),
+				$direction_style
 			) .
 			$login_form_middle .
 			( $args['remember'] ?
@@ -172,7 +176,7 @@ if( ! function_exists( 'wp_login_form' ) ) :
 	}
 endif;
 
-// wp-includes/general-template.php (WP 6.9.4)
+// wp-includes/general-template.php (WP 7.0)
 if( ! function_exists( 'wp_meta' ) ) :
 	function wp_meta() {
 		/**
@@ -184,14 +188,14 @@ if( ! function_exists( 'wp_meta' ) ) :
 	}
 endif;
 
-// wp-includes/general-template.php (WP 6.9.4)
+// wp-includes/general-template.php (WP 7.0)
 if( ! function_exists( 'bloginfo' ) ) :
 	function bloginfo( $show = '' ) {
 		echo get_bloginfo( $show, 'display' );
 	}
 endif;
 
-// wp-includes/general-template.php (WP 6.9.4)
+// wp-includes/general-template.php (WP 7.0)
 if( ! function_exists( 'get_archives_link' ) ) :
 	function get_archives_link( $url, $text, $format = 'html', $before = '', $after = '', $selected = false ) {
 		$text         = wptexturize( $text );
@@ -228,7 +232,7 @@ if( ! function_exists( 'get_archives_link' ) ) :
 	}
 endif;
 
-// wp-includes/general-template.php (WP 6.9.4)
+// wp-includes/general-template.php (WP 7.0)
 if( ! function_exists( 'calendar_week_mod' ) ) :
 	function calendar_week_mod( $num ) {
 		$base = 7;
@@ -236,7 +240,7 @@ if( ! function_exists( 'calendar_week_mod' ) ) :
 	}
 endif;
 
-// wp-includes/general-template.php (WP 6.9.4)
+// wp-includes/general-template.php (WP 7.0)
 if( ! function_exists( 'allowed_tags' ) ) :
 	function allowed_tags() {
 		global $allowedtags;
@@ -254,7 +258,7 @@ if( ! function_exists( 'allowed_tags' ) ) :
 	}
 endif;
 
-// wp-includes/general-template.php (WP 6.9.4)
+// wp-includes/general-template.php (WP 7.0)
 if( ! function_exists( 'wp_head' ) ) :
 	function wp_head() {
 		/**
@@ -266,7 +270,7 @@ if( ! function_exists( 'wp_head' ) ) :
 	}
 endif;
 
-// wp-includes/general-template.php (WP 6.9.4)
+// wp-includes/general-template.php (WP 7.0)
 if( ! function_exists( 'wp_footer' ) ) :
 	function wp_footer() {
 		/**
@@ -278,7 +282,7 @@ if( ! function_exists( 'wp_footer' ) ) :
 	}
 endif;
 
-// wp-includes/general-template.php (WP 6.9.4)
+// wp-includes/general-template.php (WP 7.0)
 if( ! function_exists( 'wp_body_open' ) ) :
 	function wp_body_open() {
 		/**
@@ -290,7 +294,7 @@ if( ! function_exists( 'wp_body_open' ) ) :
 	}
 endif;
 
-// wp-includes/general-template.php (WP 6.9.4)
+// wp-includes/general-template.php (WP 7.0)
 if( ! function_exists( 'rsd_link' ) ) :
 	function rsd_link() {
 		printf(
@@ -300,7 +304,7 @@ if( ! function_exists( 'rsd_link' ) ) :
 	}
 endif;
 
-// wp-includes/general-template.php (WP 6.9.4)
+// wp-includes/general-template.php (WP 7.0)
 if( ! function_exists( 'wp_strict_cross_origin_referrer' ) ) :
 	function wp_strict_cross_origin_referrer() {
 		?>
@@ -309,7 +313,7 @@ if( ! function_exists( 'wp_strict_cross_origin_referrer' ) ) :
 	}
 endif;
 
-// wp-includes/general-template.php (WP 6.9.4)
+// wp-includes/general-template.php (WP 7.0)
 if( ! function_exists( 'wp_resource_hints' ) ) :
 	function wp_resource_hints() {
 		$hints = array(
@@ -419,7 +423,7 @@ if( ! function_exists( 'wp_resource_hints' ) ) :
 	}
 endif;
 
-// wp-includes/general-template.php (WP 6.9.4)
+// wp-includes/general-template.php (WP 7.0)
 if( ! function_exists( 'wp_preload_resources' ) ) :
 	function wp_preload_resources() {
 		/**
@@ -522,7 +526,7 @@ if( ! function_exists( 'wp_preload_resources' ) ) :
 	}
 endif;
 
-// wp-includes/general-template.php (WP 6.9.4)
+// wp-includes/general-template.php (WP 7.0)
 if( ! function_exists( 'wp_dependencies_unique_hosts' ) ) :
 	function wp_dependencies_unique_hosts() {
 		global $wp_scripts, $wp_styles;
@@ -553,7 +557,7 @@ if( ! function_exists( 'wp_dependencies_unique_hosts' ) ) :
 	}
 endif;
 
-// wp-includes/general-template.php (WP 6.9.4)
+// wp-includes/general-template.php (WP 7.0)
 if( ! function_exists( 'get_language_attributes' ) ) :
 	function get_language_attributes( $doctype = 'html' ) {
 		$attributes = array();
@@ -588,14 +592,14 @@ if( ! function_exists( 'get_language_attributes' ) ) :
 	}
 endif;
 
-// wp-includes/general-template.php (WP 6.9.4)
+// wp-includes/general-template.php (WP 7.0)
 if( ! function_exists( 'language_attributes' ) ) :
 	function language_attributes( $doctype = 'html' ) {
 		echo get_language_attributes( $doctype );
 	}
 endif;
 
-// wp-includes/general-template.php (WP 6.9.4)
+// wp-includes/general-template.php (WP 7.0)
 if( ! function_exists( 'wp_admin_css_color' ) ) :
 	function wp_admin_css_color( $key, $name, $url, $colors = array(), $icons = array() ) {
 		global $_wp_admin_css_colors;
@@ -613,35 +617,35 @@ if( ! function_exists( 'wp_admin_css_color' ) ) :
 	}
 endif;
 
-// wp-includes/general-template.php (WP 6.9.4)
+// wp-includes/general-template.php (WP 7.0)
 if( ! function_exists( 'checked' ) ) :
 	function checked( $checked, $current = true, $display = true ) {
 		return __checked_selected_helper( $checked, $current, $display, 'checked' );
 	}
 endif;
 
-// wp-includes/general-template.php (WP 6.9.4)
+// wp-includes/general-template.php (WP 7.0)
 if( ! function_exists( 'selected' ) ) :
 	function selected( $selected, $current = true, $display = true ) {
 		return __checked_selected_helper( $selected, $current, $display, 'selected' );
 	}
 endif;
 
-// wp-includes/general-template.php (WP 6.9.4)
+// wp-includes/general-template.php (WP 7.0)
 if( ! function_exists( 'disabled' ) ) :
 	function disabled( $disabled, $current = true, $display = true ) {
 		return __checked_selected_helper( $disabled, $current, $display, 'disabled' );
 	}
 endif;
 
-// wp-includes/general-template.php (WP 6.9.4)
+// wp-includes/general-template.php (WP 7.0)
 if( ! function_exists( 'wp_readonly' ) ) :
 	function wp_readonly( $readonly_value, $current = true, $display = true ) {
 		return __checked_selected_helper( $readonly_value, $current, $display, 'readonly' );
 	}
 endif;
 
-// wp-includes/general-template.php (WP 6.9.4)
+// wp-includes/general-template.php (WP 7.0)
 if( ! function_exists( '__checked_selected_helper' ) ) :
 	function __checked_selected_helper( $helper, $current, $display, $type ) { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionDoubleUnderscore,PHPCompatibility.FunctionNameRestrictions.ReservedFunctionNames.FunctionDoubleUnderscore
 		if ( (string) $helper === (string) $current ) {
@@ -658,7 +662,7 @@ if( ! function_exists( '__checked_selected_helper' ) ) :
 	}
 endif;
 
-// wp-includes/general-template.php (WP 6.9.4)
+// wp-includes/general-template.php (WP 7.0)
 if( ! function_exists( 'wp_required_field_indicator' ) ) :
 	function wp_required_field_indicator() {
 		/* translators: Character to identify required form fields. */
@@ -676,7 +680,7 @@ if( ! function_exists( 'wp_required_field_indicator' ) ) :
 	}
 endif;
 
-// wp-includes/general-template.php (WP 6.9.4)
+// wp-includes/general-template.php (WP 7.0)
 if( ! function_exists( 'wp_required_field_message' ) ) :
 	function wp_required_field_message() {
 		$message = sprintf(

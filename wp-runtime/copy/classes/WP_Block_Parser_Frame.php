@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-block-parser-frame.php (WP 6.9.4)
+// wp-includes/class-wp-block-parser-frame.php (WP 7.0)
 if( ! class_exists( 'WP_Block_Parser_Frame' ) ) :
 	class WP_Block_Parser_Frame {
 		/**
@@ -64,7 +64,7 @@ if( ! class_exists( 'WP_Block_Parser_Frame' ) ) :
 			$this->block              = $block;
 			$this->token_start        = $token_start;
 			$this->token_length       = $token_length;
-			$this->prev_offset        = isset( $prev_offset ) ? $prev_offset : $token_start + $token_length;
+			$this->prev_offset        = $prev_offset ?? $token_start + $token_length;
 			$this->leading_html_start = $leading_html_start;
 		}
 	}

@@ -2,14 +2,14 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/utf8.php (WP 6.9.4)
+// wp-includes/utf8.php (WP 7.0)
 if( ! function_exists( 'wp_is_valid_utf8' ) ) :
 		function wp_is_valid_utf8( string $bytes ): bool {
 			return mb_check_encoding( $bytes, 'UTF-8' );
 		}
 endif;
 
-// wp-includes/utf8.php (WP 6.9.4)
+// wp-includes/utf8.php (WP 7.0)
 if( ! function_exists( 'wp_scrub_utf8' ) ) :
 		function wp_scrub_utf8( $text ) {
 			/*
@@ -27,7 +27,7 @@ if( ! function_exists( 'wp_scrub_utf8' ) ) :
 		}
 endif;
 
-// wp-includes/utf8.php (WP 6.9.4)
+// wp-includes/utf8.php (WP 7.0)
 if( ! function_exists( 'wp_has_noncharacters' ) ) :
 		function wp_has_noncharacters( string $text ): bool {
 			return 1 === preg_match(

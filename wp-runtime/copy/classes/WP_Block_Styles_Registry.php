@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-block-styles-registry.php (WP 6.9.4)
+// wp-includes/class-wp-block-styles-registry.php (WP 7.0)
 if( ! class_exists( 'WP_Block_Styles_Registry' ) ) :
 	class WP_Block_Styles_Registry {
 		/**
@@ -161,10 +161,7 @@ if( ! class_exists( 'WP_Block_Styles_Registry' ) ) :
 		 * @return array[] Array whose keys are block style names and whose values are block style properties.
 		 */
 		public function get_registered_styles_for_block( $block_name ) {
-			if ( isset( $this->registered_block_styles[ $block_name ] ) ) {
-				return $this->registered_block_styles[ $block_name ];
-			}
-			return array();
+			return $this->registered_block_styles[ $block_name ] ?? array();
 		}
 	
 		/**
