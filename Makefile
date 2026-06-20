@@ -26,18 +26,21 @@ parser.run:
 # make release WP_LINE=6.8 NOT_PUSH=1
 release:
 	WP_LINE="$(WP_LINE)" NOT_PUSH="$(NOT_PUSH)" bash releaser/release.sh
+
+WP_LINES := $(notdir $(patsubst %/,%,$(wildcard wp-runtime/wp-line-extra/*/)))
 release.all:
 	@status=0; \
-	for wp_line in 6.5 6.6 6.7 6.8 6.9; do \
+	for wp_line in $(WP_LINES); do \
 		echo "== release $$wp_line =="; \
 		$(MAKE) release WP_LINE="$$wp_line" || status=1; \
 		echo; \
 	done; \
 	exit $$status
 
-# make worktrees.run cmd="git status --short"
+
+# make worktrees.git.status cmd="git status --short"
 WORKTREE_DIRS := $(sort $(wildcard worktrees/wp-*))
-worktrees.run:
+worktrees.git.status:
 	@if [ -z "$(cmd)" ]; then \
 		echo 'Use: make worktrees-run cmd="git status --short"'; \
 		exit 1; \

@@ -20,10 +20,10 @@ Run parser with:
 ## What Parser Generates
 
 `parser/run.php` builds `Updater`, which:
-- reads configured WP source files/classes/methods;
-- extracts selected top-level functions/classes;
+- reads configured WP source files, classes, methods;
+- extracts selected top-level functions, classes;
 - updates generated content after `// ------------------auto-generated---------------------`;
-- wraps copied symbols with `function_exists`/`class_exists` guards;
+- wraps copied symbols with `function_exists` or `class_exists` guards;
 - skips symbols whose `<since-version>` is higher than current `wp_version`;
 - applies post-processing via `Source_Code_Replacer`:
   - option-call rewrites to `$GLOBALS['stub_wp_options']`;

@@ -39,17 +39,17 @@ fi
 
 ### MAIN FLOW
 
-cecho cyan "[STEP] Switch WP to ${WP_LINE}.*"
+cecho cyan "➜ Switch WP to ${WP_LINE}.*"
 run_php "composer require --dev wordpress/wordpress:${WP_LINE}.*  --no-interaction --no-update"
 run_php "composer update wordpress/wordpress  --no-interaction --with-dependencies"
 
-cecho cyan "[STEP] Run parser"
+cecho cyan "➜ Run parser"
 run_php "php parser/run.php"
 
-cecho cyan "[STEP] Run tests"
+cecho cyan "➜ Run tests"
 run_php "composer run phpunit -- --colors=always"
 
-cecho cyan "[STEP] Create/Reuse WORKTREE ${WORKTREE_DIR_REL}"
+cecho cyan "➜ Create/Reuse WORKTREE ${WORKTREE_DIR_REL}"
 git worktree prune --expire now >/dev/null 2>&1
 if git worktree list --porcelain | grep -Fqx "worktree ${WORKTREE_DIR}"; then
 	worktree_branch="$(git -C "${WORKTREE_DIR}" rev-parse --abbrev-ref HEAD)"
@@ -61,20 +61,24 @@ else
 	git worktree add "${WORKTREE_DIR}" "${WP_LINE_BRANCH}" >/dev/null
 fi
 
-cecho cyan "[STEP] Copy to WORKTREE ${WORKTREE_DIR_REL}"
-rm -rf "${WORKTREE_DIR}/wp-runtime"
-cp -a zero.php wp-runtime "${WORKTREE_DIR}/"
+# copy
+cecho cyan "➜ Copy to WORKTREE ${WORKTREE_DIR_REL}"
+cp -a "zero.php" "${WORKTREE_DIR}/"
+rsync -a --delete --delete-excluded \
+	--include="/wp-line-extra/${WP_LINE}/***" \
+	--exclude="/wp-line-extra/*" \
+	"wp-runtime/" "${WORKTREE_DIR}/wp-runtime/"
 
-cecho cyan "[STEP] Reset all changes in current branch"
+cecho cyan "➜ Reset all changes in current branch"
 git reset --hard HEAD
 run_php "composer install" # NOTE: to not change lock file
 
 if [[ -n "${NOT_PUSH}" ]]; then
-	cecho yellow "[STEP] Commit/tag/push skipped."
+	cecho yellow "➜ Commit/tag/push skipped."
 	exit 0
 fi
 
-cecho cyan "[STEP] Commit to WORKTREE ${WORKTREE_DIR_REL} and add TAG ${RELEASE_TAG}"
+cecho cyan "➜ Commit to WORKTREE ${WORKTREE_DIR_REL} and add TAG ${RELEASE_TAG}"
 git -C "${WORKTREE_DIR}" add zero.php wp-runtime
 
 if git -C "${WORKTREE_DIR}" diff --cached --quiet; then

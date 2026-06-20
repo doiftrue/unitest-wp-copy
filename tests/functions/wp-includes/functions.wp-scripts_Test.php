@@ -20,6 +20,10 @@ class functions_wp_scripts_Test extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function test___wp_scripts_add_args_data() {
+		if( $wp_ver = wp_version_compare( '< 7.0' ) ){
+			$this->markTestSkipped( "_wp_scripts_add_args_data() not exists on WP $wp_ver" );
+		}
+
 		$wp_scripts = new WP_Scripts();
 		$wp_scripts->add( 'script-args', '/assets/args.js' );
 

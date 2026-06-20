@@ -22,9 +22,7 @@ class Updater {
 
 	public function run(): void {
 		$this->symbols_copier->run();
-
 		$this->files_copier->run();
-
 		echo "DONE!\n";
 	}
 
