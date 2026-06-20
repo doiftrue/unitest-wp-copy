@@ -1,6 +1,6 @@
 <?php
 /**
- * Copy of init part of wp-includes/plugin.php from WordPress 6.9.4
+ * Copy of init part of wp-includes/plugin.php from WordPress 7.0
  */
 
 /**
