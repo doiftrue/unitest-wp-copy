@@ -24,31 +24,6 @@ if( ! function_exists( 'admin_url' ) ) :
 endif;
 
 // wp-includes/link-template.php (WP 7.0)
-if( ! function_exists( 'get_admin_url' ) ) :
-	function get_admin_url( $blog_id = null, $path = '', $scheme = 'admin' ) {
-		$url = get_site_url( $blog_id, 'wp-admin/', $scheme );
-	
-		if ( $path && is_string( $path ) ) {
-			$url .= ltrim( $path, '/' );
-		}
-	
-		/**
-		 * Filters the admin area URL.
-		 *
-		 * @since 2.8.0
-		 * @since 5.8.0 The `$scheme` parameter was added.
-		 *
-		 * @param string      $url     The complete admin area URL including scheme and path.
-		 * @param string      $path    Path relative to the admin area URL. Blank string if no path is specified.
-		 * @param int|null    $blog_id Site ID, or null for the current site.
-		 * @param string|null $scheme  The scheme to use. Accepts 'http', 'https',
-		 *                             'admin', or null. Default 'admin', which obeys force_ssl_admin() and is_ssl().
-		 */
-		return apply_filters( 'admin_url', $url, $path, $blog_id, $scheme );
-	}
-endif;
-
-// wp-includes/link-template.php (WP 7.0)
 if( ! function_exists( 'wp_internal_hosts' ) ) :
 	function wp_internal_hosts() {
 		static $internal_hosts;
