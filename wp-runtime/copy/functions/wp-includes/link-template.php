@@ -17,6 +17,13 @@ if( ! function_exists( 'site_url' ) ) :
 endif;
 
 // wp-includes/link-template.php (WP 7.0)
+if( ! function_exists( 'admin_url' ) ) :
+	function admin_url( $path = '', $scheme = 'admin' ) {
+		return get_admin_url( null, $path, $scheme );
+	}
+endif;
+
+// wp-includes/link-template.php (WP 7.0)
 if( ! function_exists( 'wp_internal_hosts' ) ) :
 	function wp_internal_hosts() {
 		static $internal_hosts;
