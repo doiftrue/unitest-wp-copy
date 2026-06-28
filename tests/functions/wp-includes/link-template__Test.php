@@ -55,6 +55,34 @@ class link_template__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( 'http://unitest-wp-copy.loc/a', get_site_url( null, 'a', 'http' ) );
 	}
 
+	public function test__admin_url() {
+		$this->assertSame( 'https://unitest-wp-copy.loc/wp-admin/', admin_url() );
+		$this->assertSame( '/wp-admin/tools.php', admin_url( '/tools.php', 'relative' ) );
+	}
+
+	public function test__get_admin_url() {
+		$filter_args = [];
+
+		add_filter(
+			'admin_url',
+			static function ( $url, $path, $blog_id, $scheme ) use ( &$filter_args ) {
+				$filter_args = [ $url, $path, $blog_id, $scheme ];
+				return $url . '?filtered=1';
+			},
+			10,
+			4
+		);
+
+		$this->assertSame(
+			'http://unitest-wp-copy.loc/wp-admin/options.php?filtered=1',
+			get_admin_url( 42, '/options.php', 'http' )
+		);
+		$this->assertSame(
+			[ 'http://unitest-wp-copy.loc/wp-admin/options.php', '/options.php', 42, 'http' ],
+			$filter_args
+		);
+	}
+
 	public function test__includes_url() {
 		$this->assertStringContainsString( '/wp-includes/x.js', includes_url( 'x.js' ) );
 	}

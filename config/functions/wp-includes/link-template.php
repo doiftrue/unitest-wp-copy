@@ -5,6 +5,8 @@ return [
 	'get_home_url'        => '3.0.0 mockable',
 	'site_url'            => '3.0.0',
 	'get_site_url'        => '3.0.0 mockable',
+	'admin_url'           => '2.6.0',
+	'get_admin_url'       => '3.0.0 mockable',
 	'wp_internal_hosts'   => '6.2.0',
 	'wp_is_internal_link' => '6.2.0',
 	'set_url_scheme'      => '3.4.0',
@@ -25,7 +27,6 @@ _navigation_markup               // why: depends on theme/template rendering con
 adjacent_post_link               // why: requires post loop/query runtime.
 adjacent_posts_rel_link          // why: requires post loop/query runtime.
 adjacent_posts_rel_link_wp_head  // why: wp_head/output hook dependency.
-admin_url                        // why: admin bootstrap/runtime dependency.
 edit_bookmark_link               // why: admin capability/bookmark runtime dependency.
 edit_comment_link                // why: comment/capability runtime dependency.
 edit_post_link                   // why: post/capability runtime dependency.
@@ -34,7 +35,6 @@ edit_term_link                   // why: taxonomy/admin runtime dependency.
 get_adjacent_post                // why: DB/query runtime dependency.
 get_adjacent_post_link           // why: DB/query runtime dependency.
 get_adjacent_post_rel_link       // why: DB/query runtime dependency.
-get_admin_url                    // why: admin bootstrap/runtime dependency.
 get_attachment_link              // why: attachment/post runtime dependency.
 get_author_feed_link             // why: author query runtime dependency.
 get_avatar_data                  // why: user/avatar runtime dependency chain.
