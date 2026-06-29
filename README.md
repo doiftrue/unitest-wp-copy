@@ -116,28 +116,34 @@ require_once __DIR__ . '/vendor/autoload.php';
 \Unitest_WP_Copy\Bootstrap::init();
 ```
 
+### Redefine Runtime Globals
+
 Runtime globals initialized or updated by bootstrap (shared in one PHP process):
-- `$GLOBALS['stub_wp_options']`
-- `$GLOBALS['timestart']`
-- `$_SERVER['HTTP_HOST']`
-- `$blog_id`
-- `$wp_plugin_paths`
-- `$shortcode_tags`
-- `$wp_locale`
-- `$wp_post_types`
-- `$wp_taxonomies`
-- `$wp_filter`
-- `$wp_actions`
-- `$wp_filters`
-- `$wp_current_filter`
-- `$allowedposttags`
-- `$allowedtags`
-- `$allowedentitynames`
-- `$allowedxmlentitynames`
-- `$wpsmiliestrans`
-- `$wp_smiliessearch`
+```php
+$GLOBALS['stub_wp_options']
+$GLOBALS['timestart']
+$_SERVER['HTTP_HOST']
+$blog_id
+$wp_plugin_paths
+$shortcode_tags
+$wp_locale
+$wp_post_types
+$wp_taxonomies
+$wp_filter
+$wp_actions
+$wp_filters
+$wp_current_filter
+$allowedposttags
+$allowedtags
+$allowedentitynames
+$allowedxmlentitynames
+$wpsmiliestrans
+$wp_smiliessearch
+```
 
 If a test mutates these globals/options, restore them in `setUp()` / `tearDown()`.
+
+### Redefine Constants
 
 Constants you can predefine before bootstrap:
 
@@ -185,12 +191,14 @@ WP_CRON_LOCK_TIMEOUT
 CUSTOM_TAGS
 ```
 
+### Redefine functions
+
 Copied functions are wrapped with `if ( ! function_exists( '...' ) )`, so you can override specific functions by defining them before bootstrap init.
 
 
 
-Use It When / Do Not Use It When
---------------------------------
+When to Use It
+--------------
 Use it when:
 - you need real behavior of selected WP functions/classes in plain PHPUnit;
 - your tested code mostly depends on WP pure-PHP logic.
@@ -198,6 +206,7 @@ Use it when:
 Do not use it when:
 - you need a full WordPress runtime and bootstrap;
 - your test mostly depends on real DB/network/filesystem-heavy WP behavior.
+
 
 
 WP_Mock Integration (Optional)
@@ -215,16 +224,16 @@ class ExampleTest extends \PHPUnit\Framework\TestCase {
 
 	protected function setUp(): void {
 		parent::setUp();
-		\WP_Mock::setUp();
+		WP_Mock::setUp();
 	}
 
 	protected function tearDown(): void {
-		\WP_Mock::tearDown();
+		WP_Mock::tearDown();
 		parent::tearDown();
 	}
 
 	public function test__is_multisite_mocked() {
-		\WP_Mock::userFunction( 'is_multisite', [ 'return' => true ] );
+		WP_Mock::userFunction( 'is_multisite' )->andReturn( true );
 		$this->assertTrue( is_multisite() );
 	}
 }
