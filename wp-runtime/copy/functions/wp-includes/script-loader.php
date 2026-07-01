@@ -253,3 +253,101 @@ if( ! function_exists( '_wp_normalize_relative_css_links' ) ) :
 	}
 endif;
 
+// wp-includes/script-loader.php (WP 7.0)
+if( ! function_exists( 'wp_js_dataset_name' ) ) :
+	function wp_js_dataset_name( string $html_attribute_name ): ?string {
+		if ( 0 !== substr_compare( $html_attribute_name, 'data-', 0, 5, true ) ) {
+			return null;
+		}
+	
+		$end = strlen( $html_attribute_name );
+	
+		/*
+		 * If it contains characters which would end the attribute name parsing then
+		 * something else is wrong and this contains more than just an attribute name.
+		 */
+		if ( ( $end - 5 ) !== strcspn( $html_attribute_name, "=/> \t\f\r\n", 5 ) ) {
+			return null;
+		}
+	
+		/**
+		 * > For each name in list, for each U+002D HYPHEN-MINUS character (-)
+		 * > in the name that is followed by an ASCII lower alpha, remove the
+		 * > U+002D HYPHEN-MINUS character (-) and replace the character that
+		 * > followed it by the same character converted to ASCII uppercase.
+		 *
+		 * @see https://html.spec.whatwg.org/#concept-domstringmap-pairs
+		 */
+		$custom_name = '';
+		$at          = 5;
+		$was_at      = $at;
+	
+		while ( $at < $end ) {
+			$next_dash_at = strpos( $html_attribute_name, '-', $at );
+			if ( false === $next_dash_at || $next_dash_at === $end - 1 ) {
+				break;
+			}
+	
+			// Transform `-a` to `A`, for example.
+			$c = $html_attribute_name[ $next_dash_at + 1 ];
+			if ( ( $c >= 'A' && $c <= 'Z' ) || ( $c >= 'a' && $c <= 'z' ) ) {
+				$prefix       = substr( $html_attribute_name, $was_at, $next_dash_at - $was_at );
+				$custom_name .= strtolower( $prefix );
+				$custom_name .= strtoupper( $c );
+				$at           = $next_dash_at + 2;
+				$was_at       = $at;
+				continue;
+			}
+	
+			$at = $next_dash_at + 1;
+		}
+	
+		// If nothing has been added it means there are no dash-letter pairs; return the name as-is.
+		return '' === $custom_name
+			? strtolower( substr( $html_attribute_name, 5 ) )
+			: ( $custom_name . strtolower( substr( $html_attribute_name, $was_at ) ) );
+	}
+endif;
+
+// wp-includes/script-loader.php (WP 7.0)
+if( ! function_exists( 'wp_html_custom_data_attribute_name' ) ) :
+	function wp_html_custom_data_attribute_name( string $js_dataset_name ): ?string {
+		$end = strlen( $js_dataset_name );
+		if ( 0 === $end ) {
+			return 'data-';
+		}
+	
+		/*
+		 * If it contains characters which would end the attribute name parsing then
+		 * something it’s not possible to represent this in HTML.
+		 */
+		if ( strcspn( $js_dataset_name, "=/> \t\f\r\n" ) !== $end ) {
+			return null;
+		}
+	
+		$html_name = 'data-';
+		$at        = 0;
+		$was_at    = $at;
+	
+		while ( $at < $end ) {
+			$next_upper_after = strcspn( $js_dataset_name, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', $at );
+			$next_upper_at    = $at + $next_upper_after;
+			if ( $next_upper_at >= $end ) {
+				break;
+			}
+	
+			$prefix     = substr( $js_dataset_name, $was_at, $next_upper_at - $was_at );
+			$html_name .= strtolower( $prefix );
+			$html_name .= '-' . strtolower( $js_dataset_name[ $next_upper_at ] );
+			$at         = $next_upper_at + 1;
+			$was_at     = $at;
+		}
+	
+		if ( $was_at < $end ) {
+			$html_name .= strtolower( substr( $js_dataset_name, $was_at ) );
+		}
+	
+		return $html_name;
+	}
+endif;
+
