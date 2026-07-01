@@ -68,7 +68,7 @@ class Symbols_Lister {
 			'{COPIED_LIST}'   => $copied_names ? implode( "\n", $copied_names ) : '(none)',
 		] );
 
-		file_put_contents( "$config->runtime_dir/$this->doc_file_name", $this->content );
+		file_put_contents( "$config->runtime_dir/$this->doc_file_name", "$this->content\n" );
 	}
 
 	private function get_mock_function_names( string $mocks_dir ): array {

@@ -35,6 +35,18 @@ Parser-specific flow is described in [parser.md](parser.md).
 - Keep functions isolated in tests; avoid multi-function combined assertions that hide failing symbol behavior.
 
 
+## WordPress Version Compatibility
+
+- If a copied symbol was introduced after an older supported WordPress line, skip its test when that symbol does not exist in the tested WordPress version.
+- Put the version check at the start of the dedicated test method and use the symbol's exact `since` version from config:
+
+```php
+if( $wp_ver = wp_version_compare( '< 6.7.0' ) ){
+	$this->markTestSkipped( "WP_HTML_Doctype_Info{} not exists on WP $wp_ver" );
+}
+```
+
+
 ## Class Independence Rule
 
 For class tests:
