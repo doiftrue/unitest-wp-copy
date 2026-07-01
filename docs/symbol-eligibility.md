@@ -30,11 +30,43 @@ Dependency documents:
 
 1. Select candidate symbols from a concrete `wp-core` file.
 2. Validate symbol eligibility using rules in this document.
-3. Update parser config for target WP line using rules from [config.md](config.md).
-4. Regenerate copies: `make parser.run`.
-5. Add/update tests following [tests.md](tests.md).
-6. Run full test suite: `make phpunit`.
-7. If symbol remains incompatible, keep it disabled/commented in config with reason.
+3. For every eligible function, run the Auto-Mockable Review below.
+4. Update parser config for target WP line using rules from [config.md](config.md).
+5. Regenerate copies: `make parser.run`.
+6. Add/update tests following [tests.md](tests.md).
+7. Run full test suite: `make phpunit`.
+8. If symbol remains incompatible, keep it disabled/commented in config with reason.
+
+
+## Auto-Mockable Review
+
+Review every eligible function for `mockable`; do not assume a regular copy by default.
+
+Mark a function `mockable` when all of the following are true:
+- its original WP implementation is dependency-safe and useful as the default fallback;
+- it is a boundary that code under test may reasonably need to override, such as an environment, runtime-state, configuration, clock, locale, URL, registry, or feature-state provider;
+- callers should be able to control its result without constructing or mutating the complete WP runtime state;
+- overriding it does not require behavior different from its WP contract.
+
+Prefer the lowest shared boundary in a delegation chain. For example, make
+`get_admin_url()` mockable while keeping `admin_url()` regular: the wrapper retains
+the original WP delegation and receives the configured `get_admin_url()` result.
+Do not automatically mark every wrapper and caller in the chain as mockable.
+
+Keep a function regular when its result is determined entirely by its arguments and
+available deterministic helpers, or when normal filters/actions already provide the
+intended test seam without requiring unavailable runtime state.
+
+`mockable` is not a compatibility workaround:
+- if the original logic requires unsupported runtime behavior, reject the symbol;
+- if the runtime implementation must intentionally differ from WP core, use a manual
+  mock in `wp-runtime/mocks/*`;
+- do not use `mockable` only to hide missing transitive dependencies or fatal default
+  behavior.
+
+For each function selected as `mockable`, tests must prove both paths:
+- original WP fallback behavior when no handler is registered;
+- `WP_Mock::userFunction(...)` override behavior.
 
 
 ## Workflow: Auto-Mockable Functions

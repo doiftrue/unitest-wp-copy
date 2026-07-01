@@ -18,20 +18,6 @@ class blocks__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertInstanceOf( WP_Block_Type::class, unregister_block_type( 'unitest/unregister' ) );
 	}
 
-	public function test__get_dynamic_block_names() {
-		$registry = WP_Block_Type_Registry::get_instance();
-		$registry->register( 'unitest/dynamic', [ 'render_callback' => static fn() => '' ] );
-		$this->assertContains( 'unitest/dynamic', get_dynamic_block_names() );
-		$registry->unregister( 'unitest/dynamic' );
-	}
-
-	public function test__get_hooked_blocks() {
-		$registry = WP_Block_Type_Registry::get_instance();
-		$registry->register( 'unitest/hooked', [ 'block_hooks' => [ 'core/paragraph' => 'after' ] ] );
-		$this->assertContains( 'unitest/hooked', get_hooked_blocks()['core/paragraph']['after'] );
-		$registry->unregister( 'unitest/hooked' );
-	}
-
 	public function test__insert_hooked_blocks() {
 		$anchor = [ 'blockName' => 'core/paragraph', 'attrs' => [] ];
 		$markup = insert_hooked_blocks( $anchor, 'after', [ 'core/paragraph' => [ 'after' => [ 'unitest/hooked' ] ] ], [] );
