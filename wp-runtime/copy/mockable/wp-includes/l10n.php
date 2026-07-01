@@ -3,6 +3,21 @@
 // ------------------auto-generated---------------------
 
 // wp-includes/l10n.php (WP 6.7.5)
+if( ! function_exists( 'is_rtl' ) ) :
+	function is_rtl() {
+		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+	
+		global $wp_locale;
+		if ( ! ( $wp_locale instanceof WP_Locale ) ) {
+			return false;
+		}
+		return $wp_locale->is_rtl();
+	}
+endif;
+
+// wp-includes/l10n.php (WP 6.7.5)
 if( ! function_exists( 'get_locale' ) ) :
 	function get_locale() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
