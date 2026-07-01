@@ -32,17 +32,6 @@ if( ! function_exists( '_nx_noop' ) ) :
 endif;
 
 // wp-includes/l10n.php (WP 6.5.8)
-if( ! function_exists( 'is_rtl' ) ) :
-	function is_rtl() {
-		global $wp_locale;
-		if ( ! ( $wp_locale instanceof WP_Locale ) ) {
-			return false;
-		}
-		return $wp_locale->is_rtl();
-	}
-endif;
-
-// wp-includes/l10n.php (WP 6.5.8)
 if( ! function_exists( 'translate_nooped_plural' ) ) :
 	function translate_nooped_plural( $nooped_plural, $count, $domain = 'default' ) {
 		if ( $nooped_plural['domain'] ) {

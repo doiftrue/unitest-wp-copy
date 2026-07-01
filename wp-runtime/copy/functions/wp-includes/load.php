@@ -3,32 +3,6 @@
 // ------------------auto-generated---------------------
 
 // wp-includes/load.php (WP 6.5.8)
-if( ! function_exists( 'get_current_blog_id' ) ) :
-	function get_current_blog_id() {
-		global $blog_id;
-	
-		return absint( $blog_id );
-	}
-endif;
-
-// wp-includes/load.php (WP 6.5.8)
-if( ! function_exists( 'get_current_network_id' ) ) :
-	function get_current_network_id() {
-		if ( ! is_multisite() ) {
-			return 1;
-		}
-	
-		$current_network = get_network();
-	
-		if ( ! isset( $current_network->id ) ) {
-			return get_main_network_id();
-		}
-	
-		return absint( $current_network->id );
-	}
-endif;
-
-// wp-includes/load.php (WP 6.5.8)
 if( ! function_exists( 'wp_convert_hr_to_bytes' ) ) :
 	function wp_convert_hr_to_bytes( $value ) {
 		$value = strtolower( trim( $value ) );
@@ -97,13 +71,6 @@ if( ! function_exists( 'is_wp_error' ) ) :
 endif;
 
 // wp-includes/load.php (WP 6.5.8)
-if( ! function_exists( 'timer_float' ) ) :
-	function timer_float() {
-		return microtime( true ) - $_SERVER['REQUEST_TIME_FLOAT'];
-	}
-endif;
-
-// wp-includes/load.php (WP 6.5.8)
 if( ! function_exists( 'timer_start' ) ) :
 	function timer_start() {
 		global $timestart;
@@ -111,28 +78,6 @@ if( ! function_exists( 'timer_start' ) ) :
 		$timestart = microtime( true );
 	
 		return true;
-	}
-endif;
-
-// wp-includes/load.php (WP 6.5.8)
-if( ! function_exists( 'timer_stop' ) ) :
-	function timer_stop( $display = 0, $precision = 3 ) {
-		global $timestart, $timeend;
-	
-		$timeend   = microtime( true );
-		$timetotal = $timeend - $timestart;
-	
-		if ( function_exists( 'number_format_i18n' ) ) {
-			$r = number_format_i18n( $timetotal, $precision );
-		} else {
-			$r = number_format( $timetotal, $precision );
-		}
-	
-		if ( $display ) {
-			echo $r;
-		}
-	
-		return $r;
 	}
 endif;
 

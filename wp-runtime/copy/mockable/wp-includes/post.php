@@ -3,6 +3,38 @@
 // ------------------auto-generated---------------------
 
 // wp-includes/post.php (WP 6.5.8)
+if( ! function_exists( 'get_post_status_object' ) ) :
+	function get_post_status_object( $post_status ) {
+		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+	
+		global $wp_post_statuses;
+	
+		if ( empty( $wp_post_statuses[ $post_status ] ) ) {
+			return null;
+		}
+	
+		return $wp_post_statuses[ $post_status ];
+	}
+endif;
+
+// wp-includes/post.php (WP 6.5.8)
+if( ! function_exists( 'get_post_stati' ) ) :
+	function get_post_stati( $args = array(), $output = 'names', $operator = 'and' ) {
+		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+	
+		global $wp_post_statuses;
+	
+		$field = ( 'names' === $output ) ? 'name' : false;
+	
+		return wp_filter_object_list( $wp_post_statuses, $args, $operator, $field );
+	}
+endif;
+
+// wp-includes/post.php (WP 6.5.8)
 if( ! function_exists( 'is_post_type_hierarchical' ) ) :
 	function is_post_type_hierarchical( $post_type ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -58,6 +90,51 @@ if( ! function_exists( 'get_post_types' ) ) :
 		$field = ( 'names' === $output ) ? 'name' : false;
 	
 		return wp_filter_object_list( $wp_post_types, $args, $operator, $field );
+	}
+endif;
+
+// wp-includes/post.php (WP 6.5.8)
+if( ! function_exists( 'get_all_post_type_supports' ) ) :
+	function get_all_post_type_supports( $post_type ) {
+		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+	
+		global $_wp_post_type_features;
+	
+		if ( isset( $_wp_post_type_features[ $post_type ] ) ) {
+			return $_wp_post_type_features[ $post_type ];
+		}
+	
+		return array();
+	}
+endif;
+
+// wp-includes/post.php (WP 6.5.8)
+if( ! function_exists( 'post_type_supports' ) ) :
+	function post_type_supports( $post_type, $feature ) {
+		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+	
+		global $_wp_post_type_features;
+	
+		return ( isset( $_wp_post_type_features[ $post_type ][ $feature ] ) );
+	}
+endif;
+
+// wp-includes/post.php (WP 6.5.8)
+if( ! function_exists( 'get_post_types_by_support' ) ) :
+	function get_post_types_by_support( $feature, $operator = 'and' ) {
+		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+	
+		global $_wp_post_type_features;
+	
+		$features = array_fill_keys( (array) $feature, true );
+	
+		return array_keys( wp_filter_object_list( $_wp_post_type_features, $features, $operator ) );
 	}
 endif;
 
