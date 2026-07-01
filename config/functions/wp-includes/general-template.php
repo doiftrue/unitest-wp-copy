@@ -27,12 +27,8 @@ return [
 	'__checked_selected_helper'      => '2.8.0',
 	'wp_required_field_indicator'    => '6.1.0',
 	'wp_required_field_message'      => '6.1.0',
+	// 'get_bloginfo' => '', // why: custom mock
 ];
-
-/*
-Custom mocks:
-get_bloginfo  // why: mocked
-*/
 
 
 /*

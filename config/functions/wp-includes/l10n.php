@@ -9,17 +9,17 @@ return [
 	'wp_get_list_item_separator' => '6.0.0',
 	'wp_get_word_count_type'     => '6.2.0',
 	'before_last_bar'            => '2.8.0',
-	// '__'         => '', // custom mock
-	// '_e'         => '', // custom mock
-	// '_x'         => '', // custom mock
-	// '_n'         => '', // custom mock
-	// '_nx'        => '', // custom mock
-	// 'esc_html__' => '', // custom mock
-	// 'esc_html_e' => '', // custom mock
-	// 'esc_html_x' => '', // custom mock
-	// 'esc_attr__' => '', // custom mock
-	// 'esc_attr_e' => '', // custom mock
-	// 'esc_attr_x' => '', // custom mock
+	// '__'         => '', // why: custom mock
+	// '_e'         => '', // why: custom mock
+	// '_x'         => '', // why: custom mock
+	// '_n'         => '', // why: custom mock
+	// '_nx'        => '', // why: custom mock
+	// 'esc_html__' => '', // why: custom mock
+	// 'esc_html_e' => '', // why: custom mock
+	// 'esc_html_x' => '', // why: custom mock
+	// 'esc_attr__' => '', // why: custom mock
+	// 'esc_attr_e' => '', // why: custom mock
+	// 'esc_attr_x' => '', // why: custom mock
 ];
 
 /*

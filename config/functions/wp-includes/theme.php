@@ -16,10 +16,10 @@ return [
 	'get_template'                  => '1.5.0 mockable',
 	'get_stylesheet_uri'            => '1.5.0',
 	'get_locale_stylesheet_uri'     => '2.1.0',
-	// 'get_stylesheet_directory'     => '', // custom mock
-	// 'get_stylesheet_directory_uri' => '', // custom mock
-	// 'get_template_directory'       => '', // custom mock
-	// 'get_template_directory_uri'   => '', // custom mock
+	// 'get_stylesheet_directory'     => '', // why: custom mock
+	// 'get_stylesheet_directory_uri' => '', // why: custom mock
+	// 'get_template_directory'       => '', // why: custom mock
+	// 'get_template_directory_uri'   => '', // why: custom mock
 ];
 
 /*

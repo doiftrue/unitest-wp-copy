@@ -79,6 +79,31 @@ Static methods compatibility:
 
 - If a function/class is not suitable, keep it commented in config; do not delete it.
 - In comments, list exact symbol names (for example `wp_get_theme`), not wildcard masks.
-- For both function and class configs, keep checked but unused/disabled symbols in a dedicated block comment (`/* ... */`) under the array (at file end), in format `SymbolName  // why: <reason>`.
 - Keep the reason short and specific to the incompatible dependency/runtime chain.
+
+A symbol in a config file can be in one of three states:
+
+1. **Active** — present as an array key:
+   ```php
+   'trailingslashit' => '1.2.0',
+   ```
+
+2. **Disabled inline** — commented-out array entry (has custom mock or is temporarily disabled):
+   ```php
+   // 'get_stylesheet_directory' => '', // why: custom mock
+   ```
+
+3. **Rejected in block** — listed in a dedicated `/* ... */` block comment after the array (ineligible for this runtime):
+   ```php
+   /*
+   Not suitable in isolated PHPUnit env:
+
+   esc_sql           // why: depends on $wpdb
+   sanitize_option   // why: depends on $wpdb + options/roles/i18n runtime chain
+   */
+   ```
+
+When to use each:
+- **Disabled inline**: symbol has a manual mock in `wp-runtime/mocks/*`. Stays inside the array region for visibility.
+- **Rejected in block**: symbol was analyzed and found permanently ineligible for this runtime. Grouped at file end to keep the active array clean.
 
