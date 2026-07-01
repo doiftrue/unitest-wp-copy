@@ -24,6 +24,63 @@ if( ! function_exists( 'admin_url' ) ) :
 endif;
 
 // wp-includes/link-template.php (WP 7.0)
+if( ! function_exists( '_navigation_markup' ) ) :
+	function _navigation_markup( $links, $css_class = 'posts-navigation', $screen_reader_text = '', $aria_label = '' ) {
+		if ( empty( $screen_reader_text ) ) {
+			$screen_reader_text = /* translators: Hidden accessibility text. */ __( 'Posts navigation' );
+		}
+		if ( empty( $aria_label ) ) {
+			$aria_label = $screen_reader_text;
+		}
+	
+		$template = '
+		<nav class="navigation %1$s" aria-label="%4$s">
+			<h2 class="screen-reader-text">%2$s</h2>
+			<div class="nav-links">%3$s</div>
+		</nav>';
+	
+		/**
+		 * Filters the navigation markup template.
+		 *
+		 * Note: The filtered template HTML must contain specifiers for the navigation
+		 * class (%1$s), the screen-reader-text value (%2$s), placement of the navigation
+		 * links (%3$s), and ARIA label text if screen-reader-text does not fit that (%4$s):
+		 *
+		 *     <nav class="navigation %1$s" aria-label="%4$s">
+		 *         <h2 class="screen-reader-text">%2$s</h2>
+		 *         <div class="nav-links">%3$s</div>
+		 *     </nav>
+		 *
+		 * @since 4.4.0
+		 *
+		 * @param string $template  The default template.
+		 * @param string $css_class The class passed by the calling function.
+		 */
+		$template = apply_filters( 'navigation_markup_template', $template, $css_class );
+	
+		return sprintf( $template, sanitize_html_class( $css_class ), esc_html( $screen_reader_text ), $links, esc_attr( $aria_label ) );
+	}
+endif;
+
+// wp-includes/link-template.php (WP 7.0)
+if( ! function_exists( 'is_avatar_comment_type' ) ) :
+	function is_avatar_comment_type( $comment_type ) {
+		/**
+		 * Filters the list of allowed comment types for retrieving avatars.
+		 *
+		 * @since 3.0.0
+		 *
+		 * @since 6.9.0 The 'note' comment type was added.
+		 *
+		 * @param array $types An array of content types. Default contains 'comment' and 'note'.
+		 */
+		$allowed_comment_types = apply_filters( 'get_avatar_comment_types', array( 'comment', 'note' ) );
+	
+		return in_array( $comment_type, (array) $allowed_comment_types, true );
+	}
+endif;
+
+// wp-includes/link-template.php (WP 7.0)
 if( ! function_exists( 'wp_internal_hosts' ) ) :
 	function wp_internal_hosts() {
 		static $internal_hosts;

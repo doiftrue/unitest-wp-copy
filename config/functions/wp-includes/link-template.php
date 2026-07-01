@@ -7,6 +7,8 @@ return [
 	'get_site_url'        => '3.0.0 mockable',
 	'admin_url'           => '2.6.0',
 	'get_admin_url'       => '3.0.0 mockable',
+	'_navigation_markup'  => '4.1.0',
+	'is_avatar_comment_type' => '5.1.0',
 	'wp_internal_hosts'   => '6.2.0',
 	'wp_is_internal_link' => '6.2.0',
 	'set_url_scheme'      => '3.4.0',
@@ -23,7 +25,6 @@ return [
 Not suitable in isolated PHPUnit env:
 
 _get_page_link                   // why: requires WP query/post permalink runtime.
-_navigation_markup               // why: depends on theme/template rendering context.
 adjacent_post_link               // why: requires post loop/query runtime.
 adjacent_posts_rel_link          // why: requires post loop/query runtime.
 adjacent_posts_rel_link_wp_head  // why: wp_head/output hook dependency.
@@ -87,7 +88,6 @@ get_the_posts_navigation         // why: query/template runtime dependency.
 get_the_posts_pagination         // why: query/template runtime dependency.
 get_the_privacy_policy_link      // why: options/page/template runtime dependency.
 get_year_link                    // why: rewrite/query runtime dependency.
-is_avatar_comment_type           // why: avatar/comment runtime dependency chain.
 network_admin_url                // why: multisite admin runtime dependency.
 network_home_url                 // why: multisite runtime dependency.
 network_site_url                 // why: multisite runtime dependency.

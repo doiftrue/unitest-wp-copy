@@ -1,8 +1,5 @@
 # Symbol Eligibility Discussion
 
-## Check all symbols in 
-wp-core/wp-includes/link-template.php
-
 
 ## WP_REST_Server
 Analyzed source: WordPress `6.9.4` (`wp-core/wp-includes/version.php`)

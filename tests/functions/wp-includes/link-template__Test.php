@@ -83,6 +83,26 @@ class link_template__Test extends \PHPUnit\Framework\TestCase {
 		);
 	}
 
+	public function test___navigation_markup() {
+		$markup = _navigation_markup( '<a href="/older">Older posts</a>', 'archive-navigation', 'Archive navigation' );
+
+		$this->assertStringContainsString( 'class="navigation archive-navigation"', $markup );
+		$this->assertStringContainsString( 'aria-label="Archive navigation"', $markup );
+		$this->assertStringContainsString( '<h2 class="screen-reader-text">Archive navigation</h2>', $markup );
+		$this->assertStringContainsString( '<a href="/older">Older posts</a>', $markup );
+	}
+
+	public function test__is_avatar_comment_type() {
+		$this->assertTrue( is_avatar_comment_type( 'comment' ) );
+		$this->assertTrue( is_avatar_comment_type( 'note' ) );
+		$this->assertFalse( is_avatar_comment_type( 'pingback' ) );
+
+		add_filter( 'get_avatar_comment_types', static fn() => [ 'review' ] );
+
+		$this->assertTrue( is_avatar_comment_type( 'review' ) );
+		$this->assertFalse( is_avatar_comment_type( 'comment' ) );
+	}
+
 	public function test__includes_url() {
 		$this->assertStringContainsString( '/wp-includes/x.js', includes_url( 'x.js' ) );
 	}
