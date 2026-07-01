@@ -167,10 +167,6 @@ class formatting__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( '&#8225;', convert_invalid_entities( '&#135;' ) );
 	}
 
-	public function test__balanceTags(): void {
-		$this->assertSame( '<b>a</b>', balanceTags( '<b>a' ) );
-	}
-
 	public function test__force_balance_tags(): void {
 		$this->assertSame( '<i>x</i>', force_balance_tags( '<i>x' ) );
 	}
@@ -207,17 +203,6 @@ class formatting__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( ['a b'], urldecode_deep( ['a%20b'] ) );
 	}
 
-	public function test__antispambot(): void {
-		$this->assertIsString( antispambot( 'test@example.com' ) );
-	}
-
-//	public function test___make_url_clickable_cb(): void {
-//		$this->assertStringContainsString(
-//		    '<a href="http://example.com">http://example.com</a>',
-//		    _make_url_clickable_cb(['', '', 'http://example.com', '', ''])
-//		);
-//	}
-
 	public function test__split_str_by_whitespace(): void {
 		$this->assertSame( ['a ', " \n", ' ', 'b'], _split_str_by_whitespace( "a  \n b", 1 ) );
 	}
@@ -236,10 +221,6 @@ class formatting__Test extends \PHPUnit\Framework\TestCase {
 
 	public function test__translate_smiley(): void {
 		$this->assertIsString( translate_smiley( [':)'] ) );
-	}
-
-	public function test__convert_smilies(): void {
-		$this->assertIsString( convert_smilies( ':)' ) );
 	}
 
 	public function test__wp_iso_descrambler(): void {

@@ -3,7 +3,7 @@
 return [
 	'_'                  => '0.0.0',
 	'_is_utf8_charset'   => '6.6.1',
-	'_wp_can_use_pcre_u' => '4.2.2',
+	'_wp_can_use_pcre_u' => '4.2.2 mockable',
 	'_mb_substr'         => '3.2.0',
 	'_mb_strlen'         => '4.2.0',
 	'mb_substr'          => '3.2.0',

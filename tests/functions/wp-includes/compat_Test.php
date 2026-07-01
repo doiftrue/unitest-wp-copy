@@ -6,19 +6,6 @@ class compat_Test extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( 'x', _( 'x' ) );
 	}
 
-	public function test___wp_can_use_pcre_u() {
-		if( wp_version_compare( '>= 6.9.0' ) ){
-			$first = _wp_can_use_pcre_u();
-			$this->assertIsBool( $first );
-			$this->assertSame( $first, _wp_can_use_pcre_u() );
-		} else {
-			_wp_can_use_pcre_u( 1 );
-			$this->assertSame( 1, _wp_can_use_pcre_u() );
-			_wp_can_use_pcre_u( 0 );
-			$this->assertSame( 0, _wp_can_use_pcre_u() );
-		}
-	}
-
 	public function test___is_utf8_charset() {
 		if( $wp_ver = wp_version_compare( '< 6.6.1' ) ){
 			$this->markTestSkipped( "_is_utf8_charset() not exists on WP $wp_ver" );

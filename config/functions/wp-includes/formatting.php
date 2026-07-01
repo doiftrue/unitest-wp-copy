@@ -50,7 +50,7 @@ return [
 	'urlencode_deep'                      => '2.2.0',
 	'rawurlencode_deep'                   => '3.4.0',
 	'urldecode_deep'                      => '4.4.0',
-	'antispambot'                         => '0.71',
+	'antispambot'                         => '0.71 mockable',
 	'make_clickable'                      => '0.71',
 	'_make_url_clickable_cb'              => '2.3.2',
 	'_make_web_ftp_clickable_cb'          => '2.3.2',
