@@ -99,4 +99,27 @@ class script_loader_Test extends \PHPUnit\Framework\TestCase {
 		$this->assertStringContainsString( 'url(/wp-content/themes/my-theme/images/bg.png)', $normalized );
 	}
 
+	public function test__wp_js_dataset_name() {
+		if( $wp_ver = wp_version_compare( '< 6.9.0' ) ){
+			$this->markTestSkipped( "wp_js_dataset_name() not exists on WP $wp_ver" );
+		}
+
+		$this->assertSame( 'fooBar', wp_js_dataset_name( 'data-foo-bar' ) );
+		$this->assertSame( 'foo', wp_js_dataset_name( 'data-foo' ) );
+		$this->assertSame( '', wp_js_dataset_name( 'data-' ) );
+		$this->assertNull( wp_js_dataset_name( 'class' ) );
+		$this->assertNull( wp_js_dataset_name( 'data-has space' ) );
+	}
+
+	public function test__wp_html_custom_data_attribute_name() {
+		if( $wp_ver = wp_version_compare( '< 6.9.0' ) ){
+			$this->markTestSkipped( "wp_html_custom_data_attribute_name() not exists on WP $wp_ver" );
+		}
+
+		$this->assertSame( 'data-foo-bar', wp_html_custom_data_attribute_name( 'fooBar' ) );
+		$this->assertSame( 'data-foo', wp_html_custom_data_attribute_name( 'foo' ) );
+		$this->assertSame( 'data-', wp_html_custom_data_attribute_name( '' ) );
+		$this->assertNull( wp_html_custom_data_attribute_name( 'has space' ) );
+	}
+
 }

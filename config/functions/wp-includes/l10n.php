@@ -55,4 +55,6 @@ wp_dropdown_languages                 // why: admin UI + translation files/runti
 wp_get_installed_translations         // why: translation files/filesystem dependency.
 wp_get_l10n_php_file_data             // why: translation file parsing/filesystem dependency.
 wp_get_pomo_file_data                 // why: translation file parsing/filesystem dependency.
+load_script_module_textdomain         // why: wp_script_modules()->get_registered + site_url + file I/O.
+_load_script_textdomain_from_src      // why: $wp_textdomain_registry + load_script_translations + file I/O.
 */

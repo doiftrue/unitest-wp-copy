@@ -95,4 +95,5 @@ _delete_attachment_theme_mod                              // why: attachment + t
 wp_is_block_theme                                         // why: depends on WP_Theme + real theme filesystem.
 _add_default_theme_supports                               // why: depends on WP_Theme + real theme filesystem.
 wp_theme_get_element_class_name                           // why: requires WP_Theme_JSON class/runtime not included.
+_custom_header_background_just_in_time                     // why: is_admin + require_once admin classes + Custom_Image_Header.
 */

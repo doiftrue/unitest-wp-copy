@@ -12,5 +12,7 @@ return [
 /*
 Not suitable in isolated PHPUnit env:
 
-wp_default_script_modules  // why: reads assets file via ABSPATH/WPINC and depends on wp_scripts_get_suffix()/includes_url() bootstrap chain.
+wp_default_script_modules           // why: reads assets file via ABSPATH/WPINC and depends on wp_scripts_get_suffix()/includes_url() bootstrap chain.
+wp_set_script_module_translations   // why: depends on wp_script_modules()->set_translations (file I/O).
+wp_enqueue_block_editor_script_modules // why: block editor lifecycle (wp_enqueue_script_module for editor assets).
 */

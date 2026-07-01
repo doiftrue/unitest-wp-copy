@@ -96,7 +96,7 @@ A symbol in a config file can be in one of three states:
 3. **Rejected in block** — listed in a dedicated `/* ... */` block comment after the array (ineligible for this runtime):
    ```php
    /*
-   Not suitable in isolated PHPUnit env:
+   Not suitable in isolated PHPUnit env:    
 
    esc_sql           // why: depends on $wpdb
    sanitize_option   // why: depends on $wpdb + options/roles/i18n runtime chain

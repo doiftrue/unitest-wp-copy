@@ -37,14 +37,17 @@ Parser-specific flow is described in [parser.md](parser.md).
 
 ## WordPress Version Compatibility
 
-- If a copied symbol was introduced after an older supported WordPress line, skip its test when that symbol does not exist in the tested WordPress version.
-- Put the version check at the start of the dedicated test method and use the symbol's exact `since` version from config:
+This library supports multiple WP lines (see `README.md`). Tests run against all of them. The parser skips symbols whose `since` version is higher than the current WP line, so the function simply won't exist in older runtimes.
+
+**Rule**: if a symbol's `since` version in config is higher than the oldest supported WP line (`6.5`), its test **must** include a version-skip guard. Use the symbol's exact `since` version from config:
 
 ```php
-if( $wp_ver = wp_version_compare( '< 6.7.0' ) ){
-	$this->markTestSkipped( "WP_HTML_Doctype_Info{} not exists on WP $wp_ver" );
+if( $wp_ver = wp_version_compare( '< 6.9.0' ) ){
+	$this->markTestSkipped( "wp_js_dataset_name() not exists on WP $wp_ver" );
 }
 ```
+
+Place the guard at the very start of the test method — before any calls to the tested symbol.
 
 
 ## Class Independence Rule

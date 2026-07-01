@@ -16,6 +16,9 @@ return [
 	'wp_filter_out_block_nodes' => '6.1.0',
 	// Pure CSS URL normalization helper.
 	'_wp_normalize_relative_css_links' => '5.9.0',
+	// Pure string dataset-name conversion helpers.
+	'wp_js_dataset_name'                 => '6.9.0',
+	'wp_html_custom_data_attribute_name' => '6.9.0',
 ];
 
 /*
@@ -57,4 +60,14 @@ wp_maybe_inline_styles                          // why: reads CSS files by absol
 wp_enqueue_stored_styles                        // why: depends on global-styles storage/runtime.
 wp_enqueue_block_style                          // why: depends on block registration + filesystem-aware URL/path args.
 wp_enqueue_classic_theme_styles                 // why: classic-theme runtime flow.
+wp_register_tinymce_scripts                     // why: $scripts registration + script_concat_settings dependency.
+wp_register_development_scripts                 // why: modifies $scripts->registered, dev-only lifecycle.
+wp_get_script_polyfill                          // why: $scripts->registered access + apply_filters + output-oriented.
+wp_tinymce_inline_scripts                       // why: multiple apply_filters, TinyMCE editor lifecycle.
+wp_just_in_time_script_localization             // why: wp_localize_script + admin lifecycle.
+wp_style_loader_src                             // why: get_user_option + wp_installing + admin colors.
+_wp_footer_scripts                              // why: output: print_late_styles + print_footer_scripts.
+wp_enqueue_command_palette_assets               // why: depends on $menu/$submenu globals + admin lifecycle.
+wp_load_classic_theme_block_styles_on_demand    // why: wp_is_block_theme + output buffer lifecycle.
+wp_hoist_late_printed_styles                    // why: complex output buffer lifecycle + footer rendering.
 */
