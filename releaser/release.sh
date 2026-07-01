@@ -8,7 +8,13 @@ REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 cd "${REPO_ROOT}"
 
 NOT_PUSH="${NOT_PUSH:-}"
-WP_LINE="${WP_LINE:-}"          # 6.8
+WP_LINE="${WP_LINE:-}"  # 6.8
+
+# Files to copy into the release worktree (alongside wp-runtime/).
+RELEASE_FILES=(
+	zero.php
+	README.md
+)
 VERSION_FILE="${REPO_ROOT}/VERSION"
 RELEASE_TAG="$(build_release_tag "${WP_LINE}" "${VERSION_FILE}")" || exit 1
 WP_LINE_BRANCH="wp-${WP_LINE}"
@@ -63,7 +69,7 @@ fi
 
 # copy
 cecho cyan "➜ Copy to WORKTREE ${WORKTREE_DIR_REL}"
-cp -a "zero.php" "${WORKTREE_DIR}/"
+cp -a "${RELEASE_FILES[@]}" "${WORKTREE_DIR}/"
 rsync -a --delete --delete-excluded \
 	--include="/wp-line-extra/${WP_LINE}/***" \
 	--exclude="/wp-line-extra/*" \
@@ -79,7 +85,7 @@ if [[ -n "${NOT_PUSH}" ]]; then
 fi
 
 cecho cyan "➜ Commit to WORKTREE ${WORKTREE_DIR_REL} and add TAG ${RELEASE_TAG}"
-git -C "${WORKTREE_DIR}" add zero.php wp-runtime
+git -C "${WORKTREE_DIR}" add "${RELEASE_FILES[@]}" wp-runtime
 
 if git -C "${WORKTREE_DIR}" diff --cached --quiet; then
 	cecho yellow "Nothing to commit on ${WP_LINE_BRANCH}."
