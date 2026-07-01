@@ -154,30 +154,6 @@ if( ! function_exists( 'register_post_status' ) ) :
 endif;
 
 // wp-includes/post.php (WP 6.8.5)
-if( ! function_exists( 'get_post_status_object' ) ) :
-	function get_post_status_object( $post_status ) {
-		global $wp_post_statuses;
-	
-		if ( empty( $wp_post_statuses[ $post_status ] ) ) {
-			return null;
-		}
-	
-		return $wp_post_statuses[ $post_status ];
-	}
-endif;
-
-// wp-includes/post.php (WP 6.8.5)
-if( ! function_exists( 'get_post_stati' ) ) :
-	function get_post_stati( $args = array(), $output = 'names', $operator = 'and' ) {
-		global $wp_post_statuses;
-	
-		$field = ( 'names' === $output ) ? 'name' : false;
-	
-		return wp_filter_object_list( $wp_post_statuses, $args, $operator, $field );
-	}
-endif;
-
-// wp-includes/post.php (WP 6.8.5)
 if( ! function_exists( 'get_post_type_capabilities' ) ) :
 	function get_post_type_capabilities( $args ) {
 		if ( ! is_array( $args->capability_type ) ) {
@@ -308,39 +284,6 @@ if( ! function_exists( 'remove_post_type_support' ) ) :
 		global $_wp_post_type_features;
 	
 		unset( $_wp_post_type_features[ $post_type ][ $feature ] );
-	}
-endif;
-
-// wp-includes/post.php (WP 6.8.5)
-if( ! function_exists( 'get_all_post_type_supports' ) ) :
-	function get_all_post_type_supports( $post_type ) {
-		global $_wp_post_type_features;
-	
-		if ( isset( $_wp_post_type_features[ $post_type ] ) ) {
-			return $_wp_post_type_features[ $post_type ];
-		}
-	
-		return array();
-	}
-endif;
-
-// wp-includes/post.php (WP 6.8.5)
-if( ! function_exists( 'post_type_supports' ) ) :
-	function post_type_supports( $post_type, $feature ) {
-		global $_wp_post_type_features;
-	
-		return ( isset( $_wp_post_type_features[ $post_type ][ $feature ] ) );
-	}
-endif;
-
-// wp-includes/post.php (WP 6.8.5)
-if( ! function_exists( 'get_post_types_by_support' ) ) :
-	function get_post_types_by_support( $feature, $operator = 'and' ) {
-		global $_wp_post_type_features;
-	
-		$features = array_fill_keys( (array) $feature, true );
-	
-		return array_keys( wp_filter_object_list( $_wp_post_type_features, $features, $operator ) );
 	}
 endif;
 

@@ -24,24 +24,6 @@ if( ! function_exists( '_is_utf8_charset' ) ) :
 endif;
 
 // wp-includes/compat.php (WP 6.8.5)
-if( ! function_exists( '_wp_can_use_pcre_u' ) ) :
-	function _wp_can_use_pcre_u( $set = null ) {
-		static $utf8_pcre = 'reset';
-	
-		if ( null !== $set ) {
-			$utf8_pcre = $set;
-		}
-	
-		if ( 'reset' === $utf8_pcre ) {
-			// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged -- intentional error generated to detect PCRE/u support.
-			$utf8_pcre = @preg_match( '/^./u', 'a' );
-		}
-	
-		return $utf8_pcre;
-	}
-endif;
-
-// wp-includes/compat.php (WP 6.8.5)
 if( ! function_exists( '_mb_substr' ) ) :
 	function _mb_substr( $str, $start, $length = null, $encoding = null ) {
 		if ( null === $str ) {

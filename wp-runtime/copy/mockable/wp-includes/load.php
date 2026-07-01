@@ -117,6 +117,40 @@ if( ! function_exists( 'wp_doing_ajax' ) ) :
 endif;
 
 // wp-includes/load.php (WP 6.8.5)
+if( ! function_exists( 'get_current_blog_id' ) ) :
+	function get_current_blog_id() {
+		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+	
+		global $blog_id;
+	
+		return absint( $blog_id );
+	}
+endif;
+
+// wp-includes/load.php (WP 6.8.5)
+if( ! function_exists( 'get_current_network_id' ) ) :
+	function get_current_network_id() {
+		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+	
+		if ( ! is_multisite() ) {
+			return 1;
+		}
+	
+		$current_network = get_network();
+	
+		if ( ! isset( $current_network->id ) ) {
+			return get_main_network_id();
+		}
+	
+		return absint( $current_network->id );
+	}
+endif;
+
+// wp-includes/load.php (WP 6.8.5)
 if( ! function_exists( 'is_ssl' ) ) :
 	function is_ssl() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -136,6 +170,43 @@ if( ! function_exists( 'is_ssl' ) ) :
 		}
 	
 		return false;
+	}
+endif;
+
+// wp-includes/load.php (WP 6.8.5)
+if( ! function_exists( 'timer_float' ) ) :
+	function timer_float() {
+		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+	
+		return microtime( true ) - $_SERVER['REQUEST_TIME_FLOAT'];
+	}
+endif;
+
+// wp-includes/load.php (WP 6.8.5)
+if( ! function_exists( 'timer_stop' ) ) :
+	function timer_stop( $display = 0, $precision = 3 ) {
+		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+	
+		global $timestart, $timeend;
+	
+		$timeend   = microtime( true );
+		$timetotal = $timeend - $timestart;
+	
+		if ( function_exists( 'number_format_i18n' ) ) {
+			$r = number_format_i18n( $timetotal, $precision );
+		} else {
+			$r = number_format( $timetotal, $precision );
+		}
+	
+		if ( $display ) {
+			echo $r;
+		}
+	
+		return $r;
 	}
 endif;
 

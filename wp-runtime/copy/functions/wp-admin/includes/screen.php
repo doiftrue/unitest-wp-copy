@@ -45,19 +45,6 @@ if( ! function_exists( 'add_screen_option' ) ) :
 endif;
 
 // wp-admin/includes/screen.php (WP 6.8.5)
-if( ! function_exists( 'get_current_screen' ) ) :
-	function get_current_screen() {
-		global $current_screen;
-	
-		if ( ! isset( $current_screen ) ) {
-			return null;
-		}
-	
-		return $current_screen;
-	}
-endif;
-
-// wp-admin/includes/screen.php (WP 6.8.5)
 if( ! function_exists( 'set_current_screen' ) ) :
 	function set_current_screen( $hook_name = '' ) {
 		WP_Screen::get( $hook_name )->set_current_screen();
