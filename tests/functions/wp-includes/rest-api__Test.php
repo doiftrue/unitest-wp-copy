@@ -14,7 +14,7 @@ class RestApiRequestStub {
 
 }
 
-class rest_api_Test extends \PHPUnit\Framework\TestCase {
+class rest_api__Test extends \PHPUnit\Framework\TestCase {
 
 	protected function setUp(): void {
 		parent::setUp();

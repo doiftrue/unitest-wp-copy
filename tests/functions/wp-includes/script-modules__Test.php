@@ -1,6 +1,6 @@
 <?php
 
-class script_modules_Test extends \PHPUnit\Framework\TestCase {
+class script_modules__Test extends \PHPUnit\Framework\TestCase {
 
 	protected function setUp(): void {
 		parent::setUp();

@@ -1,6 +1,6 @@
 <?php
 
-class default_contants_Test extends \PHPUnit\Framework\TestCase {
+class default_contants__Test extends \PHPUnit\Framework\TestCase {
 
 	/** @covers ::wp_initial_constants() */
 	public function test__wp_initial_constants(): void {

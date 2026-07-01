@@ -1,6 +1,6 @@
 <?php
 
-class compat_Test extends \PHPUnit\Framework\TestCase {
+class compat__Test extends \PHPUnit\Framework\TestCase {
 
 	public function test___() {
 		$this->assertSame( 'x', _( 'x' ) );

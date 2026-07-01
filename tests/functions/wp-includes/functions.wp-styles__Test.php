@@ -1,6 +1,6 @@
 <?php
 
-class functions_wp_styles_Test extends \PHPUnit\Framework\TestCase {
+class functions_wp_styles__Test extends \PHPUnit\Framework\TestCase {
 
 	protected function setUp(): void {
 		parent::setUp();

@@ -1,6 +1,6 @@
 <?php
 
-class theme_Test extends \PHPUnit\Framework\TestCase {
+class theme__Test extends \PHPUnit\Framework\TestCase {
 
 	private array $tmp_dirs = [];
 

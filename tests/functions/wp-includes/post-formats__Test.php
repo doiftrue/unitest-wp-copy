@@ -1,6 +1,6 @@
 <?php
 
-class post_formats_Test extends \PHPUnit\Framework\TestCase {
+class post_formats__Test extends \PHPUnit\Framework\TestCase {
 
 	public function test__get_post_format_strings() {
 		$formats = get_post_format_strings();
