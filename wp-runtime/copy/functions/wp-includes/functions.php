@@ -1115,36 +1115,6 @@ if( ! function_exists( 'wp_fuzzy_number_match' ) ) :
 endif;
 
 // wp-includes/functions.php (WP 7.0)
-if( ! function_exists( 'wp_generate_uuid4' ) ) :
-	function wp_generate_uuid4() {
-		static $backup_randomizer = false;
-		$randomizer               = function_exists( 'wp_rand' ) ? 'wp_rand' : $backup_randomizer;
-	
-		if ( false === $randomizer ) {
-			try {
-				random_int( 0, 15705 );
-				$backup_randomizer = 'random_int';
-			} catch ( Exception $e ) {
-				$backup_randomizer = 'mt_rand';
-			}
-			$randomizer = $backup_randomizer;
-		}
-	
-		return sprintf(
-			'%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
-			$randomizer( 0, 0xffff ),
-			$randomizer( 0, 0xffff ),
-			$randomizer( 0, 0xffff ),
-			$randomizer( 0, 0x0fff ) | 0x4000,
-			$randomizer( 0, 0x3fff ) | 0x8000,
-			$randomizer( 0, 0xffff ),
-			$randomizer( 0, 0xffff ),
-			$randomizer( 0, 0xffff )
-		);
-	}
-endif;
-
-// wp-includes/functions.php (WP 7.0)
 if( ! function_exists( 'wp_get_default_extension_for_mime_type' ) ) :
 	function wp_get_default_extension_for_mime_type( $mime_type ) {
 		$extensions = explode( '|', array_search( $mime_type, wp_get_mime_types(), true ) );
@@ -1807,14 +1777,6 @@ if( ! function_exists( 'wp_recursive_ksort' ) ) :
 endif;
 
 // wp-includes/functions.php (WP 7.0)
-if( ! function_exists( 'wp_unique_id' ) ) :
-	function wp_unique_id( $prefix = '' ) {
-		static $id_counter = 0;
-		return $prefix . (string) ++$id_counter;
-	}
-endif;
-
-// wp-includes/functions.php (WP 7.0)
 if( ! function_exists( 'wp_unique_id_from_values' ) ) :
 	function wp_unique_id_from_values( array $data, string $prefix = '' ): string {
 		if ( empty( $data ) ) {
@@ -1833,29 +1795,6 @@ if( ! function_exists( 'wp_unique_id_from_values' ) ) :
 		$hash       = substr( md5( $serialized ), 0, 8 );
 	
 		return $prefix . $hash;
-	}
-endif;
-
-// wp-includes/functions.php (WP 7.0)
-if( ! function_exists( 'wp_unique_prefixed_id' ) ) :
-	function wp_unique_prefixed_id( $prefix = '' ) {
-		static $id_counters = array();
-	
-		if ( ! is_string( $prefix ) ) {
-			wp_trigger_error(
-				__FUNCTION__,
-				sprintf( 'The prefix must be a string. "%s" data type given.', gettype( $prefix ) )
-			);
-			$prefix = '';
-		}
-	
-		if ( ! isset( $id_counters[ $prefix ] ) ) {
-			$id_counters[ $prefix ] = 0;
-		}
-	
-		$id = ++$id_counters[ $prefix ];
-	
-		return $prefix . (string) $id;
 	}
 endif;
 
