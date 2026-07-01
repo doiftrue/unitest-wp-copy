@@ -3,19 +3,6 @@
 // ------------------auto-generated---------------------
 
 // wp-includes/functions.wp-scripts.php (WP 7.0)
-if( ! function_exists( 'wp_scripts' ) ) :
-	function wp_scripts() {
-		global $wp_scripts;
-	
-		if ( ! ( $wp_scripts instanceof WP_Scripts ) ) {
-			$wp_scripts = new WP_Scripts();
-		}
-	
-		return $wp_scripts;
-	}
-endif;
-
-// wp-includes/functions.wp-scripts.php (WP 7.0)
 if( ! function_exists( '_wp_scripts_add_args_data' ) ) :
 	function _wp_scripts_add_args_data( WP_Scripts $wp_scripts, string $handle, array $args ): void {
 		$allowed_keys = array( 'strategy', 'in_footer', 'fetchpriority', 'module_dependencies' );

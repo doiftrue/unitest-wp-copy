@@ -14,6 +14,79 @@ if( ! function_exists( 'is_utf8_charset' ) ) :
 endif;
 
 // wp-includes/functions.php (WP 7.0)
+if( ! function_exists( 'wp_generate_uuid4' ) ) :
+	function wp_generate_uuid4() {
+		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+	
+		static $backup_randomizer = false;
+		$randomizer               = function_exists( 'wp_rand' ) ? 'wp_rand' : $backup_randomizer;
+	
+		if ( false === $randomizer ) {
+			try {
+				random_int( 0, 15705 );
+				$backup_randomizer = 'random_int';
+			} catch ( Exception $e ) {
+				$backup_randomizer = 'mt_rand';
+			}
+			$randomizer = $backup_randomizer;
+		}
+	
+		return sprintf(
+			'%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+			$randomizer( 0, 0xffff ),
+			$randomizer( 0, 0xffff ),
+			$randomizer( 0, 0xffff ),
+			$randomizer( 0, 0x0fff ) | 0x4000,
+			$randomizer( 0, 0x3fff ) | 0x8000,
+			$randomizer( 0, 0xffff ),
+			$randomizer( 0, 0xffff ),
+			$randomizer( 0, 0xffff )
+		);
+	}
+endif;
+
+// wp-includes/functions.php (WP 7.0)
+if( ! function_exists( 'wp_unique_id' ) ) :
+	function wp_unique_id( $prefix = '' ) {
+		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+	
+		static $id_counter = 0;
+		return $prefix . (string) ++$id_counter;
+	}
+endif;
+
+// wp-includes/functions.php (WP 7.0)
+if( ! function_exists( 'wp_unique_prefixed_id' ) ) :
+	function wp_unique_prefixed_id( $prefix = '' ) {
+		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+	
+		static $id_counters = array();
+	
+		if ( ! is_string( $prefix ) ) {
+			wp_trigger_error(
+				__FUNCTION__,
+				sprintf( 'The prefix must be a string. "%s" data type given.', gettype( $prefix ) )
+			);
+			$prefix = '';
+		}
+	
+		if ( ! isset( $id_counters[ $prefix ] ) ) {
+			$id_counters[ $prefix ] = 0;
+		}
+	
+		$id = ++$id_counters[ $prefix ];
+	
+		return $prefix . (string) $id;
+	}
+endif;
+
+// wp-includes/functions.php (WP 7.0)
 if( ! function_exists( '_deprecated_function' ) ) :
 	function _deprecated_function( $function_name, $version, $replacement = '' ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
