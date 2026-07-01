@@ -18,6 +18,9 @@ $shortcode_tags = [];
 global $wp_locale;
 $wp_locale = new \WP_Locale();
 
+global $wp_object_cache;
+$wp_object_cache = new WP_Object_Cache();
+
 global $wp_post_types;
 $wp_post_types = is_array( $wp_post_types ?? null ) ? $wp_post_types : [];
 
