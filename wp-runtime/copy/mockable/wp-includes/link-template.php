@@ -113,3 +113,104 @@ if( ! function_exists( 'get_admin_url' ) ) :
 	}
 endif;
 
+// wp-includes/link-template.php (WP 6.6.5)
+if( ! function_exists( 'plugins_url' ) ) :
+	function plugins_url( $path = '', $plugin = '' ) {
+		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+	
+	
+		$path          = wp_normalize_path( $path );
+		$plugin        = wp_normalize_path( $plugin );
+		$mu_plugin_dir = wp_normalize_path( WPMU_PLUGIN_DIR );
+	
+		if ( ! empty( $plugin ) && str_starts_with( $plugin, $mu_plugin_dir ) ) {
+			$url = WPMU_PLUGIN_URL;
+		} else {
+			$url = WP_PLUGIN_URL;
+		}
+	
+		$url = set_url_scheme( $url );
+	
+		if ( ! empty( $plugin ) && is_string( $plugin ) ) {
+			$folder = dirname( plugin_basename( $plugin ) );
+			if ( '.' !== $folder ) {
+				$url .= '/' . ltrim( $folder, '/' );
+			}
+		}
+	
+		if ( $path && is_string( $path ) ) {
+			$url .= '/' . ltrim( $path, '/' );
+		}
+	
+		/**
+		 * Filters the URL to the plugins directory.
+		 *
+		 * @since 2.8.0
+		 *
+		 * @param string $url    The complete URL to the plugins directory including scheme and path.
+		 * @param string $path   Path relative to the URL to the plugins directory. Blank string
+		 *                       if no path is specified.
+		 * @param string $plugin The plugin file path to be relative to. Blank string if no plugin
+		 *                       is specified.
+		 */
+		return apply_filters( 'plugins_url', $url, $path, $plugin );
+	}
+endif;
+
+// wp-includes/link-template.php (WP 6.6.5)
+if( ! function_exists( 'content_url' ) ) :
+	function content_url( $path = '' ) {
+		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+	
+		$url = set_url_scheme( WP_CONTENT_URL );
+	
+		if ( $path && is_string( $path ) ) {
+			$url .= '/' . ltrim( $path, '/' );
+		}
+	
+		/**
+		 * Filters the URL to the content directory.
+		 *
+		 * @since 2.8.0
+		 *
+		 * @param string $url  The complete URL to the content directory including scheme and path.
+		 * @param string $path Path relative to the URL to the content directory. Blank string
+		 *                     if no path is specified.
+		 */
+		return apply_filters( 'content_url', $url, $path );
+	}
+endif;
+
+// wp-includes/link-template.php (WP 6.6.5)
+if( ! function_exists( 'includes_url' ) ) :
+	function includes_url( $path = '', $scheme = null ) {
+		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+	
+		$url = site_url( '/' . WPINC . '/', $scheme );
+	
+		if ( $path && is_string( $path ) ) {
+			$url .= ltrim( $path, '/' );
+		}
+	
+		/**
+		 * Filters the URL to the includes directory.
+		 *
+		 * @since 2.8.0
+		 * @since 5.8.0 The `$scheme` parameter was added.
+		 *
+		 * @param string      $url    The complete URL to the includes directory including scheme and path.
+		 * @param string      $path   Path relative to the URL to the wp-includes directory. Blank string
+		 *                            if no path is specified.
+		 * @param string|null $scheme Scheme to give the includes URL context. Accepts
+		 *                            'http', 'https', 'relative', or null. Default null.
+		 */
+		return apply_filters( 'includes_url', $url, $path, $scheme );
+	}
+endif;
+
