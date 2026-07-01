@@ -3,19 +3,6 @@
 // ------------------auto-generated---------------------
 
 // wp-includes/functions.wp-styles.php (WP 6.9.4)
-if( ! function_exists( 'wp_styles' ) ) :
-	function wp_styles() {
-		global $wp_styles;
-	
-		if ( ! ( $wp_styles instanceof WP_Styles ) ) {
-			$wp_styles = new WP_Styles();
-		}
-	
-		return $wp_styles;
-	}
-endif;
-
-// wp-includes/functions.wp-styles.php (WP 6.9.4)
 if( ! function_exists( 'wp_print_styles' ) ) :
 	function wp_print_styles( $handles = false ) {
 		global $wp_styles;

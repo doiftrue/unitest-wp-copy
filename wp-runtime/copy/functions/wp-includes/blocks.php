@@ -66,46 +66,6 @@ if( ! function_exists( 'unregister_block_type' ) ) :
 endif;
 
 // wp-includes/blocks.php (WP 6.9.4)
-if( ! function_exists( 'get_dynamic_block_names' ) ) :
-	function get_dynamic_block_names() {
-		$dynamic_block_names = array();
-	
-		$block_types = WP_Block_Type_Registry::get_instance()->get_all_registered();
-		foreach ( $block_types as $block_type ) {
-			if ( $block_type->is_dynamic() ) {
-				$dynamic_block_names[] = $block_type->name;
-			}
-		}
-	
-		return $dynamic_block_names;
-	}
-endif;
-
-// wp-includes/blocks.php (WP 6.9.4)
-if( ! function_exists( 'get_hooked_blocks' ) ) :
-	function get_hooked_blocks() {
-		$block_types   = WP_Block_Type_Registry::get_instance()->get_all_registered();
-		$hooked_blocks = array();
-		foreach ( $block_types as $block_type ) {
-			if ( ! ( $block_type instanceof WP_Block_Type ) || ! is_array( $block_type->block_hooks ) ) {
-				continue;
-			}
-			foreach ( $block_type->block_hooks as $anchor_block_type => $relative_position ) {
-				if ( ! isset( $hooked_blocks[ $anchor_block_type ] ) ) {
-					$hooked_blocks[ $anchor_block_type ] = array();
-				}
-				if ( ! isset( $hooked_blocks[ $anchor_block_type ][ $relative_position ] ) ) {
-					$hooked_blocks[ $anchor_block_type ][ $relative_position ] = array();
-				}
-				$hooked_blocks[ $anchor_block_type ][ $relative_position ][] = $block_type->name;
-			}
-		}
-	
-		return $hooked_blocks;
-	}
-endif;
-
-// wp-includes/blocks.php (WP 6.9.4)
 if( ! function_exists( 'insert_hooked_blocks' ) ) :
 	function insert_hooked_blocks( &$parsed_anchor_block, $relative_position, $hooked_blocks, $context ) {
 		$anchor_block_type  = $parsed_anchor_block['blockName'];

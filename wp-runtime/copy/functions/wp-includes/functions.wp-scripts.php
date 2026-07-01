@@ -3,19 +3,6 @@
 // ------------------auto-generated---------------------
 
 // wp-includes/functions.wp-scripts.php (WP 6.9.4)
-if( ! function_exists( 'wp_scripts' ) ) :
-	function wp_scripts() {
-		global $wp_scripts;
-	
-		if ( ! ( $wp_scripts instanceof WP_Scripts ) ) {
-			$wp_scripts = new WP_Scripts();
-		}
-	
-		return $wp_scripts;
-	}
-endif;
-
-// wp-includes/functions.wp-scripts.php (WP 6.9.4)
 if( ! function_exists( '_wp_scripts_maybe_doing_it_wrong' ) ) :
 	function _wp_scripts_maybe_doing_it_wrong( $function_name, $handle = '' ) {
 		if ( did_action( 'init' ) || did_action( 'wp_enqueue_scripts' )
