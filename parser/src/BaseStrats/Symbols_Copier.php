@@ -68,6 +68,8 @@ class Symbols_Copier {
 
 	private function check_create_dest_file( string $file ): void {
 		if( ! file_exists( $file ) ){
+			$dir = dirname( $file );
+			is_dir( $dir ) || mkdir( $dir, 0777, true );
 			file_put_contents( $file, "<?php\n\n" );
 		}
 	}

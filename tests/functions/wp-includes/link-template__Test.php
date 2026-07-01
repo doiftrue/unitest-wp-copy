@@ -94,7 +94,9 @@ class link_template__Test extends \PHPUnit\Framework\TestCase {
 
 	public function test__is_avatar_comment_type() {
 		$this->assertTrue( is_avatar_comment_type( 'comment' ) );
-		$this->assertTrue( is_avatar_comment_type( 'note' ) );
+		if( wp_version_compare( '>= 6.9.0' ) ){
+			$this->assertTrue( is_avatar_comment_type( 'note' ) );
+		}
 		$this->assertFalse( is_avatar_comment_type( 'pingback' ) );
 
 		add_filter( 'get_avatar_comment_types', static fn() => [ 'review' ] );

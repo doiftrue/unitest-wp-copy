@@ -49,15 +49,6 @@ class screen__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( [ 'default' => 25 ], $screen->get_option( 'per_page' ) );
 	}
 
-	public function test__get_current_screen() {
-		$this->assertNull( get_current_screen() );
-
-		$screen = WP_Screen::get( 'screen-current' );
-		$screen->set_current_screen();
-
-		$this->assertSame( $screen, get_current_screen() );
-	}
-
 	public function test__set_current_screen() {
 		set_current_screen( 'screen-function' );
 

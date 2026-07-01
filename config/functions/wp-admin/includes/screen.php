@@ -3,7 +3,7 @@
 return [
 	'get_column_headers' => '2.7.0',
 	'add_screen_option'  => '3.1.0',
-	'get_current_screen' => '3.1.0',
+	'get_current_screen' => '3.1.0 mockable',
 	'set_current_screen' => '3.0.0',
 ];
 
