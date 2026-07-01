@@ -14,10 +14,6 @@ class functions_wp_styles_Test extends \PHPUnit\Framework\TestCase {
 		do_action( 'init' ); // To mark `init` as fired so style API does not enter _doing_it_wrong() branch.
 	}
 
-	public function test__wp_styles() {
-		$this->assertInstanceOf( WP_Styles::class, wp_styles() );
-	}
-
 	public function test__wp_print_styles() {
 		wp_enqueue_style( 'style-print', '/assets/app.css', [], null );
 

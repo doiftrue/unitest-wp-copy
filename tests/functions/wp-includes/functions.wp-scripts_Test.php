@@ -15,10 +15,6 @@ class functions_wp_scripts_Test extends \PHPUnit\Framework\TestCase {
 		do_action( 'init' ); // To mark `init` as fired so style API does not enter _doing_it_wrong() branch.
 	}
 
-	public function test__wp_scripts() {
-		$this->assertInstanceOf( WP_Scripts::class, wp_scripts() );
-	}
-
 	public function test___wp_scripts_add_args_data() {
 		if( $wp_ver = wp_version_compare( '< 7.0' ) ){
 			$this->markTestSkipped( "_wp_scripts_add_args_data() not exists on WP $wp_ver" );

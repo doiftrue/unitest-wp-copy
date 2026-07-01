@@ -1,7 +1,7 @@
 <?php
 
 return [
-	'wp_styles'           => '4.2.0',
+	'wp_styles'           => '4.2.0 mockable',
 	'wp_print_styles'     => '2.6.0',
 	'wp_add_inline_style' => '3.3.0',
 	'wp_register_style'   => '2.6.0',

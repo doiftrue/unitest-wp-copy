@@ -1,7 +1,7 @@
 <?php
 
 return [
-	'wp_scripts'                        => '4.2.0',
+	'wp_scripts'                        => '4.2.0 mockable',
 	'_wp_scripts_add_args_data'         => '7.0',
 	'_wp_scripts_maybe_doing_it_wrong'  => '4.2.0',
 	'wp_print_scripts'                  => '2.1.0',

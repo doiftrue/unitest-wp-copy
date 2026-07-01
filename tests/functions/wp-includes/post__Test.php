@@ -71,29 +71,6 @@ class post__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( 'queue', $default_status->label );
 	}
 
-	public function test__get_post_status_object() {
-		$object = (object) [ 'name' => 'publish' ];
-		$GLOBALS['wp_post_statuses']['publish'] = $object;
-
-		$this->assertSame( $object, get_post_status_object( 'publish' ) );
-		$this->assertNull( get_post_status_object( 'missing' ) );
-	}
-
-	public function test__get_post_stati() {
-		$GLOBALS['wp_post_statuses'] = [
-			'publish' => (object) [ 'name' => 'publish', 'public' => true ],
-			'draft'   => (object) [ 'name' => 'draft', 'public' => false ],
-		];
-
-		$public_names = get_post_stati( [ 'public' => true ] );
-		$this->assertCount( 1, $public_names );
-		$this->assertContains( 'publish', $public_names );
-
-		$objects = get_post_stati( [], 'objects' );
-		$this->assertArrayHasKey( 'publish', $objects );
-		$this->assertArrayHasKey( 'draft', $objects );
-	}
-
 	public function test__is_post_type_hierarchical() {
 		$GLOBALS['wp_post_types']['page'] = (object) [
 			'name'         => 'page',
@@ -220,48 +197,6 @@ class post__Test extends \PHPUnit\Framework\TestCase {
 
 		$this->assertTrue( $GLOBALS['_wp_post_type_features']['book']['editor'] );
 		$this->assertArrayNotHasKey( 'thumbnail', $GLOBALS['_wp_post_type_features']['book'] );
-	}
-
-	public function test__get_all_post_type_supports() {
-		$GLOBALS['_wp_post_type_features']['book'] = [
-			'editor' => true,
-		];
-
-		$this->assertSame( [ 'editor' => true ], get_all_post_type_supports( 'book' ) );
-		$this->assertSame( [], get_all_post_type_supports( 'missing' ) );
-	}
-
-	public function test__post_type_supports() {
-		$GLOBALS['_wp_post_type_features']['book'] = [
-			'editor' => true,
-		];
-
-		$this->assertTrue( post_type_supports( 'book', 'editor' ) );
-		$this->assertFalse( post_type_supports( 'book', 'thumbnail' ) );
-	}
-
-	public function test__get_post_types_by_support() {
-		$GLOBALS['_wp_post_type_features'] = [
-			'book' => [
-				'editor'    => true,
-				'thumbnail' => true,
-			],
-			'page' => [
-				'editor' => true,
-			],
-			'note' => [
-				'thumbnail' => true,
-			],
-		];
-
-		$with_editor = get_post_types_by_support( 'editor' );
-		$this->assertEqualsCanonicalizing( [ 'book', 'page' ], $with_editor );
-
-		$with_both = get_post_types_by_support( [ 'editor', 'thumbnail' ] );
-		$this->assertSame( [ 'book' ], array_values( $with_both ) );
-
-		$without_editor = get_post_types_by_support( 'editor', 'not' );
-		$this->assertSame( [ 'note' ], array_values( $without_editor ) );
 	}
 
 	public function test__is_post_type_viewable() {

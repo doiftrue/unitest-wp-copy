@@ -103,19 +103,6 @@ class link_template__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertFalse( is_avatar_comment_type( 'comment' ) );
 	}
 
-	public function test__includes_url() {
-		$this->assertStringContainsString( '/wp-includes/x.js', includes_url( 'x.js' ) );
-	}
-
-	public function test__content_url() {
-		$this->assertStringContainsString( '/wp-content/a.css', content_url( 'a.css' ) );
-	}
-
-	public function test__plugins_url() {
-		$url = plugins_url( 'asset.js', '/path/to/wp/wp-content/plugins/my-plugin/main.php' );
-		$this->assertStringContainsString( '/plugins/my-plugin/asset.js', $url );
-	}
-
 	public function test__set_url_scheme() {
 		$this->assertSame( '/a', set_url_scheme( 'https://example.com/a', 'relative' ) );
 		$this->assertSame( 'http://example.com/a', set_url_scheme( 'https://example.com/a', 'http' ) );

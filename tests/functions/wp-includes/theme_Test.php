@@ -41,17 +41,6 @@ class theme_Test extends \PHPUnit\Framework\TestCase {
 		parent::tearDown();
 	}
 
-	public function test__current_theme_supports() {
-		$this->assertFalse( current_theme_supports( 'html5', 'script' ) );
-
-		$GLOBALS['_wp_theme_features'] = [
-			'html5' => [ [ 'script', 'style' ] ],
-		];
-
-		$this->assertTrue( current_theme_supports( 'html5', 'script' ) );
-		$this->assertFalse( current_theme_supports( 'html5', 'comment-form' ) );
-	}
-
 	public function test__add_theme_support() {
 		add_theme_support( 'html5', [ 'script', 'style' ] );
 
@@ -59,12 +48,6 @@ class theme_Test extends \PHPUnit\Framework\TestCase {
 			[ [ 'script', 'style' ] ],
 			$GLOBALS['_wp_theme_features']['html5']
 		);
-	}
-
-	public function test__get_theme_support() {
-		add_theme_support( 'custom-logo', [ 'width' => 100 ] );
-
-		$this->assertSame( 100, get_theme_support( 'custom-logo', 'width' ) );
 	}
 
 	public function test__remove_theme_support() {
@@ -95,35 +78,11 @@ class theme_Test extends \PHPUnit\Framework\TestCase {
 		$this->assertArrayHasKey( 'my-feature', $GLOBALS['_wp_registered_theme_features'] );
 	}
 
-	public function test__get_registered_theme_features() {
-		register_theme_feature( 'feature-a', [ 'type' => 'boolean' ] );
-
-		$features = get_registered_theme_features();
-		$this->assertArrayHasKey( 'feature-a', $features );
-	}
-
-	public function test__get_registered_theme_feature() {
-		register_theme_feature( 'feature-one', [ 'type' => 'boolean' ] );
-
-		$this->assertSame(
-			'boolean',
-			get_registered_theme_feature( 'feature-one' )['type']
-		);
-	}
-
 	public function test__create_initial_theme_features() {
 		create_initial_theme_features();
 
 		$this->assertArrayHasKey( 'title-tag', get_registered_theme_features() );
 		$this->assertArrayHasKey( 'post-formats', get_registered_theme_features() );
-	}
-
-	public function test__get_stylesheet_and_get_template() {
-		$GLOBALS['stub_wp_options']->stylesheet = 'child-theme';
-		$GLOBALS['stub_wp_options']->template   = 'parent-theme';
-
-		$this->assertSame( 'child-theme', get_stylesheet() );
-		$this->assertSame( 'parent-theme', get_template() );
 	}
 
 	public function test__get_stylesheet_uri() {

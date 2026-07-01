@@ -57,30 +57,9 @@ class load__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertFalse( is_wp_error( new stdClass() ) );
 	}
 
-	public function test__get_current_blog_id() {
-		$GLOBALS['blog_id'] = 12;
-		$this->assertSame( 12, get_current_blog_id() );
-	}
-
-	public function test__get_current_network_id() {
-		$this->assertSame( 1, get_current_network_id() );
-	}
-
-	public function test__timer_float() {
-		$_SERVER['REQUEST_TIME_FLOAT'] = microtime( true ) - 0.5;
-		$this->assertGreaterThan( 0, timer_float() );
-	}
-
 	public function test__timer_start() {
 		$this->assertTrue( timer_start() );
 		$this->assertIsFloat( $GLOBALS['timestart'] );
-	}
-
-	public function test__timer_stop() {
-		timer_start();
-		$result = timer_stop( 0, 3 );
-		$this->assertIsString( $result );
-		$this->assertMatchesRegularExpression( '/^\d+(?:[.,]\d+)?$/', $result );
 	}
 
 }

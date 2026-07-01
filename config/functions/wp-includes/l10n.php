@@ -3,23 +3,23 @@
 return [
 	'_n_noop'                    => '2.5.0',
 	'_nx_noop'                   => '2.8.0',
-	'is_rtl'                     => '3.0.0',
+	'is_rtl'                     => '3.0.0 mockable',
 	'translate_nooped_plural'    => '3.1.0',
 	'get_locale'                 => '1.5.0 mockable',
 	'wp_get_list_item_separator' => '6.0.0',
 	'wp_get_word_count_type'     => '6.2.0',
 	'before_last_bar'            => '2.8.0',
-	// '__'         => '', // mocked
-	// '_e'         => '', // mocked
-	// '_x'         => '', // mocked
-	// '_n'         => '', // mocked
-	// '_nx'        => '', // mocked
-	// 'esc_html__' => '', // mocked
-	// 'esc_html_e' => '', // mocked
-	// 'esc_html_x' => '', // mocked
-	// 'esc_attr__' => '', // mocked
-	// 'esc_attr_e' => '', // mocked
-	// 'esc_attr_x' => '', // mocked
+	// '__'         => '', // custom mock
+	// '_e'         => '', // custom mock
+	// '_x'         => '', // custom mock
+	// '_n'         => '', // custom mock
+	// '_nx'        => '', // custom mock
+	// 'esc_html__' => '', // custom mock
+	// 'esc_html_e' => '', // custom mock
+	// 'esc_html_x' => '', // custom mock
+	// 'esc_attr__' => '', // custom mock
+	// 'esc_attr_e' => '', // custom mock
+	// 'esc_attr_x' => '', // custom mock
 ];
 
 /*

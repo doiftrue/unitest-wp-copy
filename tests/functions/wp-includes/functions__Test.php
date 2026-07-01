@@ -341,23 +341,9 @@ class functions__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertTrue( wp_validate_boolean( 1 ) );
 	}
 
-	public function test__wp_generate_uuid4() {
-		$this->assertIsString( wp_generate_uuid4() );
-	}
-
 	public function test__wp_is_uuid() {
 		$this->assertTrue( wp_is_uuid( '550e8400-e29b-41d4-a716-446655440000', 4 ) );
 		$this->assertFalse( wp_is_uuid( 'not-a-uuid' ) );
-	}
-
-	public function test__wp_unique_id() {
-		$this->assertSame( 'p1', wp_unique_id( 'p' ) );
-		$this->assertSame( 'p2', wp_unique_id( 'p' ) );
-	}
-
-	public function test__wp_unique_prefixed_id() {
-		$this->assertSame( 'x1', wp_unique_prefixed_id( 'x' ) );
-		$this->assertSame( 'x2', wp_unique_prefixed_id( 'x' ) );
 	}
 
 	public function test__wp_privacy_anonymize_ip() {

@@ -27,9 +27,7 @@ class l10n_mocks__Test extends \PHPUnit\Framework\TestCase {
 	public function test___e() {
 		ob_start();
 		_e( 'abc' );
-		$out = ob_get_clean();
-
-		$this->assertSame( 'abc', $out );
+		$this->assertSame( 'abc', ob_get_clean() );
 	}
 
 	public function test___x() {
@@ -53,9 +51,7 @@ class l10n_mocks__Test extends \PHPUnit\Framework\TestCase {
 	public function test__esc_html_e() {
 		ob_start();
 		esc_html_e( 'abc' );
-		$out = ob_get_clean();
-
-		$this->assertSame( 'abc', $out );
+		$this->assertSame( 'abc', ob_get_clean() );
 	}
 
 	public function test__esc_html_x() {
@@ -69,13 +65,19 @@ class l10n_mocks__Test extends \PHPUnit\Framework\TestCase {
 	public function test__esc_attr_e() {
 		ob_start();
 		esc_attr_e( 'abc' );
-		$out = ob_get_clean();
-
-		$this->assertSame( 'abc', $out );
+		$this->assertSame( 'abc', ob_get_clean() );
 	}
 
 	public function test__esc_attr_x() {
 		$this->assertSame( 'abc', esc_attr_x( 'abc', 'ctx' ) );
 	}
 
+	public function test__is_rtl(): void {
+		$this->assertIsBool( is_rtl() );
+	}
+
+	public function test__is_rtl_wp_mock_handler(): void {
+		\WP_Mock::userFunction( 'is_rtl', [ 'return' => true ] );
+		$this->assertTrue( is_rtl() );
+	}
 }

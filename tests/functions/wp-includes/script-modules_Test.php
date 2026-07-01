@@ -12,14 +12,6 @@ class script_modules_Test extends \PHPUnit\Framework\TestCase {
 		$GLOBALS['wp_current_filter'] = [];
 	}
 
-	public function test__wp_script_modules() {
-		$instance_1 = wp_script_modules();
-		$instance_2 = wp_script_modules();
-
-		$this->assertInstanceOf( WP_Script_Modules::class, $instance_1 );
-		$this->assertSame( $instance_1, $instance_2 );
-	}
-
 	public function test__wp_register_script_module() {
 		wp_register_script_module( '@test/module', 'https://example.com/module.js' );
 

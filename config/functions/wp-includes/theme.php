@@ -2,29 +2,25 @@
 
 return [
 	// Required for script/style tag helpers and WP_Scripts/WP_Styles classes.
-	'current_theme_supports' => '2.9.0',
+	'current_theme_supports' => '2.9.0 mockable',
 	// In-memory registry of theme-support features.
 	'add_theme_support'             => '2.9.0',
-	'get_theme_support'             => '3.1.0',
+	'get_theme_support'             => '3.1.0 mockable',
 	'remove_theme_support'          => '3.0.0',
 	'_remove_theme_support'         => '3.1.0',
 	'register_theme_feature'        => '5.5.0',
-	'get_registered_theme_features' => '5.5.0',
-	'get_registered_theme_feature'  => '5.5.0',
+	'get_registered_theme_features' => '5.5.0 mockable',
+	'get_registered_theme_feature'  => '5.5.0 mockable',
 	'create_initial_theme_features' => '5.5.0',
-	'get_stylesheet'                => '1.5.0',
-	'get_template'                  => '1.5.0',
+	'get_stylesheet'                => '1.5.0 mockable',
+	'get_template'                  => '1.5.0 mockable',
 	'get_stylesheet_uri'            => '1.5.0',
 	'get_locale_stylesheet_uri'     => '2.1.0',
+	// 'get_stylesheet_directory'     => '', // custom mock
+	// 'get_stylesheet_directory_uri' => '', // custom mock
+	// 'get_template_directory'       => '', // custom mock
+	// 'get_template_directory_uri'   => '', // custom mock
 ];
-
-/*
-Custom mocks:
-get_stylesheet_directory                                  // why: mocked
-get_stylesheet_directory_uri                              // why: mocked
-get_template_directory                                    // why: mocked
-get_template_directory_uri                                // why: mocked
-*/
 
 /*
 Not suitable in isolated PHPUnit env:

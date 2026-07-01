@@ -2,7 +2,7 @@
 
 return [
 	// Main API accessors backed by WP_Script_Modules in-memory registry.
-	'wp_script_modules'           => '6.5.0',
+	'wp_script_modules'           => '6.5.0 mockable',
 	'wp_register_script_module'   => '6.5.0',
 	'wp_enqueue_script_module'    => '6.5.0',
 	'wp_dequeue_script_module'    => '6.5.0',
