@@ -24,7 +24,7 @@ wp_get_wp_version()
 wp_salt()
 ```
 
-Copied symbols (Mockable via WP_Mock):
+Copied WP symbols (Mockable via WP_Mock):
 ```text
 _deprecated_function()
 _wp_can_use_pcre_u()
@@ -96,7 +96,7 @@ wp_unique_id()
 wp_unique_prefixed_id()
 ```
 
-Full copies symbols of WP Core (not mockable):
+Copied WP symbols (not mockable):
 ```text
 PasswordHash{}
 WP_Block_Parser_Block{}
