@@ -10,9 +10,9 @@ php.connect:
 
 composer:
 	$(call php_run,, composer  $(filter-out $@,$(MAKECMDGOALS)))
-composer.install:
+composer_install:
 	$(call php_run,, composer install  $(filter-out $@,$(MAKECMDGOALS)))
-composer.update:
+composer_update:
 	$(call php_run,, composer update  $(filter-out $@,$(MAKECMDGOALS)))
 
 # $ make phpunit WP_LINE=6.8
@@ -21,6 +21,13 @@ phpunit:
 
 parser.run:
 	$(call php_run, , php parser/run.php)
+
+
+# make switch WP_LINE=6.8
+switch:
+	@[ -n "$(WP_LINE)" ] || { echo 'Use: make switch WP_LINE=6.8'; exit 1; }
+	$(call php_run,, composer require --dev wordpress/wordpress:$(WP_LINE).* --no-interaction --with-dependencies)
+	$(MAKE) parser.run
 
 # make release WP_LINE=6.8
 # make release WP_LINE=6.8 NOT_PUSH=1

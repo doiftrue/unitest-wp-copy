@@ -6,7 +6,6 @@
   "scripts": {
     "phpunit": "phpunit"
   },
-  "require": {},
   "require-dev": {
     "composer/installers": "*",
     "wordpress/wordpress": "7.0.*",

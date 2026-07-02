@@ -26,7 +26,6 @@ Run parser with:
 - wraps copied symbols with `function_exists` or `class_exists` guards;
 - skips symbols whose `<since-version>` is higher than current `wp_version`;
 - applies post-processing via `Source_Code_Replacer`:
-  - option-call rewrites to `$GLOBALS['stub_wp_options']`;
   - static method call rewrite (`Class::method()` -> `Class__method()`).
 
 If configured symbol is missing in source file, parser throws.

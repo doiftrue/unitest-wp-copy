@@ -19,7 +19,7 @@ Dependency documents:
   - added in the same change and validated by these same rules recursively, or
 - Reject a symbol if any dependency requires unsupported runtime behavior (DB, full WordPress bootstrap, network I/O, admin/request lifecycle, or similarly heavy runtime coupling).
 - Do not add unresolved dependencies "for later".
-- If option access is covered by `$GLOBALS['stub_wp_options']`, treat it as compatible with this runtime.
+- A symbol that calls `get_option()` is compatible only when every option name it may read is present in `$GLOBALS['stub_wp_options']`. The same rule applies to `get_site_option()` and `$GLOBALS['stub_wp_site_options']` in multisite mode. The existence of these runtime mocks alone does not make arbitrary or unresolved option access eligible.
 - The symbol should solve an in-memory / pure-PHP task that is useful for unit tests.
 - Symbol behavior should be predictable and not tightly coupled to a "live" runtime (DB, HTTP, admin/request lifecycle).
 - If only a small part works, but key public behavior is not viable in this isolated runtime, the symbol is not suitable and should stay disabled in config.

@@ -58,9 +58,17 @@ class embed__Test extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function test___oembed_filter_feed_content() {
-		$html = '<iframe class="wp-embedded-content" style="display:none" src="x"></iframe><iframe style="color:red" src="y"></iframe>';
-		$result = _oembed_filter_feed_content( $html );
-		$this->assertStringNotContainsString( 'display:none', $result );
-		$this->assertStringContainsString( 'color:red', $result );
+		if( wp_version_compare( '>= 6.7' ) ){
+			$html = '<iframe class="wp-embedded-content" style="display:none" src="x"></iframe><iframe style="color:red" src="y"></iframe>';
+			$result = _oembed_filter_feed_content( $html );
+			$this->assertStringNotContainsString( 'display:none', $result );
+			$this->assertStringContainsString( 'color:red', $result );
+		}
+		else{
+			$html = '<iframe class="wp-embedded-content" sandbox="allow-scripts" security="restricted" style="position: absolute; clip: rect(1px, 1px, 1px, 1px);" src="x"></iframe><iframe style="color:red" src="y"></iframe>';
+			$result = _oembed_filter_feed_content( $html );
+			$this->assertStringNotContainsString( 'position: absolute', $result );
+			$this->assertStringContainsString( 'color:red', $result );
+		}
 	}
 }

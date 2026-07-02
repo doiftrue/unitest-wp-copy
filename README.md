@@ -97,19 +97,33 @@ define( 'WP_ENVIRONMENT_TYPE', 'development' );
 define( 'WP_DEBUG', true );
 
 $GLOBALS['stub_wp_options'] = (object) [
-	'home'            => 'https://unitest-wp-copy.loc',
-	'siteurl'         => 'https://unitest-wp-copy.loc',
-	'gmt_offset'      => 0,
-	'timezone_string' => 'UTC',
-	'language'        => 'en-US',
-	'blogdescription' => 'unitest-wp-copy runtime',
-	'admin_email'     => 'admin@unitest-wp-copy.loc',
-	'stylesheet'      => 'unitest-wp-copy',
-	'use_smilies'     => true,
-	'use_balanceTags' => true,
-	'WPLANG'          => '',
-	'blog_charset'    => 'UTF-8',
-	'html_type'       => 'text/html',
+	'home'                => 'https://unitest-wp-copy.loc',
+	'siteurl'             => 'https://unitest-wp-copy.loc',
+	'gmt_offset'          => 0,
+	'timezone_string'     => 'UTC',
+	'language'            => 'en-US',
+	'blogdescription'     => 'unitest-wp-copy runtime',
+	'admin_email'         => 'admin@unitest-wp-copy.loc',
+	'stylesheet'          => 'unitest-wp-copy',
+	'use_smilies'         => true,
+	'use_balanceTags'     => true,
+	'WPLANG'              => '',
+	'blog_charset'        => 'UTF-8',
+	'html_type'           => 'text/html',
+	'thumbnail_size_w'    => 150,
+	'thumbnail_size_h'    => 150,
+	'thumbnail_crop'      => true,
+	'medium_size_w'       => 300,
+	'medium_size_h'       => 300,
+	'medium_large_size_w' => 768,
+	'medium_large_size_h' => 0,
+	'large_size_w'        => 1024,
+	'large_size_h'        => 1024,
+];
+
+// Used by get_site_option() when is_multisite() is true.
+$GLOBALS['stub_wp_site_options'] = (object) [
+	'site_name' => 'Test network',
 ];
 
 require_once __DIR__ . '/vendor/autoload.php';
@@ -121,6 +135,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 Runtime globals initialized or updated by bootstrap (shared in one PHP process):
 ```php
 $GLOBALS['stub_wp_options']
+$GLOBALS['stub_wp_site_options']
 $GLOBALS['timestart']
 $_SERVER['HTTP_HOST']
 $blog_id
@@ -142,6 +157,32 @@ $wp_smiliessearch
 ```
 
 If a test mutates these globals/options, restore them in `setUp()` / `tearDown()`.
+
+### How `get_option()` Works
+
+`get_option()` uses `$GLOBALS['stub_wp_options']` instead of a database. Configured options have priority over `WP_Mock` handlers so that a broad mock cannot accidentally change options used by nested runtime calls.
+
+The lookup order is:
+
+1. `pre_option_{$option}` and `pre_option` filters;
+2. the value in `$GLOBALS['stub_wp_options']` and the `option_{$option}` filter;
+3. a `WP_Mock::userFunction( 'get_option', ... )` handler for an option not present in the store;
+4. the `default_option_{$option}` filter and the default value.
+
+Override a configured option by changing the store:
+```php
+$GLOBALS['stub_wp_options']->medium_size_w = 640;
+```
+
+Use `WP_Mock` to mock option that not exists in `$GLOBALS['stub_wp_options']`:
+```php
+WP_Mock::userFunction( 'get_option', [
+	'args'   => [ 'my_plugin_option', false ],
+	'return' => 'test-value',
+] );
+```
+IMPORTANT: `WP_Mock` cannot override an option while it exists in `$GLOBALS['stub_wp_options']`.
+
 
 ### Redefine Constants
 

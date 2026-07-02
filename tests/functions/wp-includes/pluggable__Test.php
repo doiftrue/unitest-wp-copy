@@ -27,14 +27,17 @@ class pluggable__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( 32, strlen( $hash ) );
 		$this->assertSame( $hash, wp_hash( 'test data' ) );
 		$this->assertNotSame( $hash, wp_hash( 'other data' ) );
-		$this->assertSame( 64, strlen( wp_hash( 'test', 'auth', 'sha256' ) ) );
 
-		try {
-			wp_hash( 'test', 'auth', 'nonexistent_algo_xyz' );
-			$this->fail( 'Unsupported hash algorithm must throw an exception.' );
-		}
-		catch ( InvalidArgumentException $e ) {
-			$this->assertNotSame( '', $e->getMessage() );
+		if( wp_version_compare( '>= 6.8.0' ) ){
+			$this->assertSame( 64, strlen( wp_hash( 'test', 'auth', 'sha256' ) ) );
+
+			try {
+				wp_hash( 'test', 'auth', 'nonexistent_algo_xyz' );
+				$this->fail( 'Unsupported hash algorithm must throw an exception.' );
+			}
+			catch ( InvalidArgumentException $e ) {
+				$this->assertNotSame( '', $e->getMessage() );
+			}
 		}
 	}
 
