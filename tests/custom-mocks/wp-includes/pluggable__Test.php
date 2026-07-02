@@ -3,7 +3,7 @@
 // Needed only for mock tests: loads 10up/wp_mock classes.
 require_once dirname( __DIR__, 3 ) . '/vendor/autoload.php';
 
-class pluggable_mocks__Test extends \PHPUnit\Framework\TestCase {
+class pluggable__custom_mocks__Test extends \PHPUnit\Framework\TestCase {
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -40,12 +40,4 @@ class pluggable_mocks__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( 'mocked-salt-value', wp_salt( 'auth' ) );
 	}
 
-	public function test__wp_nonce_tick() {
-		$tick = wp_nonce_tick();
-		$expected = ceil( time() / ( DAY_IN_SECONDS / 2 ) );
-		$this->assertSame( $expected, $tick );
-
-		\WP_Mock::userFunction( 'wp_nonce_tick', [ 'return' => 42 ] );
-		$this->assertSame( 42, wp_nonce_tick() );
-	}
 }

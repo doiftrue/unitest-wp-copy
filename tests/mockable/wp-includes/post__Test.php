@@ -2,7 +2,7 @@
 
 require_once dirname( __DIR__, 3 ) . '/vendor/autoload.php';
 
-class post_mocks__Test extends \PHPUnit\Framework\TestCase {
+class post__mockable__Test extends \PHPUnit\Framework\TestCase {
 
 	protected function setUp(): void {
 		parent::setUp();

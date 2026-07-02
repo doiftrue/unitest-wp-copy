@@ -21,7 +21,7 @@ This document describes the WP-like runtime used by tests that will use code of 
 - `wp-runtime/copy/functions/*`: parser-generated copied functions.
 - `wp-runtime/copy/classes/*`: parser-generated copied classes.
 - `wp-runtime/copy/mockable/*`: parser-generated functions with WP_Mock handler injection.
-- `wp-runtime/mocks/*`: manual runtime-adapted mocks.
+- `wp-runtime/custom-mocks/*`: manual runtime-adapted mocks.
 - `wp-runtime/wp-line-extra/<wp-line>/*`: WP-line specific mocks, overlays, init-parts etc.
 - `wp-runtime/wp-line-extra/<wp-line>/overlaps.php`: WP-line specific mocks that overlays copied symbols.
 - `wp-runtime/copy/classes-statics/*`: parser-generated static-method compatibility functions.
@@ -46,4 +46,3 @@ This is not full WordPress:
 - only selected symbols are included;
 - DB/network/full bootstrap behavior is out of scope;
 - some symbols require targeted stubs/mocks/adaptations.
-

@@ -1,6 +1,6 @@
 The following functions and classes are available in this (unit test) environment. Symbols are copied from WordPress 7.0.
 
-Changed (not full copies) symbols (Mockable - can be overridden via WP_Mock):
+Custom-adapted WordPress symbols (Mockable via WP_Mock):
 ```text
 __()
 _e()
@@ -24,7 +24,7 @@ wp_get_wp_version()
 wp_salt()
 ```
 
-Copied symbols (Mockable - can be overridden via WP_Mock):
+Copied symbols (Mockable via WP_Mock):
 ```text
 _deprecated_function()
 _wp_can_use_pcre_u()

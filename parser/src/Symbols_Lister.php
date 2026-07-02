@@ -22,12 +22,12 @@ class Symbols_Lister {
 	private string $content = <<<MD
 		The following functions and classes are available in this (unit test) environment. Symbols are copied from WordPress {WP_VERSION}.
 		
-		Changed (not full copies) symbols (Mockable - can be overridden via WP_Mock):
+		Custom-adapted WordPress symbols (Mockable via WP_Mock):
 		```text
 		{MOCKS_LIST}
 		```
 		
-		Copied symbols (Mockable - can be overridden via WP_Mock):
+		Copied symbols (Mockable via WP_Mock):
 		```text
 		{MOCKABLE_LIST}
 		```
@@ -51,7 +51,7 @@ class Symbols_Lister {
 		$mockable_names = array_values( array_unique( $mockable_names ) );
 		asort( $mockable_names );
 
-		$mocks_names = $this->get_mock_function_names( "$config->runtime_dir/mocks" );
+		$mocks_names = $this->get_mock_function_names( "$config->runtime_dir/custom-mocks" );
 		$mocks_names = array_values( array_unique( $mocks_names ) );
 		asort( $mocks_names );
 

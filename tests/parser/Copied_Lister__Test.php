@@ -11,7 +11,7 @@ class Copied_Lister__Test extends Project_TestCase {
 
 		$runtime_dir = "$tmp_dir/wp-runtime";
 		$copy_dir = "$runtime_dir/copy";
-		$mocks_dir = "$runtime_dir/mocks";
+		$mocks_dir = "$runtime_dir/custom-mocks";
 		$mockable_dir = "$copy_dir/mockable";
 
 		mkdir( "$mocks_dir/wp-includes", 0777, true );
@@ -43,6 +43,7 @@ class Copied_Lister__Test extends Project_TestCase {
 		$this->assertStringContainsString( 'runtime_mock_symbol()', $info );
 		$this->assertStringContainsString( 'copied_mockable_symbol()', $info );
 		$this->assertStringContainsString( 'copied_regular_symbol()', $info );
+		$this->assertStringNotContainsString( "Custom-adapted WordPress symbols (Mockable via WP_Mock):\n```text\n(none)", $info );
 	}
 
 }

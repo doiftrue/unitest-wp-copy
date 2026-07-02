@@ -3,7 +3,7 @@
 // Needed only for mock tests: loads 10up/wp_mock classes.
 require_once dirname( __DIR__, 3 ) . '/vendor/autoload.php';
 
-class taxonomy_mocks__Test extends \PHPUnit\Framework\TestCase {
+class taxonomy__mockable__Test extends \PHPUnit\Framework\TestCase {
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -89,4 +89,3 @@ class taxonomy_mocks__Test extends \PHPUnit\Framework\TestCase {
 	}
 
 }
-

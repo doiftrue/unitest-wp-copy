@@ -1,6 +1,6 @@
 <?php
 
-class screen_mockable__Test extends \PHPUnit\Framework\TestCase {
+class screen__mockable__Test extends \PHPUnit\Framework\TestCase {
 
 	protected function setUp(): void {
 		parent::setUp();

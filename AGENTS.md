@@ -13,7 +13,7 @@ User-facing usage belongs to `README.md`.
 - Do not use `worktrees/` for regular development. It is an artifact area for release branches only.
 - When adding/updating copied symbols, update `config/*` first, then regenerate via parser, then rerun tests.
 - Use `'mockable'` in function config only for "original WP logic + injected WP_Mock handler" behavior.
-- Keep `wp-runtime/mocks/*` for manual runtime-adapted mocks only.
+- Keep `wp-runtime/custom-mocks/*` for manual runtime-adapted mocks only.
 - When PHP code execution is needed, run it in container via `make php.run code='...'` (do not rely on local `php` CLI).
 
 

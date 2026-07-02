@@ -60,7 +60,7 @@ intended test seam without requiring unavailable runtime state.
 `mockable` is not a compatibility workaround:
 - if the original logic requires unsupported runtime behavior, reject the symbol;
 - if the runtime implementation must intentionally differ from WP core, use a manual
-  mock in `wp-runtime/mocks/*`;
+  mock in `wp-runtime/custom-mocks/*`;
 - do not use `mockable` only to hide missing transitive dependencies or fatal default
   behavior.
 
@@ -78,8 +78,6 @@ Use Auto-Mockable only for "original WP logic + handler injection":
 - add tests for:
   - default fallback behavior;
   - `WP_Mock::userFunction(...)` override behavior.
-
-If runtime behavior must diverge from WP core, a manual mock in `wp-runtime/mocks/*` should be implemented.
 
 
 ## Workflow: Static Class Methods Compatibility

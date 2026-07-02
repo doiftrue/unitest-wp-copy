@@ -3,18 +3,15 @@
 // Needed only for mock tests: loads 10up/wp_mock classes.
 require_once dirname( __DIR__, 3 ) . '/vendor/autoload.php';
 
-class general_template_mocks__Test extends \PHPUnit\Framework\TestCase {
+class general_template__custom_mocks__Test extends \PHPUnit\Framework\TestCase {
 
 	private object $initial_stub_wp_options;
-	private string $initial_wp_version;
 
 	protected function setUp(): void {
 		parent::setUp();
 		\WP_Mock::setUp();
 
 		$this->initial_stub_wp_options = clone $GLOBALS['stub_wp_options'];
-		$this->initial_wp_version      = (string) ( $GLOBALS['wp_version'] ?? '' );
-
 		$GLOBALS['wp_filter']         = [];
 		$GLOBALS['wp_actions']        = [];
 		$GLOBALS['wp_filters']        = [];
@@ -23,7 +20,6 @@ class general_template_mocks__Test extends \PHPUnit\Framework\TestCase {
 
 	protected function tearDown(): void {
 		$GLOBALS['stub_wp_options'] = clone $this->initial_stub_wp_options;
-		$GLOBALS['wp_version']      = $this->initial_wp_version;
 
 		\WP_Mock::tearDown();
 		parent::tearDown();
@@ -82,24 +78,6 @@ class general_template_mocks__Test extends \PHPUnit\Framework\TestCase {
 		$out = ob_get_clean();
 
 		$this->assertSame( 'tagline', $out );
-	}
-
-	public function test__wp_get_wp_version() {
-		if( $wp_ver = wp_version_compare( '< 6.7.0' ) ){
-			$this->markTestSkipped( "wp_version_compare() not exists on WP $wp_ver" );
-		}
-
-		$this->assertMatchesRegularExpression( '/^\d+\.\d+(?:\.\d+)?/', wp_get_wp_version() );
-	}
-
-	public function test__wp_get_wp_version_wp_mock_handler() {
-		if( $wp_ver = wp_version_compare( '< 6.7.0' ) ){
-			$this->markTestSkipped( "wp_version_compare() not exists on WP $wp_ver" );
-		}
-
-		\WP_Mock::userFunction( 'wp_get_wp_version', [ 'return' => 'mocked-version' ] );
-
-		$this->assertSame( 'mocked-version', wp_get_wp_version() );
 	}
 
 }

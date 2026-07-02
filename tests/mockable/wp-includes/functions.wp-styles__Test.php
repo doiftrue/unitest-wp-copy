@@ -2,7 +2,7 @@
 
 require_once dirname( __DIR__, 3 ) . '/vendor/autoload.php';
 
-class functions_wp_styles_mocks__Test extends \PHPUnit\Framework\TestCase {
+class functions_wp_styles__mockable__Test extends \PHPUnit\Framework\TestCase {
 
 	protected function setUp(): void {
 		parent::setUp();
