@@ -6,6 +6,9 @@
 
 use Unitest_WP_Copy\WP_Mock_Utils;
 
+/**
+ * Runtime adaptation of switch_to_blog() from WordPress 7.0 wp-includes/ms-blogs.php.
+ */
 if ( ! function_exists( 'switch_to_blog' ) ) :
 	function switch_to_blog( $new_blog_id, $deprecated = null ) {
 		if ( WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -27,6 +30,9 @@ if ( ! function_exists( 'switch_to_blog' ) ) :
 	}
 endif;
 
+/**
+ * Runtime adaptation of restore_current_blog() from WordPress 7.0 wp-includes/ms-blogs.php.
+ */
 if ( ! function_exists( 'restore_current_blog' ) ) :
 	function restore_current_blog() {
 		if ( WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {

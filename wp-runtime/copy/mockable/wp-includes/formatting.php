@@ -9,7 +9,7 @@ if( ! function_exists( 'balanceTags' ) ) :
 			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
 		}
 	
-		if ( $force || (int) $GLOBALS['stub_wp_options']->use_balanceTags === 1 ) {
+		if ( $force || (int) get_option( 'use_balanceTags' ) === 1 ) {
 			return force_balance_tags( $text );
 		} else {
 			return $text;
@@ -51,7 +51,7 @@ if( ! function_exists( 'convert_smilies' ) ) :
 	
 		global $wp_smiliessearch;
 	
-		if ( ! $GLOBALS['stub_wp_options']->use_smilies || empty( $wp_smiliessearch ) ) {
+		if ( ! get_option( 'use_smilies' ) || empty( $wp_smiliessearch ) ) {
 			// Return default text.
 			return $text;
 		}

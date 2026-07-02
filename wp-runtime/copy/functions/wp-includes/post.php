@@ -3,55 +3,63 @@
 // ------------------auto-generated---------------------
 
 // wp-includes/post.php (WP 6.8.5)
-if( ! function_exists( 'get_extended' ) ) :
-	function get_extended( $post ) {
-		// Match the new style more links.
-		if ( preg_match( '/<!--more(.*?)?-->/', $post, $matches ) ) {
-			list($main, $extended) = explode( $matches[0], $post, 2 );
-			$more_text             = $matches[1];
-		} else {
-			$main      = $post;
-			$extended  = '';
-			$more_text = '';
+if( ! function_exists( 'wp_resolve_post_date' ) ) :
+	function wp_resolve_post_date( $post_date = '', $post_date_gmt = '' ) {
+		// If the date is empty, set the date to now.
+		if ( empty( $post_date ) || '0000-00-00 00:00:00' === $post_date ) {
+			if ( empty( $post_date_gmt ) || '0000-00-00 00:00:00' === $post_date_gmt ) {
+				$post_date = current_time( 'mysql' );
+			} else {
+				$post_date = get_date_from_gmt( $post_date_gmt );
+			}
 		}
 	
-		// Leading and trailing whitespace.
-		$main      = preg_replace( '/^[\s]*(.*)[\s]*$/', '\\1', $main );
-		$extended  = preg_replace( '/^[\s]*(.*)[\s]*$/', '\\1', $extended );
-		$more_text = preg_replace( '/^[\s]*(.*)[\s]*$/', '\\1', $more_text );
+		// Validate the date.
+		$month = (int) substr( $post_date, 5, 2 );
+		$day   = (int) substr( $post_date, 8, 2 );
+		$year  = (int) substr( $post_date, 0, 4 );
 	
-		return array(
-			'main'      => $main,
-			'extended'  => $extended,
-			'more_text' => $more_text,
-		);
+		$valid_date = wp_checkdate( $month, $day, $year, $post_date );
+	
+		if ( ! $valid_date ) {
+			return false;
+		}
+		return $post_date;
 	}
 endif;
 
 // wp-includes/post.php (WP 6.8.5)
-if( ! function_exists( 'get_post_statuses' ) ) :
-	function get_post_statuses() {
-		$status = array(
-			'draft'   => __( 'Draft' ),
-			'pending' => __( 'Pending Review' ),
-			'private' => __( 'Private' ),
-			'publish' => __( 'Published' ),
-		);
-	
-		return $status;
+if( ! function_exists( 'wp_untrash_post_set_previous_status' ) ) :
+	function wp_untrash_post_set_previous_status( $new_status, $post_id, $previous_status ) {
+		return $previous_status;
 	}
 endif;
 
 // wp-includes/post.php (WP 6.8.5)
-if( ! function_exists( 'get_page_statuses' ) ) :
-	function get_page_statuses() {
-		$status = array(
-			'draft'   => __( 'Draft' ),
-			'private' => __( 'Private' ),
-			'publish' => __( 'Published' ),
-		);
+if( ! function_exists( 'use_block_editor_for_post_type' ) ) :
+	function use_block_editor_for_post_type( $post_type ) {
+		if ( ! post_type_exists( $post_type ) ) {
+			return false;
+		}
 	
-		return $status;
+		if ( ! post_type_supports( $post_type, 'editor' ) ) {
+			return false;
+		}
+	
+		$post_type_object = get_post_type_object( $post_type );
+		if ( $post_type_object && ! $post_type_object->show_in_rest ) {
+			return false;
+		}
+	
+		/**
+		 * Filters whether a post is able to be edited in the block editor.
+		 *
+		 * @since 5.0.0
+		 *
+		 * @param bool   $use_block_editor  Whether the post type can be edited or not. Default true.
+		 * @param string $post_type         The post type being checked.
+		 */
+		return apply_filters( 'use_block_editor_for_post_type', true, $post_type );
 	}
 endif;
 
@@ -64,6 +72,35 @@ if( ! function_exists( '_wp_privacy_statuses' ) ) :
 			'request-failed'    => _x( 'Failed', 'request status' ),       // User failed to confirm the action.
 			'request-completed' => _x( 'Completed', 'request status' ),    // Admin has handled the request.
 		);
+	}
+endif;
+
+// wp-includes/post.php (WP 6.8.5)
+if( ! function_exists( '_truncate_post_slug' ) ) :
+	function _truncate_post_slug( $slug, $length = 200 ) {
+		if ( strlen( $slug ) > $length ) {
+			$decoded_slug = urldecode( $slug );
+			if ( $decoded_slug === $slug ) {
+				$slug = substr( $slug, 0, $length );
+			} else {
+				$slug = utf8_uri_encode( $decoded_slug, $length, true );
+			}
+		}
+	
+		return rtrim( $slug, '-' );
+	}
+endif;
+
+// wp-includes/post.php (WP 6.8.5)
+if( ! function_exists( '_post_type_meta_capabilities' ) ) :
+	function _post_type_meta_capabilities( $capabilities = null ) {
+		global $post_type_meta_caps;
+	
+		foreach ( $capabilities as $core => $custom ) {
+			if ( in_array( $core, array( 'read_post', 'delete_post', 'edit_post' ), true ) ) {
+				$post_type_meta_caps[ $custom ] = $core;
+			}
+		}
 	}
 endif;
 
@@ -202,19 +239,6 @@ if( ! function_exists( 'get_post_type_capabilities' ) ) :
 		}
 	
 		return (object) $capabilities;
-	}
-endif;
-
-// wp-includes/post.php (WP 6.8.5)
-if( ! function_exists( '_post_type_meta_capabilities' ) ) :
-	function _post_type_meta_capabilities( $capabilities = null ) {
-		global $post_type_meta_caps;
-	
-		foreach ( $capabilities as $core => $custom ) {
-			if ( in_array( $core, array( 'read_post', 'delete_post', 'edit_post' ), true ) ) {
-				$post_type_meta_caps[ $custom ] = $core;
-			}
-		}
 	}
 endif;
 
@@ -387,6 +411,45 @@ if( ! function_exists( 'get_post_mime_types' ) ) :
 endif;
 
 // wp-includes/post.php (WP 6.8.5)
+if( ! function_exists( '_page_traverse_name' ) ) :
+	function _page_traverse_name( $page_id, &$children, &$result ) {
+		if ( isset( $children[ $page_id ] ) ) {
+			foreach ( (array) $children[ $page_id ] as $child ) {
+				$result[ $child->ID ] = $child->post_name;
+				_page_traverse_name( $child->ID, $children, $result );
+			}
+		}
+	}
+endif;
+
+// wp-includes/post.php (WP 6.8.5)
+if( ! function_exists( 'get_post_statuses' ) ) :
+	function get_post_statuses() {
+		$status = array(
+			'draft'   => __( 'Draft' ),
+			'pending' => __( 'Pending Review' ),
+			'private' => __( 'Private' ),
+			'publish' => __( 'Published' ),
+		);
+	
+		return $status;
+	}
+endif;
+
+// wp-includes/post.php (WP 6.8.5)
+if( ! function_exists( 'get_page_statuses' ) ) :
+	function get_page_statuses() {
+		$status = array(
+			'draft'   => __( 'Draft' ),
+			'private' => __( 'Private' ),
+			'publish' => __( 'Published' ),
+		);
+	
+		return $status;
+	}
+endif;
+
+// wp-includes/post.php (WP 6.8.5)
 if( ! function_exists( 'wp_match_mime_types' ) ) :
 	function wp_match_mime_types( $wildcard_mime_types, $real_mime_types ) {
 		$matches = array();
@@ -483,44 +546,22 @@ if( ! function_exists( 'wp_post_mime_type_where' ) ) :
 endif;
 
 // wp-includes/post.php (WP 6.8.5)
-if( ! function_exists( 'wp_resolve_post_date' ) ) :
-	function wp_resolve_post_date( $post_date = '', $post_date_gmt = '' ) {
-		// If the date is empty, set the date to now.
-		if ( empty( $post_date ) || '0000-00-00 00:00:00' === $post_date ) {
-			if ( empty( $post_date_gmt ) || '0000-00-00 00:00:00' === $post_date_gmt ) {
-				$post_date = current_time( 'mysql' );
-			} else {
-				$post_date = get_date_from_gmt( $post_date_gmt );
-			}
+if( ! function_exists( 'get_page_hierarchy' ) ) :
+	function get_page_hierarchy( &$pages, $page_id = 0 ) {
+		if ( empty( $pages ) ) {
+			return array();
 		}
 	
-		// Validate the date.
-		$month = (int) substr( $post_date, 5, 2 );
-		$day   = (int) substr( $post_date, 8, 2 );
-		$year  = (int) substr( $post_date, 0, 4 );
-	
-		$valid_date = wp_checkdate( $month, $day, $year, $post_date );
-	
-		if ( ! $valid_date ) {
-			return false;
-		}
-		return $post_date;
-	}
-endif;
-
-// wp-includes/post.php (WP 6.8.5)
-if( ! function_exists( '_truncate_post_slug' ) ) :
-	function _truncate_post_slug( $slug, $length = 200 ) {
-		if ( strlen( $slug ) > $length ) {
-			$decoded_slug = urldecode( $slug );
-			if ( $decoded_slug === $slug ) {
-				$slug = substr( $slug, 0, $length );
-			} else {
-				$slug = utf8_uri_encode( $decoded_slug, $length, true );
-			}
+		$children = array();
+		foreach ( (array) $pages as $p ) {
+			$parent_id                = (int) $p->post_parent;
+			$children[ $parent_id ][] = $p;
 		}
 	
-		return rtrim( $slug, '-' );
+		$result = array();
+		_page_traverse_name( $page_id, $children, $result );
+	
+		return $result;
 	}
 endif;
 
@@ -557,69 +598,28 @@ if( ! function_exists( 'get_page_children' ) ) :
 endif;
 
 // wp-includes/post.php (WP 6.8.5)
-if( ! function_exists( 'get_page_hierarchy' ) ) :
-	function get_page_hierarchy( &$pages, $page_id = 0 ) {
-		if ( empty( $pages ) ) {
-			return array();
+if( ! function_exists( 'get_extended' ) ) :
+	function get_extended( $post ) {
+		// Match the new style more links.
+		if ( preg_match( '/<!--more(.*?)?-->/', $post, $matches ) ) {
+			list($main, $extended) = explode( $matches[0], $post, 2 );
+			$more_text             = $matches[1];
+		} else {
+			$main      = $post;
+			$extended  = '';
+			$more_text = '';
 		}
 	
-		$children = array();
-		foreach ( (array) $pages as $p ) {
-			$parent_id                = (int) $p->post_parent;
-			$children[ $parent_id ][] = $p;
-		}
+		// Leading and trailing whitespace.
+		$main      = preg_replace( '/^[\s]*(.*)[\s]*$/', '\\1', $main );
+		$extended  = preg_replace( '/^[\s]*(.*)[\s]*$/', '\\1', $extended );
+		$more_text = preg_replace( '/^[\s]*(.*)[\s]*$/', '\\1', $more_text );
 	
-		$result = array();
-		_page_traverse_name( $page_id, $children, $result );
-	
-		return $result;
-	}
-endif;
-
-// wp-includes/post.php (WP 6.8.5)
-if( ! function_exists( '_page_traverse_name' ) ) :
-	function _page_traverse_name( $page_id, &$children, &$result ) {
-		if ( isset( $children[ $page_id ] ) ) {
-			foreach ( (array) $children[ $page_id ] as $child ) {
-				$result[ $child->ID ] = $child->post_name;
-				_page_traverse_name( $child->ID, $children, $result );
-			}
-		}
-	}
-endif;
-
-// wp-includes/post.php (WP 6.8.5)
-if( ! function_exists( 'wp_untrash_post_set_previous_status' ) ) :
-	function wp_untrash_post_set_previous_status( $new_status, $post_id, $previous_status ) {
-		return $previous_status;
-	}
-endif;
-
-// wp-includes/post.php (WP 6.8.5)
-if( ! function_exists( 'use_block_editor_for_post_type' ) ) :
-	function use_block_editor_for_post_type( $post_type ) {
-		if ( ! post_type_exists( $post_type ) ) {
-			return false;
-		}
-	
-		if ( ! post_type_supports( $post_type, 'editor' ) ) {
-			return false;
-		}
-	
-		$post_type_object = get_post_type_object( $post_type );
-		if ( $post_type_object && ! $post_type_object->show_in_rest ) {
-			return false;
-		}
-	
-		/**
-		 * Filters whether a post is able to be edited in the block editor.
-		 *
-		 * @since 5.0.0
-		 *
-		 * @param bool   $use_block_editor  Whether the post type can be edited or not. Default true.
-		 * @param string $post_type         The post type being checked.
-		 */
-		return apply_filters( 'use_block_editor_for_post_type', true, $post_type );
+		return array(
+			'main'      => $main,
+			'extended'  => $extended,
+			'more_text' => $more_text,
+		);
 	}
 endif;
 

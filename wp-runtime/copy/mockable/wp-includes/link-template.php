@@ -12,10 +12,10 @@ if( ! function_exists( 'get_home_url' ) ) :
 		$orig_scheme = $scheme;
 	
 		if ( empty( $blog_id ) || ! is_multisite() ) {
-			$url = $GLOBALS['stub_wp_options']->home;
+			$url = get_option( 'home' );
 		} else {
 			switch_to_blog( $blog_id );
-			$url = $GLOBALS['stub_wp_options']->home;
+			$url = get_option( 'home' );
 			restore_current_blog();
 		}
 	
@@ -56,10 +56,10 @@ if( ! function_exists( 'get_site_url' ) ) :
 		}
 	
 		if ( empty( $blog_id ) || ! is_multisite() ) {
-			$url = $GLOBALS['stub_wp_options']->siteurl;
+			$url = get_option( 'siteurl' );
 		} else {
 			switch_to_blog( $blog_id );
-			$url = $GLOBALS['stub_wp_options']->siteurl;
+			$url = get_option( 'siteurl' );
 			restore_current_blog();
 		}
 	

@@ -140,7 +140,7 @@ if( ! class_exists( 'WP_HTTP_Proxy' ) ) :
 				return true;
 			}
 	
-			$home = parse_url( $GLOBALS['stub_wp_options']->siteurl );
+			$home = parse_url( get_option( 'siteurl' ) );
 	
 			/**
 			 * Filters whether to preempt sending the request through the proxy.
