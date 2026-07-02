@@ -19,7 +19,7 @@ class l10n__custom_mocks__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( 'abc', __( 'abc' ) );
 	}
 
-	public function test____wp_mock_handler() {
+	public function test_____mockable_handler() {
 		\WP_Mock::userFunction( '__', [ 'return' => 'translated' ] );
 		$this->assertSame( 'translated', __( 'abc' ) );
 	}

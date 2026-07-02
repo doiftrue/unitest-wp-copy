@@ -51,13 +51,13 @@ class theme__custom_mocks__Test extends \PHPUnit\Framework\TestCase {
 		);
 	}
 
-	public function test__get_stylesheet_directory_uri_wp_mock_handler() {
+	public function test__get_stylesheet_directory_uri__mockable_handler() {
 		\WP_Mock::userFunction( 'get_stylesheet_directory_uri', [ 'return' => 'https://mocked.test/child' ] );
 
 		$this->assertSame( 'https://mocked.test/child', get_stylesheet_directory_uri() );
 	}
 
-	public function test__get_template_directory_wp_mock_handler() {
+	public function test__get_template_directory__mockable_handler() {
 		\WP_Mock::userFunction( 'get_template_directory', [ 'return' => '/tmp/mocked-theme' ] );
 
 		$this->assertSame( '/tmp/mocked-theme', get_template_directory() );

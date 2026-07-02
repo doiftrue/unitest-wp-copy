@@ -7,13 +7,18 @@ use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
 class Symbols_Lister {
+	/**
+	 * Infrastructure mocks intentionally omitted from the public symbol list.
+	 * Their presence alone must not make arbitrary option dependencies eligible.
+	 */
+	private const array SKIP_SYMBOL_NAMES = [
+		'get_option()',
+		'get_site_option()',
+	];
 
 	/**
 	 * List of generated function/class names.
 	 * Used to store the list of copied functions.
-	 *
-	 * Example:
-	 *  [  ]
 	 */
 	public array $names = [];
 
@@ -49,16 +54,18 @@ class Symbols_Lister {
 
 		$mockable_names = $this->get_mock_function_names( "$config->copy_dir/mockable" );
 		$mockable_names = array_values( array_unique( $mockable_names ) );
+		$mockable_names = array_values( array_diff( $mockable_names, self::SKIP_SYMBOL_NAMES ) );
 		asort( $mockable_names );
 
 		$mocks_names = $this->get_mock_function_names( "$config->runtime_dir/custom-mocks" );
 		$mocks_names = array_values( array_unique( $mocks_names ) );
+		$mocks_names = array_values( array_diff( $mocks_names, self::SKIP_SYMBOL_NAMES ) );
 		asort( $mocks_names );
 
 		$excluded_names = array_values( array_unique( array_merge( $mockable_names, $mocks_names ) ) );
 
 		$copied_names = array_values( array_unique( $this->names ) );
-		$copied_names = array_values( array_diff( $copied_names, $excluded_names ) );
+		$copied_names = array_values( array_diff( $copied_names, $excluded_names, self::SKIP_SYMBOL_NAMES ) );
 		asort( $copied_names );
 
 		$this->content = strtr( $this->content, [

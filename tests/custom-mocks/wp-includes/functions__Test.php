@@ -22,7 +22,7 @@ class functions__custom_mocks__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertMatchesRegularExpression( '/^\d+\.\d+(?:\.\d+)?/', wp_get_wp_version() );
 	}
 
-	public function test__wp_get_wp_version_wp_mock_handler() {
+	public function test__wp_get_wp_version__mockable_handler() {
 		if( $wp_ver = wp_version_compare( '< 6.7.0' ) ){
 			$this->markTestSkipped( "wp_version_compare() not exists on WP $wp_ver" );
 		}

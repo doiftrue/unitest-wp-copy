@@ -28,7 +28,7 @@ class ms_blogs__custom_mocks__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( [ 1 ], $GLOBALS['_wp_switched_stack'] );
 	}
 
-	public function test__switch_to_blog_wp_mock_handler() {
+	public function test__switch_to_blog__mockable_handler() {
 		\WP_Mock::userFunction( 'switch_to_blog', [ 'return' => false ] );
 
 		$result = switch_to_blog( 5 );

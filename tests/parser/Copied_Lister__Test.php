@@ -19,7 +19,7 @@ class Copied_Lister__Test extends Project_TestCase {
 
 		file_put_contents(
 			"$mocks_dir/wp-includes/l10n.php",
-			"<?php\nfunction runtime_mock_symbol() {}\n"
+			"<?php\nfunction runtime_mock_symbol() {}\nfunction get_option() {}\nfunction get_site_option() {}\n"
 		);
 		file_put_contents(
 			"$mockable_dir/wp-includes/load.php",
@@ -31,9 +31,11 @@ class Copied_Lister__Test extends Project_TestCase {
 			'copy_dir' => $copy_dir,
 			'wp_version' => '6.9.4',
 		] ) );
+
 		$lister->names = [
 			'copied_regular_symbol()',
 			'copied_mockable_symbol()',
+			'get_option()',
 		];
 
 		$lister->generate_list();
@@ -44,6 +46,9 @@ class Copied_Lister__Test extends Project_TestCase {
 		$this->assertStringContainsString( 'copied_mockable_symbol()', $info );
 		$this->assertStringContainsString( 'copied_regular_symbol()', $info );
 		$this->assertStringNotContainsString( "Custom-adapted WordPress symbols (Mockable via WP_Mock):\n```text\n(none)", $info );
+
+		$this->assertStringNotContainsString( 'get_option()', $info );
+		$this->assertStringNotContainsString( 'get_site_option()', $info );
 	}
 
 }
