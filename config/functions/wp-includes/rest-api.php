@@ -1,68 +1,53 @@
 <?php
 
 return [
-	// Pure registry utility for additional REST fields.
-	'register_rest_field' => '4.7.0',
-	// Pure prefix accessor.
-	'rest_get_url_prefix' => '4.4.0',
-	// Pure recursive array helper.
-	'_rest_array_intersect_key_recursive' => '5.3.0',
-	// Pure field-name inclusion helper.
-	'rest_is_field_included' => '5.3.0',
-	// Simple filtered static list.
-	'rest_get_avatar_sizes' => '4.7.0',
-	// Pure date/color parsing helpers.
-	'rest_parse_date'        => '4.4.0',
-	'rest_parse_hex_color'   => '5.4.0',
-	'rest_get_date_with_gmt' => '4.4.0',
-	// Request-arg schema adapters (work with any object exposing get_attributes()).
-	'rest_validate_request_arg' => '4.7.0',
-	'rest_sanitize_request_arg' => '4.7.0',
-	'rest_parse_request_arg'    => '4.7.0',
-	// Lightweight deprecation/wrong-usage header emitters.
-	'rest_handle_deprecated_function' => '4.4.0 mockable',
-	'rest_handle_deprecated_argument' => '4.4.0 mockable',
-	'rest_handle_doing_it_wrong'      => '5.5.0 mockable',
-	// Runtime-safe IP validator (IPv6 check is adapted via parser replacer).
-	'rest_is_ip_address' => '4.7.0',
-	// Primitive type sanitizers/checkers.
-	'rest_sanitize_boolean'                      => '4.7.0',
-	'rest_is_boolean'                            => '4.7.0',
-	'rest_is_integer'                            => '5.5.0',
-	'rest_is_array'                              => '5.5.0',
-	'rest_sanitize_array'                        => '5.5.0',
-	'rest_is_object'                             => '5.5.0',
-	'rest_sanitize_object'                       => '5.5.0',
-	'rest_get_best_type_for_value'               => '5.5.0',
-	'rest_handle_multi_type_schema'              => '5.5.0',
-	'rest_validate_array_contains_unique_items'  => '5.5.0',
-	'rest_stabilize_value'                       => '5.5.0',
-	'rest_validate_json_schema_pattern'          => '5.6.0',
-	'rest_find_matching_pattern_property_schema' => '5.6.0',
-	// Schema combining-operation helpers.
-	'rest_format_combining_operation_error' => '5.6.0',
-	'rest_get_combining_operation_error'    => '5.6.0',
-	'rest_find_any_matching_schema'         => '5.6.0',
-	'rest_find_one_matching_schema'         => '5.6.0',
-	'rest_are_values_equal'                 => '5.7.0',
-	'rest_validate_enum'                    => '5.7.0',
-	// JSON schema keywords + validation/sanitization chain.
-	'rest_get_allowed_schema_keywords'        => '5.6.0',
-	'rest_validate_value_from_schema'         => '4.7.0',
-	'rest_validate_null_value_from_schema'    => '5.7.0',
-	'rest_validate_boolean_value_from_schema' => '5.7.0',
-	'rest_validate_object_value_from_schema'  => '5.7.0',
-	'rest_validate_array_value_from_schema'   => '5.7.0',
-	'rest_validate_number_value_from_schema'  => '5.7.0',
-	'rest_validate_string_value_from_schema'  => '5.7.0',
-	'rest_validate_integer_value_from_schema' => '5.7.0',
-	'rest_sanitize_value_from_schema'         => '4.7.0',
-	// Utility helpers used by preload/context filtering logic.
-	'rest_parse_embed_param'          => '5.4.0',
-	'rest_filter_response_by_context' => '5.5.0',
-	// Required by register_theme_feature() for show_in_rest schemas.
-	'rest_default_additional_properties_to_false' => '5.5.0',
-
+	'rest_are_values_equal'                       => '5.7.0',
+	'rest_validate_enum'                          => '5.7.0',
+	'rest_validate_null_value_from_schema'        => '5.7.0',
+	'rest_validate_boolean_value_from_schema'     => '5.7.0',
+	'rest_validate_object_value_from_schema'      => '5.7.0',
+	'rest_validate_array_value_from_schema'       => '5.7.0',
+	'rest_validate_number_value_from_schema'      => '5.7.0',
+	'rest_validate_string_value_from_schema'      => '5.7.0',
+	'rest_validate_integer_value_from_schema'     => '5.7.0',
+	'rest_validate_json_schema_pattern'           => '5.6.0',
+	'rest_find_matching_pattern_property_schema'  => '5.6.0',
+	'rest_format_combining_operation_error'       => '5.6.0', // Schema combining-operation helpers.
+	'rest_get_combining_operation_error'          => '5.6.0',
+	'rest_find_any_matching_schema'               => '5.6.0',
+	'rest_find_one_matching_schema'               => '5.6.0',
+	'rest_get_allowed_schema_keywords'            => '5.6.0', // JSON schema keywords + validation/sanitization chain.
+	'rest_handle_doing_it_wrong'                  => '5.5.0 mockable',
+	'rest_is_integer'                             => '5.5.0',
+	'rest_is_array'                               => '5.5.0',
+	'rest_sanitize_array'                         => '5.5.0',
+	'rest_is_object'                              => '5.5.0',
+	'rest_sanitize_object'                        => '5.5.0',
+	'rest_get_best_type_for_value'                => '5.5.0',
+	'rest_handle_multi_type_schema'               => '5.5.0',
+	'rest_validate_array_contains_unique_items'   => '5.5.0',
+	'rest_stabilize_value'                        => '5.5.0',
+	'rest_filter_response_by_context'             => '5.5.0',
+	'rest_default_additional_properties_to_false' => '5.5.0', // Required by register_theme_feature() for show_in_rest schemas.
+	'rest_parse_hex_color'                        => '5.4.0',
+	'rest_parse_embed_param'                      => '5.4.0', // Utility helpers used by preload/context filtering logic.
+	'_rest_array_intersect_key_recursive'         => '5.3.0', // Pure recursive array helper.
+	'rest_is_field_included'                      => '5.3.0', // Pure field-name inclusion helper.
+	'register_rest_field'                         => '4.7.0', // Pure registry utility for additional REST fields.
+	'rest_get_avatar_sizes'                       => '4.7.0', // Simple filtered static list.
+	'rest_validate_request_arg'                   => '4.7.0', // Request-arg schema adapters (work with any object exposing get_attributes()).
+	'rest_sanitize_request_arg'                   => '4.7.0',
+	'rest_parse_request_arg'                      => '4.7.0',
+	'rest_is_ip_address'                          => '4.7.0', // Runtime-safe IP validator (IPv6 check is adapted via parser replacer).
+	'rest_sanitize_boolean'                       => '4.7.0', // Primitive type sanitizers/checkers.
+	'rest_is_boolean'                             => '4.7.0',
+	'rest_validate_value_from_schema'             => '4.7.0',
+	'rest_sanitize_value_from_schema'             => '4.7.0',
+	'rest_get_url_prefix'                         => '4.4.0', // Pure prefix accessor.
+	'rest_parse_date'                             => '4.4.0', // Pure date/color parsing helpers.
+	'rest_get_date_with_gmt'                      => '4.4.0',
+	'rest_handle_deprecated_function'             => '4.4.0 mockable', // Lightweight deprecation/wrong-usage header emitters.
+	'rest_handle_deprecated_argument'             => '4.4.0 mockable',
 ];
 
 /*

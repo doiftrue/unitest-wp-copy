@@ -1,8 +1,8 @@
 <?php
 
 return [
-	'wp_maybe_grant_install_languages_cap'  => '4.9.0',
 	'wp_maybe_grant_resume_extensions_caps' => '5.2.0',
+	'wp_maybe_grant_install_languages_cap'  => '4.9.0',
 ];
 
 /*

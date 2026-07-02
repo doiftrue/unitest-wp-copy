@@ -1,16 +1,16 @@
 <?php
 
 return [
-	'wp_hash'                        => '2.0.3',
-	'wp_hash_password'               => '2.5.0',
-	'wp_password_needs_rehash'       => '6.8.0',
-	'wp_generate_password'           => '2.5.0',
-	'wp_rand'                        => '2.6.2',
-	'wp_sanitize_redirect'           => '2.3.0',
-	'_wp_sanitize_utf8_in_redirect'  => '4.2.0',
-	'wp_validate_redirect'           => '2.8.1',
-	'wp_nonce_tick'                  => '2.5.0 mockable',
-	'wp_parse_auth_cookie'           => '2.5.0',
+	'wp_password_needs_rehash'      => '6.8.0',
+	'_wp_sanitize_utf8_in_redirect' => '4.2.0',
+	'wp_validate_redirect'          => '2.8.1',
+	'wp_rand'                       => '2.6.2',
+	'wp_hash_password'              => '2.5.0',
+	'wp_generate_password'          => '2.5.0',
+	'wp_nonce_tick'                 => '2.5.0 mockable',
+	'wp_parse_auth_cookie'          => '2.5.0',
+	'wp_sanitize_redirect'          => '2.3.0',
+	'wp_hash'                       => '2.0.3',
 	// 'wp_salt'                     => '', // why: custom mock without DB fallback
 ];
 
