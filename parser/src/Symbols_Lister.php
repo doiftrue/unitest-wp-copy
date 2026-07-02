@@ -32,12 +32,12 @@ class Symbols_Lister {
 		{MOCKS_LIST}
 		```
 		
-		Copied symbols (Mockable via WP_Mock):
+		Copied WP symbols (Mockable via WP_Mock):
 		```text
 		{MOCKABLE_LIST}
 		```
 		
-		Full copies symbols of WP Core (not mockable):
+		Copied WP symbols (not mockable):
 		```text
 		{COPIED_LIST}
 		```
