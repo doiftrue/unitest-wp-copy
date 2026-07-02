@@ -3,37 +3,6 @@
 // ------------------auto-generated---------------------
 
 // wp-includes/http.php (WP 6.6.5)
-if( ! function_exists( 'wp_parse_url' ) ) :
-	function wp_parse_url( $url, $component = -1 ) {
-		$to_unset = array();
-		$url      = (string) $url;
-	
-		if ( str_starts_with( $url, '//' ) ) {
-			$to_unset[] = 'scheme';
-			$url        = 'placeholder:' . $url;
-		} elseif ( str_starts_with( $url, '/' ) ) {
-			$to_unset[] = 'scheme';
-			$to_unset[] = 'host';
-			$url        = 'placeholder://placeholder' . $url;
-		}
-	
-		$parts = parse_url( $url );
-	
-		if ( false === $parts ) {
-			// Parsing failure.
-			return $parts;
-		}
-	
-		// Remove the placeholder values.
-		foreach ( $to_unset as $key ) {
-			unset( $parts[ $key ] );
-		}
-	
-		return _get_component_from_parsed_url_array( $parts, $component );
-	}
-endif;
-
-// wp-includes/http.php (WP 6.6.5)
 if( ! function_exists( '_wp_translate_php_url_constant_to_key' ) ) :
 	function _wp_translate_php_url_constant_to_key( $constant ) {
 		$translation = array(
@@ -72,6 +41,37 @@ if( ! function_exists( '_get_component_from_parsed_url_array' ) ) :
 endif;
 
 // wp-includes/http.php (WP 6.6.5)
+if( ! function_exists( 'wp_parse_url' ) ) :
+	function wp_parse_url( $url, $component = -1 ) {
+		$to_unset = array();
+		$url      = (string) $url;
+	
+		if ( str_starts_with( $url, '//' ) ) {
+			$to_unset[] = 'scheme';
+			$url        = 'placeholder:' . $url;
+		} elseif ( str_starts_with( $url, '/' ) ) {
+			$to_unset[] = 'scheme';
+			$to_unset[] = 'host';
+			$url        = 'placeholder://placeholder' . $url;
+		}
+	
+		$parts = parse_url( $url );
+	
+		if ( false === $parts ) {
+			// Parsing failure.
+			return $parts;
+		}
+	
+		// Remove the placeholder values.
+		foreach ( $to_unset as $key ) {
+			unset( $parts[ $key ] );
+		}
+	
+		return _get_component_from_parsed_url_array( $parts, $component );
+	}
+endif;
+
+// wp-includes/http.php (WP 6.6.5)
 if( ! function_exists( 'wp_http_validate_url' ) ) :
 	function wp_http_validate_url( $url ) {
 		if ( ! is_string( $url ) || '' === $url || is_numeric( $url ) ) {
@@ -97,7 +97,7 @@ if( ! function_exists( 'wp_http_validate_url' ) ) :
 			return false;
 		}
 	
-		$parsed_home = parse_url( $GLOBALS['stub_wp_options']->home );
+		$parsed_home = parse_url( get_option( 'home' ) );
 		$same_host   = isset( $parsed_home['host'] ) && strtolower( $parsed_home['host'] ) === strtolower( $parsed_url['host'] );
 		$host        = trim( $parsed_url['host'], '.' );
 	

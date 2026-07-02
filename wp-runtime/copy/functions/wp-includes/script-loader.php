@@ -3,29 +3,78 @@
 // ------------------auto-generated---------------------
 
 // wp-includes/script-loader.php (WP 6.6.5)
-if( ! function_exists( 'wp_prototype_before_jquery' ) ) :
-	function wp_prototype_before_jquery( $js_array ) {
-		$prototype = array_search( 'prototype', $js_array, true );
+if( ! function_exists( 'wp_remove_surrounding_empty_script_tags' ) ) :
+	function wp_remove_surrounding_empty_script_tags( $contents ) {
+		$contents = trim( $contents );
+		$opener   = '<SCRIPT>';
+		$closer   = '</SCRIPT>';
 	
-		if ( false === $prototype ) {
-			return $js_array;
+		if (
+			strlen( $contents ) > strlen( $opener ) + strlen( $closer ) &&
+			strtoupper( substr( $contents, 0, strlen( $opener ) ) ) === $opener &&
+			strtoupper( substr( $contents, -strlen( $closer ) ) ) === $closer
+		) {
+			return substr( $contents, strlen( $opener ), -strlen( $closer ) );
+		} else {
+			$error_message = __( 'Expected string to start with script tag (without attributes) and end with script tag, with optional whitespace.' );
+			_doing_it_wrong( __FUNCTION__, $error_message, '6.4' );
+			return sprintf(
+				'console.error(%s)',
+				wp_json_encode(
+					sprintf(
+						/* translators: %s: wp_remove_surrounding_empty_script_tags() */
+						__( 'Function %s used incorrectly in PHP.' ),
+						'wp_remove_surrounding_empty_script_tags()'
+					) . ' ' . $error_message
+				)
+			);
 		}
+	}
+endif;
+
+// wp-includes/script-loader.php (WP 6.6.5)
+if( ! function_exists( 'wp_filter_out_block_nodes' ) ) :
+	function wp_filter_out_block_nodes( $nodes ) {
+		return array_filter(
+			$nodes,
+			static function ( $node ) {
+				return ! in_array( 'blocks', $node['path'], true );
+			},
+			ARRAY_FILTER_USE_BOTH
+		);
+	}
+endif;
+
+// wp-includes/script-loader.php (WP 6.6.5)
+if( ! function_exists( '_wp_normalize_relative_css_links' ) ) :
+	function _wp_normalize_relative_css_links( $css, $stylesheet_url ) {
+		return preg_replace_callback(
+			'#(url\s*\(\s*[\'"]?\s*)([^\'"\)]+)#',
+			static function ( $matches ) use ( $stylesheet_url ) {
+				list( , $prefix, $url ) = $matches;
 	
-		$jquery = array_search( 'jquery', $js_array, true );
+				// Short-circuit if the URL does not require normalization.
+				if (
+					str_starts_with( $url, 'http:' ) ||
+					str_starts_with( $url, 'https:' ) ||
+					str_starts_with( $url, '//' ) ||
+					str_starts_with( $url, '#' ) ||
+					str_starts_with( $url, 'data:' )
+				) {
+					return $matches[0];
+				}
 	
-		if ( false === $jquery ) {
-			return $js_array;
-		}
+				// Build the absolute URL.
+				$absolute_url = dirname( $stylesheet_url ) . '/' . $url;
+				$absolute_url = str_replace( '/./', '/', $absolute_url );
 	
-		if ( $prototype < $jquery ) {
-			return $js_array;
-		}
+				// Convert to URL related to the site root.
+				$url = wp_make_link_relative( $absolute_url );
 	
-		unset( $js_array[ $prototype ] );
-	
-		array_splice( $js_array, $jquery, 0, 'prototype' );
-	
-		return $js_array;
+				return $prefix . $url;
+			},
+			$css
+		);
 	}
 endif;
 
@@ -173,6 +222,33 @@ if( ! function_exists( 'wp_print_inline_script_tag' ) ) :
 endif;
 
 // wp-includes/script-loader.php (WP 6.6.5)
+if( ! function_exists( 'wp_prototype_before_jquery' ) ) :
+	function wp_prototype_before_jquery( $js_array ) {
+		$prototype = array_search( 'prototype', $js_array, true );
+	
+		if ( false === $prototype ) {
+			return $js_array;
+		}
+	
+		$jquery = array_search( 'jquery', $js_array, true );
+	
+		if ( false === $jquery ) {
+			return $js_array;
+		}
+	
+		if ( $prototype < $jquery ) {
+			return $js_array;
+		}
+	
+		unset( $js_array[ $prototype ] );
+	
+		array_splice( $js_array, $jquery, 0, 'prototype' );
+	
+		return $js_array;
+	}
+endif;
+
+// wp-includes/script-loader.php (WP 6.6.5)
 if( ! function_exists( '_print_scripts' ) ) :
 	function _print_scripts() {
 		global $wp_scripts, $compress_scripts;
@@ -208,82 +284,6 @@ if( ! function_exists( '_print_scripts' ) ) :
 		if ( ! empty( $wp_scripts->print_html ) ) {
 			echo $wp_scripts->print_html;
 		}
-	}
-endif;
-
-// wp-includes/script-loader.php (WP 6.6.5)
-if( ! function_exists( 'wp_remove_surrounding_empty_script_tags' ) ) :
-	function wp_remove_surrounding_empty_script_tags( $contents ) {
-		$contents = trim( $contents );
-		$opener   = '<SCRIPT>';
-		$closer   = '</SCRIPT>';
-	
-		if (
-			strlen( $contents ) > strlen( $opener ) + strlen( $closer ) &&
-			strtoupper( substr( $contents, 0, strlen( $opener ) ) ) === $opener &&
-			strtoupper( substr( $contents, -strlen( $closer ) ) ) === $closer
-		) {
-			return substr( $contents, strlen( $opener ), -strlen( $closer ) );
-		} else {
-			$error_message = __( 'Expected string to start with script tag (without attributes) and end with script tag, with optional whitespace.' );
-			_doing_it_wrong( __FUNCTION__, $error_message, '6.4' );
-			return sprintf(
-				'console.error(%s)',
-				wp_json_encode(
-					sprintf(
-						/* translators: %s: wp_remove_surrounding_empty_script_tags() */
-						__( 'Function %s used incorrectly in PHP.' ),
-						'wp_remove_surrounding_empty_script_tags()'
-					) . ' ' . $error_message
-				)
-			);
-		}
-	}
-endif;
-
-// wp-includes/script-loader.php (WP 6.6.5)
-if( ! function_exists( 'wp_filter_out_block_nodes' ) ) :
-	function wp_filter_out_block_nodes( $nodes ) {
-		return array_filter(
-			$nodes,
-			static function ( $node ) {
-				return ! in_array( 'blocks', $node['path'], true );
-			},
-			ARRAY_FILTER_USE_BOTH
-		);
-	}
-endif;
-
-// wp-includes/script-loader.php (WP 6.6.5)
-if( ! function_exists( '_wp_normalize_relative_css_links' ) ) :
-	function _wp_normalize_relative_css_links( $css, $stylesheet_url ) {
-		return preg_replace_callback(
-			'#(url\s*\(\s*[\'"]?\s*)([^\'"\)]+)#',
-			static function ( $matches ) use ( $stylesheet_url ) {
-				list( , $prefix, $url ) = $matches;
-	
-				// Short-circuit if the URL does not require normalization.
-				if (
-					str_starts_with( $url, 'http:' ) ||
-					str_starts_with( $url, 'https:' ) ||
-					str_starts_with( $url, '//' ) ||
-					str_starts_with( $url, '#' ) ||
-					str_starts_with( $url, 'data:' )
-				) {
-					return $matches[0];
-				}
-	
-				// Build the absolute URL.
-				$absolute_url = dirname( $stylesheet_url ) . '/' . $url;
-				$absolute_url = str_replace( '/./', '/', $absolute_url );
-	
-				// Convert to URL related to the site root.
-				$url = wp_make_link_relative( $absolute_url );
-	
-				return $prefix . $url;
-			},
-			$css
-		);
 	}
 endif;
 

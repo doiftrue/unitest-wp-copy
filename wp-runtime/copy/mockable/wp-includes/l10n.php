@@ -44,11 +44,11 @@ if( ! function_exists( 'get_locale' ) ) :
 		if ( is_multisite() ) {
 			// Don't check blog option when installing.
 			if ( wp_installing() ) {
-				$ms_locale = $GLOBALS['stub_wp_options']->WPLANG;
+				$ms_locale = get_site_option( 'WPLANG' );
 			} else {
-				$ms_locale = $GLOBALS['stub_wp_options']->WPLANG;
+				$ms_locale = get_option( 'WPLANG' );
 				if ( false === $ms_locale ) {
-					$ms_locale = $GLOBALS['stub_wp_options']->WPLANG;
+					$ms_locale = get_site_option( 'WPLANG' );
 				}
 			}
 	
@@ -56,7 +56,7 @@ if( ! function_exists( 'get_locale' ) ) :
 				$locale = $ms_locale;
 			}
 		} else {
-			$db_locale = $GLOBALS['stub_wp_options']->WPLANG;
+			$db_locale = get_option( 'WPLANG' );
 			if ( false !== $db_locale ) {
 				$locale = $db_locale;
 			}

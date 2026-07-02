@@ -6,6 +6,9 @@
 
 use Unitest_WP_Copy\WP_Mock_Utils;
 
+/**
+ * Runtime adaptation of wp_get_wp_version() from WordPress 7.0 wp-includes/functions.php.
+ */
 if ( ! function_exists( 'wp_get_wp_version' ) ) :
 	function wp_get_wp_version() {
 		if ( WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {

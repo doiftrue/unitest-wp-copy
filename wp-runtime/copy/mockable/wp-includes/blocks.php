@@ -3,26 +3,6 @@
 // ------------------auto-generated---------------------
 
 // wp-includes/blocks.php (WP 6.6.5)
-if( ! function_exists( 'get_dynamic_block_names' ) ) :
-	function get_dynamic_block_names() {
-		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
-			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
-		}
-	
-		$dynamic_block_names = array();
-	
-		$block_types = WP_Block_Type_Registry::get_instance()->get_all_registered();
-		foreach ( $block_types as $block_type ) {
-			if ( $block_type->is_dynamic() ) {
-				$dynamic_block_names[] = $block_type->name;
-			}
-		}
-	
-		return $dynamic_block_names;
-	}
-endif;
-
-// wp-includes/blocks.php (WP 6.6.5)
 if( ! function_exists( 'get_hooked_blocks' ) ) :
 	function get_hooked_blocks() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -47,6 +27,26 @@ if( ! function_exists( 'get_hooked_blocks' ) ) :
 		}
 	
 		return $hooked_blocks;
+	}
+endif;
+
+// wp-includes/blocks.php (WP 6.6.5)
+if( ! function_exists( 'get_dynamic_block_names' ) ) :
+	function get_dynamic_block_names() {
+		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+	
+		$dynamic_block_names = array();
+	
+		$block_types = WP_Block_Type_Registry::get_instance()->get_all_registered();
+		foreach ( $block_types as $block_type ) {
+			if ( $block_type->is_dynamic() ) {
+				$dynamic_block_names[] = $block_type->name;
+			}
+		}
+	
+		return $dynamic_block_names;
 	}
 endif;
 

@@ -3,6 +3,26 @@
 // ------------------auto-generated---------------------
 
 // wp-admin/includes/screen.php (WP 6.6.5)
+if( ! function_exists( 'add_screen_option' ) ) :
+	function add_screen_option( $option, $args = array() ) {
+		$current_screen = get_current_screen();
+	
+		if ( ! $current_screen ) {
+			return;
+		}
+	
+		$current_screen->add_option( $option, $args );
+	}
+endif;
+
+// wp-admin/includes/screen.php (WP 6.6.5)
+if( ! function_exists( 'set_current_screen' ) ) :
+	function set_current_screen( $hook_name = '' ) {
+		WP_Screen::get( $hook_name )->set_current_screen();
+	}
+endif;
+
+// wp-admin/includes/screen.php (WP 6.6.5)
 if( ! function_exists( 'get_column_headers' ) ) :
 	function get_column_headers( $screen ) {
 		static $column_headers = array();
@@ -28,26 +48,6 @@ if( ! function_exists( 'get_column_headers' ) ) :
 		}
 	
 		return $column_headers[ $screen->id ];
-	}
-endif;
-
-// wp-admin/includes/screen.php (WP 6.6.5)
-if( ! function_exists( 'add_screen_option' ) ) :
-	function add_screen_option( $option, $args = array() ) {
-		$current_screen = get_current_screen();
-	
-		if ( ! $current_screen ) {
-			return;
-		}
-	
-		$current_screen->add_option( $option, $args );
-	}
-endif;
-
-// wp-admin/includes/screen.php (WP 6.6.5)
-if( ! function_exists( 'set_current_screen' ) ) :
-	function set_current_screen( $hook_name = '' ) {
-		WP_Screen::get( $hook_name )->set_current_screen();
 	}
 endif;
 
