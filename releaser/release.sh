@@ -85,13 +85,14 @@ if [[ -n "${NOT_PUSH}" ]]; then
 	exit 0
 fi
 
+# commit & push
 cecho cyan "➜ Commit to WORKTREE ${WORKTREE_DIR_REL} and add TAG ${RELEASE_TAG}"
-git -C "${WORKTREE_DIR}" add "${RELEASE_FILES[@]}" wp-runtime/
+git -C "${WORKTREE_DIR}" add -A
 
 if git -C "${WORKTREE_DIR}" diff --cached --quiet; then
 	cecho yellow "Nothing to commit on ${WP_LINE_BRANCH}."
 else
-	git -C "${WORKTREE_DIR}" commit -am "Release ${RELEASE_TAG}"
+	git -C "${WORKTREE_DIR}" commit -m "Release ${RELEASE_TAG}"
 	git -C "${WORKTREE_DIR}" tag "${RELEASE_TAG}"
 	git -C "${WORKTREE_DIR}" push --atomic origin "${WP_LINE_BRANCH}" "refs/tags/${RELEASE_TAG}"
 	cecho green "Pushed with tag: ${RELEASE_TAG}"

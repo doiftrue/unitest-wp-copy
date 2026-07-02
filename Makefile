@@ -19,7 +19,7 @@ composer_update:
 phpunit:
 	$(call php_run, -e WP_LINE="$(WP_LINE)", composer run phpunit -- --colors=always)
 
-parser.run:
+parser_run:
 	$(call php_run, , php parser/run.php)
 
 
@@ -27,7 +27,7 @@ parser.run:
 switch:
 	@[ -n "$(WP_LINE)" ] || { echo 'Use: make switch WP_LINE=6.8'; exit 1; }
 	$(call php_run,, composer require --dev wordpress/wordpress:$(WP_LINE).* --no-interaction --with-dependencies)
-	$(MAKE) parser.run
+	$(MAKE) parser_run
 
 # make release WP_LINE=6.8
 # make release WP_LINE=6.8 NOT_PUSH=1
@@ -35,7 +35,7 @@ release:
 	WP_LINE="$(WP_LINE)" NOT_PUSH="$(NOT_PUSH)" bash releaser/release.sh
 
 WP_LINES := $(notdir $(patsubst %/,%,$(wildcard wp-runtime/wp-line-extra/*/)))
-release.all:
+release_all:
 	@status=0; \
 	for wp_line in $(WP_LINES); do \
 		echo "== release $$wp_line =="; \
@@ -45,9 +45,9 @@ release.all:
 	exit $$status
 
 
-# make worktrees.git.status cmd="git status --short"
+# make worktrees_run cmd="git status --short"
 WORKTREE_DIRS := $(sort $(wildcard worktrees/wp-*))
-worktrees.git.status:
+worktrees_run:
 	@if [ -z "$(cmd)" ]; then \
 		echo 'Use: make worktrees-run cmd="git status --short"'; \
 		exit 1; \
@@ -55,6 +55,13 @@ worktrees.git.status:
 	@for dir in $(WORKTREE_DIRS); do \
 		echo "== $$dir =="; \
 		sh -c 'cd "$$1" && $(cmd)' -- "$$dir"; \
+		echo; \
+	done
+
+worktrees_git_status:
+	@for dir in $(WORKTREE_DIRS); do \
+		echo "== $$dir =="; \
+		sh -c 'cd "$$1" && git status --short' -- "$$dir"; \
 		echo; \
 	done
 

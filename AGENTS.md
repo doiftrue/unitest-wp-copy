@@ -32,7 +32,7 @@ All maintainer instructions are centralized under `docs/`:
 
 ## Quick Commands
 
-1. Install dependencies: `make composer.install`
-2. Regenerate copies: `make parser.run`
+1. Install dependencies: `make composer_install`
+2. Regenerate copies: `make parser_run`
 3. Run tests: `make phpunit`
 4. Run ad-hoc PHP code in container: `make php.run code='include "wp-core/wp-includes/version.php"; echo $wp_version, "\n";'`

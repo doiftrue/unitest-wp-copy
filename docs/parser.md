@@ -14,7 +14,7 @@ Parser is a whitelist-based copier of selected WP symbols from `wp-core/` into `
 It is not a dependency analyzer.
 
 Run parser with:
-- `make parser.run`
+- `make parser_run`
 
 
 ## What Parser Generates

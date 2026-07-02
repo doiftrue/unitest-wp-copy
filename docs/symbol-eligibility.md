@@ -32,7 +32,7 @@ Dependency documents:
 2. Validate symbol eligibility using rules in this document.
 3. For every eligible function, run the Auto-Mockable Review below.
 4. Update parser config for target WP line using rules from [config.md](config.md).
-5. Regenerate copies: `make parser.run`.
+5. Regenerate copies: `make parser_run`.
 6. Add/update tests following [tests.md](tests.md).
 7. Run full test suite: `make phpunit`.
 8. If symbol remains incompatible, keep it disabled/commented in config with reason.
