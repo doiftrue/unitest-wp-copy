@@ -19,7 +19,7 @@ class functions_wp_styles__mockable__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertInstanceOf( WP_Styles::class, wp_styles() );
 	}
 
-	public function test__wp_styles_wp_mock_handler(): void {
+	public function test__wp_styles__mockable_handler(): void {
 		$registry = new WP_Styles();
 		\WP_Mock::userFunction( 'wp_styles', [ 'return' => $registry ] );
 		$this->assertSame( $registry, wp_styles() );

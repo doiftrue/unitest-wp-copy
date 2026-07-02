@@ -22,7 +22,7 @@ class post__mockable__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( $status, get_post_status_object( 'publish' ) );
 	}
 
-	public function test__get_post_status_object_wp_mock_handler(): void {
+	public function test__get_post_status_object__mockable_handler(): void {
 		$status = (object) [ 'name' => 'mocked' ];
 		\WP_Mock::userFunction( 'get_post_status_object', [ 'return' => $status ] );
 		$this->assertSame( $status, get_post_status_object( 'publish' ) );
@@ -33,7 +33,7 @@ class post__mockable__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( [ 'publish' => 'publish' ], get_post_stati( [ 'public' => true ] ) );
 	}
 
-	public function test__get_post_stati_wp_mock_handler(): void {
+	public function test__get_post_stati__mockable_handler(): void {
 		\WP_Mock::userFunction( 'get_post_stati', [ 'return' => [ 'mocked' ] ] );
 		$this->assertSame( [ 'mocked' ], get_post_stati() );
 	}
@@ -43,7 +43,7 @@ class post__mockable__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( [ 'editor' => true ], get_all_post_type_supports( 'book' ) );
 	}
 
-	public function test__get_all_post_type_supports_wp_mock_handler(): void {
+	public function test__get_all_post_type_supports__mockable_handler(): void {
 		\WP_Mock::userFunction( 'get_all_post_type_supports', [ 'return' => [ 'mocked' => true ] ] );
 		$this->assertSame( [ 'mocked' => true ], get_all_post_type_supports( 'book' ) );
 	}
@@ -53,7 +53,7 @@ class post__mockable__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertTrue( post_type_supports( 'book', 'editor' ) );
 	}
 
-	public function test__post_type_supports_wp_mock_handler(): void {
+	public function test__post_type_supports__mockable_handler(): void {
 		\WP_Mock::userFunction( 'post_type_supports', [ 'return' => true ] );
 		$this->assertTrue( post_type_supports( 'book', 'mocked' ) );
 	}
@@ -66,7 +66,7 @@ class post__mockable__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( [ 'book' ], get_post_types_by_support( 'editor' ) );
 	}
 
-	public function test__get_post_types_by_support_wp_mock_handler(): void {
+	public function test__get_post_types_by_support__mockable_handler(): void {
 		\WP_Mock::userFunction( 'get_post_types_by_support', [ 'return' => [ 'mocked' ] ] );
 		$this->assertSame( [ 'mocked' ], get_post_types_by_support( 'editor' ) );
 	}

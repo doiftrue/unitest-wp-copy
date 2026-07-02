@@ -24,7 +24,7 @@ class blocks__mockable__Test extends \PHPUnit\Framework\TestCase {
 		$registry->unregister( 'unitest/dynamic' );
 	}
 
-	public function test__get_dynamic_block_names_wp_mock_handler() {
+	public function test__get_dynamic_block_names__mockable_handler(): void {
 		\WP_Mock::userFunction( 'get_dynamic_block_names', [ 'return' => [ 'unitest/mocked-dynamic' ] ] );
 
 		$this->assertSame( [ 'unitest/mocked-dynamic' ], get_dynamic_block_names() );
@@ -39,7 +39,7 @@ class blocks__mockable__Test extends \PHPUnit\Framework\TestCase {
 		$registry->unregister( 'unitest/hooked' );
 	}
 
-	public function test__get_hooked_blocks_wp_mock_handler() {
+	public function test__get_hooked_blocks__mockable_handler() {
 		$hooked_blocks = [ 'core/paragraph' => [ 'after' => [ 'unitest/mocked-hooked' ] ] ];
 		\WP_Mock::userFunction( 'get_hooked_blocks', [ 'return' => $hooked_blocks ] );
 

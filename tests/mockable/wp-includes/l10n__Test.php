@@ -18,7 +18,7 @@ class l10n__mockable__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertIsBool( is_rtl() );
 	}
 
-	public function test__is_rtl_wp_mock_handler(): void {
+	public function test__is_rtl__mockable_handler(): void {
 		\WP_Mock::userFunction( 'is_rtl', [ 'return' => true ] );
 		$this->assertTrue( is_rtl() );
 	}

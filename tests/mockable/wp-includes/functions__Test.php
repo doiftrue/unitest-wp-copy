@@ -18,7 +18,7 @@ class functions__mockable__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertTrue( wp_is_uuid( wp_generate_uuid4(), 4 ) );
 	}
 
-	public function test__wp_generate_uuid4_wp_mock_handler(): void {
+	public function test__wp_generate_uuid4__mockable_handler(): void {
 		\WP_Mock::userFunction( 'wp_generate_uuid4', [ 'return' => 'mocked-uuid' ] );
 		$this->assertSame( 'mocked-uuid', wp_generate_uuid4() );
 	}
@@ -28,7 +28,7 @@ class functions__mockable__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertNotSame( $first, wp_unique_id( 'mockable-unique-' ) );
 	}
 
-	public function test__wp_unique_id_wp_mock_handler(): void {
+	public function test__wp_unique_id__mockable_handler(): void {
 		\WP_Mock::userFunction( 'wp_unique_id', [ 'return' => 'fixed-id' ] );
 		$this->assertSame( 'fixed-id', wp_unique_id( 'prefix-' ) );
 	}
@@ -38,7 +38,7 @@ class functions__mockable__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertNotSame( $first, wp_unique_prefixed_id( 'mockable-prefixed-' ) );
 	}
 
-	public function test__wp_unique_prefixed_id_wp_mock_handler(): void {
+	public function test__wp_unique_prefixed_id__mockable_handler(): void {
 		\WP_Mock::userFunction( 'wp_unique_prefixed_id', [ 'return' => 'fixed-prefixed-id' ] );
 		$this->assertSame( 'fixed-prefixed-id', wp_unique_prefixed_id( 'prefix-' ) );
 	}

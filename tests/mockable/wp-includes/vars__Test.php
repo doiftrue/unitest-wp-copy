@@ -32,7 +32,7 @@ class vars__mockable__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertFalse( wp_is_mobile() );
 	}
 
-	public function test__wp_is_mobile_wp_mock_handler() {
+	public function test__wp_is_mobile__mockable_handler() {
 		\WP_Mock::userFunction( 'wp_is_mobile', [ 'return' => true ] );
 		$this->assertTrue( wp_is_mobile() );
 	}

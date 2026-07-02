@@ -19,7 +19,7 @@ class functions_wp_scripts__mockable__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertInstanceOf( WP_Scripts::class, wp_scripts() );
 	}
 
-	public function test__wp_scripts_wp_mock_handler(): void {
+	public function test__wp_scripts__mockable_handler(): void {
 		$registry = new WP_Scripts();
 		\WP_Mock::userFunction( 'wp_scripts', [ 'return' => $registry ] );
 		$this->assertSame( $registry, wp_scripts() );

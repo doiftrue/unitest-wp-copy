@@ -28,7 +28,7 @@ class compat__mockable__Test extends \PHPUnit\Framework\TestCase {
 		}
 	}
 
-	public function test___wp_can_use_pcre_u_wp_mock_handler(): void {
+	public function test___wp_can_use_pcre_u__mockable_handler(): void {
 		\WP_Mock::userFunction( '_wp_can_use_pcre_u', [ 'return' => false ] );
 
 		$this->assertFalse( _wp_can_use_pcre_u() );

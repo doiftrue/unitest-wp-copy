@@ -14,6 +14,9 @@ Parser-specific flow is described in [parser.md](parser.md).
 - Test files must use `__Test.php` suffix, for example `formatting__Test.php`, `WP_Error__Test.php`.
 - For class tests, method names must start with `test__` and must not include class name.
   - Use `test__public_methods`, not `test__WP_Error__public_methods`.
+- Mockable handler tests must use the `__mockable_handler` suffix, with two underscores separating the tested function name from the suffix.
+  - `my_function` -> `test__my_function__mockable_handler`
+  - `_my_function` -> `test___my_function__mockable_handler`
 
 
 ## Test Placement

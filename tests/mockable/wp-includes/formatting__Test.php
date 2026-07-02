@@ -19,7 +19,7 @@ class formatting__mockable__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( '<b>a</b>', balanceTags( '<b>a', true ) );
 	}
 
-	public function test__balanceTags_wp_mock_handler(): void {
+	public function test__balanceTags__mockable_handler(): void {
 		\WP_Mock::userFunction( 'balanceTags', [ 'return' => 'mocked-balanced' ] );
 
 		$this->assertSame( 'mocked-balanced', balanceTags( '<b>a' ) );
@@ -29,7 +29,7 @@ class formatting__mockable__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertIsString( antispambot( 'test@example.com' ) );
 	}
 
-	public function test__antispambot_wp_mock_handler(): void {
+	public function test__antispambot__mockable_handler(): void {
 		\WP_Mock::userFunction( 'antispambot', [ 'return' => 'mocked-email' ] );
 
 		$this->assertSame( 'mocked-email', antispambot( 'test@example.com' ) );
@@ -39,7 +39,7 @@ class formatting__mockable__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertIsString( convert_smilies( ':)' ) );
 	}
 
-	public function test__convert_smilies_wp_mock_handler(): void {
+	public function test__convert_smilies__mockable_handler(): void {
 		\WP_Mock::userFunction( 'convert_smilies', [ 'return' => 'mocked-smiley' ] );
 
 		$this->assertSame( 'mocked-smiley', convert_smilies( ':)' ) );

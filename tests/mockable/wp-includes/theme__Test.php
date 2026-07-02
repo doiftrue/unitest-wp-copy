@@ -31,7 +31,7 @@ class theme__mockable__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertTrue( current_theme_supports( 'html5', 'script' ) );
 	}
 
-	public function test__current_theme_supports_wp_mock_handler(): void {
+	public function test__current_theme_supports__mockable_handler(): void {
 		\WP_Mock::userFunction( 'current_theme_supports', [ 'return' => true ] );
 		$this->assertTrue( current_theme_supports( 'mocked-feature' ) );
 	}
@@ -41,7 +41,7 @@ class theme__mockable__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( 100, get_theme_support( 'custom-logo', 'width' ) );
 	}
 
-	public function test__get_theme_support_wp_mock_handler(): void {
+	public function test__get_theme_support__mockable_handler(): void {
 		\WP_Mock::userFunction( 'get_theme_support', [ 'return' => [ [ 'mocked' ] ] ] );
 		$this->assertSame( [ [ 'mocked' ] ], get_theme_support( 'feature' ) );
 	}
@@ -51,7 +51,7 @@ class theme__mockable__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertArrayHasKey( 'feature-a', get_registered_theme_features() );
 	}
 
-	public function test__get_registered_theme_features_wp_mock_handler(): void {
+	public function test__get_registered_theme_features__mockable_handler(): void {
 		\WP_Mock::userFunction( 'get_registered_theme_features', [ 'return' => [ 'mocked' => [] ] ] );
 		$this->assertSame( [ 'mocked' => [] ], get_registered_theme_features() );
 	}
@@ -61,7 +61,7 @@ class theme__mockable__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( 'boolean', get_registered_theme_feature( 'feature-one' )['type'] );
 	}
 
-	public function test__get_registered_theme_feature_wp_mock_handler(): void {
+	public function test__get_registered_theme_feature__mockable_handler(): void {
 		\WP_Mock::userFunction( 'get_registered_theme_feature', [ 'return' => [ 'type' => 'mocked' ] ] );
 		$this->assertSame( [ 'type' => 'mocked' ], get_registered_theme_feature( 'feature' ) );
 	}
@@ -71,7 +71,7 @@ class theme__mockable__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( 'child-theme', get_stylesheet() );
 	}
 
-	public function test__get_stylesheet_wp_mock_handler(): void {
+	public function test__get_stylesheet__mockable_handler(): void {
 		\WP_Mock::userFunction( 'get_stylesheet', [ 'return' => 'mocked-stylesheet' ] );
 		$this->assertSame( 'mocked-stylesheet', get_stylesheet() );
 	}
@@ -81,7 +81,7 @@ class theme__mockable__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( 'parent-theme', get_template() );
 	}
 
-	public function test__get_template_wp_mock_handler(): void {
+	public function test__get_template__mockable_handler(): void {
 		\WP_Mock::userFunction( 'get_template', [ 'return' => 'mocked-template' ] );
 		$this->assertSame( 'mocked-template', get_template() );
 	}

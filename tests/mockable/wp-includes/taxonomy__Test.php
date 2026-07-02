@@ -26,7 +26,7 @@ class taxonomy__mockable__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( [ 'category' => 'category' ], get_taxonomies( [ 'hierarchical' => true ] ) );
 	}
 
-	public function test__get_taxonomies_wp_mock_handler() {
+	public function test__get_taxonomies__mockable_handler() {
 		\WP_Mock::userFunction( 'get_taxonomies', [ 'return' => [ 'mocked' ] ] );
 		$this->assertSame( [ 'mocked' ], get_taxonomies( [ 'hierarchical' => true ] ) );
 	}
@@ -40,7 +40,7 @@ class taxonomy__mockable__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( $taxonomy, get_taxonomy( 'genre' ) );
 	}
 
-	public function test__get_taxonomy_wp_mock_handler() {
+	public function test__get_taxonomy__mockable_handler() {
 		$mocked = (object) [ 'name' => 'mocked' ];
 		\WP_Mock::userFunction( 'get_taxonomy', [ 'return' => $mocked ] );
 
@@ -55,7 +55,7 @@ class taxonomy__mockable__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertTrue( taxonomy_exists( 'genre' ) );
 	}
 
-	public function test__taxonomy_exists_wp_mock_handler() {
+	public function test__taxonomy_exists__mockable_handler() {
 		\WP_Mock::userFunction( 'taxonomy_exists', [ 'return' => true ] );
 		$this->assertTrue( taxonomy_exists( 'unknown' ) );
 	}
@@ -70,7 +70,7 @@ class taxonomy__mockable__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertFalse( is_taxonomy_hierarchical( 'post_tag' ) );
 	}
 
-	public function test__is_taxonomy_hierarchical_wp_mock_handler() {
+	public function test__is_taxonomy_hierarchical__mockable_handler() {
 		\WP_Mock::userFunction( 'is_taxonomy_hierarchical', [ 'return' => true ] );
 		$this->assertTrue( is_taxonomy_hierarchical( 'unknown' ) );
 	}
@@ -83,7 +83,7 @@ class taxonomy__mockable__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertTrue( is_taxonomy_viewable( 'genre' ) );
 	}
 
-	public function test__is_taxonomy_viewable_wp_mock_handler() {
+	public function test__is_taxonomy_viewable__mockable_handler() {
 		\WP_Mock::userFunction( 'is_taxonomy_viewable', [ 'return' => true ] );
 		$this->assertTrue( is_taxonomy_viewable( 'unknown' ) );
 	}

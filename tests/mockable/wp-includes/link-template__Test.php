@@ -18,7 +18,7 @@ class link_template__mockable__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertStringContainsString( '/wp-includes/x.js', includes_url( 'x.js' ) );
 	}
 
-	public function test__includes_url_wp_mock_handler(): void {
+	public function test__includes_url__mockable_handler(): void {
 		\WP_Mock::userFunction( 'includes_url', [ 'return' => 'https://mocked.test/includes/x.js' ] );
 		$this->assertSame( 'https://mocked.test/includes/x.js', includes_url( 'x.js' ) );
 	}
@@ -27,7 +27,7 @@ class link_template__mockable__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertStringContainsString( '/wp-content/a.css', content_url( 'a.css' ) );
 	}
 
-	public function test__content_url_wp_mock_handler(): void {
+	public function test__content_url__mockable_handler(): void {
 		\WP_Mock::userFunction( 'content_url', [ 'return' => 'https://mocked.test/content/a.css' ] );
 		$this->assertSame( 'https://mocked.test/content/a.css', content_url( 'a.css' ) );
 	}
@@ -37,7 +37,7 @@ class link_template__mockable__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertStringContainsString( '/plugins/my-plugin/asset.js', $url );
 	}
 
-	public function test__plugins_url_wp_mock_handler(): void {
+	public function test__plugins_url__mockable_handler(): void {
 		\WP_Mock::userFunction( 'plugins_url', [ 'return' => 'https://mocked.test/plugins/asset.js' ] );
 		$this->assertSame( 'https://mocked.test/plugins/asset.js', plugins_url( 'asset.js' ) );
 	}

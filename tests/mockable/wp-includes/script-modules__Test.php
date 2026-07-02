@@ -21,7 +21,7 @@ class script_modules__mockable__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( $registry, wp_script_modules() );
 	}
 
-	public function test__wp_script_modules_wp_mock_handler(): void {
+	public function test__wp_script_modules__mockable_handler(): void {
 		$registry = new WP_Script_Modules();
 		\WP_Mock::userFunction( 'wp_script_modules', [ 'return' => $registry ] );
 		$this->assertSame( $registry, wp_script_modules() );
