@@ -96,6 +96,7 @@ define( 'WP_CONTENT_URL', 'https://tests.example/wp-content' );
 define( 'WP_ENVIRONMENT_TYPE', 'development' );
 define( 'WP_DEBUG', true );
 
+// Used by get_option()
 $GLOBALS['stub_wp_options'] = (object) [
 	'home'                => 'https://unitest-wp-copy.loc',
 	'siteurl'             => 'https://unitest-wp-copy.loc',
@@ -121,7 +122,7 @@ $GLOBALS['stub_wp_options'] = (object) [
 	'large_size_h'        => 1024,
 ];
 
-// Used by get_site_option() when is_multisite() is true.
+// Used by get_site_option()
 $GLOBALS['stub_wp_site_options'] = (object) [
 	'site_name' => 'Test network',
 ];
