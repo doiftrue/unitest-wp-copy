@@ -6,6 +6,11 @@
 
 use Unitest_WP_Copy\WP_Mock_Utils;
 
+/**
+ * Runtime adaptations of translation helpers from WordPress 7.0 wp-includes/l10n.php.
+ *
+ * Translation lookup is intentionally reduced to source-string and plural selection fallbacks.
+ */
 if ( ! function_exists( '__' ) ) :
 	function __( $text, $domain = 'default' ) {
 		return WP_Mock_Utils::has_handler( __FUNCTION__ )
@@ -61,7 +66,7 @@ endif;
 
 if ( ! function_exists( 'esc_html_e' ) ) :
 	function esc_html_e( $text, $domain = 'default' ) {
-		echo esc_html( _e( $text, $domain ) );
+		echo esc_html( __( $text, $domain ) );
 	}
 endif;
 
@@ -79,7 +84,7 @@ endif;
 
 if ( ! function_exists( 'esc_attr_e' ) ) :
 	function esc_attr_e( $text, $domain = 'default' ) {
-		echo esc_attr( _e( $text, $domain ) );
+		echo esc_attr( __( $text, $domain ) );
 	}
 endif;
 

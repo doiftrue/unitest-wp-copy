@@ -3,6 +3,43 @@
 // ------------------auto-generated---------------------
 
 // wp-includes/functions.wp-scripts.php (WP 6.9.4)
+if( ! function_exists( 'wp_set_script_translations' ) ) :
+	function wp_set_script_translations( $handle, $domain = 'default', $path = '' ) {
+		global $wp_scripts;
+	
+		if ( ! ( $wp_scripts instanceof WP_Scripts ) ) {
+			_wp_scripts_maybe_doing_it_wrong( __FUNCTION__, $handle );
+			return false;
+		}
+	
+		return $wp_scripts->set_translations( $handle, $domain, $path );
+	}
+endif;
+
+// wp-includes/functions.wp-scripts.php (WP 6.9.4)
+if( ! function_exists( 'wp_add_inline_script' ) ) :
+	function wp_add_inline_script( $handle, $data, $position = 'after' ) {
+		_wp_scripts_maybe_doing_it_wrong( __FUNCTION__, $handle );
+	
+		if ( false !== stripos( $data, '</script>' ) ) {
+			_doing_it_wrong(
+				__FUNCTION__,
+				sprintf(
+					/* translators: 1: <script>, 2: wp_add_inline_script() */
+					__( 'Do not pass %1$s tags to %2$s.' ),
+					'<code>&lt;script&gt;</code>',
+					'<code>wp_add_inline_script()</code>'
+				),
+				'4.5.0'
+			);
+			$data = trim( preg_replace( '#<script[^>]*>(.*)</script>#is', '$1', $data ) );
+		}
+	
+		return wp_scripts()->add_inline_script( $handle, $data, $position );
+	}
+endif;
+
+// wp-includes/functions.wp-scripts.php (WP 6.9.4)
 if( ! function_exists( '_wp_scripts_maybe_doing_it_wrong' ) ) :
 	function _wp_scripts_maybe_doing_it_wrong( $function_name, $handle = '' ) {
 		if ( did_action( 'init' ) || did_action( 'wp_enqueue_scripts' )
@@ -36,6 +73,40 @@ if( ! function_exists( '_wp_scripts_maybe_doing_it_wrong' ) ) :
 endif;
 
 // wp-includes/functions.wp-scripts.php (WP 6.9.4)
+if( ! function_exists( 'wp_script_add_data' ) ) :
+	function wp_script_add_data( $handle, $key, $value ) {
+		return wp_scripts()->add_data( $handle, $key, $value );
+	}
+endif;
+
+// wp-includes/functions.wp-scripts.php (WP 6.9.4)
+if( ! function_exists( 'wp_dequeue_script' ) ) :
+	function wp_dequeue_script( $handle ) {
+		_wp_scripts_maybe_doing_it_wrong( __FUNCTION__, $handle );
+	
+		wp_scripts()->dequeue( $handle );
+	}
+endif;
+
+// wp-includes/functions.wp-scripts.php (WP 6.9.4)
+if( ! function_exists( 'wp_script_is' ) ) :
+	function wp_script_is( $handle, $status = 'enqueued' ) {
+		_wp_scripts_maybe_doing_it_wrong( __FUNCTION__, $handle );
+	
+		return (bool) wp_scripts()->query( $handle, $status );
+	}
+endif;
+
+// wp-includes/functions.wp-scripts.php (WP 6.9.4)
+if( ! function_exists( 'wp_localize_script' ) ) :
+	function wp_localize_script( $handle, $object_name, $l10n ) {
+		$wp_scripts = wp_scripts();
+	
+		return $wp_scripts->localize( $handle, $object_name, $l10n );
+	}
+endif;
+
+// wp-includes/functions.wp-scripts.php (WP 6.9.4)
 if( ! function_exists( 'wp_print_scripts' ) ) :
 	function wp_print_scripts( $handles = false ) {
 		global $wp_scripts;
@@ -64,29 +135,6 @@ if( ! function_exists( 'wp_print_scripts' ) ) :
 endif;
 
 // wp-includes/functions.wp-scripts.php (WP 6.9.4)
-if( ! function_exists( 'wp_add_inline_script' ) ) :
-	function wp_add_inline_script( $handle, $data, $position = 'after' ) {
-		_wp_scripts_maybe_doing_it_wrong( __FUNCTION__, $handle );
-	
-		if ( false !== stripos( $data, '</script>' ) ) {
-			_doing_it_wrong(
-				__FUNCTION__,
-				sprintf(
-					/* translators: 1: <script>, 2: wp_add_inline_script() */
-					__( 'Do not pass %1$s tags to %2$s.' ),
-					'<code>&lt;script&gt;</code>',
-					'<code>wp_add_inline_script()</code>'
-				),
-				'4.5.0'
-			);
-			$data = trim( preg_replace( '#<script[^>]*>(.*)</script>#is', '$1', $data ) );
-		}
-	
-		return wp_scripts()->add_inline_script( $handle, $data, $position );
-	}
-endif;
-
-// wp-includes/functions.wp-scripts.php (WP 6.9.4)
 if( ! function_exists( 'wp_register_script' ) ) :
 	function wp_register_script( $handle, $src, $deps = array(), $ver = false, $args = array() ) {
 		if ( ! is_array( $args ) ) {
@@ -109,29 +157,6 @@ if( ! function_exists( 'wp_register_script' ) ) :
 			$wp_scripts->add_data( $handle, 'fetchpriority', $args['fetchpriority'] );
 		}
 		return $registered;
-	}
-endif;
-
-// wp-includes/functions.wp-scripts.php (WP 6.9.4)
-if( ! function_exists( 'wp_localize_script' ) ) :
-	function wp_localize_script( $handle, $object_name, $l10n ) {
-		$wp_scripts = wp_scripts();
-	
-		return $wp_scripts->localize( $handle, $object_name, $l10n );
-	}
-endif;
-
-// wp-includes/functions.wp-scripts.php (WP 6.9.4)
-if( ! function_exists( 'wp_set_script_translations' ) ) :
-	function wp_set_script_translations( $handle, $domain = 'default', $path = '' ) {
-		global $wp_scripts;
-	
-		if ( ! ( $wp_scripts instanceof WP_Scripts ) ) {
-			_wp_scripts_maybe_doing_it_wrong( __FUNCTION__, $handle );
-			return false;
-		}
-	
-		return $wp_scripts->set_translations( $handle, $domain, $path );
 	}
 endif;
 
@@ -227,31 +252,6 @@ if( ! function_exists( 'wp_enqueue_script' ) ) :
 		}
 	
 		$wp_scripts->enqueue( $handle );
-	}
-endif;
-
-// wp-includes/functions.wp-scripts.php (WP 6.9.4)
-if( ! function_exists( 'wp_dequeue_script' ) ) :
-	function wp_dequeue_script( $handle ) {
-		_wp_scripts_maybe_doing_it_wrong( __FUNCTION__, $handle );
-	
-		wp_scripts()->dequeue( $handle );
-	}
-endif;
-
-// wp-includes/functions.wp-scripts.php (WP 6.9.4)
-if( ! function_exists( 'wp_script_is' ) ) :
-	function wp_script_is( $handle, $status = 'enqueued' ) {
-		_wp_scripts_maybe_doing_it_wrong( __FUNCTION__, $handle );
-	
-		return (bool) wp_scripts()->query( $handle, $status );
-	}
-endif;
-
-// wp-includes/functions.wp-scripts.php (WP 6.9.4)
-if( ! function_exists( 'wp_script_add_data' ) ) :
-	function wp_script_add_data( $handle, $key, $value ) {
-		return wp_scripts()->add_data( $handle, $key, $value );
 	}
 endif;
 
