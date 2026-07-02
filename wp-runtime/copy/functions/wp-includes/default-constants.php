@@ -158,7 +158,7 @@ endif;
 if( ! function_exists( 'wp_plugin_directory_constants' ) ) :
 	function wp_plugin_directory_constants() {
 		if ( ! defined( 'WP_CONTENT_URL' ) ) {
-			define( 'WP_CONTENT_URL', $GLOBALS['stub_wp_options']->siteurl . '/wp-content' ); // Full URL - WP_CONTENT_DIR is defined further up.
+			define( 'WP_CONTENT_URL', get_option( 'siteurl' ) . '/wp-content' ); // Full URL - WP_CONTENT_DIR is defined further up.
 		}
 	
 		/**
@@ -228,7 +228,7 @@ if( ! function_exists( 'wp_cookie_constants' ) ) :
 		 * @since 1.5.0
 		 */
 		if ( ! defined( 'COOKIEHASH' ) ) {
-			$siteurl = $GLOBALS['stub_wp_options']->siteurl;
+			$siteurl = get_site_option( 'siteurl' );
 			if ( $siteurl ) {
 				define( 'COOKIEHASH', md5( $siteurl ) );
 			} else {
@@ -282,14 +282,14 @@ if( ! function_exists( 'wp_cookie_constants' ) ) :
 		 * @since 1.2.0
 		 */
 		if ( ! defined( 'COOKIEPATH' ) ) {
-			define( 'COOKIEPATH', preg_replace( '|https?://[^/]+|i', '', $GLOBALS['stub_wp_options']->home . '/' ) );
+			define( 'COOKIEPATH', preg_replace( '|https?://[^/]+|i', '', get_option( 'home' ) . '/' ) );
 		}
 	
 		/**
 		 * @since 1.5.0
 		 */
 		if ( ! defined( 'SITECOOKIEPATH' ) ) {
-			define( 'SITECOOKIEPATH', preg_replace( '|https?://[^/]+|i', '', $GLOBALS['stub_wp_options']->siteurl . '/' ) );
+			define( 'SITECOOKIEPATH', preg_replace( '|https?://[^/]+|i', '', get_option( 'siteurl' ) . '/' ) );
 		}
 	
 		/**
@@ -330,7 +330,7 @@ if( ! function_exists( 'wp_ssl_constants' ) ) :
 		 * @since 2.6.0
 		 */
 		if ( ! defined( 'FORCE_SSL_ADMIN' ) ) {
-			if ( 'https' === parse_url( $GLOBALS['stub_wp_options']->siteurl, PHP_URL_SCHEME ) ) {
+			if ( 'https' === parse_url( get_option( 'siteurl' ), PHP_URL_SCHEME ) ) {
 				define( 'FORCE_SSL_ADMIN', true );
 			} else {
 				define( 'FORCE_SSL_ADMIN', false );
