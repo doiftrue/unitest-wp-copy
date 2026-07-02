@@ -41,6 +41,17 @@ if( ! function_exists( 'wp_get_development_mode' ) ) :
 endif;
 
 // wp-includes/load.php (WP 6.5.8)
+if( ! function_exists( 'timer_float' ) ) :
+	function timer_float() {
+		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+	
+		return microtime( true ) - $_SERVER['REQUEST_TIME_FLOAT'];
+	}
+endif;
+
+// wp-includes/load.php (WP 6.5.8)
 if( ! function_exists( 'wp_get_environment_type' ) ) :
 	function wp_get_environment_type() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -117,19 +128,6 @@ if( ! function_exists( 'wp_doing_ajax' ) ) :
 endif;
 
 // wp-includes/load.php (WP 6.5.8)
-if( ! function_exists( 'get_current_blog_id' ) ) :
-	function get_current_blog_id() {
-		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
-			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
-		}
-	
-		global $blog_id;
-	
-		return absint( $blog_id );
-	}
-endif;
-
-// wp-includes/load.php (WP 6.5.8)
 if( ! function_exists( 'get_current_network_id' ) ) :
 	function get_current_network_id() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -147,66 +145,6 @@ if( ! function_exists( 'get_current_network_id' ) ) :
 		}
 	
 		return absint( $current_network->id );
-	}
-endif;
-
-// wp-includes/load.php (WP 6.5.8)
-if( ! function_exists( 'is_ssl' ) ) :
-	function is_ssl() {
-		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
-			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
-		}
-	
-		if ( isset( $_SERVER['HTTPS'] ) ) {
-			if ( 'on' === strtolower( $_SERVER['HTTPS'] ) ) {
-				return true;
-			}
-	
-			if ( '1' === (string) $_SERVER['HTTPS'] ) {
-				return true;
-			}
-		} elseif ( isset( $_SERVER['SERVER_PORT'] ) && ( '443' === (string) $_SERVER['SERVER_PORT'] ) ) {
-			return true;
-		}
-	
-		return false;
-	}
-endif;
-
-// wp-includes/load.php (WP 6.5.8)
-if( ! function_exists( 'timer_float' ) ) :
-	function timer_float() {
-		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
-			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
-		}
-	
-		return microtime( true ) - $_SERVER['REQUEST_TIME_FLOAT'];
-	}
-endif;
-
-// wp-includes/load.php (WP 6.5.8)
-if( ! function_exists( 'timer_stop' ) ) :
-	function timer_stop( $display = 0, $precision = 3 ) {
-		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
-			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
-		}
-	
-		global $timestart, $timeend;
-	
-		$timeend   = microtime( true );
-		$timetotal = $timeend - $timestart;
-	
-		if ( function_exists( 'number_format_i18n' ) ) {
-			$r = number_format_i18n( $timetotal, $precision );
-		} else {
-			$r = number_format( $timetotal, $precision );
-		}
-	
-		if ( $display ) {
-			echo $r;
-		}
-	
-		return $r;
 	}
 endif;
 
@@ -236,19 +174,15 @@ if( ! function_exists( 'wp_installing' ) ) :
 endif;
 
 // wp-includes/load.php (WP 6.5.8)
-if( ! function_exists( 'is_admin' ) ) :
-	function is_admin() {
+if( ! function_exists( 'get_current_blog_id' ) ) :
+	function get_current_blog_id() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
 			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
 		}
 	
-		if ( isset( $GLOBALS['current_screen'] ) ) {
-			return $GLOBALS['current_screen']->in_admin();
-		} elseif ( defined( 'WP_ADMIN' ) ) {
-			return WP_ADMIN;
-		}
+		global $blog_id;
 	
-		return false;
+		return absint( $blog_id );
 	}
 endif;
 
@@ -268,6 +202,72 @@ if( ! function_exists( 'is_multisite' ) ) :
 		}
 	
 		return false;
+	}
+endif;
+
+// wp-includes/load.php (WP 6.5.8)
+if( ! function_exists( 'is_ssl' ) ) :
+	function is_ssl() {
+		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+	
+		if ( isset( $_SERVER['HTTPS'] ) ) {
+			if ( 'on' === strtolower( $_SERVER['HTTPS'] ) ) {
+				return true;
+			}
+	
+			if ( '1' === (string) $_SERVER['HTTPS'] ) {
+				return true;
+			}
+		} elseif ( isset( $_SERVER['SERVER_PORT'] ) && ( '443' === (string) $_SERVER['SERVER_PORT'] ) ) {
+			return true;
+		}
+	
+		return false;
+	}
+endif;
+
+// wp-includes/load.php (WP 6.5.8)
+if( ! function_exists( 'is_admin' ) ) :
+	function is_admin() {
+		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+	
+		if ( isset( $GLOBALS['current_screen'] ) ) {
+			return $GLOBALS['current_screen']->in_admin();
+		} elseif ( defined( 'WP_ADMIN' ) ) {
+			return WP_ADMIN;
+		}
+	
+		return false;
+	}
+endif;
+
+// wp-includes/load.php (WP 6.5.8)
+if( ! function_exists( 'timer_stop' ) ) :
+	function timer_stop( $display = 0, $precision = 3 ) {
+		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+	
+		global $timestart, $timeend;
+	
+		$timeend   = microtime( true );
+		$timetotal = $timeend - $timestart;
+	
+		if ( function_exists( 'number_format_i18n' ) ) {
+			$r = number_format_i18n( $timetotal, $precision );
+		} else {
+			$r = number_format( $timetotal, $precision );
+		}
+	
+		if ( $display ) {
+			echo $r;
+		}
+	
+		return $r;
 	}
 endif;
 

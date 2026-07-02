@@ -6,6 +6,9 @@
 
 use Unitest_WP_Copy\WP_Mock_Utils;
 
+/**
+ * Runtime adaptation of get_bloginfo() from WordPress 7.0 wp-includes/general-template.php.
+ */
 if ( ! function_exists( 'get_bloginfo' ) ) :
 	function get_bloginfo( $show = '', $filter = 'raw' ) {
 		if ( WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {

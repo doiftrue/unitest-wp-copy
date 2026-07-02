@@ -9,7 +9,7 @@ if( ! function_exists( 'balanceTags' ) ) :
 			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
 		}
 	
-		if ( $force || (int) $GLOBALS['stub_wp_options']->use_balanceTags === 1 ) {
+		if ( $force || (int) get_option( 'use_balanceTags' ) === 1 ) {
 			return force_balance_tags( $text );
 		} else {
 			return $text;
@@ -51,7 +51,7 @@ if( ! function_exists( 'convert_smilies' ) ) :
 	
 		global $wp_smiliessearch;
 		$output = '';
-		if ( $GLOBALS['stub_wp_options']->use_smilies && ! empty( $wp_smiliessearch ) ) {
+		if ( get_option( 'use_smilies' ) && ! empty( $wp_smiliessearch ) ) {
 			// HTML loop taken from texturize function, could possible be consolidated.
 			$textarr = preg_split( '/(<.*>)/U', $text, -1, PREG_SPLIT_DELIM_CAPTURE ); // Capture the tags as well as in between.
 			$stop    = count( $textarr ); // Loop stuff.
