@@ -14,6 +14,7 @@ WP_LINE="${WP_LINE:-}"  # 6.8
 RELEASE_FILES=(
 	zero.php
 	README.md
+	SYMBOLS-INFO.md
 )
 VERSION_FILE="${REPO_ROOT}/VERSION"
 RELEASE_TAG="$(build_release_tag "${WP_LINE}" "${VERSION_FILE}")" || exit 1
@@ -85,7 +86,7 @@ if [[ -n "${NOT_PUSH}" ]]; then
 fi
 
 cecho cyan "➜ Commit to WORKTREE ${WORKTREE_DIR_REL} and add TAG ${RELEASE_TAG}"
-git -C "${WORKTREE_DIR}" add "${RELEASE_FILES[@]}" wp-runtime
+git -C "${WORKTREE_DIR}" add "${RELEASE_FILES[@]}" wp-runtime/
 
 if git -C "${WORKTREE_DIR}" diff --cached --quiet; then
 	cecho yellow "Nothing to commit on ${WP_LINE_BRANCH}."

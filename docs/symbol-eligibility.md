@@ -15,7 +15,7 @@ Dependency documents:
 
 - Validate the full transitive dependency chain before adding any symbol.
 - A symbol is eligible only if every dependency in its chain is:
-  - already available in current runtime (`wp-runtime/SYMBOLS-INFO.md`), or
+  - already available in current runtime (`SYMBOLS-INFO.md`), or
   - added in the same change and validated by these same rules recursively, or
 - Reject a symbol if any dependency requires unsupported runtime behavior (DB, full WordPress bootstrap, network I/O, admin/request lifecycle, or similarly heavy runtime coupling).
 - Do not add unresolved dependencies "for later".

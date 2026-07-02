@@ -39,7 +39,7 @@ $this->assertSame(
 Available Symbols
 -----------------
 For the full list of available classes/functions, see:
-[`wp-runtime/SYMBOLS-INFO.md`](wp-runtime/SYMBOLS-INFO.md)
+[`SYMBOLS-INFO.md`](SYMBOLS-INFO.md)
 
 
 
@@ -282,7 +282,7 @@ class ExampleTest extends \PHPUnit\Framework\TestCase {
 ```
 
 For mock-friendly symbols, check:
-[`wp-runtime/SYMBOLS-INFO.md`](wp-runtime/SYMBOLS-INFO.md)
+[`SYMBOLS-INFO.md`](SYMBOLS-INFO.md)
 
 See also: https://github.com/10up/wp_mock
 

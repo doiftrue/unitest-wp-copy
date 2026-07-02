@@ -16,7 +16,7 @@ Analyzed source: WordPress `6.9.4` (`wp-core/wp-includes/version.php`)
 - `rest_get_server()` bootstrap and `rest_api_init`: `wp-core/wp-includes/rest-api.php`
 - REST default lifecycle hook wiring: `wp-core/wp-includes/default-filters.php`
 - Project-level ineligibility notes for related REST symbols: `config/functions/wp-includes/rest-api.php`
-- Missing REST server/request/response symbols in runtime index: `wp-runtime/SYMBOLS-INFO.md`
+- Missing REST server/request/response symbols in runtime index: `SYMBOLS-INFO.md`
 
 
 ## Sitemap

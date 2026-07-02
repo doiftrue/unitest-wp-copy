@@ -15,6 +15,8 @@ Dependencies:
 - One artifact branch per WP line: `wp-<major>.<minor>` (for example `wp-6.8`)
 - Artifact branches contain runtime deliverables only:
   - `zero.php`
+  - `README.md`
+  - `SYMBOLS-INFO.md`
   - `wp-runtime/`
 - Release tag format:
   - `<wp-major>.<wp-minor>.<script-major>.<script-minor>`

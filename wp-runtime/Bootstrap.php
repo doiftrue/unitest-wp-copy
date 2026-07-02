@@ -32,7 +32,7 @@ class Bootstrap {
 	 * @return string Eg: 6.5
 	 */
 	private function detect_wp_line(): string {
-		$content = file_get_contents( "$this->base_dir/SYMBOLS-INFO.md", false, null, 0, 8 * 512 );
+		$content = file_get_contents( dirname( $this->base_dir ) . '/SYMBOLS-INFO.md', false, null, 0, 8 * 512 );
 		preg_match( '~WordPress (\d+\.\d+)~m', $content, $m );
 		return $m[1] ?? '';
 	}

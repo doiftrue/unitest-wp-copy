@@ -40,7 +40,7 @@ class Copied_Lister__Test extends Project_TestCase {
 
 		$lister->generate_list();
 
-		$info = file_get_contents( "$runtime_dir/SYMBOLS-INFO.md" );
+		$info = file_get_contents( "$tmp_dir/SYMBOLS-INFO.md" );
 
 		$this->assertStringContainsString( 'runtime_mock_symbol()', $info );
 		$this->assertStringContainsString( 'copied_mockable_symbol()', $info );
