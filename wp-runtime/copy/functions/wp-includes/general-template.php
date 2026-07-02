@@ -3,29 +3,347 @@
 // ------------------auto-generated---------------------
 
 // wp-includes/general-template.php (WP 7.0)
-if( ! function_exists( 'wp_login_url' ) ) :
-	function wp_login_url( $redirect = '', $force_reauth = false ) {
-		$login_url = site_url( 'wp-login.php', 'login' );
+if( ! function_exists( 'wp_preload_resources' ) ) :
+	function wp_preload_resources() {
+		/**
+		 * Filters domains and URLs for resource preloads.
+		 *
+		 * @since 6.1.0
+		 * @since 6.6.0 Added the `$fetchpriority` attribute.
+		 *
+		 * @param array  $preload_resources {
+		 *     Array of resources and their attributes, or URLs to print for resource preloads.
+		 *
+		 *     @type array ...$0 {
+		 *         Array of resource attributes.
+		 *
+		 *         @type string $href          URL to include in resource preloads. Required.
+		 *         @type string $as            How the browser should treat the resource
+		 *                                     (`script`, `style`, `image`, `document`, etc).
+		 *         @type string $crossorigin   Indicates the CORS policy of the specified resource.
+		 *         @type string $type          Type of the resource (`text/html`, `text/css`, etc).
+		 *         @type string $media         Accepts media types or media queries. Allows responsive preloading.
+		 *         @type string $imagesizes    Responsive source size to the source Set.
+		 *         @type string $imagesrcset   Responsive image sources to the source set.
+		 *         @type string $fetchpriority Fetchpriority value for the resource.
+		 *     }
+		 * }
+		 */
+		$preload_resources = apply_filters( 'wp_preload_resources', array() );
 	
-		if ( ! empty( $redirect ) ) {
-			$login_url = add_query_arg( 'redirect_to', urlencode( $redirect ), $login_url );
+		if ( ! is_array( $preload_resources ) ) {
+			return;
 		}
 	
-		if ( $force_reauth ) {
-			$login_url = add_query_arg( 'reauth', '1', $login_url );
+		$unique_resources = array();
+	
+		// Parse the complete resource list and extract unique resources.
+		foreach ( $preload_resources as $resource ) {
+			if ( ! is_array( $resource ) ) {
+				continue;
+			}
+	
+			$attributes = $resource;
+			if ( isset( $resource['href'] ) ) {
+				$href = $resource['href'];
+				if ( isset( $unique_resources[ $href ] ) ) {
+					continue;
+				}
+				$unique_resources[ $href ] = $attributes;
+				// Media can use imagesrcset and not href.
+			} elseif ( ( 'image' === $resource['as'] ) &&
+				( isset( $resource['imagesrcset'] ) || isset( $resource['imagesizes'] ) )
+			) {
+				if ( isset( $unique_resources[ $resource['imagesrcset'] ] ) ) {
+					continue;
+				}
+				$unique_resources[ $resource['imagesrcset'] ] = $attributes;
+			} else {
+				continue;
+			}
 		}
+	
+		// Build and output the HTML for each unique resource.
+		foreach ( $unique_resources as $unique_resource ) {
+			$html = '';
+	
+			foreach ( $unique_resource as $resource_key => $resource_value ) {
+				if ( ! is_scalar( $resource_value ) ) {
+					continue;
+				}
+	
+				// Ignore non-supported attributes.
+				$non_supported_attributes = array( 'as', 'crossorigin', 'href', 'imagesrcset', 'imagesizes', 'type', 'media', 'fetchpriority' );
+				if ( ! in_array( $resource_key, $non_supported_attributes, true ) && ! is_numeric( $resource_key ) ) {
+					continue;
+				}
+	
+				// imagesrcset only usable when preloading image, ignore otherwise.
+				if ( ( 'imagesrcset' === $resource_key ) && ( ! isset( $unique_resource['as'] ) || ( 'image' !== $unique_resource['as'] ) ) ) {
+					continue;
+				}
+	
+				// imagesizes only usable when preloading image and imagesrcset present, ignore otherwise.
+				if ( ( 'imagesizes' === $resource_key ) &&
+					( ! isset( $unique_resource['as'] ) || ( 'image' !== $unique_resource['as'] ) || ! isset( $unique_resource['imagesrcset'] ) )
+				) {
+					continue;
+				}
+	
+				$resource_value = ( 'href' === $resource_key ) ? esc_url( $resource_value, array( 'http', 'https' ) ) : esc_attr( $resource_value );
+	
+				if ( ! is_string( $resource_key ) ) {
+					$html .= " $resource_value";
+				} else {
+					$html .= " $resource_key='$resource_value'";
+				}
+			}
+			$html = trim( $html );
+	
+			printf( "<link rel='preload' %s />\n", $html );
+		}
+	}
+endif;
+
+// wp-includes/general-template.php (WP 7.0)
+if( ! function_exists( 'wp_required_field_indicator' ) ) :
+	function wp_required_field_indicator() {
+		/* translators: Character to identify required form fields. */
+		$glyph     = __( '*' );
+		$indicator = '<span class="required">' . esc_html( $glyph ) . '</span>';
 	
 		/**
-		 * Filters the login URL.
+		 * Filters the markup for a visual indicator of required form fields.
 		 *
-		 * @since 2.8.0
-		 * @since 4.2.0 The `$force_reauth` parameter was added.
+		 * @since 6.1.0
 		 *
-		 * @param string $login_url    The login URL. Not HTML-encoded.
-		 * @param string $redirect     The path to redirect to on login, if supplied.
-		 * @param bool   $force_reauth Whether to force reauthorization, even if a cookie is present.
+		 * @param string $indicator Markup for the indicator element.
 		 */
-		return apply_filters( 'login_url', $login_url, $redirect, $force_reauth );
+		return apply_filters( 'wp_required_field_indicator', $indicator );
+	}
+endif;
+
+// wp-includes/general-template.php (WP 7.0)
+if( ! function_exists( 'wp_required_field_message' ) ) :
+	function wp_required_field_message() {
+		$message = sprintf(
+			'<span class="required-field-message">%s</span>',
+			/* translators: %s: Asterisk symbol (*). */
+			sprintf( __( 'Required fields are marked %s' ), wp_required_field_indicator() )
+		);
+	
+		/**
+		 * Filters the message to explain required form fields.
+		 *
+		 * @since 6.1.0
+		 *
+		 * @param string $message Message text and glyph wrapped in a `span` tag.
+		 */
+		return apply_filters( 'wp_required_field_message', $message );
+	}
+endif;
+
+// wp-includes/general-template.php (WP 7.0)
+if( ! function_exists( 'wp_readonly' ) ) :
+	function wp_readonly( $readonly_value, $current = true, $display = true ) {
+		return __checked_selected_helper( $readonly_value, $current, $display, 'readonly' );
+	}
+endif;
+
+// wp-includes/general-template.php (WP 7.0)
+if( ! function_exists( 'wp_strict_cross_origin_referrer' ) ) :
+	function wp_strict_cross_origin_referrer() {
+		?>
+		<meta name='referrer' content='strict-origin-when-cross-origin' />
+		<?php
+	}
+endif;
+
+// wp-includes/general-template.php (WP 7.0)
+if( ! function_exists( 'wp_body_open' ) ) :
+	function wp_body_open() {
+		/**
+		 * Triggered after the opening body tag.
+		 *
+		 * @since 5.2.0
+		 */
+		do_action( 'wp_body_open' );
+	}
+endif;
+
+// wp-includes/general-template.php (WP 7.0)
+if( ! function_exists( 'wp_resource_hints' ) ) :
+	function wp_resource_hints() {
+		$hints = array(
+			'dns-prefetch' => wp_dependencies_unique_hosts(),
+			'preconnect'   => array(),
+			'prefetch'     => array(),
+			'prerender'    => array(),
+		);
+	
+		foreach ( $hints as $relation_type => $urls ) {
+			$unique_urls = array();
+	
+			/**
+			 * Filters domains and URLs for resource hints of the given relation type.
+			 *
+			 * @since 4.6.0
+			 * @since 4.7.0 The `$urls` parameter accepts arrays of specific HTML attributes
+			 *              as its child elements.
+			 *
+			 * @param array  $urls {
+			 *     Array of resources and their attributes, or URLs to print for resource hints.
+			 *
+			 *     @type array|string ...$0 {
+			 *         Array of resource attributes, or a URL string.
+			 *
+			 *         @type string $href        URL to include in resource hints. Required.
+			 *         @type string $as          How the browser should treat the resource
+			 *                                   (`script`, `style`, `image`, `document`, etc).
+			 *         @type string $crossorigin Indicates the CORS policy of the specified resource.
+			 *         @type float  $pr          Expected probability that the resource hint will be used.
+			 *         @type string $type        Type of the resource (`text/html`, `text/css`, etc).
+			 *     }
+			 * }
+			 * @param string $relation_type The relation type the URLs are printed for. One of
+			 *                              'dns-prefetch', 'preconnect', 'prefetch', or 'prerender'.
+			 */
+			$urls = apply_filters( 'wp_resource_hints', $urls, $relation_type );
+	
+			foreach ( $urls as $key => $url ) {
+				$atts = array();
+	
+				if ( is_array( $url ) ) {
+					if ( isset( $url['href'] ) ) {
+						$atts = $url;
+						$url  = $url['href'];
+					} else {
+						continue;
+					}
+				}
+	
+				$url = esc_url( $url, array( 'http', 'https' ) );
+	
+				if ( ! $url ) {
+					continue;
+				}
+	
+				if ( isset( $unique_urls[ $url ] ) ) {
+					continue;
+				}
+	
+				if ( in_array( $relation_type, array( 'preconnect', 'dns-prefetch' ), true ) ) {
+					$parsed = wp_parse_url( $url );
+	
+					if ( empty( $parsed['host'] ) ) {
+						continue;
+					}
+	
+					if ( 'preconnect' === $relation_type && ! empty( $parsed['scheme'] ) ) {
+						$url = $parsed['scheme'] . '://' . $parsed['host'];
+					} else {
+						// Use protocol-relative URLs for dns-prefetch or if scheme is missing.
+						$url = '//' . $parsed['host'];
+					}
+				}
+	
+				$atts['rel']  = $relation_type;
+				$atts['href'] = $url;
+	
+				$unique_urls[ $url ] = $atts;
+			}
+	
+			foreach ( $unique_urls as $atts ) {
+				$html = '';
+	
+				foreach ( $atts as $attr => $value ) {
+					if ( ! is_scalar( $value )
+						|| ( ! in_array( $attr, array( 'as', 'crossorigin', 'href', 'pr', 'rel', 'type' ), true ) && ! is_numeric( $attr ) )
+					) {
+	
+						continue;
+					}
+	
+					$value = ( 'href' === $attr ) ? esc_url( $value ) : esc_attr( $value );
+	
+					if ( ! is_string( $attr ) ) {
+						$html .= " $value";
+					} else {
+						$html .= " $attr='$value'";
+					}
+				}
+	
+				$html = trim( $html );
+	
+				echo "<link $html />\n";
+			}
+		}
+	}
+endif;
+
+// wp-includes/general-template.php (WP 7.0)
+if( ! function_exists( 'wp_dependencies_unique_hosts' ) ) :
+	function wp_dependencies_unique_hosts() {
+		global $wp_scripts, $wp_styles;
+	
+		$unique_hosts = array();
+	
+		foreach ( array( $wp_scripts, $wp_styles ) as $dependencies ) {
+			if ( $dependencies instanceof WP_Dependencies && ! empty( $dependencies->queue ) ) {
+				foreach ( $dependencies->queue as $handle ) {
+					if ( ! isset( $dependencies->registered[ $handle ] ) ) {
+						continue;
+					}
+	
+					/* @var _WP_Dependency $dependency */
+					$dependency = $dependencies->registered[ $handle ];
+					$parsed     = wp_parse_url( $dependency->src );
+	
+					if ( ! empty( $parsed['host'] )
+						&& ! in_array( $parsed['host'], $unique_hosts, true ) && $parsed['host'] !== $_SERVER['SERVER_NAME']
+					) {
+						$unique_hosts[] = $parsed['host'];
+					}
+				}
+			}
+		}
+	
+		return $unique_hosts;
+	}
+endif;
+
+// wp-includes/general-template.php (WP 7.0)
+if( ! function_exists( 'get_language_attributes' ) ) :
+	function get_language_attributes( $doctype = 'html' ) {
+		$attributes = array();
+	
+		if ( function_exists( 'is_rtl' ) && is_rtl() ) {
+			$attributes[] = 'dir="rtl"';
+		}
+	
+		$lang = get_bloginfo( 'language' );
+		if ( $lang ) {
+			if ( 'text/html' === get_option( 'html_type' ) || 'html' === $doctype ) {
+				$attributes[] = 'lang="' . esc_attr( $lang ) . '"';
+			}
+	
+			if ( 'text/html' !== get_option( 'html_type' ) || 'xhtml' === $doctype ) {
+				$attributes[] = 'xml:lang="' . esc_attr( $lang ) . '"';
+			}
+		}
+	
+		$output = implode( ' ', $attributes );
+	
+		/**
+		 * Filters the language attributes for display in the 'html' tag.
+		 *
+		 * @since 2.5.0
+		 * @since 4.3.0 Added the `$doctype` parameter.
+		 *
+		 * @param string $output A space-separated list of language attributes.
+		 * @param string $doctype The type of HTML document (xhtml|html).
+		 */
+		return apply_filters( 'language_attributes', $output, $doctype );
 	}
 endif;
 
@@ -177,6 +495,104 @@ if( ! function_exists( 'wp_login_form' ) ) :
 endif;
 
 // wp-includes/general-template.php (WP 7.0)
+if( ! function_exists( 'disabled' ) ) :
+	function disabled( $disabled, $current = true, $display = true ) {
+		return __checked_selected_helper( $disabled, $current, $display, 'disabled' );
+	}
+endif;
+
+// wp-includes/general-template.php (WP 7.0)
+if( ! function_exists( '__checked_selected_helper' ) ) :
+	function __checked_selected_helper( $helper, $current, $display, $type ) { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionDoubleUnderscore,PHPCompatibility.FunctionNameRestrictions.ReservedFunctionNames.FunctionDoubleUnderscore
+		if ( (string) $helper === (string) $current ) {
+			$result = " $type='$type'";
+		} else {
+			$result = '';
+		}
+	
+		if ( $display ) {
+			echo $result;
+		}
+	
+		return $result;
+	}
+endif;
+
+// wp-includes/general-template.php (WP 7.0)
+if( ! function_exists( 'wp_login_url' ) ) :
+	function wp_login_url( $redirect = '', $force_reauth = false ) {
+		$login_url = site_url( 'wp-login.php', 'login' );
+	
+		if ( ! empty( $redirect ) ) {
+			$login_url = add_query_arg( 'redirect_to', urlencode( $redirect ), $login_url );
+		}
+	
+		if ( $force_reauth ) {
+			$login_url = add_query_arg( 'reauth', '1', $login_url );
+		}
+	
+		/**
+		 * Filters the login URL.
+		 *
+		 * @since 2.8.0
+		 * @since 4.2.0 The `$force_reauth` parameter was added.
+		 *
+		 * @param string $login_url    The login URL. Not HTML-encoded.
+		 * @param string $redirect     The path to redirect to on login, if supplied.
+		 * @param bool   $force_reauth Whether to force reauthorization, even if a cookie is present.
+		 */
+		return apply_filters( 'login_url', $login_url, $redirect, $force_reauth );
+	}
+endif;
+
+// wp-includes/general-template.php (WP 7.0)
+if( ! function_exists( 'wp_admin_css_color' ) ) :
+	function wp_admin_css_color( $key, $name, $url, $colors = array(), $icons = array() ) {
+		global $_wp_admin_css_colors;
+	
+		if ( ! isset( $_wp_admin_css_colors ) ) {
+			$_wp_admin_css_colors = array();
+		}
+	
+		$_wp_admin_css_colors[ $key ] = (object) array(
+			'name'        => $name,
+			'url'         => $url,
+			'colors'      => $colors,
+			'icon_colors' => $icons,
+		);
+	}
+endif;
+
+// wp-includes/general-template.php (WP 7.0)
+if( ! function_exists( 'language_attributes' ) ) :
+	function language_attributes( $doctype = 'html' ) {
+		echo get_language_attributes( $doctype );
+	}
+endif;
+
+// wp-includes/general-template.php (WP 7.0)
+if( ! function_exists( 'rsd_link' ) ) :
+	function rsd_link() {
+		printf(
+			'<link rel="EditURI" type="application/rsd+xml" title="RSD" href="%s" />' . "\n",
+			esc_url( site_url( 'xmlrpc.php?rsd', 'rpc' ) )
+		);
+	}
+endif;
+
+// wp-includes/general-template.php (WP 7.0)
+if( ! function_exists( 'wp_footer' ) ) :
+	function wp_footer() {
+		/**
+		 * Prints scripts or data before the closing body tag on the front end.
+		 *
+		 * @since 1.5.1
+		 */
+		do_action( 'wp_footer' );
+	}
+endif;
+
+// wp-includes/general-template.php (WP 7.0)
 if( ! function_exists( 'wp_meta' ) ) :
 	function wp_meta() {
 		/**
@@ -189,9 +605,40 @@ if( ! function_exists( 'wp_meta' ) ) :
 endif;
 
 // wp-includes/general-template.php (WP 7.0)
-if( ! function_exists( 'bloginfo' ) ) :
-	function bloginfo( $show = '' ) {
-		echo get_bloginfo( $show, 'display' );
+if( ! function_exists( 'calendar_week_mod' ) ) :
+	function calendar_week_mod( $num ) {
+		$base = 7;
+		return ( $num - $base * floor( $num / $base ) );
+	}
+endif;
+
+// wp-includes/general-template.php (WP 7.0)
+if( ! function_exists( 'wp_head' ) ) :
+	function wp_head() {
+		/**
+		 * Prints scripts or data in the head tag on the front end.
+		 *
+		 * @since 1.5.0
+		 */
+		do_action( 'wp_head' );
+	}
+endif;
+
+// wp-includes/general-template.php (WP 7.0)
+if( ! function_exists( 'allowed_tags' ) ) :
+	function allowed_tags() {
+		global $allowedtags;
+		$allowed = '';
+		foreach ( (array) $allowedtags as $tag => $attributes ) {
+			$allowed .= '<' . $tag;
+			if ( 0 < count( $attributes ) ) {
+				foreach ( $attributes as $attribute => $limits ) {
+					$allowed .= ' ' . $attribute . '=""';
+				}
+			}
+			$allowed .= '> ';
+		}
+		return htmlentities( $allowed );
 	}
 endif;
 
@@ -233,391 +680,6 @@ if( ! function_exists( 'get_archives_link' ) ) :
 endif;
 
 // wp-includes/general-template.php (WP 7.0)
-if( ! function_exists( 'calendar_week_mod' ) ) :
-	function calendar_week_mod( $num ) {
-		$base = 7;
-		return ( $num - $base * floor( $num / $base ) );
-	}
-endif;
-
-// wp-includes/general-template.php (WP 7.0)
-if( ! function_exists( 'allowed_tags' ) ) :
-	function allowed_tags() {
-		global $allowedtags;
-		$allowed = '';
-		foreach ( (array) $allowedtags as $tag => $attributes ) {
-			$allowed .= '<' . $tag;
-			if ( 0 < count( $attributes ) ) {
-				foreach ( $attributes as $attribute => $limits ) {
-					$allowed .= ' ' . $attribute . '=""';
-				}
-			}
-			$allowed .= '> ';
-		}
-		return htmlentities( $allowed );
-	}
-endif;
-
-// wp-includes/general-template.php (WP 7.0)
-if( ! function_exists( 'wp_head' ) ) :
-	function wp_head() {
-		/**
-		 * Prints scripts or data in the head tag on the front end.
-		 *
-		 * @since 1.5.0
-		 */
-		do_action( 'wp_head' );
-	}
-endif;
-
-// wp-includes/general-template.php (WP 7.0)
-if( ! function_exists( 'wp_footer' ) ) :
-	function wp_footer() {
-		/**
-		 * Prints scripts or data before the closing body tag on the front end.
-		 *
-		 * @since 1.5.1
-		 */
-		do_action( 'wp_footer' );
-	}
-endif;
-
-// wp-includes/general-template.php (WP 7.0)
-if( ! function_exists( 'wp_body_open' ) ) :
-	function wp_body_open() {
-		/**
-		 * Triggered after the opening body tag.
-		 *
-		 * @since 5.2.0
-		 */
-		do_action( 'wp_body_open' );
-	}
-endif;
-
-// wp-includes/general-template.php (WP 7.0)
-if( ! function_exists( 'rsd_link' ) ) :
-	function rsd_link() {
-		printf(
-			'<link rel="EditURI" type="application/rsd+xml" title="RSD" href="%s" />' . "\n",
-			esc_url( site_url( 'xmlrpc.php?rsd', 'rpc' ) )
-		);
-	}
-endif;
-
-// wp-includes/general-template.php (WP 7.0)
-if( ! function_exists( 'wp_strict_cross_origin_referrer' ) ) :
-	function wp_strict_cross_origin_referrer() {
-		?>
-		<meta name='referrer' content='strict-origin-when-cross-origin' />
-		<?php
-	}
-endif;
-
-// wp-includes/general-template.php (WP 7.0)
-if( ! function_exists( 'wp_resource_hints' ) ) :
-	function wp_resource_hints() {
-		$hints = array(
-			'dns-prefetch' => wp_dependencies_unique_hosts(),
-			'preconnect'   => array(),
-			'prefetch'     => array(),
-			'prerender'    => array(),
-		);
-	
-		foreach ( $hints as $relation_type => $urls ) {
-			$unique_urls = array();
-	
-			/**
-			 * Filters domains and URLs for resource hints of the given relation type.
-			 *
-			 * @since 4.6.0
-			 * @since 4.7.0 The `$urls` parameter accepts arrays of specific HTML attributes
-			 *              as its child elements.
-			 *
-			 * @param array  $urls {
-			 *     Array of resources and their attributes, or URLs to print for resource hints.
-			 *
-			 *     @type array|string ...$0 {
-			 *         Array of resource attributes, or a URL string.
-			 *
-			 *         @type string $href        URL to include in resource hints. Required.
-			 *         @type string $as          How the browser should treat the resource
-			 *                                   (`script`, `style`, `image`, `document`, etc).
-			 *         @type string $crossorigin Indicates the CORS policy of the specified resource.
-			 *         @type float  $pr          Expected probability that the resource hint will be used.
-			 *         @type string $type        Type of the resource (`text/html`, `text/css`, etc).
-			 *     }
-			 * }
-			 * @param string $relation_type The relation type the URLs are printed for. One of
-			 *                              'dns-prefetch', 'preconnect', 'prefetch', or 'prerender'.
-			 */
-			$urls = apply_filters( 'wp_resource_hints', $urls, $relation_type );
-	
-			foreach ( $urls as $key => $url ) {
-				$atts = array();
-	
-				if ( is_array( $url ) ) {
-					if ( isset( $url['href'] ) ) {
-						$atts = $url;
-						$url  = $url['href'];
-					} else {
-						continue;
-					}
-				}
-	
-				$url = esc_url( $url, array( 'http', 'https' ) );
-	
-				if ( ! $url ) {
-					continue;
-				}
-	
-				if ( isset( $unique_urls[ $url ] ) ) {
-					continue;
-				}
-	
-				if ( in_array( $relation_type, array( 'preconnect', 'dns-prefetch' ), true ) ) {
-					$parsed = wp_parse_url( $url );
-	
-					if ( empty( $parsed['host'] ) ) {
-						continue;
-					}
-	
-					if ( 'preconnect' === $relation_type && ! empty( $parsed['scheme'] ) ) {
-						$url = $parsed['scheme'] . '://' . $parsed['host'];
-					} else {
-						// Use protocol-relative URLs for dns-prefetch or if scheme is missing.
-						$url = '//' . $parsed['host'];
-					}
-				}
-	
-				$atts['rel']  = $relation_type;
-				$atts['href'] = $url;
-	
-				$unique_urls[ $url ] = $atts;
-			}
-	
-			foreach ( $unique_urls as $atts ) {
-				$html = '';
-	
-				foreach ( $atts as $attr => $value ) {
-					if ( ! is_scalar( $value )
-						|| ( ! in_array( $attr, array( 'as', 'crossorigin', 'href', 'pr', 'rel', 'type' ), true ) && ! is_numeric( $attr ) )
-					) {
-	
-						continue;
-					}
-	
-					$value = ( 'href' === $attr ) ? esc_url( $value ) : esc_attr( $value );
-	
-					if ( ! is_string( $attr ) ) {
-						$html .= " $value";
-					} else {
-						$html .= " $attr='$value'";
-					}
-				}
-	
-				$html = trim( $html );
-	
-				echo "<link $html />\n";
-			}
-		}
-	}
-endif;
-
-// wp-includes/general-template.php (WP 7.0)
-if( ! function_exists( 'wp_preload_resources' ) ) :
-	function wp_preload_resources() {
-		/**
-		 * Filters domains and URLs for resource preloads.
-		 *
-		 * @since 6.1.0
-		 * @since 6.6.0 Added the `$fetchpriority` attribute.
-		 *
-		 * @param array  $preload_resources {
-		 *     Array of resources and their attributes, or URLs to print for resource preloads.
-		 *
-		 *     @type array ...$0 {
-		 *         Array of resource attributes.
-		 *
-		 *         @type string $href          URL to include in resource preloads. Required.
-		 *         @type string $as            How the browser should treat the resource
-		 *                                     (`script`, `style`, `image`, `document`, etc).
-		 *         @type string $crossorigin   Indicates the CORS policy of the specified resource.
-		 *         @type string $type          Type of the resource (`text/html`, `text/css`, etc).
-		 *         @type string $media         Accepts media types or media queries. Allows responsive preloading.
-		 *         @type string $imagesizes    Responsive source size to the source Set.
-		 *         @type string $imagesrcset   Responsive image sources to the source set.
-		 *         @type string $fetchpriority Fetchpriority value for the resource.
-		 *     }
-		 * }
-		 */
-		$preload_resources = apply_filters( 'wp_preload_resources', array() );
-	
-		if ( ! is_array( $preload_resources ) ) {
-			return;
-		}
-	
-		$unique_resources = array();
-	
-		// Parse the complete resource list and extract unique resources.
-		foreach ( $preload_resources as $resource ) {
-			if ( ! is_array( $resource ) ) {
-				continue;
-			}
-	
-			$attributes = $resource;
-			if ( isset( $resource['href'] ) ) {
-				$href = $resource['href'];
-				if ( isset( $unique_resources[ $href ] ) ) {
-					continue;
-				}
-				$unique_resources[ $href ] = $attributes;
-				// Media can use imagesrcset and not href.
-			} elseif ( ( 'image' === $resource['as'] ) &&
-				( isset( $resource['imagesrcset'] ) || isset( $resource['imagesizes'] ) )
-			) {
-				if ( isset( $unique_resources[ $resource['imagesrcset'] ] ) ) {
-					continue;
-				}
-				$unique_resources[ $resource['imagesrcset'] ] = $attributes;
-			} else {
-				continue;
-			}
-		}
-	
-		// Build and output the HTML for each unique resource.
-		foreach ( $unique_resources as $unique_resource ) {
-			$html = '';
-	
-			foreach ( $unique_resource as $resource_key => $resource_value ) {
-				if ( ! is_scalar( $resource_value ) ) {
-					continue;
-				}
-	
-				// Ignore non-supported attributes.
-				$non_supported_attributes = array( 'as', 'crossorigin', 'href', 'imagesrcset', 'imagesizes', 'type', 'media', 'fetchpriority' );
-				if ( ! in_array( $resource_key, $non_supported_attributes, true ) && ! is_numeric( $resource_key ) ) {
-					continue;
-				}
-	
-				// imagesrcset only usable when preloading image, ignore otherwise.
-				if ( ( 'imagesrcset' === $resource_key ) && ( ! isset( $unique_resource['as'] ) || ( 'image' !== $unique_resource['as'] ) ) ) {
-					continue;
-				}
-	
-				// imagesizes only usable when preloading image and imagesrcset present, ignore otherwise.
-				if ( ( 'imagesizes' === $resource_key ) &&
-					( ! isset( $unique_resource['as'] ) || ( 'image' !== $unique_resource['as'] ) || ! isset( $unique_resource['imagesrcset'] ) )
-				) {
-					continue;
-				}
-	
-				$resource_value = ( 'href' === $resource_key ) ? esc_url( $resource_value, array( 'http', 'https' ) ) : esc_attr( $resource_value );
-	
-				if ( ! is_string( $resource_key ) ) {
-					$html .= " $resource_value";
-				} else {
-					$html .= " $resource_key='$resource_value'";
-				}
-			}
-			$html = trim( $html );
-	
-			printf( "<link rel='preload' %s />\n", $html );
-		}
-	}
-endif;
-
-// wp-includes/general-template.php (WP 7.0)
-if( ! function_exists( 'wp_dependencies_unique_hosts' ) ) :
-	function wp_dependencies_unique_hosts() {
-		global $wp_scripts, $wp_styles;
-	
-		$unique_hosts = array();
-	
-		foreach ( array( $wp_scripts, $wp_styles ) as $dependencies ) {
-			if ( $dependencies instanceof WP_Dependencies && ! empty( $dependencies->queue ) ) {
-				foreach ( $dependencies->queue as $handle ) {
-					if ( ! isset( $dependencies->registered[ $handle ] ) ) {
-						continue;
-					}
-	
-					/* @var _WP_Dependency $dependency */
-					$dependency = $dependencies->registered[ $handle ];
-					$parsed     = wp_parse_url( $dependency->src );
-	
-					if ( ! empty( $parsed['host'] )
-						&& ! in_array( $parsed['host'], $unique_hosts, true ) && $parsed['host'] !== $_SERVER['SERVER_NAME']
-					) {
-						$unique_hosts[] = $parsed['host'];
-					}
-				}
-			}
-		}
-	
-		return $unique_hosts;
-	}
-endif;
-
-// wp-includes/general-template.php (WP 7.0)
-if( ! function_exists( 'get_language_attributes' ) ) :
-	function get_language_attributes( $doctype = 'html' ) {
-		$attributes = array();
-	
-		if ( function_exists( 'is_rtl' ) && is_rtl() ) {
-			$attributes[] = 'dir="rtl"';
-		}
-	
-		$lang = get_bloginfo( 'language' );
-		if ( $lang ) {
-			if ( 'text/html' === $GLOBALS['stub_wp_options']->html_type || 'html' === $doctype ) {
-				$attributes[] = 'lang="' . esc_attr( $lang ) . '"';
-			}
-	
-			if ( 'text/html' !== $GLOBALS['stub_wp_options']->html_type || 'xhtml' === $doctype ) {
-				$attributes[] = 'xml:lang="' . esc_attr( $lang ) . '"';
-			}
-		}
-	
-		$output = implode( ' ', $attributes );
-	
-		/**
-		 * Filters the language attributes for display in the 'html' tag.
-		 *
-		 * @since 2.5.0
-		 * @since 4.3.0 Added the `$doctype` parameter.
-		 *
-		 * @param string $output A space-separated list of language attributes.
-		 * @param string $doctype The type of HTML document (xhtml|html).
-		 */
-		return apply_filters( 'language_attributes', $output, $doctype );
-	}
-endif;
-
-// wp-includes/general-template.php (WP 7.0)
-if( ! function_exists( 'language_attributes' ) ) :
-	function language_attributes( $doctype = 'html' ) {
-		echo get_language_attributes( $doctype );
-	}
-endif;
-
-// wp-includes/general-template.php (WP 7.0)
-if( ! function_exists( 'wp_admin_css_color' ) ) :
-	function wp_admin_css_color( $key, $name, $url, $colors = array(), $icons = array() ) {
-		global $_wp_admin_css_colors;
-	
-		if ( ! isset( $_wp_admin_css_colors ) ) {
-			$_wp_admin_css_colors = array();
-		}
-	
-		$_wp_admin_css_colors[ $key ] = (object) array(
-			'name'        => $name,
-			'url'         => $url,
-			'colors'      => $colors,
-			'icon_colors' => $icons,
-		);
-	}
-endif;
-
-// wp-includes/general-template.php (WP 7.0)
 if( ! function_exists( 'checked' ) ) :
 	function checked( $checked, $current = true, $display = true ) {
 		return __checked_selected_helper( $checked, $current, $display, 'checked' );
@@ -632,71 +694,9 @@ if( ! function_exists( 'selected' ) ) :
 endif;
 
 // wp-includes/general-template.php (WP 7.0)
-if( ! function_exists( 'disabled' ) ) :
-	function disabled( $disabled, $current = true, $display = true ) {
-		return __checked_selected_helper( $disabled, $current, $display, 'disabled' );
-	}
-endif;
-
-// wp-includes/general-template.php (WP 7.0)
-if( ! function_exists( 'wp_readonly' ) ) :
-	function wp_readonly( $readonly_value, $current = true, $display = true ) {
-		return __checked_selected_helper( $readonly_value, $current, $display, 'readonly' );
-	}
-endif;
-
-// wp-includes/general-template.php (WP 7.0)
-if( ! function_exists( '__checked_selected_helper' ) ) :
-	function __checked_selected_helper( $helper, $current, $display, $type ) { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionDoubleUnderscore,PHPCompatibility.FunctionNameRestrictions.ReservedFunctionNames.FunctionDoubleUnderscore
-		if ( (string) $helper === (string) $current ) {
-			$result = " $type='$type'";
-		} else {
-			$result = '';
-		}
-	
-		if ( $display ) {
-			echo $result;
-		}
-	
-		return $result;
-	}
-endif;
-
-// wp-includes/general-template.php (WP 7.0)
-if( ! function_exists( 'wp_required_field_indicator' ) ) :
-	function wp_required_field_indicator() {
-		/* translators: Character to identify required form fields. */
-		$glyph     = __( '*' );
-		$indicator = '<span class="required">' . esc_html( $glyph ) . '</span>';
-	
-		/**
-		 * Filters the markup for a visual indicator of required form fields.
-		 *
-		 * @since 6.1.0
-		 *
-		 * @param string $indicator Markup for the indicator element.
-		 */
-		return apply_filters( 'wp_required_field_indicator', $indicator );
-	}
-endif;
-
-// wp-includes/general-template.php (WP 7.0)
-if( ! function_exists( 'wp_required_field_message' ) ) :
-	function wp_required_field_message() {
-		$message = sprintf(
-			'<span class="required-field-message">%s</span>',
-			/* translators: %s: Asterisk symbol (*). */
-			sprintf( __( 'Required fields are marked %s' ), wp_required_field_indicator() )
-		);
-	
-		/**
-		 * Filters the message to explain required form fields.
-		 *
-		 * @since 6.1.0
-		 *
-		 * @param string $message Message text and glyph wrapped in a `span` tag.
-		 */
-		return apply_filters( 'wp_required_field_message', $message );
+if( ! function_exists( 'bloginfo' ) ) :
+	function bloginfo( $show = '' ) {
+		echo get_bloginfo( $show, 'display' );
 	}
 endif;
 

@@ -3,25 +3,6 @@
 // ------------------auto-generated---------------------
 
 // wp-includes/load.php (WP 7.0)
-if( ! function_exists( 'wp_convert_hr_to_bytes' ) ) :
-	function wp_convert_hr_to_bytes( $value ) {
-		$value = strtolower( trim( $value ) );
-		$bytes = (int) $value;
-	
-		if ( str_contains( $value, 'g' ) ) {
-			$bytes *= GB_IN_BYTES;
-		} elseif ( str_contains( $value, 'm' ) ) {
-			$bytes *= MB_IN_BYTES;
-		} elseif ( str_contains( $value, 'k' ) ) {
-			$bytes *= KB_IN_BYTES;
-		}
-	
-		// Deal with large (float) values which run into the maximum integer size.
-		return min( $bytes, PHP_INT_MAX );
-	}
-endif;
-
-// wp-includes/load.php (WP 7.0)
 if( ! function_exists( 'wp_is_ini_value_changeable' ) ) :
 	function wp_is_ini_value_changeable( $setting ) {
 		static $ini_all;
@@ -50,6 +31,32 @@ if( ! function_exists( 'wp_is_ini_value_changeable' ) ) :
 endif;
 
 // wp-includes/load.php (WP 7.0)
+if( ! function_exists( 'absint' ) ) :
+	function absint( $maybeint ) {
+		return abs( (int) $maybeint );
+	}
+endif;
+
+// wp-includes/load.php (WP 7.0)
+if( ! function_exists( 'wp_convert_hr_to_bytes' ) ) :
+	function wp_convert_hr_to_bytes( $value ) {
+		$value = strtolower( trim( $value ) );
+		$bytes = (int) $value;
+	
+		if ( str_contains( $value, 'g' ) ) {
+			$bytes *= GB_IN_BYTES;
+		} elseif ( str_contains( $value, 'm' ) ) {
+			$bytes *= MB_IN_BYTES;
+		} elseif ( str_contains( $value, 'k' ) ) {
+			$bytes *= KB_IN_BYTES;
+		}
+	
+		// Deal with large (float) values which run into the maximum integer size.
+		return min( $bytes, PHP_INT_MAX );
+	}
+endif;
+
+// wp-includes/load.php (WP 7.0)
 if( ! function_exists( 'is_wp_error' ) ) :
 	function is_wp_error( $thing ) {
 		$is_wp_error = ( $thing instanceof WP_Error );
@@ -66,13 +73,6 @@ if( ! function_exists( 'is_wp_error' ) ) :
 		}
 	
 		return $is_wp_error;
-	}
-endif;
-
-// wp-includes/load.php (WP 7.0)
-if( ! function_exists( 'absint' ) ) :
-	function absint( $maybeint ) {
-		return abs( (int) $maybeint );
 	}
 endif;
 
