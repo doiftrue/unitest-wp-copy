@@ -9,53 +9,7 @@ if( ! function_exists( 'is_utf8_charset' ) ) :
 			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
 		}
 	
-		return _is_utf8_charset( $blog_charset ?? $GLOBALS['stub_wp_options']->blog_charset );
-	}
-endif;
-
-// wp-includes/functions.php (WP 7.0)
-if( ! function_exists( 'wp_generate_uuid4' ) ) :
-	function wp_generate_uuid4() {
-		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
-			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
-		}
-	
-		static $backup_randomizer = false;
-		$randomizer               = function_exists( 'wp_rand' ) ? 'wp_rand' : $backup_randomizer;
-	
-		if ( false === $randomizer ) {
-			try {
-				random_int( 0, 15705 );
-				$backup_randomizer = 'random_int';
-			} catch ( Exception $e ) {
-				$backup_randomizer = 'mt_rand';
-			}
-			$randomizer = $backup_randomizer;
-		}
-	
-		return sprintf(
-			'%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
-			$randomizer( 0, 0xffff ),
-			$randomizer( 0, 0xffff ),
-			$randomizer( 0, 0xffff ),
-			$randomizer( 0, 0x0fff ) | 0x4000,
-			$randomizer( 0, 0x3fff ) | 0x8000,
-			$randomizer( 0, 0xffff ),
-			$randomizer( 0, 0xffff ),
-			$randomizer( 0, 0xffff )
-		);
-	}
-endif;
-
-// wp-includes/functions.php (WP 7.0)
-if( ! function_exists( 'wp_unique_id' ) ) :
-	function wp_unique_id( $prefix = '' ) {
-		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
-			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
-		}
-	
-		static $id_counter = 0;
-		return $prefix . (string) ++$id_counter;
+		return _is_utf8_charset( $blog_charset ?? get_option( 'blog_charset' ) );
 	}
 endif;
 
@@ -83,121 +37,6 @@ if( ! function_exists( 'wp_unique_prefixed_id' ) ) :
 		$id = ++$id_counters[ $prefix ];
 	
 		return $prefix . (string) $id;
-	}
-endif;
-
-// wp-includes/functions.php (WP 7.0)
-if( ! function_exists( '_deprecated_function' ) ) :
-	function _deprecated_function( $function_name, $version, $replacement = '' ) {
-		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
-			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
-		}
-	
-	
-		/**
-		 * Fires when a deprecated function is called.
-		 *
-		 * @since 2.5.0
-		 *
-		 * @param string $function_name The function that was called.
-		 * @param string $replacement   The function that should have been called.
-		 * @param string $version       The version of WordPress that deprecated the function.
-		 */
-		do_action( 'deprecated_function_run', $function_name, $replacement, $version );
-	
-		/**
-		 * Filters whether to trigger an error for deprecated functions.
-		 *
-		 * @since 2.5.0
-		 *
-		 * @param bool $trigger Whether to trigger the error for deprecated functions. Default true.
-		 */
-		if ( WP_DEBUG && apply_filters( 'deprecated_function_trigger_error', true ) ) {
-			if ( function_exists( '__' ) ) {
-				if ( $replacement ) {
-					$message = sprintf(
-						/* translators: 1: PHP function name, 2: Version number, 3: Alternative function name. */
-						__( 'Function %1$s is <strong>deprecated</strong> since version %2$s! Use %3$s instead.' ),
-						$function_name,
-						$version,
-						$replacement
-					);
-				} else {
-					$message = sprintf(
-						/* translators: 1: PHP function name, 2: Version number. */
-						__( 'Function %1$s is <strong>deprecated</strong> since version %2$s with no alternative available.' ),
-						$function_name,
-						$version
-					);
-				}
-			} else {
-				if ( $replacement ) {
-					$message = sprintf(
-						'Function %1$s is <strong>deprecated</strong> since version %2$s! Use %3$s instead.',
-						$function_name,
-						$version,
-						$replacement
-					);
-				} else {
-					$message = sprintf(
-						'Function %1$s is <strong>deprecated</strong> since version %2$s with no alternative available.',
-						$function_name,
-						$version
-					);
-				}
-			}
-	
-			wp_trigger_error( '', $message, E_USER_DEPRECATED );
-		}
-	}
-endif;
-
-// wp-includes/functions.php (WP 7.0)
-if( ! function_exists( 'wp_timezone_string' ) ) :
-	function wp_timezone_string() {
-		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
-			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
-		}
-	
-		$timezone_string = $GLOBALS['stub_wp_options']->timezone_string;
-	
-		if ( $timezone_string ) {
-			return $timezone_string;
-		}
-	
-		$offset  = (float) $GLOBALS['stub_wp_options']->gmt_offset;
-		$hours   = (int) $offset;
-		$minutes = ( $offset - $hours );
-	
-		$sign      = ( $offset < 0 ) ? '-' : '+';
-		$abs_hour  = abs( $hours );
-		$abs_mins  = abs( $minutes * 60 );
-		$tz_offset = sprintf( '%s%02d:%02d', $sign, $abs_hour, $abs_mins );
-	
-		return $tz_offset;
-	}
-endif;
-
-// wp-includes/functions.php (WP 7.0)
-if( ! function_exists( 'current_time' ) ) :
-	function current_time( $type, $gmt = false ) {
-		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
-			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
-		}
-	
-		// Don't use non-GMT timestamp, unless you know the difference and really need to.
-		if ( 'timestamp' === $type || 'U' === $type ) {
-			return $gmt ? time() : time() + (int) ( (float) $GLOBALS['stub_wp_options']->gmt_offset * HOUR_IN_SECONDS );
-		}
-	
-		if ( 'mysql' === $type ) {
-			$type = 'Y-m-d H:i:s';
-		}
-	
-		$timezone = $gmt ? new DateTimeZone( 'UTC' ) : wp_timezone();
-		$datetime = new DateTime( 'now', $timezone );
-	
-		return $datetime->format( $type );
 	}
 endif;
 
@@ -278,6 +117,95 @@ if( ! function_exists( 'wp_trigger_error' ) ) :
 endif;
 
 // wp-includes/functions.php (WP 7.0)
+if( ! function_exists( 'wp_timezone_string' ) ) :
+	function wp_timezone_string() {
+		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+	
+		$timezone_string = get_option( 'timezone_string' );
+	
+		if ( $timezone_string ) {
+			return $timezone_string;
+		}
+	
+		$offset  = (float) get_option( 'gmt_offset' );
+		$hours   = (int) $offset;
+		$minutes = ( $offset - $hours );
+	
+		$sign      = ( $offset < 0 ) ? '-' : '+';
+		$abs_hour  = abs( $hours );
+		$abs_mins  = abs( $minutes * 60 );
+		$tz_offset = sprintf( '%s%02d:%02d', $sign, $abs_hour, $abs_mins );
+	
+		return $tz_offset;
+	}
+endif;
+
+// wp-includes/functions.php (WP 7.0)
+if( ! function_exists( 'wp_unique_id' ) ) :
+	function wp_unique_id( $prefix = '' ) {
+		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+	
+		static $id_counter = 0;
+		return $prefix . (string) ++$id_counter;
+	}
+endif;
+
+// wp-includes/functions.php (WP 7.0)
+if( ! function_exists( 'wp_generate_uuid4' ) ) :
+	function wp_generate_uuid4() {
+		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+	
+		static $backup_randomizer = false;
+		$randomizer               = function_exists( 'wp_rand' ) ? 'wp_rand' : $backup_randomizer;
+	
+		if ( false === $randomizer ) {
+			try {
+				random_int( 0, 15705 );
+				$backup_randomizer = 'random_int';
+			} catch ( Exception $e ) {
+				$backup_randomizer = 'mt_rand';
+			}
+			$randomizer = $backup_randomizer;
+		}
+	
+		return sprintf(
+			'%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+			$randomizer( 0, 0xffff ),
+			$randomizer( 0, 0xffff ),
+			$randomizer( 0, 0xffff ),
+			$randomizer( 0, 0x0fff ) | 0x4000,
+			$randomizer( 0, 0x3fff ) | 0x8000,
+			$randomizer( 0, 0xffff ),
+			$randomizer( 0, 0xffff ),
+			$randomizer( 0, 0xffff )
+		);
+	}
+endif;
+
+// wp-includes/functions.php (WP 7.0)
+if( ! function_exists( 'wp_suspend_cache_addition' ) ) :
+	function wp_suspend_cache_addition( $suspend = null ) {
+		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+	
+		static $_suspend = false;
+	
+		if ( is_bool( $suspend ) ) {
+			$_suspend = $suspend;
+		}
+	
+		return $_suspend;
+	}
+endif;
+
+// wp-includes/functions.php (WP 7.0)
 if( ! function_exists( 'force_ssl_admin' ) ) :
 	function force_ssl_admin( $force = null ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -297,19 +225,91 @@ if( ! function_exists( 'force_ssl_admin' ) ) :
 endif;
 
 // wp-includes/functions.php (WP 7.0)
-if( ! function_exists( 'wp_suspend_cache_addition' ) ) :
-	function wp_suspend_cache_addition( $suspend = null ) {
+if( ! function_exists( '_deprecated_function' ) ) :
+	function _deprecated_function( $function_name, $version, $replacement = '' ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
 			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
 		}
 	
-		static $_suspend = false;
 	
-		if ( is_bool( $suspend ) ) {
-			$_suspend = $suspend;
+		/**
+		 * Fires when a deprecated function is called.
+		 *
+		 * @since 2.5.0
+		 *
+		 * @param string $function_name The function that was called.
+		 * @param string $replacement   The function that should have been called.
+		 * @param string $version       The version of WordPress that deprecated the function.
+		 */
+		do_action( 'deprecated_function_run', $function_name, $replacement, $version );
+	
+		/**
+		 * Filters whether to trigger an error for deprecated functions.
+		 *
+		 * @since 2.5.0
+		 *
+		 * @param bool $trigger Whether to trigger the error for deprecated functions. Default true.
+		 */
+		if ( WP_DEBUG && apply_filters( 'deprecated_function_trigger_error', true ) ) {
+			if ( function_exists( '__' ) ) {
+				if ( $replacement ) {
+					$message = sprintf(
+						/* translators: 1: PHP function name, 2: Version number, 3: Alternative function name. */
+						__( 'Function %1$s is <strong>deprecated</strong> since version %2$s! Use %3$s instead.' ),
+						$function_name,
+						$version,
+						$replacement
+					);
+				} else {
+					$message = sprintf(
+						/* translators: 1: PHP function name, 2: Version number. */
+						__( 'Function %1$s is <strong>deprecated</strong> since version %2$s with no alternative available.' ),
+						$function_name,
+						$version
+					);
+				}
+			} else {
+				if ( $replacement ) {
+					$message = sprintf(
+						'Function %1$s is <strong>deprecated</strong> since version %2$s! Use %3$s instead.',
+						$function_name,
+						$version,
+						$replacement
+					);
+				} else {
+					$message = sprintf(
+						'Function %1$s is <strong>deprecated</strong> since version %2$s with no alternative available.',
+						$function_name,
+						$version
+					);
+				}
+			}
+	
+			wp_trigger_error( '', $message, E_USER_DEPRECATED );
+		}
+	}
+endif;
+
+// wp-includes/functions.php (WP 7.0)
+if( ! function_exists( 'current_time' ) ) :
+	function current_time( $type, $gmt = false ) {
+		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
 		}
 	
-		return $_suspend;
+		// Don't use non-GMT timestamp, unless you know the difference and really need to.
+		if ( 'timestamp' === $type || 'U' === $type ) {
+			return $gmt ? time() : time() + (int) ( (float) get_option( 'gmt_offset' ) * HOUR_IN_SECONDS );
+		}
+	
+		if ( 'mysql' === $type ) {
+			$type = 'Y-m-d H:i:s';
+		}
+	
+		$timezone = $gmt ? new DateTimeZone( 'UTC' ) : wp_timezone();
+		$datetime = new DateTime( 'now', $timezone );
+	
+		return $datetime->format( $type );
 	}
 endif;
 

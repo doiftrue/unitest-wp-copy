@@ -3,65 +3,43 @@
 // ------------------auto-generated---------------------
 
 // wp-includes/blocks.php (WP 7.0)
-if( ! function_exists( 'remove_block_asset_path_prefix' ) ) :
-	function remove_block_asset_path_prefix( $asset_handle_or_path ) {
-		$path_prefix = 'file:';
-		if ( ! str_starts_with( $asset_handle_or_path, $path_prefix ) ) {
-			return $asset_handle_or_path;
-		}
-		$path = substr(
-			$asset_handle_or_path,
-			strlen( $path_prefix )
-		);
-		if ( str_starts_with( $path, './' ) ) {
-			$path = substr( $path, 2 );
-		}
-		return $path;
+if( ! function_exists( 'extract_serialized_parent_block' ) ) :
+	function extract_serialized_parent_block( $serialized_block ) {
+		$start = strpos( $serialized_block, '-->' ) + strlen( '-->' );
+		$end   = strrpos( $serialized_block, '<!--' );
+		return substr( $serialized_block, 0, $start ) . substr( $serialized_block, $end );
 	}
 endif;
 
 // wp-includes/blocks.php (WP 7.0)
-if( ! function_exists( 'generate_block_asset_handle' ) ) :
-	function generate_block_asset_handle( $block_name, $field_name, $index = 0 ) {
-		if ( str_starts_with( $block_name, 'core/' ) ) {
-			$asset_handle = str_replace( 'core/', 'wp-block-', $block_name );
-			if ( str_starts_with( $field_name, 'editor' ) ) {
-				$asset_handle .= '-editor';
-			}
-			if ( str_starts_with( $field_name, 'view' ) ) {
-				$asset_handle .= '-view';
-			}
-			if ( str_ends_with( strtolower( $field_name ), 'scriptmodule' ) ) {
-				$asset_handle .= '-script-module';
-			}
-			if ( $index > 0 ) {
-				$asset_handle .= '-' . ( $index + 1 );
-			}
-			return $asset_handle;
-		}
+if( ! function_exists( 'remove_serialized_parent_block' ) ) :
+	function remove_serialized_parent_block( $serialized_block ) {
+		$start = strpos( $serialized_block, '-->' ) + strlen( '-->' );
+		$end   = strrpos( $serialized_block, '<!--' );
+		return substr( $serialized_block, $start, $end - $start );
+	}
+endif;
+
+// wp-includes/blocks.php (WP 7.0)
+if( ! function_exists( 'insert_hooked_blocks_and_set_ignored_hooked_blocks_metadata' ) ) :
+	function insert_hooked_blocks_and_set_ignored_hooked_blocks_metadata( &$parsed_anchor_block, $relative_position, $hooked_blocks, $context ) {
+		$markup  = insert_hooked_blocks( $parsed_anchor_block, $relative_position, $hooked_blocks, $context );
+		$markup .= set_ignored_hooked_blocks_metadata( $parsed_anchor_block, $relative_position, $hooked_blocks, $context );
 	
-		$field_mappings = array(
-			'editorScript'     => 'editor-script',
-			'editorStyle'      => 'editor-style',
-			'script'           => 'script',
-			'style'            => 'style',
-			'viewScript'       => 'view-script',
-			'viewScriptModule' => 'view-script-module',
-			'viewStyle'        => 'view-style',
-		);
-		$asset_handle   = str_replace( '/', '-', $block_name ) .
-			'-' . $field_mappings[ $field_name ];
-		if ( $index > 0 ) {
-			$asset_handle .= '-' . ( $index + 1 );
-		}
-		return $asset_handle;
+		return $markup;
 	}
 endif;
 
 // wp-includes/blocks.php (WP 7.0)
-if( ! function_exists( 'unregister_block_type' ) ) :
-	function unregister_block_type( $name ) {
-		return WP_Block_Type_Registry::get_instance()->unregister( $name );
+if( ! function_exists( 'filter_block_core_template_part_attributes' ) ) :
+	function filter_block_core_template_part_attributes( $attribute_value, $attribute_name, $allowed_html ) {
+		if ( empty( $attribute_value ) || 'tagName' !== $attribute_name ) {
+			return $attribute_value;
+		}
+		if ( ! is_array( $allowed_html ) ) {
+			$allowed_html = wp_kses_allowed_html( $allowed_html );
+		}
+		return isset( $allowed_html[ $attribute_value ] ) ? $attribute_value : '';
 	}
 endif;
 
@@ -193,34 +171,6 @@ if( ! function_exists( 'set_ignored_hooked_blocks_metadata' ) ) :
 endif;
 
 // wp-includes/blocks.php (WP 7.0)
-if( ! function_exists( 'remove_serialized_parent_block' ) ) :
-	function remove_serialized_parent_block( $serialized_block ) {
-		$start = strpos( $serialized_block, '-->' ) + strlen( '-->' );
-		$end   = strrpos( $serialized_block, '<!--' );
-		return substr( $serialized_block, $start, $end - $start );
-	}
-endif;
-
-// wp-includes/blocks.php (WP 7.0)
-if( ! function_exists( 'extract_serialized_parent_block' ) ) :
-	function extract_serialized_parent_block( $serialized_block ) {
-		$start = strpos( $serialized_block, '-->' ) + strlen( '-->' );
-		$end   = strrpos( $serialized_block, '<!--' );
-		return substr( $serialized_block, 0, $start ) . substr( $serialized_block, $end );
-	}
-endif;
-
-// wp-includes/blocks.php (WP 7.0)
-if( ! function_exists( 'insert_hooked_blocks_and_set_ignored_hooked_blocks_metadata' ) ) :
-	function insert_hooked_blocks_and_set_ignored_hooked_blocks_metadata( &$parsed_anchor_block, $relative_position, $hooked_blocks, $context ) {
-		$markup  = insert_hooked_blocks( $parsed_anchor_block, $relative_position, $hooked_blocks, $context );
-		$markup .= set_ignored_hooked_blocks_metadata( $parsed_anchor_block, $relative_position, $hooked_blocks, $context );
-	
-		return $markup;
-	}
-endif;
-
-// wp-includes/blocks.php (WP 7.0)
 if( ! function_exists( 'make_after_block_visitor' ) ) :
 	function make_after_block_visitor( $hooked_blocks, $context, $callback = 'insert_hooked_blocks' ) {
 		/**
@@ -250,89 +200,6 @@ if( ! function_exists( 'make_after_block_visitor' ) ) :
 	
 			return $markup;
 		};
-	}
-endif;
-
-// wp-includes/blocks.php (WP 7.0)
-if( ! function_exists( 'serialize_block_attributes' ) ) :
-	function serialize_block_attributes( $block_attributes ) {
-		$encoded_attributes = wp_json_encode( $block_attributes, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );
-	
-		return strtr(
-			$encoded_attributes,
-			array(
-				'\\\\' => '\\u005c',
-				'--'   => '\\u002d\\u002d',
-				'<'    => '\\u003c',
-				'>'    => '\\u003e',
-				'&'    => '\\u0026',
-				'\\"'  => '\\u0022',
-			)
-		);
-	}
-endif;
-
-// wp-includes/blocks.php (WP 7.0)
-if( ! function_exists( 'strip_core_block_namespace' ) ) :
-	function strip_core_block_namespace( $block_name = null ) {
-		if ( is_string( $block_name ) && str_starts_with( $block_name, 'core/' ) ) {
-			return substr( $block_name, 5 );
-		}
-	
-		return $block_name;
-	}
-endif;
-
-// wp-includes/blocks.php (WP 7.0)
-if( ! function_exists( 'get_comment_delimited_block_content' ) ) :
-	function get_comment_delimited_block_content( $block_name, $block_attributes, $block_content ) {
-		if ( is_null( $block_name ) ) {
-			return $block_content;
-		}
-	
-		$serialized_block_name = strip_core_block_namespace( $block_name );
-		$serialized_attributes = empty( $block_attributes ) ? '' : serialize_block_attributes( $block_attributes ) . ' ';
-	
-		if ( empty( $block_content ) ) {
-			return sprintf( '<!-- wp:%s %s/-->', $serialized_block_name, $serialized_attributes );
-		}
-	
-		return sprintf(
-			'<!-- wp:%s %s-->%s<!-- /wp:%s -->',
-			$serialized_block_name,
-			$serialized_attributes,
-			$block_content,
-			$serialized_block_name
-		);
-	}
-endif;
-
-// wp-includes/blocks.php (WP 7.0)
-if( ! function_exists( 'serialize_block' ) ) :
-	function serialize_block( $block ) {
-		$block_content = '';
-	
-		$index = 0;
-		foreach ( $block['innerContent'] as $chunk ) {
-			$block_content .= is_string( $chunk ) ? $chunk : serialize_block( $block['innerBlocks'][ $index++ ] );
-		}
-	
-		if ( ! is_array( $block['attrs'] ) ) {
-			$block['attrs'] = array();
-		}
-	
-		return get_comment_delimited_block_content(
-			$block['blockName'],
-			$block['attrs'],
-			$block_content
-		);
-	}
-endif;
-
-// wp-includes/blocks.php (WP 7.0)
-if( ! function_exists( 'serialize_blocks' ) ) :
-	function serialize_blocks( $blocks ) {
-		return implode( '', array_map( 'serialize_block', $blocks ) );
 	}
 endif;
 
@@ -430,81 +297,47 @@ if( ! function_exists( 'traverse_and_serialize_blocks' ) ) :
 endif;
 
 // wp-includes/blocks.php (WP 7.0)
-if( ! function_exists( 'filter_block_content' ) ) :
-	function filter_block_content( $text, $allowed_html = 'post', $allowed_protocols = array() ) {
-		$result = '';
-	
-		if ( str_contains( $text, '<!--' ) && str_contains( $text, '--->' ) ) {
-			$text = preg_replace_callback( '%<!--(.*?)--->%', '_filter_block_content_callback', $text );
+if( ! function_exists( '_wp_filter_post_meta_footnotes' ) ) :
+	function _wp_filter_post_meta_footnotes( $footnotes ) {
+		$footnotes_decoded = json_decode( $footnotes, true );
+		if ( ! is_array( $footnotes_decoded ) ) {
+			return '';
 		}
-	
-		$blocks = parse_blocks( $text );
-		foreach ( $blocks as $block ) {
-			$block   = filter_block_kses( $block, $allowed_html, $allowed_protocols );
-			$result .= serialize_block( $block );
-		}
-	
-		return $result;
-	}
-endif;
-
-// wp-includes/blocks.php (WP 7.0)
-if( ! function_exists( '_filter_block_content_callback' ) ) :
-	function _filter_block_content_callback( $matches ) {
-		return '<!--' . rtrim( $matches[1], '-' ) . '-->';
-	}
-endif;
-
-// wp-includes/blocks.php (WP 7.0)
-if( ! function_exists( 'filter_block_kses' ) ) :
-	function filter_block_kses( $block, $allowed_html, $allowed_protocols = array() ) {
-		$block['attrs'] = filter_block_kses_value( $block['attrs'], $allowed_html, $allowed_protocols, $block );
-	
-		if ( is_array( $block['innerBlocks'] ) ) {
-			foreach ( $block['innerBlocks'] as $i => $inner_block ) {
-				$block['innerBlocks'][ $i ] = filter_block_kses( $inner_block, $allowed_html, $allowed_protocols );
+		$footnotes_sanitized = array();
+		foreach ( $footnotes_decoded as $footnote ) {
+			if ( ! empty( $footnote['content'] ) && ! empty( $footnote['id'] ) ) {
+				$footnotes_sanitized[] = array(
+					'id'      => sanitize_key( $footnote['id'] ),
+					'content' => wp_unslash( wp_filter_post_kses( wp_slash( $footnote['content'] ) ) ),
+				);
 			}
 		}
-	
-		return $block;
+		return wp_json_encode( $footnotes_sanitized );
 	}
 endif;
 
 // wp-includes/blocks.php (WP 7.0)
-if( ! function_exists( 'filter_block_kses_value' ) ) :
-	function filter_block_kses_value( $value, $allowed_html, $allowed_protocols = array(), $block_context = null ) {
-		if ( is_array( $value ) ) {
-			foreach ( $value as $key => $inner_value ) {
-				$filtered_key   = filter_block_kses_value( $key, $allowed_html, $allowed_protocols, $block_context );
-				$filtered_value = filter_block_kses_value( $inner_value, $allowed_html, $allowed_protocols, $block_context );
-	
-				if ( isset( $block_context['blockName'] ) && 'core/template-part' === $block_context['blockName'] ) {
-					$filtered_value = filter_block_core_template_part_attributes( $filtered_value, $filtered_key, $allowed_html );
-				}
-				if ( $filtered_key !== $key ) {
-					unset( $value[ $key ] );
-				}
-	
-				$value[ $filtered_key ] = $filtered_value;
-			}
-		} elseif ( is_string( $value ) ) {
-			return wp_kses( $value, $allowed_html, $allowed_protocols );
-		}
-	
-		return $value;
+if( ! function_exists( '_wp_footnotes_kses_init_filters' ) ) :
+	function _wp_footnotes_kses_init_filters() {
+		add_filter( 'sanitize_post_meta_footnotes', '_wp_filter_post_meta_footnotes' );
 	}
 endif;
 
 // wp-includes/blocks.php (WP 7.0)
-if( ! function_exists( 'filter_block_core_template_part_attributes' ) ) :
-	function filter_block_core_template_part_attributes( $attribute_value, $attribute_name, $allowed_html ) {
-		if ( empty( $attribute_value ) || 'tagName' !== $attribute_name ) {
-			return $attribute_value;
+if( ! function_exists( '_wp_footnotes_remove_filters' ) ) :
+	function _wp_footnotes_remove_filters() {
+		remove_filter( 'sanitize_post_meta_footnotes', '_wp_filter_post_meta_footnotes' );
+	}
+endif;
+
+// wp-includes/blocks.php (WP 7.0)
+if( ! function_exists( '_wp_footnotes_force_filtered_html_on_import_filter' ) ) :
+	function _wp_footnotes_force_filtered_html_on_import_filter( $arg ) {
+		// If `force_filtered_html_on_import` is true, we need to init the global styles kses filters.
+		if ( $arg ) {
+			_wp_footnotes_kses_init_filters();
 		}
-		if ( ! is_array( $allowed_html ) ) {
-			$allowed_html = wp_kses_allowed_html( $allowed_html );
-		}
-		return isset( $allowed_html[ $attribute_value ] ) ? $attribute_value : '';
+		return $arg;
 	}
 endif;
 
@@ -524,45 +357,58 @@ if( ! function_exists( 'excerpt_remove_footnotes' ) ) :
 endif;
 
 // wp-includes/blocks.php (WP 7.0)
-if( ! function_exists( 'parse_blocks' ) ) :
-	function parse_blocks( $content ) {
-		/**
-		 * Filter to allow plugins to replace the server-side block parser.
-		 *
-		 * @since 5.0.0
-		 *
-		 * @param string $parser_class Name of block parser class.
-		 */
-		$parser_class = apply_filters( 'block_parser_class', 'WP_Block_Parser' );
-	
-		$parser = new $parser_class();
-		return $parser->parse( $content );
+if( ! function_exists( '_filter_block_content_callback' ) ) :
+	function _filter_block_content_callback( $matches ) {
+		return '<!--' . rtrim( $matches[1], '-' ) . '-->';
 	}
 endif;
 
 // wp-includes/blocks.php (WP 7.0)
-if( ! function_exists( '_restore_wpautop_hook' ) ) :
-	function _restore_wpautop_hook( $content ) {
-		$current_priority = has_filter( 'the_content', '_restore_wpautop_hook' );
-	
-		add_filter( 'the_content', 'wpautop', $current_priority - 1 );
-		remove_filter( 'the_content', '_restore_wpautop_hook', $current_priority );
-	
-		return $content;
+if( ! function_exists( 'get_comments_pagination_arrow' ) ) :
+	function get_comments_pagination_arrow( $block, $pagination_type = 'next' ) {
+		$arrow_map = array(
+			'none'    => '',
+			'arrow'   => array(
+				'next'     => '→',
+				'previous' => '←',
+			),
+			'chevron' => array(
+				'next'     => '»',
+				'previous' => '«',
+			),
+		);
+		if ( ! empty( $block->context['comments/paginationArrow'] ) && ! empty( $arrow_map[ $block->context['comments/paginationArrow'] ][ $pagination_type ] ) ) {
+			$arrow_attribute = $block->context['comments/paginationArrow'];
+			$arrow           = $arrow_map[ $block->context['comments/paginationArrow'] ][ $pagination_type ];
+			$arrow_classes   = "wp-block-comments-pagination-$pagination_type-arrow is-arrow-$arrow_attribute";
+			return "<span class='$arrow_classes' aria-hidden='true'>$arrow</span>";
+		}
+		return null;
 	}
 endif;
 
 // wp-includes/blocks.php (WP 7.0)
-if( ! function_exists( 'register_block_style' ) ) :
-	function register_block_style( $block_name, $style_properties ) {
-		return WP_Block_Styles_Registry::get_instance()->register( $block_name, $style_properties );
-	}
-endif;
-
-// wp-includes/blocks.php (WP 7.0)
-if( ! function_exists( 'unregister_block_style' ) ) :
-	function unregister_block_style( $block_name, $block_style_name ) {
-		return WP_Block_Styles_Registry::get_instance()->unregister( $block_name, $block_style_name );
+if( ! function_exists( 'get_query_pagination_arrow' ) ) :
+	function get_query_pagination_arrow( $block, $is_next ) {
+		$arrow_map = array(
+			'none'    => '',
+			'arrow'   => array(
+				'next'     => '→',
+				'previous' => '←',
+			),
+			'chevron' => array(
+				'next'     => '»',
+				'previous' => '«',
+			),
+		);
+		if ( ! empty( $block->context['paginationArrow'] ) && array_key_exists( $block->context['paginationArrow'], $arrow_map ) && ! empty( $arrow_map[ $block->context['paginationArrow'] ] ) ) {
+			$pagination_type = $is_next ? 'next' : 'previous';
+			$arrow_attribute = $block->context['paginationArrow'];
+			$arrow           = $arrow_map[ $block->context['paginationArrow'] ][ $pagination_type ];
+			$arrow_classes   = "wp-block-query-pagination-$pagination_type-arrow is-arrow-$arrow_attribute";
+			return "<span class='$arrow_classes' aria-hidden='true'>$arrow</span>";
+		}
+		return null;
 	}
 endif;
 
@@ -632,96 +478,250 @@ if( ! function_exists( 'wp_migrate_old_typography_shape' ) ) :
 endif;
 
 // wp-includes/blocks.php (WP 7.0)
-if( ! function_exists( 'get_query_pagination_arrow' ) ) :
-	function get_query_pagination_arrow( $block, $is_next ) {
-		$arrow_map = array(
-			'none'    => '',
-			'arrow'   => array(
-				'next'     => '→',
-				'previous' => '←',
-			),
-			'chevron' => array(
-				'next'     => '»',
-				'previous' => '«',
-			),
-		);
-		if ( ! empty( $block->context['paginationArrow'] ) && array_key_exists( $block->context['paginationArrow'], $arrow_map ) && ! empty( $arrow_map[ $block->context['paginationArrow'] ] ) ) {
-			$pagination_type = $is_next ? 'next' : 'previous';
-			$arrow_attribute = $block->context['paginationArrow'];
-			$arrow           = $arrow_map[ $block->context['paginationArrow'] ][ $pagination_type ];
-			$arrow_classes   = "wp-block-query-pagination-$pagination_type-arrow is-arrow-$arrow_attribute";
-			return "<span class='$arrow_classes' aria-hidden='true'>$arrow</span>";
+if( ! function_exists( 'remove_block_asset_path_prefix' ) ) :
+	function remove_block_asset_path_prefix( $asset_handle_or_path ) {
+		$path_prefix = 'file:';
+		if ( ! str_starts_with( $asset_handle_or_path, $path_prefix ) ) {
+			return $asset_handle_or_path;
 		}
-		return null;
+		$path = substr(
+			$asset_handle_or_path,
+			strlen( $path_prefix )
+		);
+		if ( str_starts_with( $path, './' ) ) {
+			$path = substr( $path, 2 );
+		}
+		return $path;
 	}
 endif;
 
 // wp-includes/blocks.php (WP 7.0)
-if( ! function_exists( 'get_comments_pagination_arrow' ) ) :
-	function get_comments_pagination_arrow( $block, $pagination_type = 'next' ) {
-		$arrow_map = array(
-			'none'    => '',
-			'arrow'   => array(
-				'next'     => '→',
-				'previous' => '←',
-			),
-			'chevron' => array(
-				'next'     => '»',
-				'previous' => '«',
-			),
-		);
-		if ( ! empty( $block->context['comments/paginationArrow'] ) && ! empty( $arrow_map[ $block->context['comments/paginationArrow'] ][ $pagination_type ] ) ) {
-			$arrow_attribute = $block->context['comments/paginationArrow'];
-			$arrow           = $arrow_map[ $block->context['comments/paginationArrow'] ][ $pagination_type ];
-			$arrow_classes   = "wp-block-comments-pagination-$pagination_type-arrow is-arrow-$arrow_attribute";
-			return "<span class='$arrow_classes' aria-hidden='true'>$arrow</span>";
+if( ! function_exists( 'generate_block_asset_handle' ) ) :
+	function generate_block_asset_handle( $block_name, $field_name, $index = 0 ) {
+		if ( str_starts_with( $block_name, 'core/' ) ) {
+			$asset_handle = str_replace( 'core/', 'wp-block-', $block_name );
+			if ( str_starts_with( $field_name, 'editor' ) ) {
+				$asset_handle .= '-editor';
+			}
+			if ( str_starts_with( $field_name, 'view' ) ) {
+				$asset_handle .= '-view';
+			}
+			if ( str_ends_with( strtolower( $field_name ), 'scriptmodule' ) ) {
+				$asset_handle .= '-script-module';
+			}
+			if ( $index > 0 ) {
+				$asset_handle .= '-' . ( $index + 1 );
+			}
+			return $asset_handle;
 		}
-		return null;
+	
+		$field_mappings = array(
+			'editorScript'     => 'editor-script',
+			'editorStyle'      => 'editor-style',
+			'script'           => 'script',
+			'style'            => 'style',
+			'viewScript'       => 'view-script',
+			'viewScriptModule' => 'view-script-module',
+			'viewStyle'        => 'view-style',
+		);
+		$asset_handle   = str_replace( '/', '-', $block_name ) .
+			'-' . $field_mappings[ $field_name ];
+		if ( $index > 0 ) {
+			$asset_handle .= '-' . ( $index + 1 );
+		}
+		return $asset_handle;
 	}
 endif;
 
 // wp-includes/blocks.php (WP 7.0)
-if( ! function_exists( '_wp_filter_post_meta_footnotes' ) ) :
-	function _wp_filter_post_meta_footnotes( $footnotes ) {
-		$footnotes_decoded = json_decode( $footnotes, true );
-		if ( ! is_array( $footnotes_decoded ) ) {
-			return '';
+if( ! function_exists( 'serialize_block_attributes' ) ) :
+	function serialize_block_attributes( $block_attributes ) {
+		$encoded_attributes = wp_json_encode( $block_attributes, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );
+	
+		return strtr(
+			$encoded_attributes,
+			array(
+				'\\\\' => '\\u005c',
+				'--'   => '\\u002d\\u002d',
+				'<'    => '\\u003c',
+				'>'    => '\\u003e',
+				'&'    => '\\u0026',
+				'\\"'  => '\\u0022',
+			)
+		);
+	}
+endif;
+
+// wp-includes/blocks.php (WP 7.0)
+if( ! function_exists( 'strip_core_block_namespace' ) ) :
+	function strip_core_block_namespace( $block_name = null ) {
+		if ( is_string( $block_name ) && str_starts_with( $block_name, 'core/' ) ) {
+			return substr( $block_name, 5 );
 		}
-		$footnotes_sanitized = array();
-		foreach ( $footnotes_decoded as $footnote ) {
-			if ( ! empty( $footnote['content'] ) && ! empty( $footnote['id'] ) ) {
-				$footnotes_sanitized[] = array(
-					'id'      => sanitize_key( $footnote['id'] ),
-					'content' => wp_unslash( wp_filter_post_kses( wp_slash( $footnote['content'] ) ) ),
-				);
+	
+		return $block_name;
+	}
+endif;
+
+// wp-includes/blocks.php (WP 7.0)
+if( ! function_exists( 'get_comment_delimited_block_content' ) ) :
+	function get_comment_delimited_block_content( $block_name, $block_attributes, $block_content ) {
+		if ( is_null( $block_name ) ) {
+			return $block_content;
+		}
+	
+		$serialized_block_name = strip_core_block_namespace( $block_name );
+		$serialized_attributes = empty( $block_attributes ) ? '' : serialize_block_attributes( $block_attributes ) . ' ';
+	
+		if ( empty( $block_content ) ) {
+			return sprintf( '<!-- wp:%s %s/-->', $serialized_block_name, $serialized_attributes );
+		}
+	
+		return sprintf(
+			'<!-- wp:%s %s-->%s<!-- /wp:%s -->',
+			$serialized_block_name,
+			$serialized_attributes,
+			$block_content,
+			$serialized_block_name
+		);
+	}
+endif;
+
+// wp-includes/blocks.php (WP 7.0)
+if( ! function_exists( 'serialize_block' ) ) :
+	function serialize_block( $block ) {
+		$block_content = '';
+	
+		$index = 0;
+		foreach ( $block['innerContent'] as $chunk ) {
+			$block_content .= is_string( $chunk ) ? $chunk : serialize_block( $block['innerBlocks'][ $index++ ] );
+		}
+	
+		if ( ! is_array( $block['attrs'] ) ) {
+			$block['attrs'] = array();
+		}
+	
+		return get_comment_delimited_block_content(
+			$block['blockName'],
+			$block['attrs'],
+			$block_content
+		);
+	}
+endif;
+
+// wp-includes/blocks.php (WP 7.0)
+if( ! function_exists( 'serialize_blocks' ) ) :
+	function serialize_blocks( $blocks ) {
+		return implode( '', array_map( 'serialize_block', $blocks ) );
+	}
+endif;
+
+// wp-includes/blocks.php (WP 7.0)
+if( ! function_exists( 'filter_block_content' ) ) :
+	function filter_block_content( $text, $allowed_html = 'post', $allowed_protocols = array() ) {
+		$result = '';
+	
+		if ( str_contains( $text, '<!--' ) && str_contains( $text, '--->' ) ) {
+			$text = preg_replace_callback( '%<!--(.*?)--->%', '_filter_block_content_callback', $text );
+		}
+	
+		$blocks = parse_blocks( $text );
+		foreach ( $blocks as $block ) {
+			$block   = filter_block_kses( $block, $allowed_html, $allowed_protocols );
+			$result .= serialize_block( $block );
+		}
+	
+		return $result;
+	}
+endif;
+
+// wp-includes/blocks.php (WP 7.0)
+if( ! function_exists( 'filter_block_kses' ) ) :
+	function filter_block_kses( $block, $allowed_html, $allowed_protocols = array() ) {
+		$block['attrs'] = filter_block_kses_value( $block['attrs'], $allowed_html, $allowed_protocols, $block );
+	
+		if ( is_array( $block['innerBlocks'] ) ) {
+			foreach ( $block['innerBlocks'] as $i => $inner_block ) {
+				$block['innerBlocks'][ $i ] = filter_block_kses( $inner_block, $allowed_html, $allowed_protocols );
 			}
 		}
-		return wp_json_encode( $footnotes_sanitized );
+	
+		return $block;
 	}
 endif;
 
 // wp-includes/blocks.php (WP 7.0)
-if( ! function_exists( '_wp_footnotes_kses_init_filters' ) ) :
-	function _wp_footnotes_kses_init_filters() {
-		add_filter( 'sanitize_post_meta_footnotes', '_wp_filter_post_meta_footnotes' );
-	}
-endif;
-
-// wp-includes/blocks.php (WP 7.0)
-if( ! function_exists( '_wp_footnotes_remove_filters' ) ) :
-	function _wp_footnotes_remove_filters() {
-		remove_filter( 'sanitize_post_meta_footnotes', '_wp_filter_post_meta_footnotes' );
-	}
-endif;
-
-// wp-includes/blocks.php (WP 7.0)
-if( ! function_exists( '_wp_footnotes_force_filtered_html_on_import_filter' ) ) :
-	function _wp_footnotes_force_filtered_html_on_import_filter( $arg ) {
-		// If `force_filtered_html_on_import` is true, we need to init the global styles kses filters.
-		if ( $arg ) {
-			_wp_footnotes_kses_init_filters();
+if( ! function_exists( 'filter_block_kses_value' ) ) :
+	function filter_block_kses_value( $value, $allowed_html, $allowed_protocols = array(), $block_context = null ) {
+		if ( is_array( $value ) ) {
+			foreach ( $value as $key => $inner_value ) {
+				$filtered_key   = filter_block_kses_value( $key, $allowed_html, $allowed_protocols, $block_context );
+				$filtered_value = filter_block_kses_value( $inner_value, $allowed_html, $allowed_protocols, $block_context );
+	
+				if ( isset( $block_context['blockName'] ) && 'core/template-part' === $block_context['blockName'] ) {
+					$filtered_value = filter_block_core_template_part_attributes( $filtered_value, $filtered_key, $allowed_html );
+				}
+				if ( $filtered_key !== $key ) {
+					unset( $value[ $key ] );
+				}
+	
+				$value[ $filtered_key ] = $filtered_value;
+			}
+		} elseif ( is_string( $value ) ) {
+			return wp_kses( $value, $allowed_html, $allowed_protocols );
 		}
-		return $arg;
+	
+		return $value;
+	}
+endif;
+
+// wp-includes/blocks.php (WP 7.0)
+if( ! function_exists( 'register_block_style' ) ) :
+	function register_block_style( $block_name, $style_properties ) {
+		return WP_Block_Styles_Registry::get_instance()->register( $block_name, $style_properties );
+	}
+endif;
+
+// wp-includes/blocks.php (WP 7.0)
+if( ! function_exists( 'unregister_block_style' ) ) :
+	function unregister_block_style( $block_name, $block_style_name ) {
+		return WP_Block_Styles_Registry::get_instance()->unregister( $block_name, $block_style_name );
+	}
+endif;
+
+// wp-includes/blocks.php (WP 7.0)
+if( ! function_exists( 'unregister_block_type' ) ) :
+	function unregister_block_type( $name ) {
+		return WP_Block_Type_Registry::get_instance()->unregister( $name );
+	}
+endif;
+
+// wp-includes/blocks.php (WP 7.0)
+if( ! function_exists( 'parse_blocks' ) ) :
+	function parse_blocks( $content ) {
+		/**
+		 * Filter to allow plugins to replace the server-side block parser.
+		 *
+		 * @since 5.0.0
+		 *
+		 * @param string $parser_class Name of block parser class.
+		 */
+		$parser_class = apply_filters( 'block_parser_class', 'WP_Block_Parser' );
+	
+		$parser = new $parser_class();
+		return $parser->parse( $content );
+	}
+endif;
+
+// wp-includes/blocks.php (WP 7.0)
+if( ! function_exists( '_restore_wpautop_hook' ) ) :
+	function _restore_wpautop_hook( $content ) {
+		$current_priority = has_filter( 'the_content', '_restore_wpautop_hook' );
+	
+		add_filter( 'the_content', 'wpautop', $current_priority - 1 );
+		remove_filter( 'the_content', '_restore_wpautop_hook', $current_priority );
+	
+		return $content;
 	}
 endif;
 
