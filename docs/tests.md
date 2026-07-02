@@ -35,6 +35,8 @@ Parser-specific flow is described in [parser.md](parser.md).
 ## Coverage Expectations
 
 - Keep tests simple and runtime-focused.
+- Keep all behavior checks for one function in a single test method. Do not split branches or input variants into separate test methods.
+  Mockable handler behavior remains in its dedicated `__mockable_handler` test method.
 - Basic behavior and non-fatal execution are mandatory.
 - If a function/method has branches from parameter variants, cover each branch minimally.
 - Each copied function must have its own dedicated test coverage.

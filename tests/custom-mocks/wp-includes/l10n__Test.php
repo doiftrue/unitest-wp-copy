@@ -52,6 +52,10 @@ class l10n__custom_mocks__Test extends \PHPUnit\Framework\TestCase {
 		ob_start();
 		esc_html_e( 'abc' );
 		$this->assertSame( 'abc', ob_get_clean() );
+
+		ob_start();
+		esc_html_e( '<b>&</b>' );
+		$this->assertSame( '&lt;b&gt;&amp;&lt;/b&gt;', ob_get_clean() );
 	}
 
 	public function test__esc_html_x() {
@@ -66,6 +70,10 @@ class l10n__custom_mocks__Test extends \PHPUnit\Framework\TestCase {
 		ob_start();
 		esc_attr_e( 'abc' );
 		$this->assertSame( 'abc', ob_get_clean() );
+
+		ob_start();
+		esc_attr_e( '"<&' );
+		$this->assertSame( '&quot;&lt;&amp;', ob_get_clean() );
 	}
 
 	public function test__esc_attr_x() {

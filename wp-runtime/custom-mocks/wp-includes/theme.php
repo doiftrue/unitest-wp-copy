@@ -6,6 +6,9 @@
 
 use Unitest_WP_Copy\WP_Mock_Utils;
 
+/**
+ * Runtime adaptation of get_stylesheet_directory() from WordPress 7.0 wp-includes/theme.php.
+ */
 if ( ! function_exists( 'get_stylesheet_directory' ) ) :
 	function get_stylesheet_directory() {
 		if ( WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -21,6 +24,9 @@ if ( ! function_exists( 'get_stylesheet_directory' ) ) :
 	}
 endif;
 
+/**
+ * Runtime adaptation of get_stylesheet_directory_uri() from WordPress 7.0 wp-includes/theme.php.
+ */
 if ( ! function_exists( 'get_stylesheet_directory_uri' ) ) :
 	function get_stylesheet_directory_uri() {
 		if ( WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -35,6 +41,9 @@ if ( ! function_exists( 'get_stylesheet_directory_uri' ) ) :
 	}
 endif;
 
+/**
+ * Runtime adaptation of get_template_directory() from WordPress 7.0 wp-includes/theme.php.
+ */
 if ( ! function_exists( 'get_template_directory' ) ) :
 	function get_template_directory() {
 		if ( WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -50,6 +59,9 @@ if ( ! function_exists( 'get_template_directory' ) ) :
 	}
 endif;
 
+/**
+ * Runtime adaptation of get_template_directory_uri() from WordPress 7.0 wp-includes/theme.php.
+ */
 if ( ! function_exists( 'get_template_directory_uri' ) ) :
 	function get_template_directory_uri() {
 		if ( WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
