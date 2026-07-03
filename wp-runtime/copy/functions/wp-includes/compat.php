@@ -3,6 +3,30 @@
 // ------------------auto-generated---------------------
 
 // wp-includes/compat.php (WP 7.0)
+if( ! function_exists( 'array_first' ) ) :
+		function array_first( array $array ) { // phpcs:ignore Universal.NamingConventions.NoReservedKeywordParameterNames.arrayFound
+			if ( empty( $array ) ) {
+				return null;
+			}
+	
+			foreach ( $array as $value ) {
+				return $value;
+			}
+		}
+endif;
+
+// wp-includes/compat.php (WP 7.0)
+if( ! function_exists( 'array_last' ) ) :
+		function array_last( array $array ) { // phpcs:ignore Universal.NamingConventions.NoReservedKeywordParameterNames.arrayFound
+			if ( empty( $array ) ) {
+				return null;
+			}
+	
+			return $array[ array_key_last( $array ) ];
+		}
+endif;
+
+// wp-includes/compat.php (WP 7.0)
 if( ! function_exists( 'array_find' ) ) :
 		function array_find( array $array, callable $callback ) { // phpcs:ignore Universal.NamingConventions.NoReservedKeywordParameterNames.arrayFound
 			foreach ( $array as $key => $value ) {
