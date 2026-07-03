@@ -16,7 +16,7 @@ global $shortcode_tags;
 $shortcode_tags = [];
 
 global $wp_locale;
-$wp_locale = new \WP_Locale();
+$wp_locale = new WP_Locale();
 
 global $wp_object_cache;
 $wp_object_cache = new WP_Object_Cache();

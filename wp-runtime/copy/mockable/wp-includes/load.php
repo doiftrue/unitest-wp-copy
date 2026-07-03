@@ -52,6 +52,24 @@ if( ! function_exists( 'timer_float' ) ) :
 endif;
 
 // wp-includes/load.php (WP 6.8.5)
+if( ! function_exists( 'wp_using_themes' ) ) :
+	function wp_using_themes() {
+		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+	
+		/**
+		 * Filters whether the current request should use themes.
+		 *
+		 * @since 5.1.0
+		 *
+		 * @param bool $wp_using_themes Whether the current request should use themes.
+		 */
+		return apply_filters( 'wp_using_themes', defined( 'WP_USE_THEMES' ) && WP_USE_THEMES );
+	}
+endif;
+
+// wp-includes/load.php (WP 6.8.5)
 if( ! function_exists( 'wp_get_environment_type' ) ) :
 	function wp_get_environment_type() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -110,6 +128,43 @@ if( ! function_exists( 'wp_get_environment_type' ) ) :
 endif;
 
 // wp-includes/load.php (WP 6.8.5)
+if( ! function_exists( 'wp_doing_cron' ) ) :
+	function wp_doing_cron() {
+		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+	
+		/**
+		 * Filters whether the current request is a WordPress cron request.
+		 *
+		 * @since 4.8.0
+		 *
+		 * @param bool $wp_doing_cron Whether the current request is a WordPress cron request.
+		 */
+		return apply_filters( 'wp_doing_cron', defined( 'DOING_CRON' ) && DOING_CRON );
+	}
+endif;
+
+// wp-includes/load.php (WP 6.8.5)
+if( ! function_exists( 'wp_is_file_mod_allowed' ) ) :
+	function wp_is_file_mod_allowed( $context ) {
+		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+	
+		/**
+		 * Filters whether file modifications are allowed.
+		 *
+		 * @since 4.8.0
+		 *
+		 * @param bool   $file_mod_allowed Whether file modifications are allowed.
+		 * @param string $context          The usage context.
+		 */
+		return apply_filters( 'file_mod_allowed', ! defined( 'DISALLOW_FILE_MODS' ) || ! DISALLOW_FILE_MODS, $context );
+	}
+endif;
+
+// wp-includes/load.php (WP 6.8.5)
 if( ! function_exists( 'wp_doing_ajax' ) ) :
 	function wp_doing_ajax() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -149,6 +204,23 @@ if( ! function_exists( 'get_current_network_id' ) ) :
 endif;
 
 // wp-includes/load.php (WP 6.8.5)
+if( ! function_exists( 'wp_get_server_protocol' ) ) :
+	function wp_get_server_protocol() {
+		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+	
+		$protocol = isset( $_SERVER['SERVER_PROTOCOL'] ) ? $_SERVER['SERVER_PROTOCOL'] : '';
+	
+		if ( ! in_array( $protocol, array( 'HTTP/1.1', 'HTTP/2', 'HTTP/2.0', 'HTTP/3' ), true ) ) {
+			$protocol = 'HTTP/1.0';
+		}
+	
+		return $protocol;
+	}
+endif;
+
+// wp-includes/load.php (WP 6.8.5)
 if( ! function_exists( 'wp_installing' ) ) :
 	function wp_installing( $is_installing = null ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -170,6 +242,57 @@ if( ! function_exists( 'wp_installing' ) ) :
 		}
 	
 		return (bool) $installing;
+	}
+endif;
+
+// wp-includes/load.php (WP 6.8.5)
+if( ! function_exists( 'is_blog_admin' ) ) :
+	function is_blog_admin() {
+		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+	
+		if ( isset( $GLOBALS['current_screen'] ) ) {
+			return $GLOBALS['current_screen']->in_admin( 'site' );
+		} elseif ( defined( 'WP_BLOG_ADMIN' ) ) {
+			return WP_BLOG_ADMIN;
+		}
+	
+		return false;
+	}
+endif;
+
+// wp-includes/load.php (WP 6.8.5)
+if( ! function_exists( 'is_network_admin' ) ) :
+	function is_network_admin() {
+		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+	
+		if ( isset( $GLOBALS['current_screen'] ) ) {
+			return $GLOBALS['current_screen']->in_admin( 'network' );
+		} elseif ( defined( 'WP_NETWORK_ADMIN' ) ) {
+			return WP_NETWORK_ADMIN;
+		}
+	
+		return false;
+	}
+endif;
+
+// wp-includes/load.php (WP 6.8.5)
+if( ! function_exists( 'is_user_admin' ) ) :
+	function is_user_admin() {
+		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+	
+		if ( isset( $GLOBALS['current_screen'] ) ) {
+			return $GLOBALS['current_screen']->in_admin( 'user' );
+		} elseif ( defined( 'WP_USER_ADMIN' ) ) {
+			return WP_USER_ADMIN;
+		}
+	
+		return false;
 	}
 endif;
 
