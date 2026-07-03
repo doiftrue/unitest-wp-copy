@@ -2,7 +2,7 @@
 namespace Parser\ExtraStrats;
 
 use Parser\Config;
-use RuntimeException;
+use Parser\Logger;
 
 abstract class Files_Copy_Strategy {
 
@@ -12,6 +12,7 @@ abstract class Files_Copy_Strategy {
 
 	public function __construct(
 		protected readonly Config $config,
+		private readonly Logger $logger,
 	){
 		$this->wp_line_dir = sprintf( '%s/wp-line-extra/%s', $this->config->runtime_dir, $this->config->wp_version_line );
 		$this->init_parts_dir = "$this->wp_line_dir/init-parts";
@@ -23,7 +24,7 @@ abstract class Files_Copy_Strategy {
 			$content = $this->get_content( $src_file );
 
 			$this->write_file( $dest_file, $content );
-			echo $this->get_log_message( $dest_rel_file ) . "\n";
+			$this->logger->progress( $this->get_log_message( $dest_rel_file ) );
 		}
 	}
 

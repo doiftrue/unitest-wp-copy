@@ -19,8 +19,7 @@ phpunit:
 	$(call php_run, -e WP_LINE="$(WP_LINE)", composer run phpunit -- --colors=always)
 
 parser.run:
-	$(call php_run, , php parser/run.php)
-
+	$(call php_run, , php parser/run.php --verbose)
 
 # make switch WP_LINE=6.8
 switch:
@@ -37,7 +36,7 @@ WP_LINES := $(notdir $(patsubst %/,%,$(wildcard wp-runtime/wp-line-extra/*/)))
 release.all:
 	@status=0; \
 	for wp_line in $(WP_LINES); do \
-		echo "== release $$wp_line =="; \
+		printf "\033[35m\n============== RELEASE $$wp_line ==============\n\n\033[0m"; \
 		$(MAKE) release WP_LINE="$$wp_line" || status=1; \
 		echo; \
 	done; \
@@ -76,4 +75,3 @@ php.run:
 	$(call php_run, , php tmp/.phprun.php) || status=$$?; \
 	rm -f tmp/.phprun.php; \
 	exit $$status
-

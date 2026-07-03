@@ -3,6 +3,7 @@
 namespace Parser\BaseStrats;
 
 use Parser\Config;
+use Parser\Logger;
 use Parser\Source_Code_Replacer;
 use Parser\Symbols_Lister;
 
@@ -15,6 +16,7 @@ class Symbols_Copier {
 	public function __construct(
 		private readonly Config $config,
 		private readonly Symbols_Lister $lister,
+		private readonly Logger $logger,
 	){
 		$this->extra_replacer = new Source_Code_Replacer( $this->config );
 	}
@@ -34,7 +36,7 @@ class Symbols_Copier {
 
 				$this->run_update_pipeline( $dest_file, $content );
 
-				echo $strategy->get_log_message( $items_data ) . "\n";
+				$this->logger->progress( $strategy->get_log_message( $items_data ) );
 			}
 		}
 

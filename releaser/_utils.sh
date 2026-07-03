@@ -20,7 +20,6 @@ function echo_lightblue(){ _echo_color 94 "$@"; }
 function _echo_color(){
 	local color_code="$1"
 	shift
-
 	echo -e "\033[${color_code}m$*\033[0m"
 }
 
