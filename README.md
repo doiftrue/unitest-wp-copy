@@ -7,32 +7,32 @@ The goal is to test real WP pure-PHP behavior instead of mocking everything.
 
 Quick Example (Why This Helps)
 ------------------------------
-Suppose your code builds preview URLs like this:
+Suppose your code turns a raw, user-submitted comment into safe HTML:
 
 ```php
-function build_preview_url( string $title ): string {
-	return add_query_arg(
-		[
-			'preview' => '1',
-			'slug'    => sanitize_title( $title ),
-		],
-		'https://example.com/post.php'
-	);
+function render_comment( string $raw ): string {
+	// wp_kses_post() strips disallowed tags.
+	// make_clickable() linkifies URLs.
+	// wpautop() adds paragraphs — all real WordPress logic.
+	return wpautop( make_clickable( wp_kses_post( $raw ) ) );
 }
 ```
 
-Without this library, you need to mock `sanitize_title()` and `add_query_arg()`, so they do not validate real WordPress behavior.
+To mock this you would have to hardcode the expected output of each function, so the test would no longer verify any real WordPress behavior.
 
-With this library, the same test can run real implementations in plain PHPUnit:
+With this library the real implementations run in plain PHPUnit:
 
 ```php
 require_once __DIR__ . '/vendor/autoload.php';
 \Unitest_WP_Copy\Bootstrap::init();
 
-$this->assertSame(
-	'https://example.com/post.php?preview=1&slug=hello-world',
-	build_preview_url( 'Hello World!' )
+$html = render_comment(
+	'Great post! <script>alert(1)</script> visit https://example.com <b>thanks</b>'
 );
+
+$this->assertStringNotContainsString( '<script>', $html );                   // kses removed it
+$this->assertStringContainsString( '<a href="https://example.com"', $html ); // linkified
+$this->assertStringContainsString( '<b>thanks</b>', $html );                 // allowed tag kept
 ```
 
 
@@ -46,17 +46,17 @@ For the full list of available classes/functions, see:
 Quick Start
 -----------
 1. Install a package line that matches your WordPress version line:
-
-```shell
-composer require --dev doiftrue/unitest-wp-copy:6.9.*
-```
+	
+	```shell
+	composer require --dev doiftrue/unitest-wp-copy:6.9.*
+	```
 
 2. Initialize the runtime in your PHPUnit bootstrap:
-
-```php
-require_once __DIR__ . '/vendor/autoload.php';
-\Unitest_WP_Copy\Bootstrap::init();
-```
+	
+	```php
+	require_once __DIR__ . '/vendor/autoload.php';
+	\Unitest_WP_Copy\Bootstrap::init();
+	```
 
 3. Write unit tests where many WordPress calls do not need mocking.
 
@@ -74,14 +74,14 @@ Use the package line that matches your WP version:
 | 6.6            | `doiftrue/unitest-wp-copy:6.6.*` |
 | 6.5            | `doiftrue/unitest-wp-copy:6.5.*` |
 
-Real release tags use 4 numbers, for example `7.0.2.0`:
+Real release tags use 4 numbers, for example `7.0.2.8`:
 - `7.0` is the target WordPress version line;
-- `2.0` is this repository's release-script version for that line.
+- `2.8` is this repository's version for that line.
 
-In Composer, use:
-- `7.0.2.0` - pin one exact release
-- `~7.0.2.0` - allow conservative updates starting from this build (usually small runtime fixes)
-- `7.0.*` - allow any update in the WP `7.0` line (new copied functions/classes may appear and affect existing tests)
+Usage examples in your composer.json:
+- `7.0.2.8` - pin one exact release.
+- `~7.0.2.8` - allow conservative updates starting from this build (usually small runtime fixes).
+- `7.0.*` - allow any update in the WP `7.0` line (new copied functions/classes may appear and affect existing tests).
 
 
 Bootstrap Overrides and Shared State
@@ -175,14 +175,14 @@ Override a configured option by changing the store:
 $GLOBALS['stub_wp_options']->medium_size_w = 640;
 ```
 
-Use `WP_Mock` to mock option that not exists in `$GLOBALS['stub_wp_options']`:
+Use `WP_Mock` to mock an option that does not exist in `$GLOBALS['stub_wp_options']`:
 ```php
 WP_Mock::userFunction( 'get_option', [
 	'args'   => [ 'my_plugin_option', false ],
 	'return' => 'test-value',
 ] );
 ```
-IMPORTANT: `WP_Mock` cannot override an option while it exists in `$GLOBALS['stub_wp_options']`.
+IMPORTANT: `WP_Mock` cannot override an option when it exists in `$GLOBALS['stub_wp_options']`.
 
 
 ### Redefine Constants
@@ -233,7 +233,7 @@ WP_CRON_LOCK_TIMEOUT
 CUSTOM_TAGS
 ```
 
-### Redefine functions
+### Redefine Functions
 
 Copied functions are wrapped with `if ( ! function_exists( '...' ) )`, so you can override specific functions by defining them before bootstrap init.
 
@@ -285,8 +285,3 @@ For mock-friendly symbols, check:
 [`SYMBOLS-INFO.md`](SYMBOLS-INFO.md)
 
 See also: https://github.com/10up/wp_mock
-
-
-Maintainers
------------
-If you maintain this repository, see the docs in [`docs/`](./docs/) (runtime, parser, config, tests, release flow).
