@@ -6,6 +6,8 @@ return [
 	'is_utf8_charset'                        => '6.6.0 mockable',
 	'wp_unique_prefixed_id'                  => '6.4.0 mockable',
 	'wp_trigger_error'                       => '6.4.0 mockable',
+	'wp_cache_set_last_changed'              => '6.3.0',
+	'_validate_cache_id'                     => '6.3.0',
 	'wp_recursive_ksort'                     => '6.0.0',
 	'wp_json_file_decode'                    => '5.9.0',
 	'wp_get_default_extension_for_mime_type' => '5.8.1',
@@ -26,6 +28,7 @@ return [
 	'wp_generate_uuid4'                      => '4.7.0 mockable',
 	'wp_list_sort'                           => '4.7.0',
 	'wp_parse_slug_list'                     => '4.7.0',
+	'wp_cache_get_last_changed'              => '4.7.0',
 	'wp_check_jsonp_callback'                => '4.6.0',
 	'wp_get_ext_types'                       => '4.6.0',
 	'_deprecated_hook'                       => '4.6.0', // note: need as deps
@@ -47,6 +50,7 @@ return [
 	'wp_is_stream'                           => '3.5.0',
 	'__return_null'                          => '3.4.0',
 	'wp_debug_backtrace_summary'             => '3.4.0',
+	'_get_non_cached_ids'                    => '3.4.0',
 	'wp_suspend_cache_addition'              => '3.3.0 mockable',
 	'wp_allowed_protocols'                   => '3.3.0',
 	'_http_build_query'                      => '3.2.0',
@@ -67,6 +71,7 @@ return [
 	'get_allowed_mime_types'                 => '2.8.6',
 	'_cleanup_header_comment'                => '2.8.0',
 	'wp_get_nocache_headers'                 => '2.8.0',
+	'wp_suspend_cache_invalidation'          => '2.7.0',
 	'force_ssl_admin'                        => '2.6.0 mockable',
 	'path_is_absolute'                       => '2.5.0',
 	'path_join'                              => '2.5.0',
@@ -110,12 +115,10 @@ _deprecated_class                            // why: tied to legacy runtime noti
 _deprecated_constructor                      // why: tied to legacy runtime notices/bootstrapping.
 _deprecated_file                             // why: tied to include/runtime loading flow.
 _device_can_upload                           // why: depends on request headers/client runtime.
-_get_non_cached_ids                          // why: requires object-cache/runtime context.
 _json_wp_die_handler                         // why: requires full HTTP output/wp_die runtime flow.
 _jsonp_wp_die_handler                        // why: requires full HTTP output/wp_die runtime flow.
 _mce_set_direction                           // why: editor/admin runtime dependency.
 _scalar_wp_die_handler                       // why: requires full HTTP output/wp_die runtime flow.
-_validate_cache_id                           // why: requires object-cache/runtime context.
 _wp_check_alternate_file_names               // why: filesystem/media upload dependency.
 _wp_check_existing_file_names                // why: filesystem/media upload dependency.
 _wp_die_process_input                        // why: requires wp_die request lifecycle.
@@ -162,8 +165,6 @@ wp_admin_notice                              // why: admin notice/runtime depend
 wp_auth_check                                // why: auth/cookie/session runtime dependency.
 wp_auth_check_html                           // why: auth/cookie/session runtime dependency.
 wp_auth_check_load                           // why: auth/cookie/session runtime dependency.
-wp_cache_get_last_changed                    // why: object-cache runtime dependency.
-wp_cache_set_last_changed                    // why: object-cache runtime dependency.
 wp_check_filetype_and_ext                    // why: filesystem/media validation dependency.
 wp_delete_file                               // why: filesystem side effects.
 wp_delete_file_from_directory                // why: filesystem side effects.
@@ -209,7 +210,6 @@ wp_send_json                                 // why: HTTP output side effects.
 wp_send_json_error                           // why: HTTP output side effects.
 wp_send_json_success                         // why: HTTP output side effects.
 wp_site_admin_email_change_notification      // why: option/mail runtime dependency.
-wp_suspend_cache_invalidation                // why: object-cache runtime dependency.
 wp_timezone_choice                           // why: admin UI/runtime dependency.
 wp_timezone_override_offset                  // why: option/timezone runtime dependency.
 wp_unique_filename                           // why: filesystem/uploads runtime dependency.

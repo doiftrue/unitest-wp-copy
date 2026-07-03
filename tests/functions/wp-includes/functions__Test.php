@@ -432,4 +432,81 @@ class functions__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( '1970-01-01 00:00', wp_date( 'Y-m-d H:i', 0, new DateTimeZone( 'UTC' ) ) );
 	}
 
+	public function test__wp_cache_get_last_changed() {
+		global $wp_object_cache;
+		$wp_object_cache = new WP_Object_Cache();
+
+		// First call sets the value
+		$result = wp_cache_get_last_changed( 'test_group' );
+		$this->assertIsString( $result );
+
+		// Subsequent call returns cached value
+		$second = wp_cache_get_last_changed( 'test_group' );
+		$this->assertSame( $result, $second );
+	}
+
+	public function test__wp_cache_set_last_changed() {
+		global $wp_object_cache;
+		$wp_object_cache = new WP_Object_Cache();
+
+		$time = wp_cache_set_last_changed( 'my_group' );
+		$this->assertIsString( $time );
+
+		$cached = wp_cache_get( 'last_changed', 'my_group' );
+		$this->assertSame( $time, $cached );
+
+		// Calling again produces a new value
+		$time2 = wp_cache_set_last_changed( 'my_group' );
+		$this->assertIsString( $time2 );
+	}
+
+	public function test__wp_suspend_cache_invalidation() {
+		global $_wp_suspend_cache_invalidation;
+		$_wp_suspend_cache_invalidation = false;
+
+		// Returns previous value and sets new
+		$prev = wp_suspend_cache_invalidation( true );
+		$this->assertFalse( $prev );
+		$this->assertTrue( $_wp_suspend_cache_invalidation );
+
+		// Returns true (current), sets false
+		$prev = wp_suspend_cache_invalidation( false );
+		$this->assertTrue( $prev );
+		$this->assertFalse( $_wp_suspend_cache_invalidation );
+
+		// Default argument is true
+		$prev = wp_suspend_cache_invalidation();
+		$this->assertFalse( $prev );
+		$this->assertTrue( $_wp_suspend_cache_invalidation );
+
+		// Cleanup
+		$_wp_suspend_cache_invalidation = false;
+	}
+
+	public function test___get_non_cached_ids() {
+		global $wp_object_cache;
+		$wp_object_cache = new WP_Object_Cache();
+
+		// Cache some IDs
+		wp_cache_set( 1, 'data1', 'test_group' );
+		wp_cache_set( 3, 'data3', 'test_group' );
+
+		$result = _get_non_cached_ids( [ 1, 2, 3, 4 ], 'test_group' );
+
+		$this->assertContains( 2, $result );
+		$this->assertContains( 4, $result );
+		$this->assertNotContains( 1, $result );
+		$this->assertNotContains( 3, $result );
+
+		// Empty input
+		$this->assertSame( [], _get_non_cached_ids( [], 'test_group' ) );
+	}
+
+	public function test___validate_cache_id() {
+		$this->assertTrue( _validate_cache_id( 5 ) );
+		$this->assertTrue( _validate_cache_id( '42' ) );
+		$this->assertFalse( _validate_cache_id( 'abc' ) );
+		$this->assertFalse( _validate_cache_id( 3.14 ) );
+	}
+
 }
