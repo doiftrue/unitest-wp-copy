@@ -3,6 +3,37 @@
 // ------------------auto-generated---------------------
 
 // wp-includes/load.php (WP 6.5.8)
+if( ! function_exists( 'wp_is_development_mode' ) ) :
+	function wp_is_development_mode( $mode ) {
+		$current_mode = wp_get_development_mode();
+		if ( empty( $current_mode ) ) {
+			return false;
+		}
+	
+		// Return true if the current mode encompasses all modes.
+		if ( 'all' === $current_mode ) {
+			return true;
+		}
+	
+		// Return true if the current mode is the given mode.
+		return $mode === $current_mode;
+	}
+endif;
+
+// wp-includes/load.php (WP 6.5.8)
+if( ! function_exists( 'wp_is_json_media_type' ) ) :
+	function wp_is_json_media_type( $media_type ) {
+		static $cache = array();
+	
+		if ( ! isset( $cache[ $media_type ] ) ) {
+			$cache[ $media_type ] = (bool) preg_match( '/(^|\s|,)application\/([\w!#\$&-\^\.\+]+\+)?json(\+oembed)?($|\s|;|,)/i', $media_type );
+		}
+	
+		return $cache[ $media_type ];
+	}
+endif;
+
+// wp-includes/load.php (WP 6.5.8)
 if( ! function_exists( 'wp_is_ini_value_changeable' ) ) :
 	function wp_is_ini_value_changeable( $setting ) {
 		static $ini_all;
