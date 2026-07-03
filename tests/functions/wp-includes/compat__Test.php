@@ -116,4 +116,25 @@ class compat__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertFalse( array_all( $a, static fn( $v ) => $v > 4 ) );
 	}
 
+
+	public function test__array_first() {
+		if( $wp_ver = wp_version_compare( '< 6.9.0' ) ){
+			$this->markTestSkipped( "array_first() not exists on WP $wp_ver" );
+		}
+
+		$this->assertSame( 'first', array_first( [ 'first', 'second' ] ) );
+		$this->assertSame( 'a', array_first( [ 'x' => 'a', 'y' => 'b' ] ) );
+		$this->assertNull( array_first( [] ) );
+	}
+
+	public function test__array_last() {
+		if( $wp_ver = wp_version_compare( '< 6.9.0' ) ){
+			$this->markTestSkipped( "array_last() not exists on WP $wp_ver" );
+		}
+
+		$this->assertSame( 'second', array_last( [ 'first', 'second' ] ) );
+		$this->assertSame( 'b', array_last( [ 'x' => 'a', 'y' => 'b' ] ) );
+		$this->assertNull( array_last( [] ) );
+	}
+
 }

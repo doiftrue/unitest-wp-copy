@@ -37,4 +37,68 @@ class http__Test extends \PHPUnit\Framework\TestCase {
 		remove_filter( 'http_request_host_is_external', $allow_local_host, 10 );
 	}
 
+
+	private function sample_response(): array {
+		return [
+			'headers'  => [
+				'content-type' => 'application/json',
+				'x-test'       => [ 'one', 'two' ],
+			],
+			'body'     => '{"ok":true}',
+			'response' => [
+				'code'    => 201,
+				'message' => 'Created',
+			],
+			'cookies'  => [
+				new WP_Http_Cookie( [ 'name' => 'session', 'value' => 'abc' ] ),
+			],
+		];
+	}
+
+	public function test__wp_remote_retrieve_headers() {
+		$this->assertSame( $this->sample_response()['headers'], wp_remote_retrieve_headers( $this->sample_response() ) );
+		$this->assertSame( [], wp_remote_retrieve_headers( new WP_Error( 'e' ) ) );
+	}
+
+	public function test__wp_remote_retrieve_header() {
+		$response = $this->sample_response();
+		$this->assertSame( 'application/json', wp_remote_retrieve_header( $response, 'content-type' ) );
+		$this->assertSame( [ 'one', 'two' ], wp_remote_retrieve_header( $response, 'x-test' ) );
+		$this->assertSame( '', wp_remote_retrieve_header( $response, 'missing' ) );
+	}
+
+	public function test__wp_remote_retrieve_response_code() {
+		$this->assertSame( 201, wp_remote_retrieve_response_code( $this->sample_response() ) );
+		$this->assertSame( '', wp_remote_retrieve_response_code( new WP_Error( 'e' ) ) );
+	}
+
+	public function test__wp_remote_retrieve_response_message() {
+		$this->assertSame( 'Created', wp_remote_retrieve_response_message( $this->sample_response() ) );
+		$this->assertSame( '', wp_remote_retrieve_response_message( [] ) );
+	}
+
+	public function test__wp_remote_retrieve_body() {
+		$this->assertSame( '{"ok":true}', wp_remote_retrieve_body( $this->sample_response() ) );
+		$this->assertSame( '', wp_remote_retrieve_body( [] ) );
+	}
+
+	public function test__wp_remote_retrieve_cookies() {
+		$cookies = wp_remote_retrieve_cookies( $this->sample_response() );
+		$this->assertCount( 1, $cookies );
+		$this->assertInstanceOf( WP_Http_Cookie::class, $cookies[0] );
+		$this->assertSame( [], wp_remote_retrieve_cookies( new WP_Error( 'e' ) ) );
+	}
+
+	public function test__wp_remote_retrieve_cookie() {
+		$cookie = wp_remote_retrieve_cookie( $this->sample_response(), 'session' );
+		$this->assertInstanceOf( WP_Http_Cookie::class, $cookie );
+		$this->assertSame( 'session', $cookie->name );
+		$this->assertSame( '', wp_remote_retrieve_cookie( $this->sample_response(), 'missing' ) );
+	}
+
+	public function test__wp_remote_retrieve_cookie_value() {
+		$this->assertSame( 'abc', wp_remote_retrieve_cookie_value( $this->sample_response(), 'session' ) );
+		$this->assertSame( '', wp_remote_retrieve_cookie_value( $this->sample_response(), 'missing' ) );
+	}
+
 }

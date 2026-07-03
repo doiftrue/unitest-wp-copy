@@ -1,13 +1,22 @@
 <?php
 
 return [
+	'wp_is_development_mode'     => '6.3.0',
 	'wp_get_development_mode'    => '6.3.0 mockable',
 	'timer_float'                => '5.8.0 mockable',
+	'wp_is_json_media_type'      => '5.6.0',
+	'wp_using_themes'            => '5.1.0 mockable',
 	'wp_get_environment_type'    => '5.5.0 mockable',
+	'wp_doing_cron'              => '4.8.0 mockable',
+	'wp_is_file_mod_allowed'     => '4.8.0 mockable',
 	'wp_doing_ajax'              => '4.7.0 mockable',
 	'get_current_network_id'     => '4.6.0 mockable',
 	'wp_is_ini_value_changeable' => '4.6.0',
+	'wp_get_server_protocol'     => '4.4.0 mockable',
 	'wp_installing'              => '4.4.0 mockable', // note: in 99% is not installing, and it used as deps so add it
+	'is_blog_admin'              => '3.1.0 mockable',
+	'is_network_admin'           => '3.1.0 mockable',
+	'is_user_admin'              => '3.1.0 mockable',
 	'get_current_blog_id'        => '3.1.0 mockable',
 	'is_multisite'               => '3.0.0 mockable',
 	'is_ssl'                     => '2.6.0 mockable',
@@ -22,28 +31,20 @@ return [
 /*
 Not suitable in isolated PHPUnit env:
 
-is_blog_admin                                     // why: requires admin bootstrap/request context.
 is_login                                          // why: requires login screen/request context.
-is_network_admin                                  // why: requires multisite admin context.
 is_protected_ajax_action                          // why: protected-endpoint runtime dependency.
 is_protected_endpoint                             // why: protected-endpoint runtime dependency.
-is_user_admin                                     // why: requires user-admin request context.
 require_wp_db                                     // why: hard DB bootstrap dependency.
 shutdown_action_hook                              // why: shutdown hook/runtime side effects.
 wp_check_php_mysql_versions                       // why: environment + DB capability checks.
 wp_clone                                          // why: full bootstrap clone lifecycle.
 wp_debug_mode                                     // why: global runtime/error-handler mutation.
-wp_doing_cron                                     // why: cron/request runtime dependency.
 wp_favicon_request                                // why: request routing/output dependency.
 wp_finalize_scraping_edited_file_errors           // why: admin/editor error-scraping runtime.
 wp_fix_server_vars                                // why: mutates global server runtime.
 wp_get_active_and_valid_plugins                   // why: plugin bootstrap/filesystem dependency.
 wp_get_active_and_valid_themes                    // why: theme bootstrap/filesystem dependency.
 wp_get_mu_plugins                                 // why: mu-plugin filesystem bootstrap dependency.
-wp_get_server_protocol                            // why: request server-runtime dependency.
-wp_is_development_mode                            // why: full runtime option/env dependency.
-wp_is_file_mod_allowed                            // why: file-modification policy/runtime dependency.
-wp_is_json_media_type                             // why: request/content-type runtime dependency.
 wp_is_json_request                                // why: request/content-type runtime dependency.
 wp_is_jsonp_request                               // why: request/content-type runtime dependency.
 wp_is_maintenance_mode                            // why: filesystem + bootstrap dependency.
@@ -63,5 +64,4 @@ wp_skip_paused_themes                             // why: recovery mode/theme ru
 wp_start_object_cache                             // why: object-cache bootstrap dependency.
 wp_start_scraping_edited_file_errors              // why: admin/editor runtime dependency.
 wp_using_ext_object_cache                         // why: object-cache runtime dependency.
-wp_using_themes                                   // why: theme bootstrap state dependency.
 */

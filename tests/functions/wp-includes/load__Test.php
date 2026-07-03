@@ -62,4 +62,15 @@ class load__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertIsFloat( $GLOBALS['timestart'] );
 	}
 
+
+	public function test__wp_is_development_mode() {
+		$this->assertFalse( wp_is_development_mode( 'plugin' ) );
+	}
+
+	public function test__wp_is_json_media_type() {
+		$this->assertTrue( wp_is_json_media_type( 'application/json' ) );
+		$this->assertTrue( wp_is_json_media_type( 'application/activity+json; charset=utf-8' ) );
+		$this->assertFalse( wp_is_json_media_type( 'text/html' ) );
+	}
+
 }

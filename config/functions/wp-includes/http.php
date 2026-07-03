@@ -3,8 +3,16 @@
 return [
 	'_wp_translate_php_url_constant_to_key' => '4.7.0',
 	'_get_component_from_parsed_url_array'  => '4.7.0',
+	'wp_remote_retrieve_cookies'            => '4.4.0',
+	'wp_remote_retrieve_cookie'             => '4.4.0',
+	'wp_remote_retrieve_cookie_value'       => '4.4.0',
 	'wp_parse_url'                          => '4.4.0',
 	'wp_http_validate_url'                  => '3.5.2',
+	'wp_remote_retrieve_headers'            => '2.7.0',
+	'wp_remote_retrieve_header'             => '2.7.0',
+	'wp_remote_retrieve_response_code'      => '2.7.0',
+	'wp_remote_retrieve_response_message'   => '2.7.0',
+	'wp_remote_retrieve_body'               => '2.7.0',
 ];
 
 /*
@@ -22,14 +30,6 @@ wp_remote_get                        // why: network I/O dependency.
 wp_remote_head                       // why: network I/O dependency.
 wp_remote_post                       // why: network I/O dependency.
 wp_remote_request                    // why: network I/O dependency.
-wp_remote_retrieve_body              // why: requires WP_HTTP response objects/runtime.
-wp_remote_retrieve_cookie            // why: requires WP_HTTP response objects/runtime.
-wp_remote_retrieve_cookie_value      // why: requires WP_HTTP response objects/runtime.
-wp_remote_retrieve_cookies           // why: requires WP_HTTP response objects/runtime.
-wp_remote_retrieve_header            // why: requires WP_HTTP response objects/runtime.
-wp_remote_retrieve_headers           // why: requires WP_HTTP response objects/runtime.
-wp_remote_retrieve_response_code     // why: requires WP_HTTP response objects/runtime.
-wp_remote_retrieve_response_message  // why: requires WP_HTTP response objects/runtime.
 wp_safe_remote_get                   // why: network I/O dependency.
 wp_safe_remote_head                  // why: network I/O dependency.
 wp_safe_remote_post                  // why: network I/O dependency.

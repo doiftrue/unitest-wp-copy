@@ -1,6 +1,8 @@
 <?php
 
 return [
+	'array_first'        => '6.9.0',
+	'array_last'         => '6.9.0',
 	'array_find'         => '6.8.0',
 	'array_find_key'     => '6.8.0',
 	'array_any'          => '6.8.0',
