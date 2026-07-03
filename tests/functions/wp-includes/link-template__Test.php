@@ -40,23 +40,23 @@ class link_template__Test extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function test__home_url() {
-		$this->assertSame( 'https://unitest-wp-copy.loc/a', home_url( 'a' ) );
+		$this->assertSame( 'https://wp.test/a', home_url( 'a' ) );
 	}
 
 	public function test__get_home_url() {
-		$this->assertSame( 'http://unitest-wp-copy.loc/a', get_home_url( null, 'a', 'http' ) );
+		$this->assertSame( 'http://wp.test/a', get_home_url( null, 'a', 'http' ) );
 	}
 
 	public function test__site_url() {
-		$this->assertSame( 'http://unitest-wp-copy.loc/a', site_url( 'a' ) );
+		$this->assertSame( 'http://wp.test/a', site_url( 'a' ) );
 	}
 
 	public function test__get_site_url() {
-		$this->assertSame( 'http://unitest-wp-copy.loc/a', get_site_url( null, 'a', 'http' ) );
+		$this->assertSame( 'http://wp.test/a', get_site_url( null, 'a', 'http' ) );
 	}
 
 	public function test__admin_url() {
-		$this->assertSame( 'https://unitest-wp-copy.loc/wp-admin/', admin_url() );
+		$this->assertSame( 'https://wp.test/wp-admin/', admin_url() );
 		$this->assertSame( '/wp-admin/tools.php', admin_url( '/tools.php', 'relative' ) );
 	}
 
@@ -74,11 +74,11 @@ class link_template__Test extends \PHPUnit\Framework\TestCase {
 		);
 
 		$this->assertSame(
-			'http://unitest-wp-copy.loc/wp-admin/options.php?filtered=1',
+			'http://wp.test/wp-admin/options.php?filtered=1',
 			get_admin_url( 42, '/options.php', 'http' )
 		);
 		$this->assertSame(
-			[ 'http://unitest-wp-copy.loc/wp-admin/options.php', '/options.php', 42, 'http' ],
+			[ 'http://wp.test/wp-admin/options.php', '/options.php', 42, 'http' ],
 			$filter_args
 		);
 	}
@@ -111,11 +111,11 @@ class link_template__Test extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function test__wp_internal_hosts() {
-		$this->assertContains( 'unitest-wp-copy.loc', wp_internal_hosts() );
+		$this->assertContains( 'wp.test', wp_internal_hosts() );
 	}
 
 	public function test__wp_is_internal_link() {
-		$this->assertTrue( wp_is_internal_link( 'https://unitest-wp-copy.loc/a' ) );
+		$this->assertTrue( wp_is_internal_link( 'https://wp.test/a' ) );
 		$this->assertFalse( wp_is_internal_link( 'https://example.com/a' ) );
 	}
 

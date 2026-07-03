@@ -50,7 +50,7 @@ class WP_Sitemaps_Index__Test extends \PHPUnit\Framework\TestCase {
 			'posts',
 			new WP_Sitemaps_Index_Test_Provider(
 				[
-					[ 'loc' => 'https://unitest-wp-copy.loc/wp-sitemap-posts-1.xml' ],
+					[ 'loc' => 'https://wp.test/wp-sitemap-posts-1.xml' ],
 				]
 			)
 		);
@@ -58,8 +58,8 @@ class WP_Sitemaps_Index__Test extends \PHPUnit\Framework\TestCase {
 			'pages',
 			new WP_Sitemaps_Index_Test_Provider(
 				[
-					[ 'loc' => 'https://unitest-wp-copy.loc/wp-sitemap-pages-1.xml' ],
-					[ 'loc' => 'https://unitest-wp-copy.loc/wp-sitemap-pages-2.xml' ],
+					[ 'loc' => 'https://wp.test/wp-sitemap-pages-1.xml' ],
+					[ 'loc' => 'https://wp.test/wp-sitemap-pages-2.xml' ],
 				]
 			)
 		);
@@ -68,8 +68,8 @@ class WP_Sitemaps_Index__Test extends \PHPUnit\Framework\TestCase {
 		$list  = $index->get_sitemap_list();
 
 		$this->assertCount( 3, $list );
-		$this->assertSame( 'https://unitest-wp-copy.loc/wp-sitemap-posts-1.xml', $list[0]['loc'] );
-		$this->assertSame( 'https://unitest-wp-copy.loc/wp-sitemap-pages-2.xml', $list[2]['loc'] );
+		$this->assertSame( 'https://wp.test/wp-sitemap-posts-1.xml', $list[0]['loc'] );
+		$this->assertSame( 'https://wp.test/wp-sitemap-pages-2.xml', $list[2]['loc'] );
 	}
 
 	public function test__get_index_url() {

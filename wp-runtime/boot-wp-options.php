@@ -1,15 +1,15 @@
 <?php
 /// Runtime option values needed by copied and custom-mock functions.
 $default_stub_wp_options = [
-	'home'                => 'https://unitest-wp-copy.loc',
-	'siteurl'             => 'https://unitest-wp-copy.loc',
+	'home'                => 'https://wp.test',
+	'siteurl'             => 'https://wp.test',
 	'gmt_offset'          => 0,
 	'timezone_string'     => 'UTC',
 	'language'            => 'en-US',
 	'blogdescription'     => 'unitest-wp-copy runtime',
-	'admin_email'         => 'admin@unitest-wp-copy.loc',
-	'stylesheet'          => 'wp-copy-stylesheet',
-	'template'            => 'wp-copy-template',
+	'admin_email'         => 'admin@wp.test',
+	'stylesheet'          => 'wp-test-stylesheet',
+	'template'            => 'wp-test-template',
 	'use_smilies'         => true,
 	'use_balanceTags'     => true,
 	'WPLANG'              => '',

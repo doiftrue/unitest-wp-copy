@@ -19,7 +19,7 @@ class general_template__Test extends \PHPUnit\Framework\TestCase {
 		$GLOBALS['wp_current_filter'] = [];
 
 		$_SERVER['REQUEST_URI'] = '/current-uri/';
-		$_SERVER['SERVER_NAME'] = 'unitest-wp-copy.loc';
+		$_SERVER['SERVER_NAME'] = 'wp.test';
 	}
 
 	protected function tearDown(): void {
@@ -170,7 +170,7 @@ class general_template__Test extends \PHPUnit\Framework\TestCase {
 		$wp_scripts->queue = [ 'script-cdn', 'script-local' ];
 		$wp_scripts->registered = [
 			'script-cdn' => (object) [ 'src' => 'https://cdn1.example/script.js' ],
-			'script-local' => (object) [ 'src' => 'https://unitest-wp-copy.loc/local.js' ],
+			'script-local' => (object) [ 'src' => 'https://wp.test/local.js' ],
 		];
 
 		$wp_styles = new WP_Dependencies();
@@ -186,7 +186,7 @@ class general_template__Test extends \PHPUnit\Framework\TestCase {
 
 		$this->assertContains( 'cdn1.example', $hosts );
 		$this->assertContains( 'cdn2.example', $hosts );
-		$this->assertNotContains( 'unitest-wp-copy.loc', $hosts );
+		$this->assertNotContains( 'wp.test', $hosts );
 	}
 
 	public function test__wp_resource_hints() {

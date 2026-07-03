@@ -21,12 +21,12 @@ class http__Test extends \PHPUnit\Framework\TestCase {
 
 	public function test__wp_http_validate_url() {
 		$this->assertSame(
-			'https://unitest-wp-copy.loc/path?a=1',
-			wp_http_validate_url( 'https://unitest-wp-copy.loc/path?a=1' )
+			'https://wp.test/path?a=1',
+			wp_http_validate_url( 'https://wp.test/path?a=1' )
 		);
 
-		$this->assertFalse( wp_http_validate_url( 'ftp://unitest-wp-copy.loc/path' ) );
-		$this->assertFalse( wp_http_validate_url( 'https://user:pass@unitest-wp-copy.loc/path' ) );
+		$this->assertFalse( wp_http_validate_url( 'ftp://wp.test/path' ) );
+		$this->assertFalse( wp_http_validate_url( 'https://user:pass@wp.test/path' ) );
 		$this->assertFalse( wp_http_validate_url( 'http://192.168.0.1/path' ) );
 
 		$allow_local_host = static function () {

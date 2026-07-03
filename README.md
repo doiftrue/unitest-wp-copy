@@ -92,19 +92,19 @@ Define overrides before `\Unitest_WP_Copy\Bootstrap::init()`.
 // tests/bootstrap.php
 define( 'ABSPATH', '/srv/wp/' );
 define( 'WP_CONTENT_DIR', '/srv/wp/wp-content' );
-define( 'WP_CONTENT_URL', 'https://tests.example/wp-content' );
+define( 'WP_CONTENT_URL', 'https://wp.test/wp-content' );
 define( 'WP_ENVIRONMENT_TYPE', 'development' );
 define( 'WP_DEBUG', true );
 
 // Used by get_option()
 $GLOBALS['stub_wp_options'] = (object) [
-	'home'                => 'https://unitest-wp-copy.loc',
-	'siteurl'             => 'https://unitest-wp-copy.loc',
+	'home'                => 'https://wp.test',
+	'siteurl'             => 'https://wp.test',
 	'gmt_offset'          => 0,
 	'timezone_string'     => 'UTC',
 	'language'            => 'en-US',
 	'blogdescription'     => 'unitest-wp-copy runtime',
-	'admin_email'         => 'admin@unitest-wp-copy.loc',
+	'admin_email'         => 'admin@wp.test',
 	'stylesheet'          => 'unitest-wp-copy',
 	'use_smilies'         => true,
 	'use_balanceTags'     => true,
