@@ -1,4 +1,3 @@
-
 define php_run
 	docker run --rm $(1) --name UNITEST_WP_COPY__php --user 1000:1000 \
 		-v "$(CURDIR):/app"  -w /app \
@@ -10,16 +9,16 @@ php.connect:
 
 composer:
 	$(call php_run,, composer  $(filter-out $@,$(MAKECMDGOALS)))
-composer_install:
+composer.install:
 	$(call php_run,, composer install  $(filter-out $@,$(MAKECMDGOALS)))
-composer_update:
+composer.update:
 	$(call php_run,, composer update  $(filter-out $@,$(MAKECMDGOALS)))
 
 # $ make phpunit WP_LINE=6.8
 phpunit:
 	$(call php_run, -e WP_LINE="$(WP_LINE)", composer run phpunit -- --colors=always)
 
-parser_run:
+parser.run:
 	$(call php_run, , php parser/run.php)
 
 
@@ -27,7 +26,7 @@ parser_run:
 switch:
 	@[ -n "$(WP_LINE)" ] || { echo 'Use: make switch WP_LINE=6.8'; exit 1; }
 	$(call php_run,, composer require --dev wordpress/wordpress:$(WP_LINE).* --no-interaction --with-dependencies)
-	$(MAKE) parser_run
+	$(MAKE) parser.run
 
 # make release WP_LINE=6.8
 # make release WP_LINE=6.8 NOT_PUSH=1
@@ -35,7 +34,7 @@ release:
 	WP_LINE="$(WP_LINE)" NOT_PUSH="$(NOT_PUSH)" bash releaser/release.sh
 
 WP_LINES := $(notdir $(patsubst %/,%,$(wildcard wp-runtime/wp-line-extra/*/)))
-release_all:
+release.all:
 	@status=0; \
 	for wp_line in $(WP_LINES); do \
 		echo "== release $$wp_line =="; \
@@ -45,11 +44,11 @@ release_all:
 	exit $$status
 
 
-# make worktrees_run cmd="git status --short"
+# make worktrees.run cmd="git status --short"
 WORKTREE_DIRS := $(sort $(wildcard worktrees/wp-*))
-worktrees_run:
+worktrees.run:
 	@if [ -z "$(cmd)" ]; then \
-		echo 'Use: make worktrees-run cmd="git status --short"'; \
+		echo 'Use: make worktrees.run cmd="git status --short"'; \
 		exit 1; \
 	fi
 	@for dir in $(WORKTREE_DIRS); do \
@@ -58,7 +57,7 @@ worktrees_run:
 		echo; \
 	done
 
-worktrees_git_status:
+worktrees.git-status:
 	@for dir in $(WORKTREE_DIRS); do \
 		echo "== $$dir =="; \
 		sh -c 'cd "$$1" && git status --short' -- "$$dir"; \
@@ -77,3 +76,4 @@ php.run:
 	$(call php_run, , php tmp/.phprun.php) || status=$$?; \
 	rm -f tmp/.phprun.php; \
 	exit $$status
+
