@@ -3,6 +3,52 @@
 // ------------------auto-generated---------------------
 
 // wp-includes/functions.php (WP 6.5.8)
+if( ! function_exists( 'wp_cache_set_last_changed' ) ) :
+	function wp_cache_set_last_changed( $group ) {
+		$previous_time = wp_cache_get( 'last_changed', $group );
+	
+		$time = microtime();
+	
+		wp_cache_set( 'last_changed', $time, $group );
+	
+		/**
+		 * Fires after a cache group `last_changed` time is updated.
+		 * This may occur multiple times per page load and registered
+		 * actions must be performant.
+		 *
+		 * @since 6.3.0
+		 *
+		 * @param string    $group         The cache group name.
+		 * @param int       $time          The new last changed time.
+		 * @param int|false $previous_time The previous last changed time. False if not previously set.
+		 */
+		do_action( 'wp_cache_set_last_changed', $group, $time, $previous_time );
+	
+		return $time;
+	}
+endif;
+
+// wp-includes/functions.php (WP 6.5.8)
+if( ! function_exists( '_validate_cache_id' ) ) :
+	function _validate_cache_id( $object_id ) {
+		/*
+		 * filter_var() could be used here, but the `filter` PHP extension
+		 * is considered optional and may not be available.
+		 */
+		if ( is_int( $object_id )
+			|| ( is_string( $object_id ) && (string) (int) $object_id === $object_id ) ) {
+			return true;
+		}
+	
+		/* translators: %s: The type of the given object ID. */
+		$message = sprintf( __( 'Object ID must be an integer, %s given.' ), gettype( $object_id ) );
+		_doing_it_wrong( '_get_non_cached_ids', $message, '6.3.0' );
+	
+		return false;
+	}
+endif;
+
+// wp-includes/functions.php (WP 6.5.8)
 if( ! function_exists( 'wp_recursive_ksort' ) ) :
 	function wp_recursive_ksort( &$input_array ) {
 		foreach ( $input_array as &$value ) {
@@ -567,6 +613,19 @@ if( ! function_exists( 'wp_parse_slug_list' ) ) :
 endif;
 
 // wp-includes/functions.php (WP 6.5.8)
+if( ! function_exists( 'wp_cache_get_last_changed' ) ) :
+	function wp_cache_get_last_changed( $group ) {
+		$last_changed = wp_cache_get( 'last_changed', $group );
+	
+		if ( $last_changed ) {
+			return $last_changed;
+		}
+	
+		return wp_cache_set_last_changed( $group );
+	}
+endif;
+
+// wp-includes/functions.php (WP 6.5.8)
 if( ! function_exists( 'wp_check_jsonp_callback' ) ) :
 	function wp_check_jsonp_callback( $callback ) {
 		if ( ! is_string( $callback ) ) {
@@ -1105,6 +1164,29 @@ if( ! function_exists( 'wp_debug_backtrace_summary' ) ) :
 endif;
 
 // wp-includes/functions.php (WP 6.5.8)
+if( ! function_exists( '_get_non_cached_ids' ) ) :
+	function _get_non_cached_ids( $object_ids, $cache_group ) {
+		$object_ids = array_filter( $object_ids, '_validate_cache_id' );
+		$object_ids = array_unique( array_map( 'intval', $object_ids ), SORT_NUMERIC );
+	
+		if ( empty( $object_ids ) ) {
+			return array();
+		}
+	
+		$non_cached_ids = array();
+		$cache_values   = wp_cache_get_multiple( $object_ids, $cache_group );
+	
+		foreach ( $cache_values as $id => $value ) {
+			if ( false === $value ) {
+				$non_cached_ids[] = (int) $id;
+			}
+		}
+	
+		return $non_cached_ids;
+	}
+endif;
+
+// wp-includes/functions.php (WP 6.5.8)
 if( ! function_exists( 'wp_allowed_protocols' ) ) :
 	function wp_allowed_protocols() {
 		static $protocols = array();
@@ -1542,6 +1624,17 @@ if( ! function_exists( 'wp_get_nocache_headers' ) ) :
 		}
 		$headers['Last-Modified'] = false;
 		return $headers;
+	}
+endif;
+
+// wp-includes/functions.php (WP 6.5.8)
+if( ! function_exists( 'wp_suspend_cache_invalidation' ) ) :
+	function wp_suspend_cache_invalidation( $suspend = true ) {
+		global $_wp_suspend_cache_invalidation;
+	
+		$current_suspend                = $_wp_suspend_cache_invalidation;
+		$_wp_suspend_cache_invalidation = $suspend;
+		return $current_suspend;
 	}
 endif;
 
