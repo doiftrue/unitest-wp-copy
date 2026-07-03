@@ -3,10 +3,10 @@
 defined( 'ABSPATH' )             || define( 'ABSPATH', '/path/to/wp/' );
 defined( 'WPINC' )               || define( 'WPINC', 'wp-includes' );
 defined( 'WP_CONTENT_DIR' )      || define( 'WP_CONTENT_DIR', '/path/to/wp/wp-content' );
-defined( 'WP_CONTENT_URL' )      || define( 'WP_CONTENT_URL', 'https://test.dev/wp-content' );
+defined( 'WP_CONTENT_URL' )      || define( 'WP_CONTENT_URL', 'https://wp.test/wp-content' );
 defined( 'WP_ENVIRONMENT_TYPE' ) || define( 'WP_ENVIRONMENT_TYPE', 'local' );
 
-// Salt constants for wp_salt() / wp_hash() — unique test values.
+/// Salt constants for wp_salt() / wp_hash() — unique test values.
 defined( 'AUTH_KEY' )         || define( 'AUTH_KEY',         'test-auth-key-unitest-wp-copy' );
 defined( 'SECURE_AUTH_KEY' )  || define( 'SECURE_AUTH_KEY',  'test-secure-auth-key-unitest-wp-copy' );
 defined( 'LOGGED_IN_KEY' )    || define( 'LOGGED_IN_KEY',    'test-logged-in-key-unitest-wp-copy' );

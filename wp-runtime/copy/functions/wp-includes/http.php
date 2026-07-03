@@ -41,6 +41,49 @@ if( ! function_exists( '_get_component_from_parsed_url_array' ) ) :
 endif;
 
 // wp-includes/http.php (WP 6.6.5)
+if( ! function_exists( 'wp_remote_retrieve_cookies' ) ) :
+	function wp_remote_retrieve_cookies( $response ) {
+		if ( is_wp_error( $response ) || empty( $response['cookies'] ) ) {
+			return array();
+		}
+	
+		return $response['cookies'];
+	}
+endif;
+
+// wp-includes/http.php (WP 6.6.5)
+if( ! function_exists( 'wp_remote_retrieve_cookie' ) ) :
+	function wp_remote_retrieve_cookie( $response, $name ) {
+		$cookies = wp_remote_retrieve_cookies( $response );
+	
+		if ( empty( $cookies ) ) {
+			return '';
+		}
+	
+		foreach ( $cookies as $cookie ) {
+			if ( $cookie->name === $name ) {
+				return $cookie;
+			}
+		}
+	
+		return '';
+	}
+endif;
+
+// wp-includes/http.php (WP 6.6.5)
+if( ! function_exists( 'wp_remote_retrieve_cookie_value' ) ) :
+	function wp_remote_retrieve_cookie_value( $response, $name ) {
+		$cookie = wp_remote_retrieve_cookie( $response, $name );
+	
+		if ( ! ( $cookie instanceof WP_Http_Cookie ) ) {
+			return '';
+		}
+	
+		return $cookie->value;
+	}
+endif;
+
+// wp-includes/http.php (WP 6.6.5)
 if( ! function_exists( 'wp_parse_url' ) ) :
 	function wp_parse_url( $url, $component = -1 ) {
 		$to_unset = array();
@@ -162,6 +205,65 @@ if( ! function_exists( 'wp_http_validate_url' ) ) :
 		}
 	
 		return false;
+	}
+endif;
+
+// wp-includes/http.php (WP 6.6.5)
+if( ! function_exists( 'wp_remote_retrieve_headers' ) ) :
+	function wp_remote_retrieve_headers( $response ) {
+		if ( is_wp_error( $response ) || ! isset( $response['headers'] ) ) {
+			return array();
+		}
+	
+		return $response['headers'];
+	}
+endif;
+
+// wp-includes/http.php (WP 6.6.5)
+if( ! function_exists( 'wp_remote_retrieve_header' ) ) :
+	function wp_remote_retrieve_header( $response, $header ) {
+		if ( is_wp_error( $response ) || ! isset( $response['headers'] ) ) {
+			return '';
+		}
+	
+		if ( isset( $response['headers'][ $header ] ) ) {
+			return $response['headers'][ $header ];
+		}
+	
+		return '';
+	}
+endif;
+
+// wp-includes/http.php (WP 6.6.5)
+if( ! function_exists( 'wp_remote_retrieve_response_code' ) ) :
+	function wp_remote_retrieve_response_code( $response ) {
+		if ( is_wp_error( $response ) || ! isset( $response['response'] ) || ! is_array( $response['response'] ) ) {
+			return '';
+		}
+	
+		return $response['response']['code'];
+	}
+endif;
+
+// wp-includes/http.php (WP 6.6.5)
+if( ! function_exists( 'wp_remote_retrieve_response_message' ) ) :
+	function wp_remote_retrieve_response_message( $response ) {
+		if ( is_wp_error( $response ) || ! isset( $response['response'] ) || ! is_array( $response['response'] ) ) {
+			return '';
+		}
+	
+		return $response['response']['message'];
+	}
+endif;
+
+// wp-includes/http.php (WP 6.6.5)
+if( ! function_exists( 'wp_remote_retrieve_body' ) ) :
+	function wp_remote_retrieve_body( $response ) {
+		if ( is_wp_error( $response ) || ! isset( $response['body'] ) ) {
+			return '';
+		}
+	
+		return $response['body'];
 	}
 endif;
 
