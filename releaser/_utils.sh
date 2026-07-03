@@ -6,37 +6,22 @@ run_php() {
 		composer sh -c "${cmd}"
 }
 
-# Display a color-coded message on the terminal.
-#
-# Parameters:
-#   $1 (color_name): The name of the color. One of:
-#                    red, green, yellow, blue, magenta, cyan, white, darkgray, lightblue.
-#   $@ (message):    The message. Backslash escapes characters are allowed: \t, \n.
-#
-# Returns: None
-#
-function cecho(){
-	local color_name="$1"
-	local color_code=0
+function echo_red(){ _echo_color 31 "$@"; }
+function echo_green(){ _echo_color 32 "$@"; }
+function echo_yellow(){ _echo_color 33 "$@"; }
+function echo_blue(){ _echo_color 34 "$@"; }
+function echo_magenta(){ _echo_color 35 "$@"; }
+function echo_cyan(){ _echo_color 36 "$@"; }
+function echo_white(){ _echo_color 37 "$@"; }
+function echo_darkgray(){ _echo_color 90 "$@"; }
+function echo_lightblue(){ _echo_color 94 "$@"; }
 
-	# Convert color name to respective color code.
-	# If the first argument is not a known color, treat all args as message.
-	case "$color_name" in
-		red)       color_code=31; shift ;;
-		green)     color_code=32; shift ;;
-		yellow)    color_code=33; shift ;;
-		blue)      color_code=34; shift ;;
-		magenta)   color_code=35; shift ;;
-		cyan)      color_code=36; shift ;;
-		white)     color_code=37; shift ;;
-		darkgray)  color_code=90; shift ;;
-		lightblue) color_code=94; shift ;;
-		*)         color_code=0 ;;
-	esac
+# Display a message using the given ANSI color code.
+function _echo_color(){
+	local color_code="$1"
+	shift
 
-	local message="$*"
-
-	echo -e "\033[${color_code}m${message}\033[0m"
+	echo -e "\033[${color_code}m$*\033[0m"
 }
 
 # Build release tag from WP line and VERSION file.
@@ -61,30 +46,30 @@ function build_release_tag(){
 	local release_tag
 
 	if [[ -z "${wp_line}" ]]; then
-		cecho red "[STOP] Set required env var: WP_LINE (example: 6.8)" >&2
+		echo_red "[STOP] Set required env var: WP_LINE (example: 6.8)" >&2
 		return 1
 	fi
 
 	if [[ ! -f "${version_file}" ]]; then
-		cecho red "[STOP] VERSION file not found: ${version_file}" >&2
+		echo_red "[STOP] VERSION file not found: ${version_file}" >&2
 		return 1
 	fi
 
 	version_value="$(tr -d '[:space:]' < "${version_file}")"
 	if [[ -z "${version_value}" ]]; then
-		cecho red "[STOP] VERSION file is empty" >&2
+		echo_red "[STOP] VERSION file is empty" >&2
 		return 1
 	fi
 
 	IFS='.' read -r -a version_parts <<< "${version_value}"
 	if (( ${#version_parts[@]} < 2 )); then
-		cecho red "[STOP] VERSION must contain at least two dot-separated numbers (got: ${version_value})" >&2
+		echo_red "[STOP] VERSION must contain at least two dot-separated numbers (got: ${version_value})" >&2
 		return 1
 	fi
 
 	for part in "${version_parts[@]}"; do
 		if [[ ! "${part}" =~ ^[0-9]+$ ]]; then
-			cecho red "[STOP] VERSION must contain numbers only (got: ${version_value})" >&2
+			echo_red "[STOP] VERSION must contain numbers only (got: ${version_value})" >&2
 			return 1
 		fi
 	done
@@ -93,7 +78,7 @@ function build_release_tag(){
 	release_tag="${wp_line}.${version_suffix}"
 
 	if [[ ! "${release_tag}" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-		cecho red "[STOP] RELEASE_TAG format is invalid: ${release_tag}" >&2
+		echo_red "[STOP] RELEASE_TAG format is invalid: ${release_tag}" >&2
 		return 1
 	fi
 

@@ -22,46 +22,46 @@ WP_LINE_BRANCH="wp-${WP_LINE}"
 WORKTREE_DIR_REL="worktrees/${WP_LINE_BRANCH}"
 WORKTREE_DIR="$(realpath -m "${WORKTREE_DIR_REL}")"
 
-cecho cyan "[INFO] RELEASE_TAG: ${RELEASE_TAG}"
+echo_cyan "[INFO] RELEASE_TAG: ${RELEASE_TAG}"
 
 ### CHECKS
 
 # Tag exists
 if git rev-parse --verify --quiet "refs/tags/${RELEASE_TAG}" >/dev/null; then
-	cecho red "[STOP] Tag ${RELEASE_TAG} already exists" >&2
+	echo_red "[STOP] Tag ${RELEASE_TAG} already exists" >&2
 	exit 1
 fi
 
 # No branch
 if ! git rev-parse --verify --quiet "refs/heads/${WP_LINE_BRANCH}" >/dev/null; then
-	cecho red "[STOP] Branch ${WP_LINE_BRANCH} not found" >&2
+	echo_red "[STOP] Branch ${WP_LINE_BRANCH} not found" >&2
 	exit 1
 fi
 
 # Uncommitted changes
 if [[ -n "$(git status --porcelain --untracked-files=all)" ]]; then
-	cecho red "[STOP] Commit changes before starting the flow." >&2
+	echo_red "[STOP] Commit changes before starting the flow." >&2
 	exit 1
 fi
 
 ### MAIN FLOW
 
-cecho cyan "➜ Switch WP to ${WP_LINE}.*"
+echo_cyan "➜ ➜ Switch WP to ${WP_LINE}.*"
 run_php "composer require --dev wordpress/wordpress:${WP_LINE}.*  --no-interaction --no-update"
 run_php "composer update wordpress/wordpress  --no-interaction --with-dependencies"
 
-cecho cyan "➜ Run parser"
+echo_cyan "➜ ➜ Run parser"
 run_php "php parser/run.php"
 
-cecho cyan "➜ Run tests"
+echo_cyan "➜ ➜ Run tests"
 run_php "composer run phpunit -- --colors=always"
 
-cecho cyan "➜ Create/Reuse WORKTREE ${WORKTREE_DIR_REL}"
+echo_cyan "➜ ➜ Create/Reuse WORKTREE ${WORKTREE_DIR_REL}"
 git worktree prune --expire now >/dev/null 2>&1
 if git worktree list --porcelain | grep -Fqx "worktree ${WORKTREE_DIR}"; then
 	worktree_branch="$(git -C "${WORKTREE_DIR}" rev-parse --abbrev-ref HEAD)"
 	if [[ "${worktree_branch}" != "${WP_LINE_BRANCH}" ]]; then
-		cecho red "[STOP] Existing worktree ${WORKTREE_DIR} is on branch ${worktree_branch}, expected ${WP_LINE_BRANCH}" >&2
+		echo_red "[STOP] Existing worktree ${WORKTREE_DIR} is on branch ${worktree_branch}, expected ${WP_LINE_BRANCH}" >&2
 		exit 1
 	fi
 else
@@ -69,31 +69,31 @@ else
 fi
 
 # copy
-cecho cyan "➜ Copy to WORKTREE ${WORKTREE_DIR_REL}"
+echo_cyan "➜ ➜ Copy to WORKTREE ${WORKTREE_DIR_REL}"
 cp -a "${RELEASE_FILES[@]}" "${WORKTREE_DIR}/"
 rsync -a --delete --delete-excluded \
 	--include="/wp-line-extra/${WP_LINE}/***" \
 	--exclude="/wp-line-extra/*" \
 	"wp-runtime/" "${WORKTREE_DIR}/wp-runtime/"
 
-cecho cyan "➜ Reset all changes in current branch"
+echo_cyan "➜ ➜ Reset all changes in current branch"
 git reset --hard HEAD
 run_php "composer install" # NOTE: to not change lock file
 
 if [[ -n "${NOT_PUSH}" ]]; then
-	cecho yellow "➜ Commit/tag/push skipped."
+	echo_yellow "➜ ➜ Commit/tag/push skipped."
 	exit 0
 fi
 
 # commit & push
-cecho cyan "➜ Commit to WORKTREE ${WORKTREE_DIR_REL} and add TAG ${RELEASE_TAG}"
+echo_cyan "➜ ➜ Commit to WORKTREE ${WORKTREE_DIR_REL} and add TAG ${RELEASE_TAG}"
 git -C "${WORKTREE_DIR}" add -A
 
 if git -C "${WORKTREE_DIR}" diff --cached --quiet; then
-	cecho yellow "Nothing to commit on ${WP_LINE_BRANCH}."
+	echo_yellow "Nothing to commit on ${WP_LINE_BRANCH}."
 else
 	git -C "${WORKTREE_DIR}" commit -m "Release ${RELEASE_TAG}"
 	git -C "${WORKTREE_DIR}" tag "${RELEASE_TAG}"
 	git -C "${WORKTREE_DIR}" push --atomic origin "${WP_LINE_BRANCH}" "refs/tags/${RELEASE_TAG}"
-	cecho green "Pushed with tag: ${RELEASE_TAG}"
+	echo_green "➜ ➜ ➜ ➜ Pushed with tag: ${RELEASE_TAG}"
 fi
