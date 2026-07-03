@@ -17,6 +17,7 @@ Dependencies:
   - `zero.php`
   - `README.md`
   - `SYMBOLS-INFO.md`
+  - `VERSION` (full package version, identical to the release tag)
   - `wp-runtime/`
 - Release tag format:
   - `<wp-major>.<wp-minor>.<script-major>.<script-minor>`
@@ -45,7 +46,7 @@ Inputs:
 2. Regenerate runtime copies via parser.
 3. Run full test suite.
 4. Create or reuse git worktree for branch `wp-<line>`.
-5. Copy `zero.php`, `README.md`, `SYMBOLS-INFO.md` and `wp-runtime/` into that worktree.
+5. Copy `zero.php`, `README.md`, `SYMBOLS-INFO.md` and `wp-runtime/` into that worktree, then write the release tag to `VERSION`.
 6. Commit on `wp-<line>`.
 7. Create release tag.
 

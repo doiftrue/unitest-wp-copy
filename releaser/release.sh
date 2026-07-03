@@ -71,6 +71,7 @@ fi
 # copy
 echo_cyan "➜ ➜ Copy to WORKTREE ${WORKTREE_DIR_REL}"
 cp -a "${RELEASE_FILES[@]}" "${WORKTREE_DIR}/"
+printf '%s\n' "${RELEASE_TAG}" > "${WORKTREE_DIR}/VERSION"
 rsync -a --delete --delete-excluded \
 	--include="/wp-line-extra/${WP_LINE}/***" \
 	--exclude="/wp-line-extra/*" \
