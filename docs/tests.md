@@ -49,6 +49,8 @@ This library supports multiple WP lines (see `README.md`). Tests run against all
 
 **Rule**: if a symbol's `since` version in config is higher than the oldest supported WP line (`6.5`), its test **must** include a version-skip guard. Use the symbol's exact `since` version from config:
 
+Example (substitute the tested symbol name and its own `since` version):
+
 ```php
 if( $wp_ver = wp_version_compare( '< 6.9.0' ) ){
 	$this->markTestSkipped( "wp_js_dataset_name() not exists on WP $wp_ver" );

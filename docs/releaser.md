@@ -20,7 +20,7 @@ Dependencies:
   - `wp-runtime/`
 - Release tag format:
   - `<wp-major>.<wp-minor>.<script-major>.<script-minor>`
-  - example: `6.9.0.26`
+  - example: `6.8.2.8`
 
 
 ## Release Command
@@ -33,8 +33,9 @@ make release WP_LINE=6.8 NOT_PUSH=1
 
 Inputs:
 - `WP_LINE` is required
-- `RELEASE_TAG` is auto-generated as `<WP_LINE>.<last VERSION part #1>.<last VERSION part #2>`
-  - example: if `WP_LINE=6.8` and `VERSION=6.9.0.26`, then tag is `6.8.0.26`
+- `RELEASE_TAG` is auto-generated as `<WP_LINE>.<script-major>.<script-minor>`, where
+  `script-major.script-minor` are the last two parts of `VERSION`
+  - example: if `WP_LINE=6.8` and `VERSION=7.0.2.8`, then tag is `6.8.2.8`
 - optional `NOT_PUSH=1` runs all release steps but skips commit/tag/push
 
 
@@ -44,7 +45,7 @@ Inputs:
 2. Regenerate runtime copies via parser.
 3. Run full test suite.
 4. Create or reuse git worktree for branch `wp-<line>`.
-5. Copy `zero.php` and `wp-runtime/` into that worktree.
+5. Copy `zero.php`, `README.md`, `SYMBOLS-INFO.md` and `wp-runtime/` into that worktree.
 6. Commit on `wp-<line>`.
 7. Create release tag.
 

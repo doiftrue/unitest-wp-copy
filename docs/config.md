@@ -9,14 +9,14 @@ Parser flow details are in [parser.md](parser.md).
 ## Config Layout
 
 Base (latest supported WP line):
-- `config/functions/<wp-source-file>.php`
+- `config/functions/<wp-path>/<source-file>.php` (for example `config/functions/wp-includes/formatting.php`)
 - `config/symbols-moved.php`
 - `config/symbols-removed.php`
 - `config/classes.php`
 - `config/static-methods.php`
 
 Overrides for older WP lines:
-- `config/<wp-line>/functions/<wp-source-file>.php`
+- `config/<wp-line>/functions/<wp-path>/<source-file>.php`
 - `config/<wp-line>/classes.php`
 - `config/<wp-line>/static-methods.php`
 
@@ -36,9 +36,9 @@ Merge rules:
   - scalar/array value adds/replaces file metadata;
   - `false` on a file key removes inherited file config.
 - Versioned symbol moves (`symbols-moved.php`):
-  - parser applies moves to inherited base config before version override merge;
+  - parser applies moves to inherited base config before version override merge.
 - Versioned symbol removals (`symbols-removed.php`):
-  - parser applies removals after moves and before version override merge;
+  - parser applies removals after moves and before version override merge.
 
 
 ## Value Formats

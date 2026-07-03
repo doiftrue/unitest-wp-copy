@@ -2,7 +2,7 @@
 
 ## Scope
 
-This document describes the WP-like runtime used by tests that will use code of this project to write it's unit tests. How this code (runtime) loads and what it contains.
+This document describes the WP-like runtime that this project provides to tests: how it loads and what it contains.
 
 
 ## Entry Points
@@ -21,11 +21,11 @@ This document describes the WP-like runtime used by tests that will use code of 
 - `wp-runtime/copy/functions/*`: parser-generated copied functions.
 - `wp-runtime/copy/classes/*`: parser-generated copied classes.
 - `wp-runtime/copy/mockable/*`: parser-generated functions with WP_Mock handler injection.
-- `wp-runtime/custom-mocks/*`: manual runtime-adapted mocks.
-- `wp-runtime/wp-line-extra/<wp-line>/*`: WP-line specific mocks, overlays, init-parts etc.
-- `wp-runtime/wp-line-extra/<wp-line>/overlaps.php`: WP-line specific mocks that overlays copied symbols.
 - `wp-runtime/copy/classes-statics/*`: parser-generated static-method compatibility functions.
-- `SYMBOLS-INFO.md`: index of all available symbols (functions, classes).
+- `wp-runtime/custom-mocks/*`: manual runtime-adapted mocks.
+- `wp-runtime/wp-line-extra/<wp-line>/*`: WP-line specific mocks, overlays, init-parts etc. (override mechanism: [parser.md](parser.md)).
+- `wp-runtime/wp-line-extra/<wp-line>/overlaps.php`: WP-line specific mocks that overlay copied symbols.
+- `SYMBOLS-INFO.md` (repo root): index of all available symbols (functions, classes).
 
 
 ## Bootstrap Effects

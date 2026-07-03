@@ -33,8 +33,8 @@ If configured symbol is missing in source file, parser throws.
 
 ## How `wp-line-extra` should be used
 
-All inside `wp-runtime/wp-line-extra/6.8/*` should override `wp-runtime/*` if relative path matches. 
-Example: `wp-runtime/wp-line-extra/6.8/init-parts/wp-includes/kses.php` overrides `wp-runtime/init-parts/wp-includes/kses.php` for WP 6.8 line.
+All inside `wp-runtime/wp-line-extra/<wp-line>/*` should override `wp-runtime/*` if relative path matches.
+Example: `wp-runtime/wp-line-extra/6.8/init-parts/wp-includes/kses.php` overrides `wp-runtime/init-parts/wp-includes/kses.php` for the WP 6.8 line.
 
 
 ## Parser Code Style
@@ -49,4 +49,4 @@ When editing `parser/src/*`:
 
 - `wp-runtime/copy/` is generated output; avoid manual edits unless adaptation is intentional.
 - Parser copies only configured symbols.
-- Parser is not a dependency analyzer; evaluate symbol suitability via [symbol-eligibility.md](symbol-eligibility.md).
+- Evaluate symbol suitability before configuring via [symbol-eligibility.md](symbol-eligibility.md).

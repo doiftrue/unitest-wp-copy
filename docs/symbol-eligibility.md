@@ -14,12 +14,15 @@ Dependency documents:
 ## Rules for Symbol Eligibility
 
 - Validate the full transitive dependency chain before adding any symbol.
-- A symbol is eligible only if every dependency in its chain is:
-  - already available in current runtime (`SYMBOLS-INFO.md`), or
-  - added in the same change and validated by these same rules recursively, or
+- A symbol is eligible only if every dependency in its chain is one of:
+  - already available in current runtime (`SYMBOLS-INFO.md`);
+  - added in the same change and validated by these same rules recursively.
 - Reject a symbol if any dependency requires unsupported runtime behavior (DB, full WordPress bootstrap, network I/O, admin/request lifecycle, or similarly heavy runtime coupling).
 - Do not add unresolved dependencies "for later".
-- A symbol that calls `get_option()` is compatible only when every option name it may read is present in `$GLOBALS['stub_wp_options']`. The same rule applies to `get_site_option()` and `$GLOBALS['stub_wp_site_options']` in multisite mode. The existence of these runtime mocks alone does not make arbitrary or unresolved option access eligible.
+- A symbol that reads options is compatible only when every option name it may read is resolvable in the runtime (see the `get_option()`/`get_site_option()` priority in [runtime.md](runtime.md)):
+  - `get_option()` calls require each option present in `$GLOBALS['stub_wp_options']`;
+  - `get_site_option()` calls require each option present in `$GLOBALS['stub_wp_site_options']` in multisite mode.
+  - The existence of these runtime mocks alone does not make arbitrary or unresolved option access eligible.
 - The symbol should solve an in-memory / pure-PHP task that is useful for unit tests.
 - Symbol behavior should be predictable and not tightly coupled to a "live" runtime (DB, HTTP, admin/request lifecycle).
 - If only a small part works, but key public behavior is not viable in this isolated runtime, the symbol is not suitable and should stay disabled in config.
@@ -75,8 +78,8 @@ Use Auto-Mockable only for "original WP logic + handler injection":
 - mark function config value as `'<since-version> mockable'` (see [config.md](config.md));
 - parser generates into `wp-runtime/copy/mockable/...`;
 - function start includes `WP_Mock_Utils` handler check/call;
-- add tests for:
-  - default fallback behavior;
+- cover both paths in tests as required by the Auto-Mockable Review above (fallback + override):
+  - default fallback behavior.
   - `WP_Mock::userFunction(...)` override behavior.
 
 
@@ -87,7 +90,7 @@ Use this only when:
 - one static method is utility-like and dependency-safe.
 - this utility-like method is used by another symbol that is eligible for copying.
 
-INFP: Configured methods are copied as plain functions:
+INFO: Configured methods are copied as plain functions:
 - `ClassName::methodName()` -> `ClassName__methodName()`
 - output in `wp-runtime/copy/classes-statics/ClassName.php`
 - parser replace static calls of `ClassName::methodName()` in copied code with `ClassName__methodName()` to break a dependency.
@@ -95,7 +98,5 @@ INFP: Configured methods are copied as plain functions:
 
 ## Decision Outcome
 
-- If eligible: add symbol to config, regenerate copies, add/update tests, run full suite.
-- If not eligible: keep symbol disabled/commented in config with a short `why` reason.
-
-Comment format and placement rules are documented in [config.md](config.md).
+- If eligible: follow "Workflow: Add Symbols" above.
+- If not eligible: keep symbol disabled/commented in config with a short `why` reason (comment format and placement rules are documented in [config.md](config.md)).
