@@ -55,6 +55,7 @@ return [
 	'esc_js'                             => '2.8.0',
 	'esc_html'                           => '2.8.0',
 	'esc_attr'                           => '2.8.0',
+	'esc_sql'                            => '2.8.0',
 	'links_add_base_url'                 => '2.7.0',
 	'_links_add_base'                    => '2.7.0',
 	'links_add_target'                   => '2.7.0',
@@ -121,7 +122,6 @@ wp_targeted_link_rel                // why: deprecated
 wp_targeted_link_rel_callback       // why: deprecated
 wp_init_targeted_link_rel_filters   // why: deprecated
 wp_remove_targeted_link_rel_filters // why: deprecated
-esc_sql                             // why: depends on $wpdb
 sanitize_option                     // why: depends on $wpdb + options/roles/i18n runtime chain
 wp_pre_kses_block_attributes        // why: depends on block parser (maybe can be implemented later)
 wp_enqueue_emoji_styles             // why: wp_add_inline_style dependency

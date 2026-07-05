@@ -61,6 +61,20 @@ class formatting__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertFalse( is_email( 'bad@@' ) );
 	}
 
+	public function test__esc_sql(): void {
+		global $wpdb;
+
+		$this->assertSame( "O\\'Reilly", esc_sql( "O'Reilly" ) );
+
+		$escaped = esc_sql( [
+			'name'   => "O'Reilly",
+			'nested' => [ '100%' ],
+		] );
+
+		$this->assertSame( "O\\'Reilly", $escaped['name'] );
+		$this->assertSame( '100%', $wpdb->remove_placeholder_escape( $escaped['nested'][0] ) );
+	}
+
 	public function test__wp_check_invalid_utf8(): void {
 		$this->assertSame( 'abc', wp_check_invalid_utf8( "abc" ) );
 		$this->assertSame( '', wp_check_invalid_utf8( "abc\x80" ) );
