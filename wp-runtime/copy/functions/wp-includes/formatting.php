@@ -1539,6 +1539,14 @@ if( ! function_exists( 'esc_attr' ) ) :
 endif;
 
 // wp-includes/formatting.php (WP 6.6.5)
+if( ! function_exists( 'esc_sql' ) ) :
+	function esc_sql( $data ) {
+		global $wpdb;
+		return $wpdb->_escape( $data );
+	}
+endif;
+
+// wp-includes/formatting.php (WP 6.6.5)
 if( ! function_exists( 'links_add_base_url' ) ) :
 	function links_add_base_url( $content, $base, $attrs = array( 'src', 'href' ) ) {
 		global $_links_add_base;
