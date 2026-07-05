@@ -96,6 +96,22 @@ INFO: Configured methods are copied as plain functions:
 - parser replace static calls of `ClassName::methodName()` in copied code with `ClassName__methodName()` to break a dependency.
 
 
+## Workflow: Instance Methods for Runtime Adapters
+
+Use an instance-method trait only when:
+- the full WordPress class is unsuitable for the isolated runtime;
+- methods are extracted strictly from the explicitly configured source class;
+- selected original methods are dependency-safe when hosted by a reduced custom class;
+- every dependency through `$this`, `self::`, and `parent::` is identified and provided by the consuming class;
+- the selected methods do not rely on constructor side effects or other hidden invariants of the full class;
+- the selected methods do not require DB, network, filesystem, or WordPress lifecycle behavior;
+- the selected method set is behaviorally complete and does not split a coupled method group in a way that changes its contract;
+- magic methods and methods that mutate critical internal state have an explicit compatibility justification;
+- runtime-specific methods remain manual adaptations in `wp-runtime/custom-mocks/*`.
+
+If eligible, follow the instance-method configuration and generation workflows documented in [config.md](config.md) and [parser.md](parser.md). On WordPress updates, review copied method signatures and dependencies for compatibility. Test the trait through its consuming runtime adapter, including its interaction with manually adapted methods, rather than treating the generated trait as a public symbol.
+
+
 ## Decision Outcome
 
 - If eligible: follow "Workflow: Add Symbols" above.

@@ -21,6 +21,7 @@ get_template_directory_uri()
 restore_current_blog()
 switch_to_blog()
 wp_get_wp_version()
+wp_load_translations_early()
 wp_salt()
 ```
 

@@ -30,6 +30,9 @@ class Config {
 	/** @see config/static-methods.php */
 	public readonly array $static_methods_data;
 
+	/** @see config/instance-methods.php */
+	public readonly array $instance_methods_data;
+
 	public function __construct() {
 		$parser_dir = dirname( __DIR__ );
 		$project_dir = dirname( $parser_dir );
@@ -49,6 +52,7 @@ class Config {
 		$this->funcs_data = $this->build_funcs_config();
 		$this->classes_data = $this->build_classes_config();
 		$this->static_methods_data = $this->build_static_methods_config();
+		$this->instance_methods_data = $this->build_instance_methods_config();
 	}
 
 	/** EG: 6.8.0  >>>  6.8 */
@@ -79,6 +83,13 @@ class Config {
 	private function build_static_methods_config(): array {
 		$base_config = $this->load_php_config_file( "$this->config_dir/static-methods.php", true );
 		$ver_config  = $this->load_php_config_file( "$this->line_config_dir/static-methods.php", false );
+
+		return $this->merge_flat_configs( $base_config, $ver_config );
+	}
+
+	private function build_instance_methods_config(): array {
+		$base_config = $this->load_php_config_file( "$this->config_dir/instance-methods.php", true );
+		$ver_config  = $this->load_php_config_file( "$this->line_config_dir/instance-methods.php", false );
 
 		return $this->merge_flat_configs( $base_config, $ver_config );
 	}
@@ -184,7 +195,8 @@ class Config {
 	}
 
 	/**
-	 * Merges config with flat array data: [ rel_file => value ] See: static-methods.php
+	 * Merges config with flat array data: [ rel_file => value ].
+	 * See: static-methods.php, instance-methods.php.
 	 *
 	 * Override rules:
 	 * - false value deletes array element.

@@ -22,6 +22,7 @@ This document describes the WP-like runtime that this project provides to tests:
 - `wp-runtime/copy/classes/*`: parser-generated copied classes.
 - `wp-runtime/copy/mockable/*`: parser-generated functions with WP_Mock handler injection.
 - `wp-runtime/copy/classes-statics/*`: parser-generated static-method compatibility functions.
+- `wp-runtime/copy/traits/*`: parser-generated traits containing selected original instance methods for runtime-adapted classes.
 - `wp-runtime/custom-mocks/*`: manual runtime-adapted mocks.
 - `wp-runtime/wp-line-extra/<wp-line>/*`: WP-line specific mocks, overlays, init-parts etc. (override mechanism: [parser.md](parser.md)).
 - `wp-runtime/wp-line-extra/<wp-line>/overlaps.php`: WP-line specific mocks that overlay copied symbols.
@@ -39,6 +40,18 @@ This document describes the WP-like runtime that this project provides to tests:
 - initializes required WP-like globals used by copied code.
 
 Runtime state is process-shared. Tests must restore changed globals/options in `setUp()`/`tearDown()`.
+
+### Runtime-adapted classes with copied methods
+
+When a class cannot be copied as a whole, a custom runtime adapter may use a trait generated from selected original WordPress instance methods. The trait contains unchanged method implementations; the custom class supplies the reduced runtime state and any intentionally adapted dependencies.
+
+Generated traits are available under the `Unitest_WP_Copy` namespace in `wp-runtime/copy/traits/` and may be used by manual mocks that need the configured original WordPress methods. The consuming mock must provide every property and excluded method referenced through `$this`.
+
+Current consumers:
+
+| Runtime adapter | Generated trait      | Manual adaptation |
+| --- |----------------------| --- |
+| `WPDB_Runtime` | `wpdb__Copied_Methods` | `_real_escape()` uses `addslashes()` because the runtime has no database connection. |
 
 ### `get_option()` and `get_site_option()` are runtime-adapted manual mocks.
 

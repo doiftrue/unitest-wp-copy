@@ -253,29 +253,23 @@ class Config__Test extends Project_TestCase {
 		$config_dir = "$tmp_dir/config";
 		$line_dir   = "$config_dir/6.6";
 
-		$this->write_config_data_to_file(
-			"$config_dir/static-methods.php",
-			[
-				'wp-includes/class-a.php' => [
-					'class'   => 'ClassA',
-					'methods' => [ 'm1' => '' ],
-				],
-				'wp-includes/class-b.php' => [
-					'class'   => 'ClassB',
-					'methods' => [ 'm2' => '' ],
-				],
-			]
-		);
-		$this->write_config_data_to_file(
-			"$line_dir/static-methods.php",
-			[
-				'wp-includes/class-a.php' => false,
-				'wp-includes/class-c.php' => [
-					'class'   => 'ClassC',
-					'methods' => [ 'm3' => '' ],
-				],
-			]
-		);
+		$this->write_config_data_to_file( "$config_dir/static-methods.php", [
+			'wp-includes/class-a.php' => [
+				'class'   => 'ClassA',
+				'methods' => [ 'm1' => '1.0.0' ],
+			],
+			'wp-includes/class-b.php' => [
+				'class'   => 'ClassB',
+				'methods' => [ 'm2' => '2.0.0' ],
+			],
+		] );
+		$this->write_config_data_to_file( "$line_dir/static-methods.php", [
+			'wp-includes/class-a.php' => false,
+			'wp-includes/class-c.php' => [
+				'class'   => 'ClassC',
+				'methods' => [ 'm3' => '3.0.0' ],
+			],
+		] );
 
 		$config = $this->make_config( [
 			'config_dir'      => $config_dir,
@@ -287,10 +281,59 @@ class Config__Test extends Project_TestCase {
 			[
 				'wp-includes/class-b.php' => [
 					'class'   => 'ClassB',
+					'methods' => [ 'm2' => '2.0.0' ],
+				],
+				'wp-includes/class-c.php' => [
+					'class'   => 'ClassC',
+					'methods' => [ 'm3' => '3.0.0' ],
+				],
+			],
+			$result
+		);
+	}
+
+	public function test__build_instance_methods_config__merges_base_and_version_config() {
+		$tmp_dir    = $this->make_temp_dir();
+		$config_dir = "$tmp_dir/config";
+		$line_dir   = "$config_dir/6.6";
+
+		$this->write_config_data_to_file( "$config_dir/instance-methods.php", [
+			'wp-includes/class-a.php' => [
+				'class'   => 'ClassA',
+				'trait'   => 'ClassA_Methods',
+				'methods' => [ 'm1' => '' ],
+			],
+			'wp-includes/class-b.php' => [
+				'class'   => 'ClassB',
+				'trait'   => 'ClassB_Methods',
+				'methods' => [ 'm2' => '' ],
+			],
+		] );
+		$this->write_config_data_to_file( "$line_dir/instance-methods.php", [
+			'wp-includes/class-a.php' => false,
+			'wp-includes/class-c.php' => [
+				'class'   => 'ClassC',
+				'trait'   => 'ClassC_Methods',
+				'methods' => [ 'm3' => '' ],
+			],
+		] );
+
+		$config = $this->make_config( [
+			'config_dir'      => $config_dir,
+			'line_config_dir' => $line_dir,
+		] );
+		$result = $this->call_private_method( 'build_instance_methods_config', [], $config );
+
+		$this->assertSame(
+			[
+				'wp-includes/class-b.php' => [
+					'class'   => 'ClassB',
+					'trait'   => 'ClassB_Methods',
 					'methods' => [ 'm2' => '' ],
 				],
 				'wp-includes/class-c.php' => [
 					'class'   => 'ClassC',
+					'trait'   => 'ClassC_Methods',
 					'methods' => [ 'm3' => '' ],
 				],
 			],
@@ -303,54 +346,36 @@ class Config__Test extends Project_TestCase {
 		$config_dir = "$tmp_dir/config";
 		$line_dir   = "$config_dir/6.6";
 
-		$this->write_config_data_to_file(
-			"$config_dir/functions/wp-includes/functions.php",
-			[
-				'path_is_absolute' => '2.5.0',
-			]
-		);
-		$this->write_config_data_to_file(
-			"$config_dir/functions/wp-includes/load.php",
-			[
-				'absint' => '2.5.0',
-			]
-		);
-		$this->write_config_data_to_file(
-			"$config_dir/symbols-moved.php",
-			[
-				'functions' => [
-					'absint' => [
-						'moved_in' => '6.7',
-						'from'    => 'wp-includes/functions.php',
-						'to'      => 'wp-includes/load.php',
-					],
+		$this->write_config_data_to_file( "$config_dir/functions/wp-includes/functions.php", [
+			'path_is_absolute' => '2.5.0',
+		] );
+		$this->write_config_data_to_file( "$config_dir/functions/wp-includes/load.php", [
+			'absint' => '2.5.0',
+		] );
+		$this->write_config_data_to_file( "$config_dir/symbols-moved.php", [
+			'functions' => [
+				'absint' => [
+					'moved_in' => '6.7',
+					'from'    => 'wp-includes/functions.php',
+					'to'      => 'wp-includes/load.php',
 				],
-			]
-		);
-		$this->write_config_data_to_file(
-			"$config_dir/symbols-removed.php",
-			[
-				'functions' => [
-					'path_is_absolute' => [
-						'removed_in' => '6.6',
-						'file'       => 'wp-includes/functions.php',
-					],
+			],
+		] );
+		$this->write_config_data_to_file( "$config_dir/symbols-removed.php", [
+			'functions' => [
+				'path_is_absolute' => [
+					'removed_in' => '6.6',
+					'file'       => 'wp-includes/functions.php',
 				],
-			]
-		);
-		$this->write_config_data_to_file(
-			"$line_dir/functions/wp-includes/functions.php",
-			[
-				'absint' => '2.5.0 mockable',
-				'path_is_absolute' => '2.5.0 mockable',
-			]
-		);
-		$this->write_config_data_to_file(
-			"$line_dir/functions/wp-includes/load.php",
-			[
-				'absint' => false,
-			]
-		);
+			],
+		] );
+		$this->write_config_data_to_file( "$line_dir/functions/wp-includes/functions.php", [
+			'absint' => '2.5.0 mockable',
+			'path_is_absolute' => '2.5.0 mockable',
+		] );
+		$this->write_config_data_to_file( "$line_dir/functions/wp-includes/load.php", [
+			'absint' => false,
+		] );
 
 		$config = $this->make_config( [
 			'config_dir'      => $config_dir,

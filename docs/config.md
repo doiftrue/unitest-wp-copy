@@ -14,11 +14,13 @@ Base (latest supported WP line):
 - `config/symbols-removed.php`
 - `config/classes.php`
 - `config/static-methods.php`
+- `config/instance-methods.php`
 
 Overrides for older WP lines:
 - `config/<wp-line>/functions/<wp-path>/<source-file>.php`
 - `config/<wp-line>/classes.php`
 - `config/<wp-line>/static-methods.php`
+- `config/<wp-line>/instance-methods.php`
 
 
 ## Merge Model (Base + Overrides)
@@ -32,7 +34,7 @@ Merge rules:
 - Nested symbol config (`functions/*`, `classes.php`):
   - scalar override value adds/replaces symbol metadata;
   - `false` on a symbol key removes inherited symbol.
-- Flat config (`static-methods.php`):
+- Flat config (`static-methods.php`, `instance-methods.php`):
   - scalar/array value adds/replaces file metadata;
   - `false` on a file key removes inherited file config.
 - Versioned symbol moves (`symbols-moved.php`):
@@ -73,6 +75,19 @@ Static methods compatibility:
   `'path/to/class-file.php' => [ 'class' => 'ClassName', 'methods' => [ 'methodName' => '' ] ]`
 - remove inherited file config in override:
   `'path/to/class-file.php' => false`
+
+Instance methods copied into a trait:
+- include:
+  ```php
+  'path/to/class-file.php' => [
+      'class'   => 'SourceClass',
+      'trait'   => '{SourceClass}__Copied_Methods',
+      'methods' => [ 'methodName' => '<since-version>' ],
+  ]
+  ```
+- `class` selects the source class in the WordPress file;
+- `trait` defines the generated trait and output filename;
+- `methods` maps original instance method names to the WordPress version where each method was introduced;
 
 
 ## Rules for Disabled Symbols

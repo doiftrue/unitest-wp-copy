@@ -22,6 +22,7 @@ Run parser with:
 `parser/run.php` builds `Updater`, which:
 - reads configured WP source files, classes, methods;
 - extracts selected top-level functions, classes;
+- generates traits from configured instance methods for use by runtime-adapted classes;
 - updates generated content after `// ------------------auto-generated---------------------`;
 - wraps copied symbols with `function_exists` or `class_exists` guards;
 - skips symbols whose `<since-version>` is higher than current `wp_version`;
@@ -29,6 +30,12 @@ Run parser with:
   - static method call rewrite (`Class::method()` -> `Class__method()`).
 
 If configured symbol is missing in source file, parser throws.
+
+## Instance-method traits
+
+`Instance_Methods_Trait_Copier` extracts configured methods from one named source class and generates a trait under `wp-runtime/copy/traits/` in the `Unitest_WP_Copy` namespace. Methods keep their original names, visibility, signatures, and bodies. Each method receives an annotation identifying the WordPress version it was copied from. Methods whose configured `since` version is higher than the current WordPress version are skipped.
+
+The generated trait is internal implementation support and is not added to `SYMBOLS-INFO.md`. Its consumer must provide every property and excluded method referenced through `$this`. Methods requiring runtime-specific behavior must remain in the manual adapter rather than being configured for copying.
 
 
 ## How `wp-line-extra` should be used

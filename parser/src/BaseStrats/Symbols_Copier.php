@@ -27,6 +27,7 @@ class Symbols_Copier {
 			new Functions_Copier( $this->config, $this->lister ),
 			new Classes_Copier( $this->config, $this->lister ),
 			new Static_Methods_Copier( $this->config, $this->lister ),
+			new Instance_Methods_Trait_Copier( $this->config, $this->lister ),
 		];
 
 		foreach( $strategies as $strategy ){

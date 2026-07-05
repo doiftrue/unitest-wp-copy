@@ -24,6 +24,7 @@ Parser-specific flow is described in [parser.md](parser.md).
 - Core copied function tests: `tests/functions/...`
 - Class tests: `tests/classes/...` (one class per file)
 - Static-class-method compatibility tests: `tests/classes-statics/...`
+- Generated instance-method traits: cover through their consuming runtime-adapted class under `tests/custom-mocks/...`; parser generation behavior belongs under `tests/parser/...`.
 - Mockable function tests:
   - source files in `wp-runtime/copy/mockable/...`
   - tests in `tests/mockable/...` with the same WP-path structure
