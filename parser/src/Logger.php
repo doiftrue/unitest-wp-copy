@@ -2,7 +2,7 @@
 
 namespace Parser;
 
-final class Logger {
+class Logger {
 
 	public function __construct(
 		private readonly bool $verbose = false,

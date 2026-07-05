@@ -28,7 +28,14 @@ abstract class Symbols_Copy_Strategy {
 	abstract public function get_log_message( array $item ): string;
 
 	protected function is_supported_for_current_wp( string $since ): bool {
-		return version_compare( $this->config->wp_version, $since, '>=' );
+		$wp_version = $this->config->wp_version;
+
+		// add 3d zero - 7.0 >>> 7.0.0 for consistency
+		if( preg_match( '/^\d+\.\d+$/', $wp_version ) ){
+			$wp_version .= '.0';
+		}
+
+		return version_compare( $wp_version, $since, '>=' );
 	}
 
 }

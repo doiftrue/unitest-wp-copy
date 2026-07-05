@@ -19,5 +19,14 @@ function wp_version( string $wp_dir = '' ): string {
  */
 function wp_version_compare( string $to_compare ): string {
 	[ $operator, $version ] = explode( ' ', $to_compare, 2 );
-	return version_compare( wp_version(), $version, $operator ) ? wp_version() : '';
+	$wp_version = wp_version();
+
+	if( preg_match( '/^\d+\.\d+$/', $wp_version ) ){
+		$wp_version .= '.0';
+	}
+	if( preg_match( '/^\d+\.\d+$/', $version ) ){
+		$version .= '.0';
+	}
+
+	return version_compare( $wp_version, $version, $operator ) ? wp_version() : '';
 }

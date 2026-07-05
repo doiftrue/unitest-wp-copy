@@ -54,6 +54,9 @@ return [
 	'wp-includes/class-wp-block-type.php'         => [ 'WP_Block_Type' => '5.0.0' ],
 	// In-memory registry used by block type lookup helpers.
 	'wp-includes/class-wp-block-type-registry.php' => [ 'WP_Block_Type_Registry' => '5.0.0' ],
+	// In-memory Block Bindings source model and registry.
+	'wp-includes/class-wp-block-bindings-source.php'   => [ 'WP_Block_Bindings_Source' => '6.5.0' ],
+	'wp-includes/class-wp-block-bindings-registry.php' => [ 'WP_Block_Bindings_Registry' => '6.5.0' ],
 	// Block styles registry; in-memory.
 	'wp-includes/class-wp-block-styles-registry.php'   => [ 'WP_Block_Styles_Registry' => '5.3.0' ],
 	// Base abstract walker for tree structures; pure logic.
