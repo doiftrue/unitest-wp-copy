@@ -46,4 +46,24 @@ class meta__Test extends \PHPUnit\Framework\TestCase {
 			[ 'type' => 'string' ]
 		) );
 	}
+
+	public function test___get_meta_table() {
+		$this->assertSame( 'wp_postmeta', _get_meta_table( 'post' ) );
+		$this->assertSame( 'wp_commentmeta', _get_meta_table( 'comment' ) );
+		$this->assertFalse( _get_meta_table( 'unknown' ) );
+	}
+
+	public function test__get_meta_sql() {
+		$sql = get_meta_sql(
+			[ [ 'key' => 'path', 'value' => 'docs_%', 'compare' => 'LIKE' ] ],
+			'post',
+			'wp_posts',
+			'ID'
+		);
+
+		$this->assertStringContainsString( 'INNER JOIN wp_postmeta', $sql['join'] );
+		$this->assertStringContainsString( "wp_postmeta.meta_key = 'path'", $sql['where'] );
+		$where = $GLOBALS['wpdb']->remove_placeholder_escape( $sql['where'] );
+		$this->assertStringContainsString( "wp_postmeta.meta_value LIKE '%docs\\\\_\\\\%%'", $where );
+	}
 }

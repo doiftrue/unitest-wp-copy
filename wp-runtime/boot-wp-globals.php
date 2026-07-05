@@ -36,3 +36,10 @@ global $wp_hasher;
 if ( version_compare( $wp_version, '6.8', '<' ) ) {
 	$wp_hasher = new PasswordHash( 8, true );
 }
+
+// CUSTOM ADAPTERS
+
+// SQL-string adapter only. It exposes metadata table names and escaping helpers,
+// but intentionally has no database connection or query methods.
+global $wpdb;
+$wpdb || $wpdb = new \Unitest_WP_Copy\WPDB_Runtime();

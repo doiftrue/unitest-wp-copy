@@ -26,6 +26,7 @@ return [
 	'is_admin'                   => '1.5.1 mockable',
 	'timer_start'                => '0.71',
 	'timer_stop'                 => '0.71 mockable',
+	// 'wp_load_translations_early' => '', // why: custom no-op mock for isolated runtime
 ];
 
 /*
@@ -51,7 +52,6 @@ wp_is_maintenance_mode                            // why: filesystem + bootstrap
 wp_is_recovery_mode                               // why: recovery bootstrap/session dependency.
 wp_is_site_protected_by_basic_auth                // why: server/auth runtime dependency.
 wp_is_xml_request                                 // why: request/content-type runtime dependency.
-wp_load_translations_early                        // why: translation bootstrap dependency.
 wp_magic_quotes                                   // why: mutates request globals.
 wp_maintenance                                    // why: maintenance bootstrap/output dependency.
 wp_not_installed                                  // why: install/bootstrap + output dependency.

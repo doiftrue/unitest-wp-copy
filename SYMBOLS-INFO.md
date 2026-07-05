@@ -140,6 +140,7 @@ WP_Http_Encoding{}
 WP_List_Util{}
 WP_Locale{}
 WP_MatchesMapRegex{}
+WP_Meta_Query{}
 WP_Object_Cache{}
 WP_Screen{}
 WP_Script_Modules{}
@@ -175,6 +176,7 @@ _filter_do_shortcode_context()
 _flatten_blocks()
 _get_component_from_parsed_url_array()
 _get_custom_object_labels()
+_get_meta_table()
 _get_non_cached_ids()
 _get_widget_id_base()
 _get_wptexturize_shortcode_regex()
@@ -363,6 +365,7 @@ get_intermediate_image_sizes()
 get_language_attributes()
 get_locale_stylesheet_uri()
 get_media_embedded_in_content()
+get_meta_sql()
 get_metadata_default()
 get_page_children()
 get_page_hierarchy()

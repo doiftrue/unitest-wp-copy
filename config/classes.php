@@ -8,6 +8,8 @@ return [
 	'wp-includes/class-wp-error.php'           => [ 'WP_Error' => '2.1.0' ],
 	'wp-includes/class-wp-exception.php'       => [ 'WP_Exception' => '6.7.0' ],
 	'wp-includes/class-wp-list-util.php'       => [ 'WP_List_Util' => '4.7.0' ],
+	// Meta-query normalization and SQL generation; uses the runtime's non-querying wpdb adapter.
+	'wp-includes/class-wp-meta-query.php'      => [ 'WP_Meta_Query' => '3.2.0' ],
 	// Internal hooks implementation; pure callback-list logic.
 	'wp-includes/class-wp-hook.php'            => [ 'WP_Hook' => '4.7.0' ],
 	// Base model of a registered script/style dependency.
@@ -77,12 +79,12 @@ return [
 /*
 Not suitable in isolated PHPUnit env:
 
-WP_Block_Patterns_Registry  // why: NOT IDEAL: depends on block-hooks runtime (apply_block_hooks_to_content/get_hooked_blocks) and pattern file include paths.
-Walker_Page  // why: NOT IDEAL: requires post/permalink/date dependency chain (get_post/get_permalink/mysql2date/page_for_posts).
-Walker_Category  // why: NOT IDEAL: requires term/taxonomy dependency chain (get_term_link/get_terms/get_term/get_term_feed_link).
-Walker_Nav_Menu  // why: NOT IDEAL: depends on get_privacy_policy_url() and nav-menu runtime chain.
-WP_Sitemaps_Posts  // why: depends on WP_Query/get_permalink and post-query runtime chain.
-WP_Sitemaps_Taxonomies  // why: depends on WP_Term_Query/get_term_link/wp_count_terms runtime chain.
-WP_Sitemaps_Users  // why: depends on WP_User_Query/get_author_posts_url runtime chain.
-WP_Sitemaps_Stylesheet  // why: depends on get_language_attributes() and HTTP output lifecycle.
+WP_Block_Patterns_Registry // why: NOT IDEAL: depends on block-hooks runtime (apply_block_hooks_to_content/get_hooked_blocks) and pattern file include paths.
+Walker_Page                // why: NOT IDEAL: requires post/permalink/date dependency chain (get_post/get_permalink/mysql2date/page_for_posts).
+Walker_Category            // why: NOT IDEAL: requires term/taxonomy dependency chain (get_term_link/get_terms/get_term/get_term_feed_link).
+Walker_Nav_Menu            // why: NOT IDEAL: depends on get_privacy_policy_url() and nav-menu runtime chain.
+WP_Sitemaps_Posts          // why: depends on WP_Query/get_permalink and post-query runtime chain.
+WP_Sitemaps_Taxonomies     // why: depends on WP_Term_Query/get_term_link/wp_count_terms runtime chain.
+WP_Sitemaps_Users          // why: depends on WP_User_Query/get_author_posts_url runtime chain.
+WP_Sitemaps_Stylesheet     // why: depends on get_language_attributes() and HTTP output lifecycle.
 */
