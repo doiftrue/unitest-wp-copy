@@ -8,6 +8,11 @@ WP_Meta_Query
 wpdb->prepare  - можно застабать метод отедльно 
 wpdb->esc_like - можно застабать метод отедльно
 get_rest_url() и все связанные функции
+WP_Connector_Registry и связанное
+WP_Fatal_Error_Handler и связанное
+get_bloginfo_rss
+bloginfo_rss
+WP_Widget_Factory
 
 
 ## WP_REST_Server
