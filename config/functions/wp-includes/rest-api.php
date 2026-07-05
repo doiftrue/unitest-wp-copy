@@ -60,7 +60,7 @@ rest_api_default_filters                  // why: runtime hook wiring for full R
 create_initial_rest_routes                // why: requires many WP_REST_* controllers/registries.
 rest_api_loaded                           // why: requires live server request dispatch.
 get_rest_url                              // why: depends on get_blog_option() and permalink runtime.
-rest_url                                  // why: wrapper around get_rest_url() chain.
+rest_url                                  // why: wrapper around get_rest_url().
 rest_do_request                           // why: depends on WP_REST_Request / WP_REST_Server.
 rest_get_server                           // why: instantiates WP_REST_Server (class not copied here).
 rest_ensure_request                       // why: constructs WP_REST_Request.
@@ -69,7 +69,7 @@ rest_send_cors_headers                    // why: depends on get_http_origin() (
 rest_handle_options_request               // why: constructs WP_REST_Response and depends on REST server route objects.
 rest_send_allow_header                    // why: depends on WP_REST_Response/WP_REST_Server interfaces.
 rest_filter_response_fields               // why: depends on WP_REST_Response methods.
-rest_output_rsd                           // why: depends on get_rest_url() chain.
+rest_output_rsd                           // why: depends on get_rest_url().
 rest_output_link_wp_head                  // why: depends on get_rest_url() and queried-resource route runtime.
 rest_output_link_header                   // why: depends on get_rest_url() and queried-resource route runtime.
 rest_cookie_check_errors                  // why: cookie auth/runtime globals chain.
@@ -78,7 +78,7 @@ rest_application_password_collect_status  // why: depends on WP_Application_Pass
 rest_get_authenticated_app_password       // why: depends on WP_Application_Passwords runtime.
 rest_application_password_check_errors    // why: depends on WP_Application_Passwords runtime.
 rest_add_application_passwords_to_index   // why: depends on WP_REST_Response object + app-password runtime.
-rest_get_avatar_urls                      // why: depends on get_avatar_url() chain not included.
+rest_get_avatar_urls                      // why: depends on get_avatar_url() not included.
 rest_authorization_required_code          // why: depends on is_user_logged_in() which is not available in this env.
 rest_preload_api_request                  // why: depends on WP_REST_Request / WP_REST_Server / response objects.
 rest_get_route_for_post                   // why: depends on WP_Post model + post-type runtime.

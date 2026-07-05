@@ -14,19 +14,19 @@ return [
 /*
 Not suitable in isolated PHPUnit env:
 
-wp_embed_register_handler          // why: depends on unavailable WP_Embed runtime
-wp_embed_unregister_handler        // why: depends on unavailable WP_Embed runtime
+wp_embed_register_handler          // why: depends on WP_Embed runtime
+wp_embed_unregister_handler        // why: depends on WP_Embed runtime
 wp_oembed_get                      // why: depends on WP_oEmbed and remote HTTP
-_wp_oembed_get_object              // why: depends on unavailable WP_oEmbed class
-wp_oembed_add_provider             // why: depends on unavailable WP_oEmbed class
-wp_oembed_remove_provider          // why: depends on unavailable WP_oEmbed class
-wp_maybe_load_embeds               // why: depends on unavailable WP_Embed runtime
-wp_embed_handler_youtube           // why: depends on unavailable WP_Embed runtime
-wp_oembed_register_route           // why: depends on unavailable WP_oEmbed_Controller
+_wp_oembed_get_object              // why: depends on WP_oEmbed class
+wp_oembed_add_provider             // why: depends on WP_oEmbed class
+wp_oembed_remove_provider          // why: depends on WP_oEmbed class
+wp_maybe_load_embeds               // why: depends on WP_Embed runtime
+wp_embed_handler_youtube           // why: depends on WP_Embed runtime
+wp_oembed_register_route           // why: depends on WP_oEmbed_Controller
 wp_oembed_add_discovery_links      // why: depends on post query and head rendering lifecycle
 wp_oembed_add_host_js              // why: deprecated no-op kept only for hook compatibility
 get_post_embed_url                 // why: depends on post retrieval and permalink DB state
-get_oembed_endpoint_url            // why: depends on unavailable REST URL runtime
+get_oembed_endpoint_url            // why: depends on REST URL runtime
 get_post_embed_html                // why: depends on posts and core file I/O
 get_oembed_response_data           // why: depends on posts, users, and public-query state
 get_oembed_response_data_for_url   // why: depends on multisite and post DB queries

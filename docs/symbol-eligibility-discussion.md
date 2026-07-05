@@ -1,5 +1,14 @@
 # Symbol Eligibility Discussion
 
+## Подумать
+Переписать логику стабанья методов. Может стоит создать класс враппер или както еще...
+
+## Проанализировать
+WP_Meta_Query
+wpdb->prepare  - можно застабать метод отедльно 
+wpdb->esc_like - можно застабать метод отедльно
+get_rest_url() и все связанные функции
+
 
 ## WP_REST_Server
 Analyzed source: WordPress `6.9.4` (`wp-core/wp-includes/version.php`)

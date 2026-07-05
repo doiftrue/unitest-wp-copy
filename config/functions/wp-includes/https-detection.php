@@ -11,5 +11,5 @@ Not suitable in isolated PHPUnit env:
 
 wp_is_https_supported         // why: delegates to remote HTTPS detection.
 wp_get_https_detection_errors // why: performs network requests to the site.
-wp_is_local_html_output       // why: REST branch depends on unavailable get_rest_url() runtime chain.
+wp_is_local_html_output       // why: REST branch depends on get_rest_url() runtime chain.
 */

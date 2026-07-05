@@ -16,7 +16,7 @@ return [
 Not suitable in isolated PHPUnit env:
 
 create_initial_taxonomies                // why: requires WP_Taxonomy class + full taxonomy registration bootstrap.
-get_object_taxonomies                    // why: attachment-object path depends on get_attachment_taxonomies() chain not included.
+get_object_taxonomies                    // why: attachment-object path depends on get_attachment_taxonomies() not included.
 register_taxonomy                        // why: requires WP_Taxonomy class + rewrite/hooks/default-term DB chain.
 unregister_taxonomy                      // why: requires WP_Taxonomy methods + full unregister runtime.
 get_taxonomy_labels                      // why: depends on WP_Taxonomy::get_default_labels().
@@ -52,11 +52,11 @@ wp_unique_term_slug                      // why: depends on term_exists/get_term
 wp_update_term                           // why: full term update lifecycle with DB/cache/hooks.
 wp_defer_term_counting                   // why: flush path depends on wp_update_term_count() heavy runtime chain.
 wp_update_term_count                     // why: depends on wp_update_term_count_now() + deferred runtime state.
-wp_update_term_count_now                 // why: depends on _update_*_term_count() + clean_term_cache() chain.
+wp_update_term_count_now                 // why: depends on _update_*_term_count() + clean_term_cache().
 clean_object_term_cache                  // why: object cache + taxonomy registry/runtime dependency.
 clean_term_cache                         // why: term cache invalidation + DB/object cache runtime dependency.
 clean_taxonomy_cache                     // why: option/cache invalidation runtime dependency.
-get_object_term_cache                    // why: depends on relationship cache + _prime_term_caches() chain.
+get_object_term_cache                    // why: depends on relationship cache + _prime_term_caches().
 update_object_term_cache                 // why: depends on get_object_taxonomies/wp_get_object_terms cache+DB chain.
 update_term_cache                        // why: depends on object cache runtime API.
 _get_term_hierarchy                      // why: depends on get_terms()/update_option runtime chain.
