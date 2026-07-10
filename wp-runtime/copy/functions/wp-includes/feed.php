@@ -71,3 +71,39 @@ if( ! function_exists( 'prep_atom_text_construct' ) ) :
 	}
 endif;
 
+// wp-includes/feed.php (WP 7.0)
+if( ! function_exists( 'get_bloginfo_rss' ) ) :
+	function get_bloginfo_rss( $show = '' ) {
+		$info = strip_tags( get_bloginfo( $show ) );
+		/**
+		 * Filters the bloginfo for use in RSS feeds.
+		 *
+		 * @since 2.2.0
+		 *
+		 * @see convert_chars()
+		 * @see get_bloginfo()
+		 *
+		 * @param string $info Converted string value of the blog information.
+		 * @param string $show The type of blog information to retrieve.
+		 */
+		return apply_filters( 'get_bloginfo_rss', convert_chars( $info ), $show );
+	}
+endif;
+
+// wp-includes/feed.php (WP 7.0)
+if( ! function_exists( 'bloginfo_rss' ) ) :
+	function bloginfo_rss( $show = '' ) {
+		/**
+		 * Filters the bloginfo for display in RSS feeds.
+		 *
+		 * @since 2.1.0
+		 *
+		 * @see get_bloginfo()
+		 *
+		 * @param string $rss_container RSS container for the blog information.
+		 * @param string $show          The type of blog information to retrieve.
+		 */
+		echo apply_filters( 'bloginfo_rss', get_bloginfo_rss( $show ), $show );
+	}
+endif;
+
