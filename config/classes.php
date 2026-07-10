@@ -74,6 +74,8 @@ return [
 	'wp-includes/sitemaps/class-wp-sitemaps-provider.php' => [ 'WP_Sitemaps_Provider' => '5.5.0' ],
 	'wp-includes/sitemaps/class-wp-sitemaps-index.php'    => [ 'WP_Sitemaps_Index' => '5.5.0' ],
 	'wp-includes/sitemaps/class-wp-sitemaps-renderer.php' => [ 'WP_Sitemaps_Renderer' => '5.5.0' ],
+	// In-memory connector registry; default connector init remains disabled.
+	'wp-includes/class-wp-connector-registry.php'         => [ 'WP_Connector_Registry' => '7.0.0' ],
 ];
 
 /*
@@ -87,4 +89,5 @@ WP_Sitemaps_Posts          // why: depends on WP_Query/get_permalink and post-qu
 WP_Sitemaps_Taxonomies     // why: depends on WP_Term_Query/get_term_link/wp_count_terms runtime chain.
 WP_Sitemaps_Users          // why: depends on WP_User_Query/get_author_posts_url runtime chain.
 WP_Sitemaps_Stylesheet     // why: depends on get_language_attributes() and HTTP output lifecycle.
+WP_Fatal_Error_Handler     // why: depends on maintenance/recovery/wp_die shutdown request lifecycle.
 */

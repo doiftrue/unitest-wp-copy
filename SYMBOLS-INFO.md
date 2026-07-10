@@ -105,6 +105,7 @@ wp_nonce_tick()
 wp_script_modules()
 wp_scripts()
 wp_styles()
+wp_supports_ai()
 wp_suspend_cache_addition()
 wp_timezone_string()
 wp_trigger_error()
@@ -124,6 +125,7 @@ WP_Block_Parser{}
 WP_Block_Styles_Registry{}
 WP_Block_Type_Registry{}
 WP_Block_Type{}
+WP_Connector_Registry{}
 WP_Dependencies{}
 WP_Error{}
 WP_Exception{}
