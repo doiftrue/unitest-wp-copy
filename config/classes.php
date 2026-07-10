@@ -76,6 +76,8 @@ return [
 	'wp-includes/sitemaps/class-wp-sitemaps-renderer.php' => [ 'WP_Sitemaps_Renderer' => '5.5.0' ],
 	// In-memory connector registry; default connector init remains disabled.
 	'wp-includes/class-wp-connector-registry.php'         => [ 'WP_Connector_Registry' => '7.0.0' ],
+	// In-memory widget-object registry; full WP_Widget lifecycle remains out of scope.
+	'wp-includes/class-wp-widget-factory.php'             => [ 'WP_Widget_Factory' => '2.8.0' ],
 ];
 
 /*

@@ -154,6 +154,7 @@ WP_Sitemaps_Provider{}
 WP_Sitemaps_Registry{}
 WP_Sitemaps_Renderer{}
 WP_Styles{}
+WP_Widget_Factory{}
 Walker{}
 _()
 _WP_Dependency{}
