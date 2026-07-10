@@ -1,13 +1,9 @@
 # Symbol Eligibility Discussion
 
 ## Подумать
-Переписать логику стабанья методов. Может стоит создать класс враппер или както еще...
+Подумать и может переписать логику замены статических методов (static-methods.php). Может стоит создать класс враппер или както более умно это сделать чтобы не заменять в оригинальном коде класс...
 
 ## Проанализировать
-WP_Meta_Query
-wpdb->prepare  - можно застабать метод отедльно 
-wpdb->esc_like - можно застабать метод отедльно
-get_rest_url() и все связанные функции
 WP_Connector_Registry и связанное
 WP_Fatal_Error_Handler и связанное
 get_bloginfo_rss
@@ -16,7 +12,7 @@ WP_Widget_Factory
 
 
 ## WP_REST_Server
-Analyzed source: WordPress `6.9.4` (`wp-core/wp-includes/version.php`)
+Analyzed source: `wp-core/wp-includes/version.php`
 
 ### Why (Summary)
 
@@ -34,7 +30,7 @@ Analyzed source: WordPress `6.9.4` (`wp-core/wp-includes/version.php`)
 
 
 ## Sitemap
-Analyzed source: WordPress `6.9.4` (`wp-core/wp-includes/version.php`)
+Analyzed source: `wp-core/wp-includes/version.php`
 
 ### Needs Discussion (Candidates)
 

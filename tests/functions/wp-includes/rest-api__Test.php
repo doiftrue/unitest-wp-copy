@@ -38,6 +38,10 @@ class rest_api__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( 'wp-json', rest_get_url_prefix() );
 	}
 
+	public function test__rest_url() {
+		$this->assertSame( 'https://wp.test/wp-json/wp/v2/posts', rest_url( '/wp/v2/posts' ) );
+	}
+
 	public function test___rest_array_intersect_key_recursive() {
 		$result = _rest_array_intersect_key_recursive(
 			[ 'a' => 1, 'b' => [ 'x' => 2, 'y' => 3 ], 'c' => 4 ],

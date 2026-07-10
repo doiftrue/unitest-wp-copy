@@ -44,10 +44,13 @@ return [
 	'rest_validate_value_from_schema'             => '4.7.0',
 	'rest_sanitize_value_from_schema'             => '4.7.0',
 	'rest_get_url_prefix'                         => '4.4.0', // Pure prefix accessor.
+	'rest_url'                                    => '4.4.0',
 	'rest_parse_date'                             => '4.4.0', // Pure date/color parsing helpers.
 	'rest_get_date_with_gmt'                      => '4.4.0',
 	'rest_handle_deprecated_function'             => '4.4.0 mockable', // Lightweight deprecation/wrong-usage header emitters.
 	'rest_handle_deprecated_argument'             => '4.4.0 mockable',
+
+	// 'get_rest_url' => '4.4.0', // why: custom mock
 ];
 
 /*
@@ -59,8 +62,6 @@ rest_api_register_rewrites                // why: depends on add_rewrite_rule() 
 rest_api_default_filters                  // why: runtime hook wiring for full REST serving lifecycle.
 create_initial_rest_routes                // why: requires many WP_REST_* controllers/registries.
 rest_api_loaded                           // why: requires live server request dispatch.
-get_rest_url                              // why: depends on get_blog_option() and permalink runtime.
-rest_url                                  // why: wrapper around get_rest_url().
 rest_do_request                           // why: depends on WP_REST_Request / WP_REST_Server.
 rest_get_server                           // why: instantiates WP_REST_Server (class not copied here).
 rest_ensure_request                       // why: constructs WP_REST_Request.
