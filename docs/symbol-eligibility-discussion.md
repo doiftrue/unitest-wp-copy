@@ -6,8 +6,6 @@
 ## Проанализировать
 WP_Connector_Registry и связанное
 WP_Fatal_Error_Handler и связанное
-get_bloginfo_rss
-bloginfo_rss
 WP_Widget_Factory
 
 

@@ -6,6 +6,7 @@ $default_stub_wp_options = [
 	'gmt_offset'          => 0,
 	'timezone_string'     => 'UTC',
 	'language'            => 'en-US',
+	'blogname'            => 'Unitest WP Copy',
 	'blogdescription'     => 'unitest-wp-copy runtime',
 	'admin_email'         => 'admin@wp.test',
 	'stylesheet'          => 'wp-test-stylesheet',

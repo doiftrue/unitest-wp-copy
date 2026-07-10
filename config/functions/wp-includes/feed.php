@@ -3,13 +3,13 @@
 return [
 	'feed_content_type'        => '2.8.0',
 	'prep_atom_text_construct' => '2.5.0',
+	'get_bloginfo_rss'         => '1.5.1',
+	'bloginfo_rss'             => '0.71',
 ];
 
 /*
 Not suitable in isolated PHPUnit env:
 
-get_bloginfo_rss          // why: delegates to get_bloginfo() fields backed by unresolved site options
-bloginfo_rss              // why: output wrapper for get_bloginfo_rss(), whose site-option chain is unresolved
 get_default_feed          // why: reads the unresolved default_feed option
 get_wp_title_rss          // why: depends on live query title state through wp_get_document_title()
 wp_title_rss              // why: output wrapper for get_wp_title_rss(), whose query-title state is unavailable

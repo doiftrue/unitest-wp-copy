@@ -28,6 +28,7 @@ class general_template__custom_mocks__Test extends \PHPUnit\Framework\TestCase {
 	public function test__get_bloginfo_basic_fields() {
 		$GLOBALS['stub_wp_options']->html_type       = 'application/xhtml+xml';
 		$GLOBALS['stub_wp_options']->language        = 'fr-FR';
+		$GLOBALS['stub_wp_options']->blogname        = 'Example Site';
 		$GLOBALS['stub_wp_options']->blogdescription = 'Example tagline';
 		$GLOBALS['stub_wp_options']->blog_charset    = 'ISO-8859-1';
 		$GLOBALS['stub_wp_options']->admin_email     = 'admin@example.test';
@@ -38,6 +39,8 @@ class general_template__custom_mocks__Test extends \PHPUnit\Framework\TestCase {
 
 		$this->assertSame( 'application/xhtml+xml', get_bloginfo( 'html_type' ) );
 		$this->assertSame( 'fr-FR', get_bloginfo( 'language' ) );
+		$this->assertSame( 'Example Site', get_bloginfo() );
+		$this->assertSame( 'Example Site', get_bloginfo( 'name' ) );
 		$this->assertSame( 'Example tagline', get_bloginfo( 'description' ) );
 		$this->assertSame( 'ISO-8859-1', get_bloginfo( 'charset' ) );
 		$this->assertSame( 'admin@example.test', get_bloginfo( 'admin_email' ) );
