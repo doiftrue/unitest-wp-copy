@@ -1,8 +1,5 @@
 # Symbol Eligibility Discussion
 
-## Подумать
-Подумать и может переписать логику замены статических методов (static-methods.php). Может стоит создать класс враппер или както более умно это сделать чтобы не заменять в оригинальном коде класс...
-
 
 ## WP_REST_Server
 Analyzed source: `wp-core/wp-includes/version.php`
