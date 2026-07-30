@@ -2187,10 +2187,10 @@
         },
         {
             "name": "wordpress/wordpress",
-            "version": "7.0",
+            "version": "7.0.2",
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/release/wordpress-7.0-no-content.zip"
+                "url": "https://downloads.wordpress.org/release/wordpress-7.0.2-no-content.zip"
             },
             "type": "wordpress-dropin"
         }
