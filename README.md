@@ -259,7 +259,17 @@ If you need handler-based mocking for supported functions, install WP_Mock:
 composer require --dev 10up/wp_mock
 ```
 
-Then use WP_Mock per test:
+Then use WP_Mock:
+
+```php
+// tests/bootstrap.php
+require_once __DIR__ . '/../vendor/autoload.php';
+
+\Unitest_WP_Copy\Bootstrap::init(); // must be before WP_Mock
+\WP_Mock::bootstrap();
+```
+
+> **Note:** Initialize Unitest_WP_Copy first. Otherwise, WP_Mock initialization will init some WordPress functions that Unitest_WP_Copy already provides, and them will not work as real WordPress functions. At the same time you can use WP_Mock to mock functions that Unitest_WP_Copy setup in any time.
 
 ```php
 class ExampleTest extends \PHPUnit\Framework\TestCase {

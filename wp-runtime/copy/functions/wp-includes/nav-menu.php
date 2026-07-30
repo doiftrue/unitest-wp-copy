@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/nav-menu.php (WP 7.0)
+// wp-includes/nav-menu.php (WP 7.0.2)
 if( ! function_exists( '_wp_reset_invalid_menu_item_parent' ) ) :
 	function _wp_reset_invalid_menu_item_parent( $menu_item_data ) {
 		if ( ! is_array( $menu_item_data ) ) {
@@ -21,7 +21,7 @@ if( ! function_exists( '_wp_reset_invalid_menu_item_parent' ) ) :
 	}
 endif;
 
-// wp-includes/nav-menu.php (WP 7.0)
+// wp-includes/nav-menu.php (WP 7.0.2)
 if( ! function_exists( 'wp_map_nav_menu_locations' ) ) :
 	function wp_map_nav_menu_locations( $new_nav_menu_locations, $old_nav_menu_locations ) {
 		$registered_nav_menus   = get_registered_nav_menus();
@@ -114,14 +114,14 @@ if( ! function_exists( 'wp_map_nav_menu_locations' ) ) :
 	}
 endif;
 
-// wp-includes/nav-menu.php (WP 7.0)
+// wp-includes/nav-menu.php (WP 7.0.2)
 if( ! function_exists( '_is_valid_nav_menu_item' ) ) :
 	function _is_valid_nav_menu_item( $item ) {
 		return empty( $item->_invalid );
 	}
 endif;
 
-// wp-includes/nav-menu.php (WP 7.0)
+// wp-includes/nav-menu.php (WP 7.0.2)
 if( ! function_exists( 'unregister_nav_menu' ) ) :
 	function unregister_nav_menu( $location ) {
 		global $_wp_registered_nav_menus;
@@ -137,7 +137,7 @@ if( ! function_exists( 'unregister_nav_menu' ) ) :
 	}
 endif;
 
-// wp-includes/nav-menu.php (WP 7.0)
+// wp-includes/nav-menu.php (WP 7.0.2)
 if( ! function_exists( 'register_nav_menus' ) ) :
 	function register_nav_menus( $locations = array() ) {
 		global $_wp_registered_nav_menus;
@@ -155,7 +155,7 @@ if( ! function_exists( 'register_nav_menus' ) ) :
 	}
 endif;
 
-// wp-includes/nav-menu.php (WP 7.0)
+// wp-includes/nav-menu.php (WP 7.0.2)
 if( ! function_exists( 'register_nav_menu' ) ) :
 	function register_nav_menu( $location, $description ) {
 		register_nav_menus( array( $location => $description ) );

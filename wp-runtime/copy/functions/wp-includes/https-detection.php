@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/https-detection.php (WP 7.0)
+// wp-includes/https-detection.php (WP 7.0.2)
 if( ! function_exists( 'wp_is_using_https' ) ) :
 	function wp_is_using_https() {
 		if ( ! wp_is_home_url_using_https() ) {
@@ -13,14 +13,14 @@ if( ! function_exists( 'wp_is_using_https' ) ) :
 	}
 endif;
 
-// wp-includes/https-detection.php (WP 7.0)
+// wp-includes/https-detection.php (WP 7.0.2)
 if( ! function_exists( 'wp_is_home_url_using_https' ) ) :
 	function wp_is_home_url_using_https() {
 		return 'https' === wp_parse_url( home_url(), PHP_URL_SCHEME );
 	}
 endif;
 
-// wp-includes/https-detection.php (WP 7.0)
+// wp-includes/https-detection.php (WP 7.0.2)
 if( ! function_exists( 'wp_is_site_url_using_https' ) ) :
 	function wp_is_site_url_using_https() {
 		/*
@@ -32,6 +32,27 @@ if( ! function_exists( 'wp_is_site_url_using_https' ) ) :
 		$site_url = apply_filters( 'site_url', get_option( 'siteurl' ), '', null, null );
 	
 		return 'https' === wp_parse_url( $site_url, PHP_URL_SCHEME );
+	}
+endif;
+
+// wp-includes/https-detection.php (WP 7.0.2)
+if( ! function_exists( 'wp_is_local_html_output' ) ) :
+	function wp_is_local_html_output( $html ) {
+		// 1. Check if HTML includes the site's Really Simple Discovery link.
+		if ( has_action( 'wp_head', 'rsd_link' ) ) {
+			$pattern = preg_replace( '#^https?:(?=//)#', '', esc_url( site_url( 'xmlrpc.php?rsd', 'rpc' ) ) ); // See rsd_link().
+			return str_contains( $html, $pattern );
+		}
+	
+		// 2. Check if HTML includes the site's REST API link.
+		if ( has_action( 'wp_head', 'rest_output_link_wp_head' ) ) {
+			// Try both HTTPS and HTTP since the URL depends on context.
+			$pattern = preg_replace( '#^https?:(?=//)#', '', esc_url( get_rest_url() ) ); // See rest_output_link_wp_head().
+			return str_contains( $html, $pattern );
+		}
+	
+		// Otherwise the result cannot be determined.
+		return null;
 	}
 endif;
 

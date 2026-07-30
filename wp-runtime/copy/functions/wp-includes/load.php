@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/load.php (WP 7.0)
+// wp-includes/load.php (WP 7.0.2)
 if( ! function_exists( 'wp_is_development_mode' ) ) :
 	function wp_is_development_mode( $mode ) {
 		$current_mode = wp_get_development_mode();
@@ -20,7 +20,7 @@ if( ! function_exists( 'wp_is_development_mode' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 7.0)
+// wp-includes/load.php (WP 7.0.2)
 if( ! function_exists( 'wp_is_json_media_type' ) ) :
 	function wp_is_json_media_type( $media_type ) {
 		static $cache = array();
@@ -33,7 +33,7 @@ if( ! function_exists( 'wp_is_json_media_type' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 7.0)
+// wp-includes/load.php (WP 7.0.2)
 if( ! function_exists( 'wp_is_ini_value_changeable' ) ) :
 	function wp_is_ini_value_changeable( $setting ) {
 		static $ini_all;
@@ -61,14 +61,14 @@ if( ! function_exists( 'wp_is_ini_value_changeable' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 7.0)
+// wp-includes/load.php (WP 7.0.2)
 if( ! function_exists( 'absint' ) ) :
 	function absint( $maybeint ) {
 		return abs( (int) $maybeint );
 	}
 endif;
 
-// wp-includes/load.php (WP 7.0)
+// wp-includes/load.php (WP 7.0.2)
 if( ! function_exists( 'wp_convert_hr_to_bytes' ) ) :
 	function wp_convert_hr_to_bytes( $value ) {
 		$value = strtolower( trim( $value ) );
@@ -87,7 +87,7 @@ if( ! function_exists( 'wp_convert_hr_to_bytes' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 7.0)
+// wp-includes/load.php (WP 7.0.2)
 if( ! function_exists( 'is_wp_error' ) ) :
 	function is_wp_error( $thing ) {
 		$is_wp_error = ( $thing instanceof WP_Error );
@@ -107,7 +107,7 @@ if( ! function_exists( 'is_wp_error' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 7.0)
+// wp-includes/load.php (WP 7.0.2)
 if( ! function_exists( 'timer_start' ) ) :
 	function timer_start() {
 		global $timestart;

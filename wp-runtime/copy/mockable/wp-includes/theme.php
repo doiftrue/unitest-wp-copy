@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/theme.php (WP 7.0)
+// wp-includes/theme.php (WP 7.0.2)
 if( ! function_exists( 'get_registered_theme_features' ) ) :
 	function get_registered_theme_features() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -19,7 +19,7 @@ if( ! function_exists( 'get_registered_theme_features' ) ) :
 	}
 endif;
 
-// wp-includes/theme.php (WP 7.0)
+// wp-includes/theme.php (WP 7.0.2)
 if( ! function_exists( 'get_registered_theme_feature' ) ) :
 	function get_registered_theme_feature( $feature ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -36,7 +36,7 @@ if( ! function_exists( 'get_registered_theme_feature' ) ) :
 	}
 endif;
 
-// wp-includes/theme.php (WP 7.0)
+// wp-includes/theme.php (WP 7.0.2)
 if( ! function_exists( 'get_theme_support' ) ) :
 	function get_theme_support( $feature, ...$args ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -65,7 +65,7 @@ if( ! function_exists( 'get_theme_support' ) ) :
 	}
 endif;
 
-// wp-includes/theme.php (WP 7.0)
+// wp-includes/theme.php (WP 7.0.2)
 if( ! function_exists( 'current_theme_supports' ) ) :
 	function current_theme_supports( $feature, ...$args ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -135,7 +135,7 @@ if( ! function_exists( 'current_theme_supports' ) ) :
 	}
 endif;
 
-// wp-includes/theme.php (WP 7.0)
+// wp-includes/theme.php (WP 7.0.2)
 if( ! function_exists( 'get_stylesheet' ) ) :
 	function get_stylesheet() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -153,7 +153,7 @@ if( ! function_exists( 'get_stylesheet' ) ) :
 	}
 endif;
 
-// wp-includes/theme.php (WP 7.0)
+// wp-includes/theme.php (WP 7.0.2)
 if( ! function_exists( 'get_template' ) ) :
 	function get_template() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {

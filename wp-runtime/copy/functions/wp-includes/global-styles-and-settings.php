@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/global-styles-and-settings.php (WP 7.0)
+// wp-includes/global-styles-and-settings.php (WP 7.0.2)
 if( ! function_exists( 'wp_get_block_name_from_theme_json_path' ) ) :
 	function wp_get_block_name_from_theme_json_path( $path ) {
 		// Block name is expected to be the third item after 'styles' and 'blocks'.

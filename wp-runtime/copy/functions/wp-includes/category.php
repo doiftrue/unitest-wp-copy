@@ -2,21 +2,21 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/category.php (WP 7.0)
+// wp-includes/category.php (WP 7.0.2)
 if( ! function_exists( 'sanitize_category' ) ) :
 	function sanitize_category( $category, $context = 'display' ) {
 		return sanitize_term( $category, 'category', $context );
 	}
 endif;
 
-// wp-includes/category.php (WP 7.0)
+// wp-includes/category.php (WP 7.0.2)
 if( ! function_exists( 'sanitize_category_field' ) ) :
 	function sanitize_category_field( $field, $value, $cat_id, $context ) {
 		return sanitize_term_field( $field, $value, $cat_id, 'category', $context );
 	}
 endif;
 
-// wp-includes/category.php (WP 7.0)
+// wp-includes/category.php (WP 7.0.2)
 if( ! function_exists( '_make_cat_compat' ) ) :
 	function _make_cat_compat( &$category ) {
 		if ( is_object( $category ) && ! is_wp_error( $category ) ) {

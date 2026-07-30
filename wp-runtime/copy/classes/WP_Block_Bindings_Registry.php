@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-block-bindings-registry.php (WP 7.0)
+// wp-includes/class-wp-block-bindings-registry.php (WP 7.0.2)
 if( ! class_exists( 'WP_Block_Bindings_Registry' ) ) :
 	class WP_Block_Bindings_Registry {
 	

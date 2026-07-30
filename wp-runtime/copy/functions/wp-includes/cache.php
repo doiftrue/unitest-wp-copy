@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/cache.php (WP 7.0)
+// wp-includes/cache.php (WP 7.0.2)
 if( ! function_exists( 'wp_cache_flush_group' ) ) :
 	function wp_cache_flush_group( $group ) {
 		global $wp_object_cache;
@@ -11,7 +11,7 @@ if( ! function_exists( 'wp_cache_flush_group' ) ) :
 	}
 endif;
 
-// wp-includes/cache.php (WP 7.0)
+// wp-includes/cache.php (WP 7.0.2)
 if( ! function_exists( 'wp_cache_supports' ) ) :
 	function wp_cache_supports( $feature ) {
 		switch ( $feature ) {
@@ -29,7 +29,7 @@ if( ! function_exists( 'wp_cache_supports' ) ) :
 	}
 endif;
 
-// wp-includes/cache.php (WP 7.0)
+// wp-includes/cache.php (WP 7.0.2)
 if( ! function_exists( 'wp_cache_add_multiple' ) ) :
 	function wp_cache_add_multiple( array $data, $group = '', $expire = 0 ) {
 		global $wp_object_cache;
@@ -38,7 +38,7 @@ if( ! function_exists( 'wp_cache_add_multiple' ) ) :
 	}
 endif;
 
-// wp-includes/cache.php (WP 7.0)
+// wp-includes/cache.php (WP 7.0.2)
 if( ! function_exists( 'wp_cache_set_multiple' ) ) :
 	function wp_cache_set_multiple( array $data, $group = '', $expire = 0 ) {
 		global $wp_object_cache;
@@ -47,7 +47,7 @@ if( ! function_exists( 'wp_cache_set_multiple' ) ) :
 	}
 endif;
 
-// wp-includes/cache.php (WP 7.0)
+// wp-includes/cache.php (WP 7.0.2)
 if( ! function_exists( 'wp_cache_delete_multiple' ) ) :
 	function wp_cache_delete_multiple( array $keys, $group = '' ) {
 		global $wp_object_cache;
@@ -56,23 +56,14 @@ if( ! function_exists( 'wp_cache_delete_multiple' ) ) :
 	}
 endif;
 
-// wp-includes/cache.php (WP 7.0)
+// wp-includes/cache.php (WP 7.0.2)
 if( ! function_exists( 'wp_cache_flush_runtime' ) ) :
 	function wp_cache_flush_runtime() {
 		return wp_cache_flush();
 	}
 endif;
 
-// wp-includes/cache.php (WP 7.0)
-if( ! function_exists( 'wp_cache_get_multiple' ) ) :
-	function wp_cache_get_multiple( $keys, $group = '', $force = false ) {
-		global $wp_object_cache;
-	
-		return $wp_object_cache->get_multiple( $keys, $group, $force );
-	}
-endif;
-
-// wp-includes/cache.php (WP 7.0)
+// wp-includes/cache.php (WP 7.0.2)
 if( ! function_exists( 'wp_cache_switch_to_blog' ) ) :
 	function wp_cache_switch_to_blog( $blog_id ) {
 		global $wp_object_cache;
@@ -81,7 +72,7 @@ if( ! function_exists( 'wp_cache_switch_to_blog' ) ) :
 	}
 endif;
 
-// wp-includes/cache.php (WP 7.0)
+// wp-includes/cache.php (WP 7.0.2)
 if( ! function_exists( 'wp_cache_incr' ) ) :
 	function wp_cache_incr( $key, $offset = 1, $group = '' ) {
 		global $wp_object_cache;
@@ -90,7 +81,7 @@ if( ! function_exists( 'wp_cache_incr' ) ) :
 	}
 endif;
 
-// wp-includes/cache.php (WP 7.0)
+// wp-includes/cache.php (WP 7.0.2)
 if( ! function_exists( 'wp_cache_decr' ) ) :
 	function wp_cache_decr( $key, $offset = 1, $group = '' ) {
 		global $wp_object_cache;
@@ -99,7 +90,7 @@ if( ! function_exists( 'wp_cache_decr' ) ) :
 	}
 endif;
 
-// wp-includes/cache.php (WP 7.0)
+// wp-includes/cache.php (WP 7.0.2)
 if( ! function_exists( 'wp_cache_add_global_groups' ) ) :
 	function wp_cache_add_global_groups( $groups ) {
 		global $wp_object_cache;
@@ -108,21 +99,21 @@ if( ! function_exists( 'wp_cache_add_global_groups' ) ) :
 	}
 endif;
 
-// wp-includes/cache.php (WP 7.0)
+// wp-includes/cache.php (WP 7.0.2)
 if( ! function_exists( 'wp_cache_add_non_persistent_groups' ) ) :
 	function wp_cache_add_non_persistent_groups( $groups ) {
 		// Default cache doesn't persist so nothing to do here.
 	}
 endif;
 
-// wp-includes/cache.php (WP 7.0)
+// wp-includes/cache.php (WP 7.0.2)
 if( ! function_exists( 'wp_cache_init' ) ) :
 	function wp_cache_init() {
 		$GLOBALS['wp_object_cache'] = new WP_Object_Cache();
 	}
 endif;
 
-// wp-includes/cache.php (WP 7.0)
+// wp-includes/cache.php (WP 7.0.2)
 if( ! function_exists( 'wp_cache_add' ) ) :
 	function wp_cache_add( $key, $data, $group = '', $expire = 0 ) {
 		global $wp_object_cache;
@@ -131,7 +122,7 @@ if( ! function_exists( 'wp_cache_add' ) ) :
 	}
 endif;
 
-// wp-includes/cache.php (WP 7.0)
+// wp-includes/cache.php (WP 7.0.2)
 if( ! function_exists( 'wp_cache_replace' ) ) :
 	function wp_cache_replace( $key, $data, $group = '', $expire = 0 ) {
 		global $wp_object_cache;
@@ -140,7 +131,7 @@ if( ! function_exists( 'wp_cache_replace' ) ) :
 	}
 endif;
 
-// wp-includes/cache.php (WP 7.0)
+// wp-includes/cache.php (WP 7.0.2)
 if( ! function_exists( 'wp_cache_set' ) ) :
 	function wp_cache_set( $key, $data, $group = '', $expire = 0 ) {
 		global $wp_object_cache;
@@ -149,7 +140,7 @@ if( ! function_exists( 'wp_cache_set' ) ) :
 	}
 endif;
 
-// wp-includes/cache.php (WP 7.0)
+// wp-includes/cache.php (WP 7.0.2)
 if( ! function_exists( 'wp_cache_get' ) ) :
 	function wp_cache_get( $key, $group = '', $force = false, &$found = null ) {
 		global $wp_object_cache;
@@ -158,7 +149,7 @@ if( ! function_exists( 'wp_cache_get' ) ) :
 	}
 endif;
 
-// wp-includes/cache.php (WP 7.0)
+// wp-includes/cache.php (WP 7.0.2)
 if( ! function_exists( 'wp_cache_delete' ) ) :
 	function wp_cache_delete( $key, $group = '' ) {
 		global $wp_object_cache;
@@ -167,7 +158,7 @@ if( ! function_exists( 'wp_cache_delete' ) ) :
 	}
 endif;
 
-// wp-includes/cache.php (WP 7.0)
+// wp-includes/cache.php (WP 7.0.2)
 if( ! function_exists( 'wp_cache_flush' ) ) :
 	function wp_cache_flush() {
 		global $wp_object_cache;
@@ -176,7 +167,7 @@ if( ! function_exists( 'wp_cache_flush' ) ) :
 	}
 endif;
 
-// wp-includes/cache.php (WP 7.0)
+// wp-includes/cache.php (WP 7.0.2)
 if( ! function_exists( 'wp_cache_close' ) ) :
 	function wp_cache_close() {
 		return true;

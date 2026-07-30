@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/feed.php (WP 7.0)
+// wp-includes/feed.php (WP 7.0.2)
 if( ! function_exists( 'feed_content_type' ) ) :
 	function feed_content_type( $type = '' ) {
 		if ( empty( $type ) ) {
@@ -31,7 +31,7 @@ if( ! function_exists( 'feed_content_type' ) ) :
 	}
 endif;
 
-// wp-includes/feed.php (WP 7.0)
+// wp-includes/feed.php (WP 7.0.2)
 if( ! function_exists( 'prep_atom_text_construct' ) ) :
 	function prep_atom_text_construct( $data ) {
 		if ( ! str_contains( $data, '<' ) && ! str_contains( $data, '&' ) ) {
@@ -68,6 +68,72 @@ if( ! function_exists( 'prep_atom_text_construct' ) ) :
 		} else {
 			return array( 'html', htmlspecialchars( $data ) );
 		}
+	}
+endif;
+
+// wp-includes/feed.php (WP 7.0.2)
+if( ! function_exists( 'get_default_feed' ) ) :
+	function get_default_feed() {
+		/**
+		 * Filters the default feed type.
+		 *
+		 * @since 2.5.0
+		 *
+		 * @param string $feed_type Type of default feed. Possible values include 'rss2', 'atom'.
+		 *                          Default 'rss2'.
+		 */
+		$default_feed = apply_filters( 'default_feed', 'rss2' );
+	
+		return ( 'rss' === $default_feed ) ? 'rss2' : $default_feed;
+	}
+endif;
+
+// wp-includes/feed.php (WP 7.0.2)
+if( ! function_exists( 'html_type_rss' ) ) :
+	function html_type_rss() {
+		$type = get_bloginfo( 'html_type' );
+		if ( str_contains( $type, 'xhtml' ) ) {
+			$type = 'xhtml';
+		} else {
+			$type = 'html';
+		}
+		echo $type;
+	}
+endif;
+
+// wp-includes/feed.php (WP 7.0.2)
+if( ! function_exists( 'get_bloginfo_rss' ) ) :
+	function get_bloginfo_rss( $show = '' ) {
+		$info = strip_tags( get_bloginfo( $show ) );
+		/**
+		 * Filters the bloginfo for use in RSS feeds.
+		 *
+		 * @since 2.2.0
+		 *
+		 * @see convert_chars()
+		 * @see get_bloginfo()
+		 *
+		 * @param string $info Converted string value of the blog information.
+		 * @param string $show The type of blog information to retrieve.
+		 */
+		return apply_filters( 'get_bloginfo_rss', convert_chars( $info ), $show );
+	}
+endif;
+
+// wp-includes/feed.php (WP 7.0.2)
+if( ! function_exists( 'bloginfo_rss' ) ) :
+	function bloginfo_rss( $show = '' ) {
+		/**
+		 * Filters the bloginfo for display in RSS feeds.
+		 *
+		 * @since 2.1.0
+		 *
+		 * @see get_bloginfo()
+		 *
+		 * @param string $rss_container RSS container for the blog information.
+		 * @param string $show          The type of blog information to retrieve.
+		 */
+		echo apply_filters( 'bloginfo_rss', get_bloginfo_rss( $show ), $show );
 	}
 endif;
 

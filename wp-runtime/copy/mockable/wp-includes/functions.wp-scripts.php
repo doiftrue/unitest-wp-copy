@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/functions.wp-scripts.php (WP 7.0)
+// wp-includes/functions.wp-scripts.php (WP 7.0.2)
 if( ! function_exists( 'wp_scripts' ) ) :
 	function wp_scripts() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
