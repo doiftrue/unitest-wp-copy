@@ -41,6 +41,17 @@ if( ! function_exists( 'wp_get_development_mode' ) ) :
 endif;
 
 // wp-includes/load.php (WP 6.6.5)
+if( ! function_exists( 'is_login' ) ) :
+	function is_login() {
+		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+	
+		return false !== stripos( wp_login_url(), $_SERVER['SCRIPT_NAME'] );
+	}
+endif;
+
+// wp-includes/load.php (WP 6.6.5)
 if( ! function_exists( 'timer_float' ) ) :
 	function timer_float() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -48,6 +59,84 @@ if( ! function_exists( 'timer_float' ) ) :
 		}
 	
 		return microtime( true ) - $_SERVER['REQUEST_TIME_FLOAT'];
+	}
+endif;
+
+// wp-includes/load.php (WP 6.6.5)
+if( ! function_exists( 'wp_is_jsonp_request' ) ) :
+	function wp_is_jsonp_request() {
+		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+	
+		if ( ! isset( $_GET['_jsonp'] ) ) {
+			return false;
+		}
+	
+		if ( ! function_exists( 'wp_check_jsonp_callback' ) ) {
+			require_once ABSPATH . WPINC . '/functions.php';
+		}
+	
+		$jsonp_callback = $_GET['_jsonp'];
+		if ( ! wp_check_jsonp_callback( $jsonp_callback ) ) {
+			return false;
+		}
+	
+		/** This filter is documented in wp-includes/rest-api/class-wp-rest-server.php */
+		$jsonp_enabled = apply_filters( 'rest_jsonp_enabled', true );
+	
+		return $jsonp_enabled;
+	}
+endif;
+
+// wp-includes/load.php (WP 6.6.5)
+if( ! function_exists( 'wp_is_xml_request' ) ) :
+	function wp_is_xml_request() {
+		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+	
+		$accepted = array(
+			'text/xml',
+			'application/rss+xml',
+			'application/atom+xml',
+			'application/rdf+xml',
+			'text/xml+oembed',
+			'application/xml+oembed',
+		);
+	
+		if ( isset( $_SERVER['HTTP_ACCEPT'] ) ) {
+			foreach ( $accepted as $type ) {
+				if ( str_contains( $_SERVER['HTTP_ACCEPT'], $type ) ) {
+					return true;
+				}
+			}
+		}
+	
+		if ( isset( $_SERVER['CONTENT_TYPE'] ) && in_array( $_SERVER['CONTENT_TYPE'], $accepted, true ) ) {
+			return true;
+		}
+	
+		return false;
+	}
+endif;
+
+// wp-includes/load.php (WP 6.6.5)
+if( ! function_exists( 'wp_is_json_request' ) ) :
+	function wp_is_json_request() {
+		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+	
+		if ( isset( $_SERVER['HTTP_ACCEPT'] ) && wp_is_json_media_type( $_SERVER['HTTP_ACCEPT'] ) ) {
+			return true;
+		}
+	
+		if ( isset( $_SERVER['CONTENT_TYPE'] ) && wp_is_json_media_type( $_SERVER['CONTENT_TYPE'] ) ) {
+			return true;
+		}
+	
+		return false;
 	}
 endif;
 

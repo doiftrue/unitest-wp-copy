@@ -16,17 +16,3 @@ if( ! function_exists( 'unregister_block_bindings_source' ) ) :
 	}
 endif;
 
-// wp-includes/block-bindings.php (WP 6.6.5)
-if( ! function_exists( 'get_all_registered_block_bindings_sources' ) ) :
-	function get_all_registered_block_bindings_sources() {
-		return WP_Block_Bindings_Registry::get_instance()->get_all_registered();
-	}
-endif;
-
-// wp-includes/block-bindings.php (WP 6.6.5)
-if( ! function_exists( 'get_block_bindings_source' ) ) :
-	function get_block_bindings_source( string $source_name ) {
-		return WP_Block_Bindings_Registry::get_instance()->get_registered( $source_name );
-	}
-endif;
-

@@ -78,8 +78,10 @@ if ( ! function_exists( 'get_bloginfo' ) ) :
 			case 'language':
 				$output = $GLOBALS['stub_wp_options']->language;
 				break;
+			case 'name':
 			default:
-				$output = '';
+				$output = $GLOBALS['stub_wp_options']->blogname;
+				break;
 		}
 
 		if ( 'display' === $filter ) {

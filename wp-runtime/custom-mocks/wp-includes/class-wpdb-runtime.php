@@ -12,6 +12,10 @@ class WPDB_Runtime {
 
 	use wpdb__Copied_Methods;
 
+	public string $posts = 'wp_posts';
+	public string $comments = 'wp_comments';
+	public string $users = 'wp_users';
+	public string $blogs = 'wp_blogs';
 	public string $postmeta = 'wp_postmeta';
 	public string $commentmeta = 'wp_commentmeta';
 	public string $termmeta = 'wp_termmeta';
