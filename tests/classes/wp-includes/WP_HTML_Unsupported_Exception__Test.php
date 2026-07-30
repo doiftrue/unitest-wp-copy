@@ -3,6 +3,12 @@
 class WP_HTML_Unsupported_Exception__Test extends \PHPUnit\Framework\TestCase {
 
 	public function test__construct() {
+		if( wp_version_compare( '< 6.7.0' ) ){
+			$exception = new WP_HTML_Unsupported_Exception( 'Unsupported' );
+			$this->assertSame( 'Unsupported', $exception->getMessage() );
+			return;
+		}
+
 		$exception = new WP_HTML_Unsupported_Exception(
 			'Unsupported',
 			'TABLE',

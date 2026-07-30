@@ -2,16 +2,6 @@
 
 class block_template_utils__Test extends \PHPUnit\Framework\TestCase {
 
-	protected function setUp(): void {
-		parent::setUp();
-		\WP_Mock::setUp();
-	}
-
-	protected function tearDown(): void {
-		\WP_Mock::tearDown();
-		parent::tearDown();
-	}
-
 	public function test__get_default_block_template_types() {
 		$types = get_default_block_template_types();
 		$this->assertArrayHasKey( 'index', $types );
@@ -34,18 +24,33 @@ class block_template_utils__Test extends \PHPUnit\Framework\TestCase {
 		);
 
 		$warning = null;
-		\WP_Mock::userFunction(
-			'wp_trigger_error',
-			[
-				'return' => static function ( $function_name, $message ) use ( &$warning ) {
-				$warning = "$function_name: $message";
-				},
-			]
+		set_error_handler(
+			static function ( $level, $message ) use ( &$warning ) {
+				$warning = $message;
+				return true;
+			},
+			E_USER_NOTICE
 		);
+
+		$capture_warning = static function ( $function_name, $message ) use ( &$warning ) {
+			$warning = "$function_name: $message";
+		};
+
+		if( wp_version_compare( '>= 7.0.0' ) ){
+			add_action( 'wp_trigger_error_always_run', $capture_warning, 10, 2 );
+		}
+
 		$result = _filter_block_template_part_area( 'unsupported' );
 
+		if( wp_version_compare( '>= 7.0.0' ) ){
+			remove_action( 'wp_trigger_error_always_run', $capture_warning, 10 );
+		}
+		restore_error_handler();
+
 		$this->assertSame( WP_TEMPLATE_PART_AREA_UNCATEGORIZED, $result );
-		$this->assertStringContainsString( 'unsupported', $warning );
+		if( WP_DEBUG || wp_version_compare( '>= 7.0.0' ) ){
+			$this->assertStringContainsString( 'unsupported', $warning );
+		}
 	}
 
 	public function test___flatten_blocks() {
