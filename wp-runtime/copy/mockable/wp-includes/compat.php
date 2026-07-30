@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/compat.php (WP 7.0)
+// wp-includes/compat.php (WP 7.0.2)
 if( ! function_exists( '_wp_can_use_pcre_u' ) ) :
 	function _wp_can_use_pcre_u( $set = null ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {

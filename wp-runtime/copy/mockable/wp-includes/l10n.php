@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/l10n.php (WP 7.0)
+// wp-includes/l10n.php (WP 7.0.2)
 if( ! function_exists( 'wp_get_word_count_type' ) ) :
 	function wp_get_word_count_type() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -20,7 +20,7 @@ if( ! function_exists( 'wp_get_word_count_type' ) ) :
 	}
 endif;
 
-// wp-includes/l10n.php (WP 7.0)
+// wp-includes/l10n.php (WP 7.0.2)
 if( ! function_exists( 'wp_get_list_item_separator' ) ) :
 	function wp_get_list_item_separator() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -39,7 +39,7 @@ if( ! function_exists( 'wp_get_list_item_separator' ) ) :
 	}
 endif;
 
-// wp-includes/l10n.php (WP 7.0)
+// wp-includes/l10n.php (WP 7.0.2)
 if( ! function_exists( 'is_rtl' ) ) :
 	function is_rtl() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -54,7 +54,7 @@ if( ! function_exists( 'is_rtl' ) ) :
 	}
 endif;
 
-// wp-includes/l10n.php (WP 7.0)
+// wp-includes/l10n.php (WP 7.0.2)
 if( ! function_exists( 'get_locale' ) ) :
 	function get_locale() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {

@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/https-detection.php (WP 7.0)
+// wp-includes/https-detection.php (WP 7.0.2)
 if( ! function_exists( 'wp_is_using_https' ) ) :
 	function wp_is_using_https() {
 		if ( ! wp_is_home_url_using_https() ) {
@@ -13,14 +13,14 @@ if( ! function_exists( 'wp_is_using_https' ) ) :
 	}
 endif;
 
-// wp-includes/https-detection.php (WP 7.0)
+// wp-includes/https-detection.php (WP 7.0.2)
 if( ! function_exists( 'wp_is_home_url_using_https' ) ) :
 	function wp_is_home_url_using_https() {
 		return 'https' === wp_parse_url( home_url(), PHP_URL_SCHEME );
 	}
 endif;
 
-// wp-includes/https-detection.php (WP 7.0)
+// wp-includes/https-detection.php (WP 7.0.2)
 if( ! function_exists( 'wp_is_site_url_using_https' ) ) :
 	function wp_is_site_url_using_https() {
 		/*
@@ -35,7 +35,7 @@ if( ! function_exists( 'wp_is_site_url_using_https' ) ) :
 	}
 endif;
 
-// wp-includes/https-detection.php (WP 7.0)
+// wp-includes/https-detection.php (WP 7.0.2)
 if( ! function_exists( 'wp_is_local_html_output' ) ) :
 	function wp_is_local_html_output( $html ) {
 		// 1. Check if HTML includes the site's Really Simple Discovery link.

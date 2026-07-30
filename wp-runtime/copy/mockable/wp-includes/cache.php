@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/cache.php (WP 7.0)
+// wp-includes/cache.php (WP 7.0.2)
 if( ! function_exists( 'wp_cache_get_multiple' ) ) :
 	function wp_cache_get_multiple( $keys, $group = '', $force = false ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {

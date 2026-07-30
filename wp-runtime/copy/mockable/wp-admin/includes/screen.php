@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-admin/includes/screen.php (WP 7.0)
+// wp-admin/includes/screen.php (WP 7.0.2)
 if( ! function_exists( 'get_current_screen' ) ) :
 	function get_current_screen() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {

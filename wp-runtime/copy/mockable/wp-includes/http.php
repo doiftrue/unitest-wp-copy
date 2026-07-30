@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/http.php (WP 7.0)
+// wp-includes/http.php (WP 7.0.2)
 if( ! function_exists( 'get_http_origin' ) ) :
 	function get_http_origin() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {

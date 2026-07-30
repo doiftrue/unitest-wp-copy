@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/https-migration.php (WP 7.0)
+// wp-includes/https-migration.php (WP 7.0.2)
 if( ! function_exists( 'wp_should_replace_insecure_home_url' ) ) :
 	function wp_should_replace_insecure_home_url() {
 		$should_replace_insecure_home_url = wp_is_using_https()
@@ -25,7 +25,7 @@ if( ! function_exists( 'wp_should_replace_insecure_home_url' ) ) :
 	}
 endif;
 
-// wp-includes/https-migration.php (WP 7.0)
+// wp-includes/https-migration.php (WP 7.0.2)
 if( ! function_exists( 'wp_replace_insecure_home_url' ) ) :
 	function wp_replace_insecure_home_url( $content ) {
 		if ( ! wp_should_replace_insecure_home_url() ) {

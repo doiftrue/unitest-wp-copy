@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-styles.php (WP 7.0)
+// wp-includes/class-wp-styles.php (WP 7.0.2)
 if( ! class_exists( 'WP_Styles' ) ) :
 	class WP_Styles extends WP_Dependencies {
 		/**

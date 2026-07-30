@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/load.php (WP 7.0)
+// wp-includes/load.php (WP 7.0.2)
 if( ! function_exists( 'wp_get_development_mode' ) ) :
 	function wp_get_development_mode() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -40,7 +40,7 @@ if( ! function_exists( 'wp_get_development_mode' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 7.0)
+// wp-includes/load.php (WP 7.0.2)
 if( ! function_exists( 'is_login' ) ) :
 	function is_login() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -51,7 +51,7 @@ if( ! function_exists( 'is_login' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 7.0)
+// wp-includes/load.php (WP 7.0.2)
 if( ! function_exists( 'timer_float' ) ) :
 	function timer_float() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -62,7 +62,7 @@ if( ! function_exists( 'timer_float' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 7.0)
+// wp-includes/load.php (WP 7.0.2)
 if( ! function_exists( 'wp_is_jsonp_request' ) ) :
 	function wp_is_jsonp_request() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -89,7 +89,7 @@ if( ! function_exists( 'wp_is_jsonp_request' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 7.0)
+// wp-includes/load.php (WP 7.0.2)
 if( ! function_exists( 'wp_is_xml_request' ) ) :
 	function wp_is_xml_request() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -121,7 +121,7 @@ if( ! function_exists( 'wp_is_xml_request' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 7.0)
+// wp-includes/load.php (WP 7.0.2)
 if( ! function_exists( 'wp_is_json_request' ) ) :
 	function wp_is_json_request() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -140,7 +140,7 @@ if( ! function_exists( 'wp_is_json_request' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 7.0)
+// wp-includes/load.php (WP 7.0.2)
 if( ! function_exists( 'wp_using_themes' ) ) :
 	function wp_using_themes() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -158,7 +158,7 @@ if( ! function_exists( 'wp_using_themes' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 7.0)
+// wp-includes/load.php (WP 7.0.2)
 if( ! function_exists( 'wp_get_environment_type' ) ) :
 	function wp_get_environment_type() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -216,7 +216,7 @@ if( ! function_exists( 'wp_get_environment_type' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 7.0)
+// wp-includes/load.php (WP 7.0.2)
 if( ! function_exists( 'wp_doing_cron' ) ) :
 	function wp_doing_cron() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -234,7 +234,7 @@ if( ! function_exists( 'wp_doing_cron' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 7.0)
+// wp-includes/load.php (WP 7.0.2)
 if( ! function_exists( 'wp_is_file_mod_allowed' ) ) :
 	function wp_is_file_mod_allowed( $context ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -253,7 +253,7 @@ if( ! function_exists( 'wp_is_file_mod_allowed' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 7.0)
+// wp-includes/load.php (WP 7.0.2)
 if( ! function_exists( 'wp_doing_ajax' ) ) :
 	function wp_doing_ajax() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -271,7 +271,7 @@ if( ! function_exists( 'wp_doing_ajax' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 7.0)
+// wp-includes/load.php (WP 7.0.2)
 if( ! function_exists( 'get_current_network_id' ) ) :
 	function get_current_network_id() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -292,7 +292,7 @@ if( ! function_exists( 'get_current_network_id' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 7.0)
+// wp-includes/load.php (WP 7.0.2)
 if( ! function_exists( 'wp_get_server_protocol' ) ) :
 	function wp_get_server_protocol() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -309,7 +309,7 @@ if( ! function_exists( 'wp_get_server_protocol' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 7.0)
+// wp-includes/load.php (WP 7.0.2)
 if( ! function_exists( 'wp_installing' ) ) :
 	function wp_installing( $is_installing = null ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -334,7 +334,7 @@ if( ! function_exists( 'wp_installing' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 7.0)
+// wp-includes/load.php (WP 7.0.2)
 if( ! function_exists( 'is_blog_admin' ) ) :
 	function is_blog_admin() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -351,7 +351,7 @@ if( ! function_exists( 'is_blog_admin' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 7.0)
+// wp-includes/load.php (WP 7.0.2)
 if( ! function_exists( 'is_network_admin' ) ) :
 	function is_network_admin() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -368,7 +368,7 @@ if( ! function_exists( 'is_network_admin' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 7.0)
+// wp-includes/load.php (WP 7.0.2)
 if( ! function_exists( 'is_user_admin' ) ) :
 	function is_user_admin() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -385,7 +385,7 @@ if( ! function_exists( 'is_user_admin' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 7.0)
+// wp-includes/load.php (WP 7.0.2)
 if( ! function_exists( 'get_current_blog_id' ) ) :
 	function get_current_blog_id() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -398,7 +398,7 @@ if( ! function_exists( 'get_current_blog_id' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 7.0)
+// wp-includes/load.php (WP 7.0.2)
 if( ! function_exists( 'is_multisite' ) ) :
 	function is_multisite() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -417,7 +417,7 @@ if( ! function_exists( 'is_multisite' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 7.0)
+// wp-includes/load.php (WP 7.0.2)
 if( ! function_exists( 'is_ssl' ) ) :
 	function is_ssl() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -440,7 +440,7 @@ if( ! function_exists( 'is_ssl' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 7.0)
+// wp-includes/load.php (WP 7.0.2)
 if( ! function_exists( 'is_admin' ) ) :
 	function is_admin() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -457,7 +457,7 @@ if( ! function_exists( 'is_admin' ) ) :
 	}
 endif;
 
-// wp-includes/load.php (WP 7.0)
+// wp-includes/load.php (WP 7.0.2)
 if( ! function_exists( 'timer_stop' ) ) :
 	function timer_stop( $display = 0, $precision = 3 ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {

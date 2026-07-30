@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-date-query.php (WP 7.0)
+// wp-includes/class-wp-date-query.php (WP 7.0.2)
 if( ! class_exists( 'WP_Date_Query' ) ) :
 	class WP_Date_Query {
 		/**

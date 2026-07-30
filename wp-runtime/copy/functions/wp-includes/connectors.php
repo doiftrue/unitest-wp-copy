@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/connectors.php (WP 7.0)
+// wp-includes/connectors.php (WP 7.0.2)
 if( ! function_exists( '_wp_connectors_mask_api_key' ) ) :
 	function _wp_connectors_mask_api_key( string $key ): string {
 		if ( strlen( $key ) <= 4 ) {

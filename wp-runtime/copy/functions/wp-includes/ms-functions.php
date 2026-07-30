@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/ms-functions.php (WP 7.0)
+// wp-includes/ms-functions.php (WP 7.0.2)
 if( ! function_exists( 'get_subdirectory_reserved_names' ) ) :
 	function get_subdirectory_reserved_names() {
 		$names = array(
@@ -31,7 +31,7 @@ if( ! function_exists( 'get_subdirectory_reserved_names' ) ) :
 	}
 endif;
 
-// wp-includes/ms-functions.php (WP 7.0)
+// wp-includes/ms-functions.php (WP 7.0.2)
 if( ! function_exists( 'is_email_address_unsafe' ) ) :
 	function is_email_address_unsafe( $user_email ) {
 		$banned_names = get_site_option( 'banned_email_domains' );
@@ -76,7 +76,7 @@ if( ! function_exists( 'is_email_address_unsafe' ) ) :
 	}
 endif;
 
-// wp-includes/ms-functions.php (WP 7.0)
+// wp-includes/ms-functions.php (WP 7.0.2)
 if( ! function_exists( 'check_upload_mimes' ) ) :
 	function check_upload_mimes( $mimes ) {
 		$site_exts  = explode( ' ', get_site_option( 'upload_filetypes', 'jpg jpeg png gif' ) );
@@ -92,7 +92,7 @@ if( ! function_exists( 'check_upload_mimes' ) ) :
 	}
 endif;
 
-// wp-includes/ms-functions.php (WP 7.0)
+// wp-includes/ms-functions.php (WP 7.0.2)
 if( ! function_exists( 'upload_is_file_too_big' ) ) :
 	function upload_is_file_too_big( $upload ) {
 		if ( ! is_array( $upload ) || defined( 'WP_IMPORTING' ) || get_site_option( 'upload_space_check_disabled' ) ) {
@@ -108,7 +108,7 @@ if( ! function_exists( 'upload_is_file_too_big' ) ) :
 	}
 endif;
 
-// wp-includes/ms-functions.php (WP 7.0)
+// wp-includes/ms-functions.php (WP 7.0.2)
 if( ! function_exists( 'users_can_register_signup_filter' ) ) :
 	function users_can_register_signup_filter() {
 		$registration = get_site_option( 'registration' );
@@ -116,7 +116,7 @@ if( ! function_exists( 'users_can_register_signup_filter' ) ) :
 	}
 endif;
 
-// wp-includes/ms-functions.php (WP 7.0)
+// wp-includes/ms-functions.php (WP 7.0.2)
 if( ! function_exists( 'get_space_allowed' ) ) :
 	function get_space_allowed() {
 		$space_allowed = get_option( 'blog_upload_space' );
@@ -140,7 +140,7 @@ if( ! function_exists( 'get_space_allowed' ) ) :
 	}
 endif;
 
-// wp-includes/ms-functions.php (WP 7.0)
+// wp-includes/ms-functions.php (WP 7.0.2)
 if( ! function_exists( 'force_ssl_content' ) ) :
 	function force_ssl_content( $force = null ) {
 		static $forced_content = false;
@@ -155,7 +155,7 @@ if( ! function_exists( 'force_ssl_content' ) ) :
 	}
 endif;
 
-// wp-includes/ms-functions.php (WP 7.0)
+// wp-includes/ms-functions.php (WP 7.0.2)
 if( ! function_exists( 'filter_SSL' ) ) :
 	function filter_SSL( $url ) {  // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid
 		if ( ! is_string( $url ) ) {

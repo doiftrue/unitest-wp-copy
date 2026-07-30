@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/block-template-utils.php (WP 7.0)
+// wp-includes/block-template-utils.php (WP 7.0.2)
 if( ! function_exists( '_inject_theme_attribute_in_template_part_block' ) ) :
 	function _inject_theme_attribute_in_template_part_block( &$block ) {
 		if (
@@ -14,7 +14,7 @@ if( ! function_exists( '_inject_theme_attribute_in_template_part_block' ) ) :
 	}
 endif;
 
-// wp-includes/block-template-utils.php (WP 7.0)
+// wp-includes/block-template-utils.php (WP 7.0.2)
 if( ! function_exists( '_remove_theme_attribute_from_template_part_block' ) ) :
 	function _remove_theme_attribute_from_template_part_block( &$block ) {
 		if (
@@ -26,7 +26,7 @@ if( ! function_exists( '_remove_theme_attribute_from_template_part_block' ) ) :
 	}
 endif;
 
-// wp-includes/block-template-utils.php (WP 7.0)
+// wp-includes/block-template-utils.php (WP 7.0.2)
 if( ! function_exists( 'get_template_hierarchy' ) ) :
 	function get_template_hierarchy( $slug, $is_custom = false, $template_prefix = '' ) {
 		if ( 'index' === $slug ) {
@@ -121,7 +121,7 @@ if( ! function_exists( 'get_template_hierarchy' ) ) :
 	}
 endif;
 
-// wp-includes/block-template-utils.php (WP 7.0)
+// wp-includes/block-template-utils.php (WP 7.0.2)
 if( ! function_exists( 'get_allowed_block_template_part_areas' ) ) :
 	function get_allowed_block_template_part_areas() {
 		$default_area_definitions = array(
@@ -186,7 +186,7 @@ if( ! function_exists( 'get_allowed_block_template_part_areas' ) ) :
 	}
 endif;
 
-// wp-includes/block-template-utils.php (WP 7.0)
+// wp-includes/block-template-utils.php (WP 7.0.2)
 if( ! function_exists( '_filter_block_template_part_area' ) ) :
 	function _filter_block_template_part_area( $type ) {
 		$allowed_areas = array_map(
@@ -210,7 +210,7 @@ if( ! function_exists( '_filter_block_template_part_area' ) ) :
 	}
 endif;
 
-// wp-includes/block-template-utils.php (WP 7.0)
+// wp-includes/block-template-utils.php (WP 7.0.2)
 if( ! function_exists( 'get_default_block_template_types' ) ) :
 	function get_default_block_template_types() {
 		$default_template_types = array(
@@ -317,7 +317,7 @@ if( ! function_exists( 'get_default_block_template_types' ) ) :
 	}
 endif;
 
-// wp-includes/block-template-utils.php (WP 7.0)
+// wp-includes/block-template-utils.php (WP 7.0.2)
 if( ! function_exists( '_flatten_blocks' ) ) :
 	function _flatten_blocks( &$blocks ) {
 		$all_blocks = array();

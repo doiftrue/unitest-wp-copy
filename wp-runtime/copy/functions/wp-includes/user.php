@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/user.php (WP 7.0)
+// wp-includes/user.php (WP 7.0.2)
 if( ! function_exists( 'validate_username' ) ) :
 	function validate_username( $username ) {
 		$sanitized = sanitize_user( $username, true );
@@ -20,7 +20,7 @@ if( ! function_exists( 'validate_username' ) ) :
 	}
 endif;
 
-// wp-includes/user.php (WP 7.0)
+// wp-includes/user.php (WP 7.0.2)
 if( ! function_exists( 'wp_get_password_hint' ) ) :
 	function wp_get_password_hint() {
 		$hint = __( 'Hint: The password should be at least twelve characters long. To make it stronger, use upper and lower case letters, numbers, and symbols like ! " ? $ % ^ &amp; ).' );
@@ -36,7 +36,7 @@ if( ! function_exists( 'wp_get_password_hint' ) ) :
 	}
 endif;
 
-// wp-includes/user.php (WP 7.0)
+// wp-includes/user.php (WP 7.0.2)
 if( ! function_exists( '_wp_privacy_action_request_types' ) ) :
 	function _wp_privacy_action_request_types() {
 		return array(
@@ -46,7 +46,7 @@ if( ! function_exists( '_wp_privacy_action_request_types' ) ) :
 	}
 endif;
 
-// wp-includes/user.php (WP 7.0)
+// wp-includes/user.php (WP 7.0.2)
 if( ! function_exists( 'wp_register_user_personal_data_exporter' ) ) :
 	function wp_register_user_personal_data_exporter( $exporters ) {
 		$exporters['wordpress-user'] = array(
@@ -58,7 +58,7 @@ if( ! function_exists( 'wp_register_user_personal_data_exporter' ) ) :
 	}
 endif;
 
-// wp-includes/user.php (WP 7.0)
+// wp-includes/user.php (WP 7.0.2)
 if( ! function_exists( 'wp_user_request_action_description' ) ) :
 	function wp_user_request_action_description( $action_name ) {
 		switch ( $action_name ) {
@@ -86,7 +86,7 @@ if( ! function_exists( 'wp_user_request_action_description' ) ) :
 	}
 endif;
 
-// wp-includes/user.php (WP 7.0)
+// wp-includes/user.php (WP 7.0.2)
 if( ! function_exists( 'wp_is_application_passwords_available' ) ) :
 	function wp_is_application_passwords_available() {
 		/**
@@ -100,14 +100,14 @@ if( ! function_exists( 'wp_is_application_passwords_available' ) ) :
 	}
 endif;
 
-// wp-includes/user.php (WP 7.0)
+// wp-includes/user.php (WP 7.0.2)
 if( ! function_exists( 'wp_cache_set_users_last_changed' ) ) :
 	function wp_cache_set_users_last_changed() {
 		wp_cache_set_last_changed( 'users' );
 	}
 endif;
 
-// wp-includes/user.php (WP 7.0)
+// wp-includes/user.php (WP 7.0.2)
 if( ! function_exists( 'sanitize_user_field' ) ) :
 	function sanitize_user_field( $field, $value, $user_id, $context ) {
 		$int_fields = array( 'ID' );

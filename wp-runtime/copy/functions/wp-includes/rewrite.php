@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/rewrite.php (WP 7.0)
+// wp-includes/rewrite.php (WP 7.0.2)
 if( ! function_exists( '_wp_filter_taxonomy_base' ) ) :
 	function _wp_filter_taxonomy_base( $base ) {
 		if ( ! empty( $base ) ) {

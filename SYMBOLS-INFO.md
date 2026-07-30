@@ -1,4 +1,4 @@
-The following functions and classes are available in this (unit test) environment. Symbols are copied from WordPress 7.0.
+The following functions and classes are available in this (unit test) environment. Symbols are copied from WordPress 7.0.2.
 
 Custom-adapted WordPress symbols (Mockable via WP_Mock):
 ```text

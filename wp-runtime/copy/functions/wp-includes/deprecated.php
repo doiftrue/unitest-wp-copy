@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/deprecated.php (WP 7.0)
+// wp-includes/deprecated.php (WP 7.0.2)
 if( ! function_exists( 'addslashes_gpc' ) ) :
 	function addslashes_gpc( $gpc ) {
 		_deprecated_function( __FUNCTION__, '7.0.0', 'wp_slash()' );
@@ -10,7 +10,7 @@ if( ! function_exists( 'addslashes_gpc' ) ) :
 	}
 endif;
 
-// wp-includes/deprecated.php (WP 7.0)
+// wp-includes/deprecated.php (WP 7.0.2)
 if( ! function_exists( 'wp_sanitize_script_attributes' ) ) :
 	function wp_sanitize_script_attributes( $attributes ) {
 		_deprecated_function( __FUNCTION__, '7.0.0', 'wp_get_script_tag() or wp_get_inline_script_tag()' );

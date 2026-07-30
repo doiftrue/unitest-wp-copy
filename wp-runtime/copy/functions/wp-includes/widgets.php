@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/widgets.php (WP 7.0)
+// wp-includes/widgets.php (WP 7.0.2)
 if( ! function_exists( 'wp_parse_widget_id' ) ) :
 	function wp_parse_widget_id( $id ) {
 		$parsed = array();
@@ -19,14 +19,14 @@ if( ! function_exists( 'wp_parse_widget_id' ) ) :
 	}
 endif;
 
-// wp-includes/widgets.php (WP 7.0)
+// wp-includes/widgets.php (WP 7.0.2)
 if( ! function_exists( '_get_widget_id_base' ) ) :
 	function _get_widget_id_base( $id ) {
 		return preg_replace( '/-[0-9]+$/', '', $id );
 	}
 endif;
 
-// wp-includes/widgets.php (WP 7.0)
+// wp-includes/widgets.php (WP 7.0.2)
 if( ! function_exists( 'register_sidebars' ) ) :
 	function register_sidebars( $number = 1, $args = array() ) {
 		global $wp_registered_sidebars;
@@ -71,7 +71,7 @@ if( ! function_exists( 'register_sidebars' ) ) :
 	}
 endif;
 
-// wp-includes/widgets.php (WP 7.0)
+// wp-includes/widgets.php (WP 7.0.2)
 if( ! function_exists( 'register_sidebar' ) ) :
 	function register_sidebar( $args = array() ) {
 		global $wp_registered_sidebars;
@@ -137,7 +137,7 @@ if( ! function_exists( 'register_sidebar' ) ) :
 	}
 endif;
 
-// wp-includes/widgets.php (WP 7.0)
+// wp-includes/widgets.php (WP 7.0.2)
 if( ! function_exists( 'unregister_sidebar' ) ) :
 	function unregister_sidebar( $sidebar_id ) {
 		global $wp_registered_sidebars;

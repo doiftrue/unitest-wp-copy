@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/connectors.php (WP 7.0)
+// wp-includes/connectors.php (WP 7.0.2)
 if( ! function_exists( 'wp_is_connector_registered' ) ) :
 	function wp_is_connector_registered( string $id ): bool {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -18,7 +18,7 @@ if( ! function_exists( 'wp_is_connector_registered' ) ) :
 	}
 endif;
 
-// wp-includes/connectors.php (WP 7.0)
+// wp-includes/connectors.php (WP 7.0.2)
 if( ! function_exists( 'wp_get_connector' ) ) :
 	function wp_get_connector( string $id ): ?array {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -34,7 +34,7 @@ if( ! function_exists( 'wp_get_connector' ) ) :
 	}
 endif;
 
-// wp-includes/connectors.php (WP 7.0)
+// wp-includes/connectors.php (WP 7.0.2)
 if( ! function_exists( 'wp_get_connectors' ) ) :
 	function wp_get_connectors(): array {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {

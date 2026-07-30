@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/pluggable.php (WP 7.0)
+// wp-includes/pluggable.php (WP 7.0.2)
 if( ! function_exists( 'wp_rand' ) ) :
 		function wp_rand( $min = null, $max = null ) {
 			if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -83,7 +83,7 @@ if( ! function_exists( 'wp_rand' ) ) :
 		}
 endif;
 
-// wp-includes/pluggable.php (WP 7.0)
+// wp-includes/pluggable.php (WP 7.0.2)
 if( ! function_exists( 'wp_nonce_tick' ) ) :
 		function wp_nonce_tick( $action = -1 ) {
 			if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {

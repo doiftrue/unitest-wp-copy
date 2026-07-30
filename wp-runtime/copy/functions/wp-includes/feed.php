@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/feed.php (WP 7.0)
+// wp-includes/feed.php (WP 7.0.2)
 if( ! function_exists( 'feed_content_type' ) ) :
 	function feed_content_type( $type = '' ) {
 		if ( empty( $type ) ) {
@@ -31,7 +31,7 @@ if( ! function_exists( 'feed_content_type' ) ) :
 	}
 endif;
 
-// wp-includes/feed.php (WP 7.0)
+// wp-includes/feed.php (WP 7.0.2)
 if( ! function_exists( 'prep_atom_text_construct' ) ) :
 	function prep_atom_text_construct( $data ) {
 		if ( ! str_contains( $data, '<' ) && ! str_contains( $data, '&' ) ) {
@@ -71,7 +71,7 @@ if( ! function_exists( 'prep_atom_text_construct' ) ) :
 	}
 endif;
 
-// wp-includes/feed.php (WP 7.0)
+// wp-includes/feed.php (WP 7.0.2)
 if( ! function_exists( 'get_default_feed' ) ) :
 	function get_default_feed() {
 		/**
@@ -88,7 +88,7 @@ if( ! function_exists( 'get_default_feed' ) ) :
 	}
 endif;
 
-// wp-includes/feed.php (WP 7.0)
+// wp-includes/feed.php (WP 7.0.2)
 if( ! function_exists( 'html_type_rss' ) ) :
 	function html_type_rss() {
 		$type = get_bloginfo( 'html_type' );
@@ -101,7 +101,7 @@ if( ! function_exists( 'html_type_rss' ) ) :
 	}
 endif;
 
-// wp-includes/feed.php (WP 7.0)
+// wp-includes/feed.php (WP 7.0.2)
 if( ! function_exists( 'get_bloginfo_rss' ) ) :
 	function get_bloginfo_rss( $show = '' ) {
 		$info = strip_tags( get_bloginfo( $show ) );
@@ -120,7 +120,7 @@ if( ! function_exists( 'get_bloginfo_rss' ) ) :
 	}
 endif;
 
-// wp-includes/feed.php (WP 7.0)
+// wp-includes/feed.php (WP 7.0.2)
 if( ! function_exists( 'bloginfo_rss' ) ) :
 	function bloginfo_rss( $show = '' ) {
 		/**

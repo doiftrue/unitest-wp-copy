@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/ms-load.php (WP 7.0)
+// wp-includes/ms-load.php (WP 7.0.2)
 if( ! function_exists( 'is_subdomain_install' ) ) :
 	function is_subdomain_install() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {

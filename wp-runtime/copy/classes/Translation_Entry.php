@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/pomo/entry.php (WP 7.0)
+// wp-includes/pomo/entry.php (WP 7.0.2)
 if( ! class_exists( 'Translation_Entry' ) ) :
 		class Translation_Entry {
 	

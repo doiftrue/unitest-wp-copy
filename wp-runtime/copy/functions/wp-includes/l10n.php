@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/l10n.php (WP 7.0)
+// wp-includes/l10n.php (WP 7.0.2)
 if( ! function_exists( 'translate_nooped_plural' ) ) :
 	function translate_nooped_plural( $nooped_plural, $count, $domain = 'default' ) {
 		if ( $nooped_plural['domain'] ) {
@@ -17,7 +17,7 @@ if( ! function_exists( 'translate_nooped_plural' ) ) :
 	}
 endif;
 
-// wp-includes/l10n.php (WP 7.0)
+// wp-includes/l10n.php (WP 7.0.2)
 if( ! function_exists( '_nx_noop' ) ) :
 	function _nx_noop( $singular, $plural, $context, $domain = null ) {
 		return array(
@@ -32,7 +32,7 @@ if( ! function_exists( '_nx_noop' ) ) :
 	}
 endif;
 
-// wp-includes/l10n.php (WP 7.0)
+// wp-includes/l10n.php (WP 7.0.2)
 if( ! function_exists( 'before_last_bar' ) ) :
 	function before_last_bar( $text ) {
 		$last_bar = strrpos( $text, '|' );
@@ -44,7 +44,7 @@ if( ! function_exists( 'before_last_bar' ) ) :
 	}
 endif;
 
-// wp-includes/l10n.php (WP 7.0)
+// wp-includes/l10n.php (WP 7.0.2)
 if( ! function_exists( '_n_noop' ) ) :
 	function _n_noop( $singular, $plural, $domain = null ) {
 		return array(

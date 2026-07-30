@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-block-editor-context.php (WP 7.0)
+// wp-includes/class-wp-block-editor-context.php (WP 7.0.2)
 if( ! class_exists( 'WP_Block_Editor_Context' ) ) :
 	class WP_Block_Editor_Context {
 		/**
