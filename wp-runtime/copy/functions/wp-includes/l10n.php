@@ -3,35 +3,6 @@
 // ------------------auto-generated---------------------
 
 // wp-includes/l10n.php (WP 6.5.8)
-if( ! function_exists( 'wp_get_word_count_type' ) ) :
-	function wp_get_word_count_type() {
-		global $wp_locale;
-	
-		if ( ! ( $wp_locale instanceof WP_Locale ) ) {
-			// Default value of WP_Locale::get_word_count_type().
-			return 'words';
-		}
-	
-		return $wp_locale->get_word_count_type();
-	}
-endif;
-
-// wp-includes/l10n.php (WP 6.5.8)
-if( ! function_exists( 'wp_get_list_item_separator' ) ) :
-	function wp_get_list_item_separator() {
-		global $wp_locale;
-	
-		if ( ! ( $wp_locale instanceof WP_Locale ) ) {
-			// Default value of WP_Locale::get_list_item_separator().
-			/* translators: Used between list items, there is a space after the comma. */
-			return __( ', ' );
-		}
-	
-		return $wp_locale->get_list_item_separator();
-	}
-endif;
-
-// wp-includes/l10n.php (WP 6.5.8)
 if( ! function_exists( 'translate_nooped_plural' ) ) :
 	function translate_nooped_plural( $nooped_plural, $count, $domain = 'default' ) {
 		if ( $nooped_plural['domain'] ) {

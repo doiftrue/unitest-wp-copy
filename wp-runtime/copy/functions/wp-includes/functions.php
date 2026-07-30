@@ -669,6 +669,75 @@ if( ! function_exists( 'wp_get_ext_types' ) ) :
 endif;
 
 // wp-includes/functions.php (WP 6.5.8)
+if( ! function_exists( '_deprecated_constructor' ) ) :
+	function _deprecated_constructor( $class_name, $version, $parent_class = '' ) {
+	
+		/**
+		 * Fires when a deprecated constructor is called.
+		 *
+		 * @since 4.3.0
+		 * @since 4.5.0 Added the `$parent_class` parameter.
+		 *
+		 * @param string $class_name   The class containing the deprecated constructor.
+		 * @param string $version      The version of WordPress that deprecated the function.
+		 * @param string $parent_class The parent class calling the deprecated constructor.
+		 */
+		do_action( 'deprecated_constructor_run', $class_name, $version, $parent_class );
+	
+		/**
+		 * Filters whether to trigger an error for deprecated functions.
+		 *
+		 * `WP_DEBUG` must be true in addition to the filter evaluating to true.
+		 *
+		 * @since 4.3.0
+		 *
+		 * @param bool $trigger Whether to trigger the error for deprecated functions. Default true.
+		 */
+		if ( WP_DEBUG && apply_filters( 'deprecated_constructor_trigger_error', true ) ) {
+			if ( function_exists( '__' ) ) {
+				if ( $parent_class ) {
+					$message = sprintf(
+						/* translators: 1: PHP class name, 2: PHP parent class name, 3: Version number, 4: __construct() method. */
+						__( 'The called constructor method for %1$s class in %2$s is <strong>deprecated</strong> since version %3$s! Use %4$s instead.' ),
+						$class_name,
+						$parent_class,
+						$version,
+						'<code>__construct()</code>'
+					);
+				} else {
+					$message = sprintf(
+						/* translators: 1: PHP class name, 2: Version number, 3: __construct() method. */
+						__( 'The called constructor method for %1$s class is <strong>deprecated</strong> since version %2$s! Use %3$s instead.' ),
+						$class_name,
+						$version,
+						'<code>__construct()</code>'
+					);
+				}
+			} else {
+				if ( $parent_class ) {
+					$message = sprintf(
+						'The called constructor method for %1$s class in %2$s is <strong>deprecated</strong> since version %3$s! Use %4$s instead.',
+						$class_name,
+						$parent_class,
+						$version,
+						'<code>__construct()</code>'
+					);
+				} else {
+					$message = sprintf(
+						'The called constructor method for %1$s class is <strong>deprecated</strong> since version %2$s! Use %3$s instead.',
+						$class_name,
+						$version,
+						'<code>__construct()</code>'
+					);
+				}
+			}
+	
+			wp_trigger_error( '', $message, E_USER_DEPRECATED );
+		}
+	}
+endif;
+
+// wp-includes/functions.php (WP 6.5.8)
 if( ! function_exists( '_deprecated_hook' ) ) :
 	function _deprecated_hook( $hook, $version, $replacement = '', $message = '' ) {
 		/**
@@ -1518,6 +1587,26 @@ if( ! function_exists( '_deprecated_argument' ) ) :
 			}
 	
 			wp_trigger_error( '', $message, E_USER_DEPRECATED );
+		}
+	}
+endif;
+
+// wp-includes/functions.php (WP 6.5.8)
+if( ! function_exists( '_wp_mysql_week' ) ) :
+	function _wp_mysql_week( $column ) {
+		$start_of_week = (int) get_option( 'start_of_week' );
+		switch ( $start_of_week ) {
+			case 1:
+				return "WEEK( $column, 1 )";
+			case 2:
+			case 3:
+			case 4:
+			case 5:
+			case 6:
+				return "WEEK( DATE_SUB( $column, INTERVAL $start_of_week DAY ), 0 )";
+			case 0:
+			default:
+				return "WEEK( $column, 0 )";
 		}
 	}
 endif;

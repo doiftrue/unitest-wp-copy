@@ -1529,6 +1529,13 @@ if( ! function_exists( 'rest_get_url_prefix' ) ) :
 endif;
 
 // wp-includes/rest-api.php (WP 6.5.8)
+if( ! function_exists( 'rest_url' ) ) :
+	function rest_url( $path = '', $scheme = 'rest' ) {
+		return get_rest_url( null, $path, $scheme );
+	}
+endif;
+
+// wp-includes/rest-api.php (WP 6.5.8)
 if( ! function_exists( 'rest_parse_date' ) ) :
 	function rest_parse_date( $date, $force_utc = false ) {
 		if ( $force_utc ) {

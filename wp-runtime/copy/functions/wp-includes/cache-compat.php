@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/cache-compat.php (WP 7.0)
+// wp-includes/cache-compat.php (WP 7.0.2)
 if( ! function_exists( 'wp_cache_get_salted' ) ) :
 		function wp_cache_get_salted( $cache_key, $group, $salt ) {
 			$salt  = is_array( $salt ) ? implode( ':', $salt ) : $salt;
@@ -20,7 +20,7 @@ if( ! function_exists( 'wp_cache_get_salted' ) ) :
 		}
 endif;
 
-// wp-includes/cache-compat.php (WP 7.0)
+// wp-includes/cache-compat.php (WP 7.0.2)
 if( ! function_exists( 'wp_cache_set_salted' ) ) :
 		function wp_cache_set_salted( $cache_key, $data, $group, $salt, $expire = 0 ) {
 			$salt = is_array( $salt ) ? implode( ':', $salt ) : $salt;
@@ -36,7 +36,7 @@ if( ! function_exists( 'wp_cache_set_salted' ) ) :
 		}
 endif;
 
-// wp-includes/cache-compat.php (WP 7.0)
+// wp-includes/cache-compat.php (WP 7.0.2)
 if( ! function_exists( 'wp_cache_get_multiple_salted' ) ) :
 		function wp_cache_get_multiple_salted( $cache_keys, $group, $salt ) {
 			$salt  = is_array( $salt ) ? implode( ':', $salt ) : $salt;
@@ -58,7 +58,7 @@ if( ! function_exists( 'wp_cache_get_multiple_salted' ) ) :
 		}
 endif;
 
-// wp-includes/cache-compat.php (WP 7.0)
+// wp-includes/cache-compat.php (WP 7.0.2)
 if( ! function_exists( 'wp_cache_set_multiple_salted' ) ) :
 		function wp_cache_set_multiple_salted( $data, $group, $salt, $expire = 0 ) {
 			$salt      = is_array( $salt ) ? implode( ':', $salt ) : $salt;
