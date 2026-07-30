@@ -7,64 +7,10 @@ files under `wp-core/wp-includes/` and `wp-core/wp-admin/`, including declaratio
 nested inside `class_exists()` guards.
 
 - 70 classes are active in `config/classes.php`.
-- 23 classes below require an explicit runtime-boundary decision.
+- 18 classes below require an explicit runtime-boundary decision.
+- 4 REST classes are tracked separately in [symbol-eligibility-discussion-rest-api.md](symbol-eligibility-discussion-rest-api.md).
+- 1 sitemap class is tracked separately in [symbol-eligibility-discussion-sitemap.md](symbol-eligibility-discussion-sitemap.md).
 - The remaining 663 declarations are covered by `config/not-suitable-files.md`.
-
-
-## REST Object and Dispatch Boundary
-
-### Candidates
-
-- `WP_REST_Request` — `wp-includes/rest-api/class-wp-rest-request.php`
-- `WP_REST_Server` — `wp-includes/rest-api/class-wp-rest-server.php`
-- `WP_REST_Controller` — `wp-includes/rest-api/endpoints/class-wp-rest-controller.php`
-- `WP_REST_Search_Handler` — `wp-includes/rest-api/search/class-wp-rest-search-handler.php`
-
-### Why Discussion Is Required
-
-- `WP_REST_Request` is mostly an in-memory request value object, but its full public
-  contract requires `WP_Http::BAD_REQUEST`, `rest_convert_error_to_response()`,
-  `rest_url()`, and the `permalink_structure` option.
-- Copying the complete `WP_Http` class only for response-code constants would also
-  import an unsupported live HTTP transport API.
-- `WP_REST_Controller` calls `rest_get_server()` and therefore crosses into the
-  server bootstrap and route registry.
-- `WP_REST_Search_Handler` is only useful as part of an intentionally supported
-  REST search subsystem.
-- `WP_REST_Server` remains coupled to authentication, routing, HTTP headers,
-  request dispatch, and the REST initialization lifecycle.
-
-### Decision Needed
-
-Decide whether the runtime should expose a deliberately partial REST object model
-with a small HTTP-status abstraction and copied error-conversion helpers, while
-keeping live dispatch and endpoint controllers out of scope.
-
-
-## Sitemap Request Lifecycle
-
-### Candidates
-
-- `WP_Sitemaps` — `wp-includes/sitemaps/class-wp-sitemaps.php`
-- `wp_sitemaps_get_server()`
-- `wp_get_sitemap_providers()`
-- `wp_register_sitemap_provider()`
-- `get_sitemap_url()`
-
-### Why Discussion Is Required
-
-- `wp_sitemaps_get_server()` constructs `WP_Sitemaps` and immediately calls
-  `WP_Sitemaps::init()`.
-- `WP_Sitemaps::init()` and `WP_Sitemaps::render_sitemaps()` require rewrite and
-  request-lifecycle symbols such as `add_rewrite_tag`, `add_rewrite_rule`,
-  `get_query_var`, `status_header`, and `wp_safe_redirect`.
-- Provider implementations also require live post, term, and user query chains.
-
-### Decision Needed
-
-Decide whether sitemap routing should become a supported partial request lifecycle.
-The in-memory registry, provider base, index, and renderer classes are already
-available independently.
 
 
 ## Block Rendering and Theme JSON Boundary
