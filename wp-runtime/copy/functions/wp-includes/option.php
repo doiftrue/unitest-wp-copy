@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/option.php (WP 6.8.5)
+// wp-includes/option.php (WP 6.8.6)
 if( ! function_exists( 'wp_autoload_values_to_autoload' ) ) :
 	function wp_autoload_values_to_autoload() {
 		$autoload_values = array( 'yes', 'on', 'auto-on', 'auto' );
@@ -23,7 +23,7 @@ if( ! function_exists( 'wp_autoload_values_to_autoload' ) ) :
 	}
 endif;
 
-// wp-includes/option.php (WP 6.8.5)
+// wp-includes/option.php (WP 6.8.6)
 if( ! function_exists( 'wp_determine_option_autoload_value' ) ) :
 	function wp_determine_option_autoload_value( $option, $value, $serialized_value, $autoload ) {
 	
@@ -60,7 +60,7 @@ if( ! function_exists( 'wp_determine_option_autoload_value' ) ) :
 	}
 endif;
 
-// wp-includes/option.php (WP 6.8.5)
+// wp-includes/option.php (WP 6.8.6)
 if( ! function_exists( 'wp_filter_default_autoload_value_via_option_size' ) ) :
 	function wp_filter_default_autoload_value_via_option_size( $autoload, $option, $value, $serialized_value ) {
 		/**
@@ -82,7 +82,7 @@ if( ! function_exists( 'wp_filter_default_autoload_value_via_option_size' ) ) :
 	}
 endif;
 
-// wp-includes/option.php (WP 6.8.5)
+// wp-includes/option.php (WP 6.8.6)
 if( ! function_exists( 'filter_default_option' ) ) :
 	function filter_default_option( $default_value, $option, $passed_default ) {
 		if ( $passed_default ) {
@@ -98,7 +98,7 @@ if( ! function_exists( 'filter_default_option' ) ) :
 	}
 endif;
 
-// wp-includes/option.php (WP 6.8.5)
+// wp-includes/option.php (WP 6.8.6)
 if( ! function_exists( 'register_setting' ) ) :
 	function register_setting( $option_group, $option_name, $args = array() ) {
 		global $new_allowed_options, $wp_registered_settings;
@@ -198,7 +198,7 @@ if( ! function_exists( 'register_setting' ) ) :
 	}
 endif;
 
-// wp-includes/option.php (WP 6.8.5)
+// wp-includes/option.php (WP 6.8.6)
 if( ! function_exists( 'unregister_setting' ) ) :
 	function unregister_setting( $option_group, $option_name, $deprecated = '' ) {
 		global $new_allowed_options, $wp_registered_settings;

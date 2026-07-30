@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/capabilities.php (WP 6.8.5)
+// wp-includes/capabilities.php (WP 6.8.6)
 if( ! function_exists( 'wp_maybe_grant_resume_extensions_caps' ) ) :
 	function wp_maybe_grant_resume_extensions_caps( $allcaps ) {
 		// Even in a multisite, regular administrators should be able to resume plugins.
@@ -19,7 +19,7 @@ if( ! function_exists( 'wp_maybe_grant_resume_extensions_caps' ) ) :
 	}
 endif;
 
-// wp-includes/capabilities.php (WP 6.8.5)
+// wp-includes/capabilities.php (WP 6.8.6)
 if( ! function_exists( 'wp_maybe_grant_install_languages_cap' ) ) :
 	function wp_maybe_grant_install_languages_cap( $allcaps ) {
 		if ( ! empty( $allcaps['update_core'] ) || ! empty( $allcaps['install_plugins'] ) || ! empty( $allcaps['install_themes'] ) ) {

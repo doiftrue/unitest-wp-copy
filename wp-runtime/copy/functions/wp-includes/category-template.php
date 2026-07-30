@@ -2,28 +2,28 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/category-template.php (WP 6.8.5)
+// wp-includes/category-template.php (WP 6.8.6)
 if( ! function_exists( '_wp_object_name_sort_cb' ) ) :
 	function _wp_object_name_sort_cb( $a, $b ) {
 		return strnatcasecmp( $a->name, $b->name );
 	}
 endif;
 
-// wp-includes/category-template.php (WP 6.8.5)
+// wp-includes/category-template.php (WP 6.8.6)
 if( ! function_exists( '_wp_object_count_sort_cb' ) ) :
 	function _wp_object_count_sort_cb( $a, $b ) {
 		return ( $a->count - $b->count );
 	}
 endif;
 
-// wp-includes/category-template.php (WP 6.8.5)
+// wp-includes/category-template.php (WP 6.8.6)
 if( ! function_exists( 'default_topic_count_scale' ) ) :
 	function default_topic_count_scale( $count ) {
 		return round( log10( $count + 1 ) * 100 );
 	}
 endif;
 
-// wp-includes/category-template.php (WP 6.8.5)
+// wp-includes/category-template.php (WP 6.8.6)
 if( ! function_exists( 'wp_generate_tag_cloud' ) ) :
 	function wp_generate_tag_cloud( $tags, $args = '' ) {
 		$defaults = array(

@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/bookmark.php (WP 6.8.5)
+// wp-includes/bookmark.php (WP 6.8.6)
 if( ! function_exists( 'sanitize_bookmark' ) ) :
 	function sanitize_bookmark( $bookmark, $context = 'display' ) {
 		$fields = array(
@@ -46,7 +46,7 @@ if( ! function_exists( 'sanitize_bookmark' ) ) :
 	}
 endif;
 
-// wp-includes/bookmark.php (WP 6.8.5)
+// wp-includes/bookmark.php (WP 6.8.6)
 if( ! function_exists( 'sanitize_bookmark_field' ) ) :
 	function sanitize_bookmark_field( $field, $value, $bookmark_id, $context ) {
 		$int_fields = array( 'link_id', 'link_rating' );

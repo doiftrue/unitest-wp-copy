@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/nav-menu.php (WP 6.8.5)
+// wp-includes/nav-menu.php (WP 6.8.6)
 if( ! function_exists( 'get_registered_nav_menus' ) ) :
 	function get_registered_nav_menus() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {

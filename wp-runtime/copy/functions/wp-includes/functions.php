@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'wp_unique_id_from_values' ) ) :
 	function wp_unique_id_from_values( array $data, string $prefix = '' ): string {
 		if ( empty( $data ) ) {
@@ -22,7 +22,7 @@ if( ! function_exists( 'wp_unique_id_from_values' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'wp_is_heic_image_mime_type' ) ) :
 	function wp_is_heic_image_mime_type( $mime_type ) {
 		$heic_mime_types = array(
@@ -36,7 +36,7 @@ if( ! function_exists( 'wp_is_heic_image_mime_type' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'wp_cache_set_last_changed' ) ) :
 	function wp_cache_set_last_changed( $group ) {
 		$previous_time = wp_cache_get( 'last_changed', $group );
@@ -62,7 +62,7 @@ if( ! function_exists( 'wp_cache_set_last_changed' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( '_validate_cache_id' ) ) :
 	function _validate_cache_id( $object_id ) {
 		/*
@@ -82,7 +82,7 @@ if( ! function_exists( '_validate_cache_id' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'wp_recursive_ksort' ) ) :
 	function wp_recursive_ksort( &$input_array ) {
 		foreach ( $input_array as &$value ) {
@@ -95,7 +95,7 @@ if( ! function_exists( 'wp_recursive_ksort' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'wp_json_file_decode' ) ) :
 	function wp_json_file_decode( $filename, $options = array() ) {
 		$result   = null;
@@ -133,7 +133,7 @@ if( ! function_exists( 'wp_json_file_decode' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'wp_get_default_extension_for_mime_type' ) ) :
 	function wp_get_default_extension_for_mime_type( $mime_type ) {
 		$extensions = explode( '|', array_search( $mime_type, wp_get_mime_types(), true ) );
@@ -146,7 +146,7 @@ if( ! function_exists( 'wp_get_default_extension_for_mime_type' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( '_wp_array_set' ) ) :
 	function _wp_array_set( &$input_array, $path, $value = null ) {
 		// Confirm $input_array is valid.
@@ -189,7 +189,7 @@ if( ! function_exists( '_wp_array_set' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( '_wp_array_get' ) ) :
 	function _wp_array_get( $input_array, $path, $default_value = null ) {
 		// Confirm $path is valid.
@@ -233,28 +233,28 @@ if( ! function_exists( '_wp_array_get' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'wp_fuzzy_number_match' ) ) :
 	function wp_fuzzy_number_match( $expected, $actual, $precision = 1 ) {
 		return abs( (float) $expected - (float) $actual ) <= $precision;
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'wp_timezone' ) ) :
 	function wp_timezone() {
 		return new DateTimeZone( wp_timezone_string() );
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'current_datetime' ) ) :
 	function current_datetime() {
 		return new DateTimeImmutable( 'now', wp_timezone() );
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'wp_date' ) ) :
 	function wp_date( $format, $timestamp = null, $timezone = null ) {
 		global $wp_locale;
@@ -337,7 +337,7 @@ if( ! function_exists( 'wp_date' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'human_readable_duration' ) ) :
 	function human_readable_duration( $duration = '' ) {
 		if ( ( empty( $duration ) || ! is_string( $duration ) ) ) {
@@ -401,7 +401,7 @@ if( ! function_exists( 'human_readable_duration' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'wp_parse_list' ) ) :
 	function wp_parse_list( $input_list ) {
 		if ( ! is_array( $input_list ) ) {
@@ -415,7 +415,7 @@ if( ! function_exists( 'wp_parse_list' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'wp_privacy_anonymize_data' ) ) :
 	function wp_privacy_anonymize_data( $type, $data = '' ) {
 	
@@ -458,7 +458,7 @@ if( ! function_exists( 'wp_privacy_anonymize_data' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'wp_privacy_anonymize_ip' ) ) :
 	function wp_privacy_anonymize_ip( $ip_addr, $ipv6_fallback = false ) {
 		if ( empty( $ip_addr ) ) {
@@ -525,7 +525,7 @@ if( ! function_exists( 'wp_privacy_anonymize_ip' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'wp_is_uuid' ) ) :
 	function wp_is_uuid( $uuid, $version = null ) {
 	
@@ -547,7 +547,7 @@ if( ! function_exists( 'wp_is_uuid' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'wp_get_image_mime' ) ) :
 	function wp_get_image_mime( $file ) {
 		/*
@@ -639,7 +639,7 @@ if( ! function_exists( 'wp_get_image_mime' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'wp_list_sort' ) ) :
 	function wp_list_sort( $input_list, $orderby = array(), $order = 'ASC', $preserve_keys = false ) {
 		if ( ! is_array( $input_list ) ) {
@@ -652,7 +652,7 @@ if( ! function_exists( 'wp_list_sort' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'wp_parse_slug_list' ) ) :
 	function wp_parse_slug_list( $input_list ) {
 		$input_list = wp_parse_list( $input_list );
@@ -661,7 +661,7 @@ if( ! function_exists( 'wp_parse_slug_list' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'wp_cache_get_last_changed' ) ) :
 	function wp_cache_get_last_changed( $group ) {
 		$last_changed = wp_cache_get( 'last_changed', $group );
@@ -674,7 +674,7 @@ if( ! function_exists( 'wp_cache_get_last_changed' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'wp_check_jsonp_callback' ) ) :
 	function wp_check_jsonp_callback( $callback ) {
 		if ( ! is_string( $callback ) ) {
@@ -687,7 +687,7 @@ if( ! function_exists( 'wp_check_jsonp_callback' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'wp_get_ext_types' ) ) :
 	function wp_get_ext_types() {
 	
@@ -717,7 +717,76 @@ if( ! function_exists( 'wp_get_ext_types' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
+if( ! function_exists( '_deprecated_constructor' ) ) :
+	function _deprecated_constructor( $class_name, $version, $parent_class = '' ) {
+	
+		/**
+		 * Fires when a deprecated constructor is called.
+		 *
+		 * @since 4.3.0
+		 * @since 4.5.0 Added the `$parent_class` parameter.
+		 *
+		 * @param string $class_name   The class containing the deprecated constructor.
+		 * @param string $version      The version of WordPress that deprecated the function.
+		 * @param string $parent_class The parent class calling the deprecated constructor.
+		 */
+		do_action( 'deprecated_constructor_run', $class_name, $version, $parent_class );
+	
+		/**
+		 * Filters whether to trigger an error for deprecated functions.
+		 *
+		 * `WP_DEBUG` must be true in addition to the filter evaluating to true.
+		 *
+		 * @since 4.3.0
+		 *
+		 * @param bool $trigger Whether to trigger the error for deprecated functions. Default true.
+		 */
+		if ( WP_DEBUG && apply_filters( 'deprecated_constructor_trigger_error', true ) ) {
+			if ( function_exists( '__' ) ) {
+				if ( $parent_class ) {
+					$message = sprintf(
+						/* translators: 1: PHP class name, 2: PHP parent class name, 3: Version number, 4: __construct() method. */
+						__( 'The called constructor method for %1$s class in %2$s is <strong>deprecated</strong> since version %3$s! Use %4$s instead.' ),
+						$class_name,
+						$parent_class,
+						$version,
+						'<code>__construct()</code>'
+					);
+				} else {
+					$message = sprintf(
+						/* translators: 1: PHP class name, 2: Version number, 3: __construct() method. */
+						__( 'The called constructor method for %1$s class is <strong>deprecated</strong> since version %2$s! Use %3$s instead.' ),
+						$class_name,
+						$version,
+						'<code>__construct()</code>'
+					);
+				}
+			} else {
+				if ( $parent_class ) {
+					$message = sprintf(
+						'The called constructor method for %1$s class in %2$s is <strong>deprecated</strong> since version %3$s! Use %4$s instead.',
+						$class_name,
+						$parent_class,
+						$version,
+						'<code>__construct()</code>'
+					);
+				} else {
+					$message = sprintf(
+						'The called constructor method for %1$s class is <strong>deprecated</strong> since version %2$s! Use %3$s instead.',
+						$class_name,
+						$version,
+						'<code>__construct()</code>'
+					);
+				}
+			}
+	
+			wp_trigger_error( '', $message, E_USER_DEPRECATED );
+		}
+	}
+endif;
+
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( '_deprecated_hook' ) ) :
 	function _deprecated_hook( $hook, $version, $replacement = '', $message = '' ) {
 		/**
@@ -765,7 +834,7 @@ if( ! function_exists( '_deprecated_hook' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( '_wp_json_prepare_data' ) ) :
 	function _wp_json_prepare_data( $value ) {
 		_deprecated_function( __FUNCTION__, '5.3.0' );
@@ -773,7 +842,7 @@ if( ! function_exists( '_wp_json_prepare_data' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'wp_is_numeric_array' ) ) :
 	function wp_is_numeric_array( $data ) {
 		if ( ! is_array( $data ) ) {
@@ -787,14 +856,14 @@ if( ! function_exists( 'wp_is_numeric_array' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'mysql_to_rfc3339' ) ) :
 	function mysql_to_rfc3339( $date_string ) {
 		return mysql2date( 'Y-m-d\TH:i:s', $date_string, false );
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( '_wp_json_convert_string' ) ) :
 	function _wp_json_convert_string( $input_string ) {
 		static $use_mb = null;
@@ -815,7 +884,7 @@ if( ! function_exists( '_wp_json_convert_string' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( '_wp_json_sanity_check' ) ) :
 	function _wp_json_sanity_check( $value, $depth ) {
 		if ( $depth < 0 ) {
@@ -868,7 +937,7 @@ if( ! function_exists( '_wp_json_sanity_check' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'wp_json_encode' ) ) :
 	function wp_json_encode( $value, $flags = 0, $depth = 512 ) {
 		$json = json_encode( $value, $flags, $depth );
@@ -888,7 +957,7 @@ if( ! function_exists( 'wp_json_encode' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'wp_validate_boolean' ) ) :
 	function wp_validate_boolean( $value ) {
 		if ( is_bool( $value ) ) {
@@ -903,7 +972,7 @@ if( ! function_exists( 'wp_validate_boolean' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'wp_normalize_path' ) ) :
 	function wp_normalize_path( $path ) {
 		$wrapper = '';
@@ -929,14 +998,14 @@ if( ! function_exists( 'wp_normalize_path' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( '__return_empty_string' ) ) :
 	function __return_empty_string() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionDoubleUnderscore,PHPCompatibility.FunctionNameRestrictions.ReservedFunctionNames.FunctionDoubleUnderscore
 		return '';
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'mbstring_binary_safe_encoding' ) ) :
 	function mbstring_binary_safe_encoding( $reset = false ) {
 		static $encodings  = array();
@@ -969,14 +1038,14 @@ if( ! function_exists( 'mbstring_binary_safe_encoding' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'reset_mbstring_encoding' ) ) :
 	function reset_mbstring_encoding() {
 		mbstring_binary_safe_encoding( true );
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( '_canonical_charset' ) ) :
 	function _canonical_charset( $charset ) {
 		if ( is_utf8_charset( $charset ) ) {
@@ -1003,7 +1072,7 @@ if( ! function_exists( '_canonical_charset' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'get_tag_regex' ) ) :
 	function get_tag_regex( $tag ) {
 		if ( empty( $tag ) ) {
@@ -1013,7 +1082,7 @@ if( ! function_exists( 'get_tag_regex' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'wp_checkdate' ) ) :
 	function wp_checkdate( $month, $day, $year, $source_date ) {
 		/**
@@ -1028,7 +1097,7 @@ if( ! function_exists( 'wp_checkdate' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'wp_get_mime_types' ) ) :
 	function wp_get_mime_types() {
 		/**
@@ -1160,7 +1229,7 @@ if( ! function_exists( 'wp_get_mime_types' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'wp_is_stream' ) ) :
 	function wp_is_stream( $path ) {
 		$scheme_separator = strpos( $path, '://' );
@@ -1176,14 +1245,14 @@ if( ! function_exists( 'wp_is_stream' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( '__return_null' ) ) :
 	function __return_null() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionDoubleUnderscore,PHPCompatibility.FunctionNameRestrictions.ReservedFunctionNames.FunctionDoubleUnderscore
 		return null;
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'wp_debug_backtrace_summary' ) ) :
 	function wp_debug_backtrace_summary( $ignore_class = null, $skip_frames = 0, $pretty = true ) {
 		static $truncate_paths;
@@ -1228,7 +1297,7 @@ if( ! function_exists( 'wp_debug_backtrace_summary' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( '_get_non_cached_ids' ) ) :
 	function _get_non_cached_ids( $object_ids, $cache_group ) {
 		$object_ids = array_filter( $object_ids, '_validate_cache_id' );
@@ -1251,7 +1320,7 @@ if( ! function_exists( '_get_non_cached_ids' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'wp_allowed_protocols' ) ) :
 	function wp_allowed_protocols() {
 		static $protocols = array();
@@ -1275,7 +1344,7 @@ if( ! function_exists( 'wp_allowed_protocols' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( '_http_build_query' ) ) :
 	function _http_build_query( $data, $prefix = null, $sep = null, $key = '', $urlencode = true ) {
 		$ret = array();
@@ -1316,7 +1385,7 @@ if( ! function_exists( '_http_build_query' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'wp_array_slice_assoc' ) ) :
 	function wp_array_slice_assoc( $input_array, $keys ) {
 		$slice = array();
@@ -1331,7 +1400,7 @@ if( ! function_exists( 'wp_array_slice_assoc' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'wp_find_hierarchy_loop' ) ) :
 	function wp_find_hierarchy_loop( $callback, $start, $start_parent, $callback_args = array() ) {
 		$override = is_null( $start_parent ) ? array() : array( $start => $start_parent );
@@ -1345,7 +1414,7 @@ if( ! function_exists( 'wp_find_hierarchy_loop' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'wp_find_hierarchy_loop_tortoise_hare' ) ) :
 	function wp_find_hierarchy_loop_tortoise_hare( $callback, $start, $override = array(), $callback_args = array(), $_return_loop = false ) {
 		$tortoise        = $start;
@@ -1380,14 +1449,14 @@ if( ! function_exists( 'wp_find_hierarchy_loop_tortoise_hare' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'wp_list_filter' ) ) :
 	function wp_list_filter( $input_list, $args = array(), $operator = 'AND' ) {
 		return wp_filter_object_list( $input_list, $args, $operator );
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'wp_list_pluck' ) ) :
 	function wp_list_pluck( $input_list, $field, $index_key = null ) {
 		if ( ! is_array( $input_list ) ) {
@@ -1400,7 +1469,7 @@ if( ! function_exists( 'wp_list_pluck' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( '_doing_it_wrong' ) ) :
 	function _doing_it_wrong( $function_name, $message, $version ) {
 	
@@ -1469,35 +1538,35 @@ if( ! function_exists( '_doing_it_wrong' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( '__return_empty_array' ) ) :
 	function __return_empty_array() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionDoubleUnderscore,PHPCompatibility.FunctionNameRestrictions.ReservedFunctionNames.FunctionDoubleUnderscore
 		return array();
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( '__return_false' ) ) :
 	function __return_false() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionDoubleUnderscore,PHPCompatibility.FunctionNameRestrictions.ReservedFunctionNames.FunctionDoubleUnderscore
 		return false;
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( '__return_true' ) ) :
 	function __return_true() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionDoubleUnderscore,PHPCompatibility.FunctionNameRestrictions.ReservedFunctionNames.FunctionDoubleUnderscore
 		return true;
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( '__return_zero' ) ) :
 	function __return_zero() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionDoubleUnderscore,PHPCompatibility.FunctionNameRestrictions.ReservedFunctionNames.FunctionDoubleUnderscore
 		return 0;
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'wp_filter_object_list' ) ) :
 	function wp_filter_object_list( $input_list, $args = array(), $operator = 'and', $field = false ) {
 		if ( ! is_array( $input_list ) ) {
@@ -1516,7 +1585,7 @@ if( ! function_exists( 'wp_filter_object_list' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'wp_parse_id_list' ) ) :
 	function wp_parse_id_list( $input_list ) {
 		$input_list = wp_parse_list( $input_list );
@@ -1525,7 +1594,7 @@ if( ! function_exists( 'wp_parse_id_list' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( '_deprecated_argument' ) ) :
 	function _deprecated_argument( $function_name, $version, $message = '' ) {
 	
@@ -1587,7 +1656,27 @@ if( ! function_exists( '_deprecated_argument' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
+if( ! function_exists( '_wp_mysql_week' ) ) :
+	function _wp_mysql_week( $column ) {
+		$start_of_week = (int) get_option( 'start_of_week' );
+		switch ( $start_of_week ) {
+			case 1:
+				return "WEEK( $column, 1 )";
+			case 2:
+			case 3:
+			case 4:
+			case 5:
+			case 6:
+				return "WEEK( DATE_SUB( $column, INTERVAL $start_of_week DAY ), 0 )";
+			case 0:
+			default:
+				return "WEEK( $column, 0 )";
+		}
+	}
+endif;
+
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'get_file_data' ) ) :
 	function get_file_data( $file, $default_headers, $context = '' ) {
 		// Pull only the first 8 KB of the file in.
@@ -1630,7 +1719,7 @@ if( ! function_exists( 'get_file_data' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'get_allowed_mime_types' ) ) :
 	function get_allowed_mime_types( $user = null ) {
 		$t = wp_get_mime_types();
@@ -1656,14 +1745,14 @@ if( ! function_exists( 'get_allowed_mime_types' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( '_cleanup_header_comment' ) ) :
 	function _cleanup_header_comment( $str ) {
 		return trim( preg_replace( '/\s*(?:\*\/|\?>).*/', '', $str ) );
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'wp_get_nocache_headers' ) ) :
 	function wp_get_nocache_headers() {
 		$cache_control = 'no-cache, must-revalidate, max-age=0, no-store, private';
@@ -1690,7 +1779,7 @@ if( ! function_exists( 'wp_get_nocache_headers' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'wp_suspend_cache_invalidation' ) ) :
 	function wp_suspend_cache_invalidation( $suspend = true ) {
 		global $_wp_suspend_cache_invalidation;
@@ -1701,7 +1790,7 @@ if( ! function_exists( 'wp_suspend_cache_invalidation' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'path_is_absolute' ) ) :
 	function path_is_absolute( $path ) {
 		/*
@@ -1734,7 +1823,7 @@ if( ! function_exists( 'path_is_absolute' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'path_join' ) ) :
 	function path_join( $base, $path ) {
 		if ( path_is_absolute( $path ) ) {
@@ -1745,7 +1834,7 @@ if( ! function_exists( 'path_join' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'wp_ext2type' ) ) :
 	function wp_ext2type( $ext ) {
 		$ext = strtolower( $ext );
@@ -1759,14 +1848,14 @@ if( ! function_exists( 'wp_ext2type' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'build_query' ) ) :
 	function build_query( $data ) {
 		return _http_build_query( $data, null, '&', '', false );
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'get_status_header_desc' ) ) :
 	function get_status_header_desc( $code ) {
 		global $wp_header_to_desc;
@@ -1851,7 +1940,7 @@ if( ! function_exists( 'get_status_header_desc' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'number_format_i18n' ) ) :
 	function number_format_i18n( $number, $decimals = 0 ) {
 		global $wp_locale;
@@ -1876,7 +1965,7 @@ if( ! function_exists( 'number_format_i18n' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'size_format' ) ) :
 	function size_format( $bytes, $decimals = 0 ) {
 		$quant = array(
@@ -1915,7 +2004,7 @@ if( ! function_exists( 'size_format' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'wp_parse_args' ) ) :
 	function wp_parse_args( $args, $defaults = array() ) {
 		if ( is_object( $args ) ) {
@@ -1933,7 +2022,7 @@ if( ! function_exists( 'wp_parse_args' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'smilies_init' ) ) :
 	function smilies_init() {
 		global $wpsmiliestrans, $wp_smiliessearch;
@@ -2046,7 +2135,7 @@ if( ! function_exists( 'smilies_init' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'is_serialized' ) ) :
 	function is_serialized( $data, $strict = true ) {
 		// If it isn't a string, it isn't serialized.
@@ -2108,7 +2197,7 @@ if( ! function_exists( 'is_serialized' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'is_serialized_string' ) ) :
 	function is_serialized_string( $data ) {
 		// if it isn't a string, it isn't a serialized string.
@@ -2132,7 +2221,7 @@ if( ! function_exists( 'is_serialized_string' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'maybe_serialize' ) ) :
 	function maybe_serialize( $data ) {
 		if ( is_array( $data ) || is_object( $data ) ) {
@@ -2152,7 +2241,7 @@ if( ! function_exists( 'maybe_serialize' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'wp_check_filetype' ) ) :
 	function wp_check_filetype( $filename, $mimes = null ) {
 		if ( empty( $mimes ) ) {
@@ -2174,7 +2263,7 @@ if( ! function_exists( 'wp_check_filetype' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'maybe_unserialize' ) ) :
 	function maybe_unserialize( $data ) {
 		if ( is_serialized( $data ) ) { // Don't attempt to unserialize data that wasn't serialized going in.
@@ -2185,7 +2274,7 @@ if( ! function_exists( 'maybe_unserialize' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'add_query_arg' ) ) :
 	function add_query_arg( ...$args ) {
 		if ( is_array( $args[0] ) ) {
@@ -2256,7 +2345,7 @@ if( ! function_exists( 'add_query_arg' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'remove_query_arg' ) ) :
 	function remove_query_arg( $key, $query = false ) {
 		if ( is_array( $key ) ) { // Removing multiple keys.
@@ -2269,7 +2358,7 @@ if( ! function_exists( 'remove_query_arg' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'validate_file' ) ) :
 	function validate_file( $file, $allowed_files = array() ) {
 		if ( ! is_scalar( $file ) || '' === $file ) {
@@ -2310,14 +2399,14 @@ if( ! function_exists( 'validate_file' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'bool_from_yn' ) ) :
 	function bool_from_yn( $yn ) {
 		return ( 'y' === strtolower( $yn ) );
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'date_i18n' ) ) :
 	function date_i18n( $format, $timestamp_with_offset = false, $gmt = false ) {
 		$timestamp = $timestamp_with_offset;
@@ -2367,7 +2456,7 @@ if( ! function_exists( 'date_i18n' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( 'mysql2date' ) ) :
 	function mysql2date( $format, $date, $translate = true ) {
 		if ( empty( $date ) ) {
@@ -2394,7 +2483,7 @@ if( ! function_exists( 'mysql2date' ) ) :
 	}
 endif;
 
-// wp-includes/functions.php (WP 6.8.5)
+// wp-includes/functions.php (WP 6.8.6)
 if( ! function_exists( '_wp_to_kebab_case' ) ) :
 	function _wp_to_kebab_case( $input_string ) {
 		// Ignore the camelCase names for variables so the names are the same as lodash so comparing and porting new changes is easier.

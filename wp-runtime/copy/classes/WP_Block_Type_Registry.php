@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-block-type-registry.php (WP 6.8.5)
+// wp-includes/class-wp-block-type-registry.php (WP 6.8.6)
 if( ! class_exists( 'WP_Block_Type_Registry' ) ) :
 	class WP_Block_Type_Registry {
 		/**

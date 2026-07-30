@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/taxonomy.php (WP 6.8.5)
+// wp-includes/taxonomy.php (WP 6.8.6)
 if( ! function_exists( 'is_taxonomy_viewable' ) ) :
 	function is_taxonomy_viewable( $taxonomy ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -20,7 +20,7 @@ if( ! function_exists( 'is_taxonomy_viewable' ) ) :
 	}
 endif;
 
-// wp-includes/taxonomy.php (WP 6.8.5)
+// wp-includes/taxonomy.php (WP 6.8.6)
 if( ! function_exists( 'get_taxonomies' ) ) :
 	function get_taxonomies( $args = array(), $output = 'names', $operator = 'and' ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -35,7 +35,7 @@ if( ! function_exists( 'get_taxonomies' ) ) :
 	}
 endif;
 
-// wp-includes/taxonomy.php (WP 6.8.5)
+// wp-includes/taxonomy.php (WP 6.8.6)
 if( ! function_exists( 'taxonomy_exists' ) ) :
 	function taxonomy_exists( $taxonomy ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -48,7 +48,7 @@ if( ! function_exists( 'taxonomy_exists' ) ) :
 	}
 endif;
 
-// wp-includes/taxonomy.php (WP 6.8.5)
+// wp-includes/taxonomy.php (WP 6.8.6)
 if( ! function_exists( 'get_taxonomy' ) ) :
 	function get_taxonomy( $taxonomy ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -65,7 +65,7 @@ if( ! function_exists( 'get_taxonomy' ) ) :
 	}
 endif;
 
-// wp-includes/taxonomy.php (WP 6.8.5)
+// wp-includes/taxonomy.php (WP 6.8.6)
 if( ! function_exists( 'is_taxonomy_hierarchical' ) ) :
 	function is_taxonomy_hierarchical( $taxonomy ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {

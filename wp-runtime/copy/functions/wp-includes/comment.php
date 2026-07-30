@@ -2,14 +2,14 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/comment.php (WP 6.8.5)
+// wp-includes/comment.php (WP 6.8.6)
 if( ! function_exists( 'wp_cache_set_comments_last_changed' ) ) :
 	function wp_cache_set_comments_last_changed() {
 		wp_cache_set_last_changed( 'comment' );
 	}
 endif;
 
-// wp-includes/comment.php (WP 6.8.5)
+// wp-includes/comment.php (WP 6.8.6)
 if( ! function_exists( 'wp_register_comment_personal_data_exporter' ) ) :
 	function wp_register_comment_personal_data_exporter( $exporters ) {
 		$exporters['wordpress-comments'] = array(
@@ -21,7 +21,7 @@ if( ! function_exists( 'wp_register_comment_personal_data_exporter' ) ) :
 	}
 endif;
 
-// wp-includes/comment.php (WP 6.8.5)
+// wp-includes/comment.php (WP 6.8.6)
 if( ! function_exists( 'wp_register_comment_personal_data_eraser' ) ) :
 	function wp_register_comment_personal_data_eraser( $erasers ) {
 		$erasers['wordpress-comments'] = array(
@@ -33,7 +33,7 @@ if( ! function_exists( 'wp_register_comment_personal_data_eraser' ) ) :
 	}
 endif;
 
-// wp-includes/comment.php (WP 6.8.5)
+// wp-includes/comment.php (WP 6.8.6)
 if( ! function_exists( '_clear_modified_cache_on_transition_comment_status' ) ) :
 	function _clear_modified_cache_on_transition_comment_status( $new_status, $old_status ) {
 		if ( 'approved' === $new_status || 'approved' === $old_status ) {
@@ -46,7 +46,7 @@ if( ! function_exists( '_clear_modified_cache_on_transition_comment_status' ) ) 
 	}
 endif;
 
-// wp-includes/comment.php (WP 6.8.5)
+// wp-includes/comment.php (WP 6.8.6)
 if( ! function_exists( 'get_comment_statuses' ) ) :
 	function get_comment_statuses() {
 		$status = array(
@@ -60,7 +60,7 @@ if( ! function_exists( 'get_comment_statuses' ) ) :
 	}
 endif;
 
-// wp-includes/comment.php (WP 6.8.5)
+// wp-includes/comment.php (WP 6.8.6)
 if( ! function_exists( 'separate_comments' ) ) :
 	function separate_comments( &$comments ) {
 		$comments_by_type = array(
@@ -90,7 +90,7 @@ if( ! function_exists( 'separate_comments' ) ) :
 	}
 endif;
 
-// wp-includes/comment.php (WP 6.8.5)
+// wp-includes/comment.php (WP 6.8.6)
 if( ! function_exists( 'clean_comment_cache' ) ) :
 	function clean_comment_cache( $ids ) {
 		$comment_ids = (array) $ids;
@@ -110,7 +110,7 @@ if( ! function_exists( 'clean_comment_cache' ) ) :
 	}
 endif;
 
-// wp-includes/comment.php (WP 6.8.5)
+// wp-includes/comment.php (WP 6.8.6)
 if( ! function_exists( 'wp_throttle_comment_flood' ) ) :
 	function wp_throttle_comment_flood( $block, $time_lastcomment, $time_newcomment ) {
 		if ( $block ) { // A plugin has already blocked... we'll let that decision stand.
@@ -123,7 +123,7 @@ if( ! function_exists( 'wp_throttle_comment_flood' ) ) :
 	}
 endif;
 
-// wp-includes/comment.php (WP 6.8.5)
+// wp-includes/comment.php (WP 6.8.6)
 if( ! function_exists( 'wp_filter_comment' ) ) :
 	function wp_filter_comment( $commentdata ) {
 		if ( isset( $commentdata['user_ID'] ) ) {

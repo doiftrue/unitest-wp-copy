@@ -2,14 +2,14 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/meta.php (WP 6.8.5)
+// wp-includes/meta.php (WP 6.8.6)
 if( ! function_exists( '_wp_register_meta_args_allowed_list' ) ) :
 	function _wp_register_meta_args_allowed_list( $args, $default_args ) {
 		return array_intersect_key( $args, $default_args );
 	}
 endif;
 
-// wp-includes/meta.php (WP 6.8.5)
+// wp-includes/meta.php (WP 6.8.6)
 if( ! function_exists( 'get_metadata_default' ) ) :
 	function get_metadata_default( $meta_type, $object_id, $meta_key, $single = false ) {
 		if ( $single ) {
@@ -51,7 +51,7 @@ if( ! function_exists( 'get_metadata_default' ) ) :
 	}
 endif;
 
-// wp-includes/meta.php (WP 6.8.5)
+// wp-includes/meta.php (WP 6.8.6)
 if( ! function_exists( 'registered_meta_key_exists' ) ) :
 	function registered_meta_key_exists( $object_type, $meta_key, $object_subtype = '' ) {
 		$meta_keys = get_registered_meta_keys( $object_type, $object_subtype );
@@ -60,7 +60,7 @@ if( ! function_exists( 'registered_meta_key_exists' ) ) :
 	}
 endif;
 
-// wp-includes/meta.php (WP 6.8.5)
+// wp-includes/meta.php (WP 6.8.6)
 if( ! function_exists( 'unregister_meta_key' ) ) :
 	function unregister_meta_key( $object_type, $meta_key, $object_subtype = '' ) {
 		global $wp_meta_keys;
@@ -101,7 +101,7 @@ if( ! function_exists( 'unregister_meta_key' ) ) :
 	}
 endif;
 
-// wp-includes/meta.php (WP 6.8.5)
+// wp-includes/meta.php (WP 6.8.6)
 if( ! function_exists( 'register_meta' ) ) :
 	function register_meta( $object_type, $meta_key, $args, $deprecated = null ) {
 		global $wp_meta_keys;
@@ -236,7 +236,7 @@ if( ! function_exists( 'register_meta' ) ) :
 	}
 endif;
 
-// wp-includes/meta.php (WP 6.8.5)
+// wp-includes/meta.php (WP 6.8.6)
 if( ! function_exists( 'get_meta_sql' ) ) :
 	function get_meta_sql( $meta_query, $type, $primary_table, $primary_id_column, $context = null ) {
 		$meta_query_obj = new WP_Meta_Query( $meta_query );
@@ -244,7 +244,7 @@ if( ! function_exists( 'get_meta_sql' ) ) :
 	}
 endif;
 
-// wp-includes/meta.php (WP 6.8.5)
+// wp-includes/meta.php (WP 6.8.6)
 if( ! function_exists( 'sanitize_meta' ) ) :
 	function sanitize_meta( $meta_key, $meta_value, $object_type, $object_subtype = '' ) {
 		if ( ! empty( $object_subtype ) && has_filter( "sanitize_{$object_type}_meta_{$meta_key}_for_{$object_subtype}" ) ) {
@@ -285,7 +285,7 @@ if( ! function_exists( 'sanitize_meta' ) ) :
 	}
 endif;
 
-// wp-includes/meta.php (WP 6.8.5)
+// wp-includes/meta.php (WP 6.8.6)
 if( ! function_exists( '_get_meta_table' ) ) :
 	function _get_meta_table( $type ) {
 		global $wpdb;

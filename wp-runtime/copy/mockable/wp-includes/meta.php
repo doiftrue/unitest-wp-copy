@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/meta.php (WP 6.8.5)
+// wp-includes/meta.php (WP 6.8.6)
 if( ! function_exists( 'get_registered_meta_keys' ) ) :
 	function get_registered_meta_keys( $object_type, $object_subtype = '' ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -19,7 +19,7 @@ if( ! function_exists( 'get_registered_meta_keys' ) ) :
 	}
 endif;
 
-// wp-includes/meta.php (WP 6.8.5)
+// wp-includes/meta.php (WP 6.8.6)
 if( ! function_exists( 'is_protected_meta' ) ) :
 	function is_protected_meta( $meta_key, $meta_type = '' ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {

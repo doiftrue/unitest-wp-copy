@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/nav-menu-template.php (WP 6.8.5)
+// wp-includes/nav-menu-template.php (WP 6.8.6)
 if( ! function_exists( 'wp_nav_menu_remove_menu_item_has_children_class' ) ) :
 	function wp_nav_menu_remove_menu_item_has_children_class( $classes, $menu_item, $args = false, $depth = false ) {
 		/*
@@ -44,7 +44,7 @@ if( ! function_exists( 'wp_nav_menu_remove_menu_item_has_children_class' ) ) :
 	}
 endif;
 
-// wp-includes/nav-menu-template.php (WP 6.8.5)
+// wp-includes/nav-menu-template.php (WP 6.8.6)
 if( ! function_exists( '_nav_menu_item_id_use_once' ) ) :
 	function _nav_menu_item_id_use_once( $id, $item ) {
 		static $_used_ids = array();

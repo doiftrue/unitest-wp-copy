@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/media.php (WP 6.8.5)
+// wp-includes/media.php (WP 6.8.6)
 if( ! function_exists( 'wp_get_additional_image_sizes' ) ) :
 	function wp_get_additional_image_sizes() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {

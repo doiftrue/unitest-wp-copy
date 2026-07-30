@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/plugin.php (WP 6.8.5)
+// wp-includes/plugin.php (WP 6.8.6)
 if( ! function_exists( 'did_filter' ) ) :
 	function did_filter( $hook_name ) {
 		global $wp_filters;
@@ -15,7 +15,7 @@ if( ! function_exists( 'did_filter' ) ) :
 	}
 endif;
 
-// wp-includes/plugin.php (WP 6.8.5)
+// wp-includes/plugin.php (WP 6.8.6)
 if( ! function_exists( 'apply_filters_deprecated' ) ) :
 	function apply_filters_deprecated( $hook_name, $args, $version, $replacement = '', $message = '' ) {
 		if ( ! has_filter( $hook_name ) ) {
@@ -28,7 +28,7 @@ if( ! function_exists( 'apply_filters_deprecated' ) ) :
 	}
 endif;
 
-// wp-includes/plugin.php (WP 6.8.5)
+// wp-includes/plugin.php (WP 6.8.6)
 if( ! function_exists( 'do_action_deprecated' ) ) :
 	function do_action_deprecated( $hook_name, $args, $version, $replacement = '', $message = '' ) {
 		if ( ! has_action( $hook_name ) ) {
@@ -41,7 +41,7 @@ if( ! function_exists( 'do_action_deprecated' ) ) :
 	}
 endif;
 
-// wp-includes/plugin.php (WP 6.8.5)
+// wp-includes/plugin.php (WP 6.8.6)
 if( ! function_exists( 'doing_filter' ) ) :
 	function doing_filter( $hook_name = null ) {
 		global $wp_current_filter;
@@ -54,21 +54,21 @@ if( ! function_exists( 'doing_filter' ) ) :
 	}
 endif;
 
-// wp-includes/plugin.php (WP 6.8.5)
+// wp-includes/plugin.php (WP 6.8.6)
 if( ! function_exists( 'current_action' ) ) :
 	function current_action() {
 		return current_filter();
 	}
 endif;
 
-// wp-includes/plugin.php (WP 6.8.5)
+// wp-includes/plugin.php (WP 6.8.6)
 if( ! function_exists( 'doing_action' ) ) :
 	function doing_action( $hook_name = null ) {
 		return doing_filter( $hook_name );
 	}
 endif;
 
-// wp-includes/plugin.php (WP 6.8.5)
+// wp-includes/plugin.php (WP 6.8.6)
 if( ! function_exists( 'wp_register_plugin_realpath' ) ) :
 	function wp_register_plugin_realpath( $file ) {
 		global $wp_plugin_paths;
@@ -96,7 +96,7 @@ if( ! function_exists( 'wp_register_plugin_realpath' ) ) :
 	}
 endif;
 
-// wp-includes/plugin.php (WP 6.8.5)
+// wp-includes/plugin.php (WP 6.8.6)
 if( ! function_exists( 'apply_filters_ref_array' ) ) :
 	function apply_filters_ref_array( $hook_name, $args ) {
 		global $wp_filter, $wp_filters, $wp_current_filter;
@@ -134,21 +134,21 @@ if( ! function_exists( 'apply_filters_ref_array' ) ) :
 	}
 endif;
 
-// wp-includes/plugin.php (WP 6.8.5)
+// wp-includes/plugin.php (WP 6.8.6)
 if( ! function_exists( 'plugin_dir_path' ) ) :
 	function plugin_dir_path( $file ) {
 		return trailingslashit( dirname( $file ) );
 	}
 endif;
 
-// wp-includes/plugin.php (WP 6.8.5)
+// wp-includes/plugin.php (WP 6.8.6)
 if( ! function_exists( 'plugin_dir_url' ) ) :
 	function plugin_dir_url( $file ) {
 		return trailingslashit( plugins_url( '', $file ) );
 	}
 endif;
 
-// wp-includes/plugin.php (WP 6.8.5)
+// wp-includes/plugin.php (WP 6.8.6)
 if( ! function_exists( 'remove_all_filters' ) ) :
 	function remove_all_filters( $hook_name, $priority = false ) {
 		global $wp_filter;
@@ -165,14 +165,14 @@ if( ! function_exists( 'remove_all_filters' ) ) :
 	}
 endif;
 
-// wp-includes/plugin.php (WP 6.8.5)
+// wp-includes/plugin.php (WP 6.8.6)
 if( ! function_exists( 'remove_all_actions' ) ) :
 	function remove_all_actions( $hook_name, $priority = false ) {
 		return remove_all_filters( $hook_name, $priority );
 	}
 endif;
 
-// wp-includes/plugin.php (WP 6.8.5)
+// wp-includes/plugin.php (WP 6.8.6)
 if( ! function_exists( 'register_uninstall_hook' ) ) :
 	function register_uninstall_hook( $file, $callback ) {
 		if ( is_array( $callback ) && is_object( $callback[0] ) ) {
@@ -195,7 +195,7 @@ if( ! function_exists( 'register_uninstall_hook' ) ) :
 	}
 endif;
 
-// wp-includes/plugin.php (WP 6.8.5)
+// wp-includes/plugin.php (WP 6.8.6)
 if( ! function_exists( '_wp_call_all_hook' ) ) :
 	function _wp_call_all_hook( $args ) {
 		global $wp_filter;
@@ -204,7 +204,7 @@ if( ! function_exists( '_wp_call_all_hook' ) ) :
 	}
 endif;
 
-// wp-includes/plugin.php (WP 6.8.5)
+// wp-includes/plugin.php (WP 6.8.6)
 if( ! function_exists( 'has_filter' ) ) :
 	function has_filter( $hook_name, $callback = false ) {
 		global $wp_filter;
@@ -217,7 +217,7 @@ if( ! function_exists( 'has_filter' ) ) :
 	}
 endif;
 
-// wp-includes/plugin.php (WP 6.8.5)
+// wp-includes/plugin.php (WP 6.8.6)
 if( ! function_exists( 'current_filter' ) ) :
 	function current_filter() {
 		global $wp_current_filter;
@@ -226,14 +226,14 @@ if( ! function_exists( 'current_filter' ) ) :
 	}
 endif;
 
-// wp-includes/plugin.php (WP 6.8.5)
+// wp-includes/plugin.php (WP 6.8.6)
 if( ! function_exists( 'has_action' ) ) :
 	function has_action( $hook_name, $callback = false ) {
 		return has_filter( $hook_name, $callback );
 	}
 endif;
 
-// wp-includes/plugin.php (WP 6.8.5)
+// wp-includes/plugin.php (WP 6.8.6)
 if( ! function_exists( '_wp_filter_build_unique_id' ) ) :
 	function _wp_filter_build_unique_id( $hook_name, $callback, $priority ) {
 		if ( is_string( $callback ) ) {
@@ -257,7 +257,7 @@ if( ! function_exists( '_wp_filter_build_unique_id' ) ) :
 	}
 endif;
 
-// wp-includes/plugin.php (WP 6.8.5)
+// wp-includes/plugin.php (WP 6.8.6)
 if( ! function_exists( 'do_action_ref_array' ) ) :
 	function do_action_ref_array( $hook_name, $args ) {
 		global $wp_filter, $wp_actions, $wp_current_filter;
@@ -293,7 +293,7 @@ if( ! function_exists( 'do_action_ref_array' ) ) :
 	}
 endif;
 
-// wp-includes/plugin.php (WP 6.8.5)
+// wp-includes/plugin.php (WP 6.8.6)
 if( ! function_exists( 'did_action' ) ) :
 	function did_action( $hook_name ) {
 		global $wp_actions;
@@ -306,7 +306,7 @@ if( ! function_exists( 'did_action' ) ) :
 	}
 endif;
 
-// wp-includes/plugin.php (WP 6.8.5)
+// wp-includes/plugin.php (WP 6.8.6)
 if( ! function_exists( 'register_activation_hook' ) ) :
 	function register_activation_hook( $file, $callback ) {
 		$file = plugin_basename( $file );
@@ -314,7 +314,7 @@ if( ! function_exists( 'register_activation_hook' ) ) :
 	}
 endif;
 
-// wp-includes/plugin.php (WP 6.8.5)
+// wp-includes/plugin.php (WP 6.8.6)
 if( ! function_exists( 'register_deactivation_hook' ) ) :
 	function register_deactivation_hook( $file, $callback ) {
 		$file = plugin_basename( $file );
@@ -322,7 +322,7 @@ if( ! function_exists( 'register_deactivation_hook' ) ) :
 	}
 endif;
 
-// wp-includes/plugin.php (WP 6.8.5)
+// wp-includes/plugin.php (WP 6.8.6)
 if( ! function_exists( 'plugin_basename' ) ) :
 	function plugin_basename( $file ) {
 		global $wp_plugin_paths;
@@ -348,7 +348,7 @@ if( ! function_exists( 'plugin_basename' ) ) :
 	}
 endif;
 
-// wp-includes/plugin.php (WP 6.8.5)
+// wp-includes/plugin.php (WP 6.8.6)
 if( ! function_exists( 'remove_filter' ) ) :
 	function remove_filter( $hook_name, $callback, $priority = 10 ) {
 		global $wp_filter;
@@ -367,14 +367,14 @@ if( ! function_exists( 'remove_filter' ) ) :
 	}
 endif;
 
-// wp-includes/plugin.php (WP 6.8.5)
+// wp-includes/plugin.php (WP 6.8.6)
 if( ! function_exists( 'add_action' ) ) :
 	function add_action( $hook_name, $callback, $priority = 10, $accepted_args = 1 ) {
 		return add_filter( $hook_name, $callback, $priority, $accepted_args );
 	}
 endif;
 
-// wp-includes/plugin.php (WP 6.8.5)
+// wp-includes/plugin.php (WP 6.8.6)
 if( ! function_exists( 'do_action' ) ) :
 	function do_action( $hook_name, ...$arg ) {
 		global $wp_filter, $wp_actions, $wp_current_filter;
@@ -417,14 +417,14 @@ if( ! function_exists( 'do_action' ) ) :
 	}
 endif;
 
-// wp-includes/plugin.php (WP 6.8.5)
+// wp-includes/plugin.php (WP 6.8.6)
 if( ! function_exists( 'remove_action' ) ) :
 	function remove_action( $hook_name, $callback, $priority = 10 ) {
 		return remove_filter( $hook_name, $callback, $priority );
 	}
 endif;
 
-// wp-includes/plugin.php (WP 6.8.5)
+// wp-includes/plugin.php (WP 6.8.6)
 if( ! function_exists( 'add_filter' ) ) :
 	function add_filter( $hook_name, $callback, $priority = 10, $accepted_args = 1 ) {
 		global $wp_filter;
@@ -439,7 +439,7 @@ if( ! function_exists( 'add_filter' ) ) :
 	}
 endif;
 
-// wp-includes/plugin.php (WP 6.8.5)
+// wp-includes/plugin.php (WP 6.8.6)
 if( ! function_exists( 'apply_filters' ) ) :
 	function apply_filters( $hook_name, $value, ...$args ) {
 		global $wp_filter, $wp_filters, $wp_current_filter;

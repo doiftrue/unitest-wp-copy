@@ -2,36 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/l10n.php (WP 6.8.5)
-if( ! function_exists( 'wp_get_word_count_type' ) ) :
-	function wp_get_word_count_type() {
-		global $wp_locale;
-	
-		if ( ! ( $wp_locale instanceof WP_Locale ) ) {
-			// Default value of WP_Locale::get_word_count_type().
-			return 'words';
-		}
-	
-		return $wp_locale->get_word_count_type();
-	}
-endif;
-
-// wp-includes/l10n.php (WP 6.8.5)
-if( ! function_exists( 'wp_get_list_item_separator' ) ) :
-	function wp_get_list_item_separator() {
-		global $wp_locale;
-	
-		if ( ! ( $wp_locale instanceof WP_Locale ) ) {
-			// Default value of WP_Locale::get_list_item_separator().
-			/* translators: Used between list items, there is a space after the comma. */
-			return __( ', ' );
-		}
-	
-		return $wp_locale->get_list_item_separator();
-	}
-endif;
-
-// wp-includes/l10n.php (WP 6.8.5)
+// wp-includes/l10n.php (WP 6.8.6)
 if( ! function_exists( 'translate_nooped_plural' ) ) :
 	function translate_nooped_plural( $nooped_plural, $count, $domain = 'default' ) {
 		if ( $nooped_plural['domain'] ) {
@@ -46,7 +17,7 @@ if( ! function_exists( 'translate_nooped_plural' ) ) :
 	}
 endif;
 
-// wp-includes/l10n.php (WP 6.8.5)
+// wp-includes/l10n.php (WP 6.8.6)
 if( ! function_exists( '_nx_noop' ) ) :
 	function _nx_noop( $singular, $plural, $context, $domain = null ) {
 		return array(
@@ -61,7 +32,7 @@ if( ! function_exists( '_nx_noop' ) ) :
 	}
 endif;
 
-// wp-includes/l10n.php (WP 6.8.5)
+// wp-includes/l10n.php (WP 6.8.6)
 if( ! function_exists( 'before_last_bar' ) ) :
 	function before_last_bar( $text ) {
 		$last_bar = strrpos( $text, '|' );
@@ -73,7 +44,7 @@ if( ! function_exists( 'before_last_bar' ) ) :
 	}
 endif;
 
-// wp-includes/l10n.php (WP 6.8.5)
+// wp-includes/l10n.php (WP 6.8.6)
 if( ! function_exists( '_n_noop' ) ) :
 	function _n_noop( $singular, $plural, $domain = null ) {
 		return array(

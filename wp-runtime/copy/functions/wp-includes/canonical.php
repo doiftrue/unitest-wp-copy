@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/canonical.php (WP 6.8.5)
+// wp-includes/canonical.php (WP 6.8.6)
 if( ! function_exists( '_remove_qs_args_if_not_in_url' ) ) :
 	function _remove_qs_args_if_not_in_url( $query_string, array $args_to_check, $url ) {
 		$parsed_url = parse_url( $url );
@@ -23,7 +23,7 @@ if( ! function_exists( '_remove_qs_args_if_not_in_url' ) ) :
 	}
 endif;
 
-// wp-includes/canonical.php (WP 6.8.5)
+// wp-includes/canonical.php (WP 6.8.6)
 if( ! function_exists( 'strip_fragment_from_url' ) ) :
 	function strip_fragment_from_url( $url ) {
 		$parsed_url = wp_parse_url( $url );

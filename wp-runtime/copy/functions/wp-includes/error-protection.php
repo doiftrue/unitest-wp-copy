@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/error-protection.php (WP 6.8.5)
+// wp-includes/error-protection.php (WP 6.8.6)
 if( ! function_exists( 'wp_get_extension_error_description' ) ) :
 	function wp_get_extension_error_description( $error ) {
 		$constants   = get_defined_constants( true );
@@ -32,7 +32,7 @@ if( ! function_exists( 'wp_get_extension_error_description' ) ) :
 	}
 endif;
 
-// wp-includes/error-protection.php (WP 6.8.5)
+// wp-includes/error-protection.php (WP 6.8.6)
 if( ! function_exists( 'wp_is_fatal_error_handler_enabled' ) ) :
 	function wp_is_fatal_error_handler_enabled() {
 		$enabled = ! defined( 'WP_DISABLE_FATAL_ERROR_HANDLER' ) || ! WP_DISABLE_FATAL_ERROR_HANDLER;

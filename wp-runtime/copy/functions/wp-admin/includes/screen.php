@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-admin/includes/screen.php (WP 6.8.5)
+// wp-admin/includes/screen.php (WP 6.8.6)
 if( ! function_exists( 'add_screen_option' ) ) :
 	function add_screen_option( $option, $args = array() ) {
 		$current_screen = get_current_screen();
@@ -15,14 +15,14 @@ if( ! function_exists( 'add_screen_option' ) ) :
 	}
 endif;
 
-// wp-admin/includes/screen.php (WP 6.8.5)
+// wp-admin/includes/screen.php (WP 6.8.6)
 if( ! function_exists( 'set_current_screen' ) ) :
 	function set_current_screen( $hook_name = '' ) {
 		WP_Screen::get( $hook_name )->set_current_screen();
 	}
 endif;
 
-// wp-admin/includes/screen.php (WP 6.8.5)
+// wp-admin/includes/screen.php (WP 6.8.6)
 if( ! function_exists( 'get_column_headers' ) ) :
 	function get_column_headers( $screen ) {
 		static $column_headers = array();
