@@ -115,6 +115,65 @@ if( ! function_exists( 'wp_parse_url' ) ) :
 endif;
 
 // wp-includes/http.php (WP 6.7.5)
+if( ! function_exists( 'get_allowed_http_origins' ) ) :
+	function get_allowed_http_origins() {
+		$admin_origin = parse_url( admin_url() );
+		$home_origin  = parse_url( home_url() );
+	
+		// @todo Preserve port?
+		$allowed_origins = array_unique(
+			array(
+				'http://' . $admin_origin['host'],
+				'https://' . $admin_origin['host'],
+				'http://' . $home_origin['host'],
+				'https://' . $home_origin['host'],
+			)
+		);
+	
+		/**
+		 * Changes the origin types allowed for HTTP requests.
+		 *
+		 * @since 3.4.0
+		 *
+		 * @param string[] $allowed_origins {
+		 *     Array of default allowed HTTP origins.
+		 *
+		 *     @type string $0 Non-secure URL for admin origin.
+		 *     @type string $1 Secure URL for admin origin.
+		 *     @type string $2 Non-secure URL for home origin.
+		 *     @type string $3 Secure URL for home origin.
+		 * }
+		 */
+		return apply_filters( 'allowed_http_origins', $allowed_origins );
+	}
+endif;
+
+// wp-includes/http.php (WP 6.7.5)
+if( ! function_exists( 'is_allowed_http_origin' ) ) :
+	function is_allowed_http_origin( $origin = null ) {
+		$origin_arg = $origin;
+	
+		if ( null === $origin ) {
+			$origin = get_http_origin();
+		}
+	
+		if ( $origin && ! in_array( $origin, get_allowed_http_origins(), true ) ) {
+			$origin = '';
+		}
+	
+		/**
+		 * Changes the allowed HTTP origin result.
+		 *
+		 * @since 3.4.0
+		 *
+		 * @param string $origin     Origin URL if allowed, empty string if not.
+		 * @param string $origin_arg Original origin string passed into is_allowed_http_origin function.
+		 */
+		return apply_filters( 'allowed_http_origin', $origin, $origin_arg );
+	}
+endif;
+
+// wp-includes/http.php (WP 6.7.5)
 if( ! function_exists( 'wp_http_validate_url' ) ) :
 	function wp_http_validate_url( $url ) {
 		if ( ! is_string( $url ) || '' === $url || is_numeric( $url ) ) {

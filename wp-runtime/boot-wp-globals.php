@@ -27,6 +27,9 @@ $wp_post_types = is_array( $wp_post_types ?? null ) ? $wp_post_types : [];
 global $wp_taxonomies;
 $wp_taxonomies = is_array( $wp_taxonomies ?? null ) ? $wp_taxonomies : [];
 
+global $wp_registered_sidebars;
+$wp_registered_sidebars = is_array( $wp_registered_sidebars ?? null ) ? $wp_registered_sidebars : [];
+
 global $wp_meta_keys;
 $wp_meta_keys = [];
 
