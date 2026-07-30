@@ -1,7 +1,10 @@
 define php_run
+	@mkdir -p "$(CURDIR)/tmp/composer-cache"
 	docker run --rm $(1) --name UNITEST_WP_COPY__php --user 1000:1000 \
 		-v "$(CURDIR):/app"  -w /app \
-		composer sh -c "$2"
+		-v "$(CURDIR)/tmp/composer-cache:/tmp/composer-cache" \
+		-e COMPOSER_CACHE_DIR=/tmp/composer-cache \
+		composer sh -c "$(2)"
 endef
 
 php.connect:
