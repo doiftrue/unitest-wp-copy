@@ -10,6 +10,7 @@ Parser flow details are in [parser.md](parser.md).
 
 Base (latest supported WP line):
 - `config/functions/<wp-path>/<source-file>.php` (for example `config/functions/wp-includes/formatting.php`)
+- `config/not-suitable-files.md`
 - `config/symbols-moved.php`
 - `config/symbols-removed.php`
 - `config/classes.php`
@@ -119,3 +120,22 @@ A symbol in a config file can be in one of three states:
    */
    ```
    symbol was analyzed and found permanently ineligible for this runtime. Grouped at file end to keep the active array clean.
+
+
+## Files Without Active Functions
+
+`config/not-suitable-files.md` records WordPress source files that were analyzed
+but currently contribute no active function to parser config.
+
+- Store paths relative to `wp-core/`, for example `wp-includes/query.php`.
+- Add a path only after reviewing all relevant top-level functions in the source
+  file using [symbol-eligibility.md](symbol-eligibility.md).
+- Keep rejection reasons in the corresponding
+  `config/functions/<wp-path>/<source-file>.php` file when that config file
+  exists.
+- Check this registry before starting a file-level suitability review, so an
+  unchanged file and dependency chain are not analyzed repeatedly.
+- Re-review an entry when WordPress changes the source file or the project gains
+  dependencies that can remove its recorded blockers.
+- Remove the path as soon as at least one function from the file becomes active
+  in parser config.

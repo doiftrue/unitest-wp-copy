@@ -4,6 +4,8 @@ return [
 	'sanitize_locale_name'               => '6.2.1',
 	'_make_clickable_rel_attr'           => '6.2.0',
 	'esc_xml'                            => '5.5.0',
+	'wp_pre_kses_block_attributes'       => '5.3.1',
+	'wp_rel_ugc'                         => '5.3.0',
 	'wp_rel_callback'                    => '5.3.0',
 	'_wp_emoji_list'                     => '4.9.0',
 	'_sanitize_text_fields'              => '4.7.0',
@@ -116,14 +118,12 @@ return [
 /*
 Not suitable in isolated PHPUnit env:
 
-wp_rel_ugc                          // why: too many dependencies
 wp_rel_nofollow_callback            // why: deprecated
 wp_targeted_link_rel                // why: deprecated
 wp_targeted_link_rel_callback       // why: deprecated
 wp_init_targeted_link_rel_filters   // why: deprecated
 wp_remove_targeted_link_rel_filters // why: deprecated
 sanitize_option                     // why: depends on $wpdb + options/roles/i18n runtime chain
-wp_pre_kses_block_attributes        // why: depends on block parser (maybe can be implemented later)
 wp_enqueue_emoji_styles             // why: wp_add_inline_style dependency
 print_emoji_detection_script        // why: _print_emoji_detection_script dependency
 _print_emoji_detection_script       // why: file_get_contents dependency

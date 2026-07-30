@@ -3,8 +3,12 @@
 return [
 	'wp_is_development_mode'     => '6.3.0',
 	'wp_get_development_mode'    => '6.3.0 mockable',
+	'is_login'                   => '6.1.0 mockable',
 	'timer_float'                => '5.8.0 mockable',
 	'wp_is_json_media_type'      => '5.6.0',
+	'wp_is_jsonp_request'        => '5.2.0 mockable',
+	'wp_is_xml_request'          => '5.2.0 mockable',
+	'wp_is_json_request'         => '5.0.0 mockable',
 	'wp_using_themes'            => '5.1.0 mockable',
 	'wp_get_environment_type'    => '5.5.0 mockable',
 	'wp_doing_cron'              => '4.8.0 mockable',
@@ -32,7 +36,6 @@ return [
 /*
 Not suitable in isolated PHPUnit env:
 
-is_login                                          // why: requires login screen/request context.
 is_protected_ajax_action                          // why: protected-endpoint runtime dependency.
 is_protected_endpoint                             // why: protected-endpoint runtime dependency.
 require_wp_db                                     // why: hard DB bootstrap dependency.
@@ -46,12 +49,9 @@ wp_fix_server_vars                                // why: mutates global server 
 wp_get_active_and_valid_plugins                   // why: plugin bootstrap/filesystem dependency.
 wp_get_active_and_valid_themes                    // why: theme bootstrap/filesystem dependency.
 wp_get_mu_plugins                                 // why: mu-plugin filesystem bootstrap dependency.
-wp_is_json_request                                // why: request/content-type runtime dependency.
-wp_is_jsonp_request                               // why: request/content-type runtime dependency.
 wp_is_maintenance_mode                            // why: filesystem + bootstrap dependency.
 wp_is_recovery_mode                               // why: recovery bootstrap/session dependency.
 wp_is_site_protected_by_basic_auth                // why: server/auth runtime dependency.
-wp_is_xml_request                                 // why: request/content-type runtime dependency.
 wp_magic_quotes                                   // why: mutates request globals.
 wp_maintenance                                    // why: maintenance bootstrap/output dependency.
 wp_not_installed                                  // why: install/bootstrap + output dependency.

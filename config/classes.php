@@ -61,6 +61,8 @@ return [
 	'wp-includes/class-wp-block-bindings-registry.php' => [ 'WP_Block_Bindings_Registry' => '6.5.0' ],
 	// Block styles registry; in-memory.
 	'wp-includes/class-wp-block-styles-registry.php'   => [ 'WP_Block_Styles_Registry' => '5.3.0' ],
+	// Block pattern categories registry; in-memory.
+	'wp-includes/class-wp-block-pattern-categories-registry.php' => [ 'WP_Block_Pattern_Categories_Registry' => '5.5.0' ],
 	// Base abstract walker for tree structures; pure logic.
 	'wp-includes/class-wp-walker.php'                  => [ 'Walker' => '2.1.0' ],
 	// NOT IDEAL: registry/state/options API works in memory.

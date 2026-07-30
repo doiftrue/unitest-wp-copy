@@ -229,6 +229,22 @@ class formatting__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertStringContainsString( 'rel=\"nofollow\"', wp_rel_nofollow( '<a href="x">x</a>' ) );
 	}
 
+	public function test__wp_rel_ugc(): void {
+		$this->assertStringContainsString( 'rel=\"nofollow ugc\"', wp_rel_ugc( '<a href="x">x</a>' ) );
+	}
+
+	public function test__wp_pre_kses_block_attributes(): void {
+		add_filter( 'pre_kses', 'wp_pre_kses_block_attributes', 10, 3 );
+
+		$content = '<!-- wp:paragraph {"content":"<script>alert(1)</script><strong>ok</strong>"} /-->';
+		$result  = wp_pre_kses_block_attributes( $content, 'post', wp_allowed_protocols() );
+
+		$this->assertStringNotContainsString( '<script>', $result );
+		$this->assertSame( 10, has_filter( 'pre_kses', 'wp_pre_kses_block_attributes' ) );
+
+		remove_filter( 'pre_kses', 'wp_pre_kses_block_attributes', 10 );
+	}
+
 	public function test__wp_pre_kses_less_than_callback(): void {
 		$this->assertSame( '&lt;a', wp_pre_kses_less_than_callback( [ '<a' ] ) );
 	}

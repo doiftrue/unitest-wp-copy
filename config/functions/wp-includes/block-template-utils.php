@@ -4,6 +4,8 @@ return [
 	'_inject_theme_attribute_in_template_part_block'    => '6.4.0',
 	'_remove_theme_attribute_from_template_part_block'  => '6.4.0',
 	'get_template_hierarchy'                            => '6.1.0',
+	'get_allowed_block_template_part_areas'             => '5.9.0',
+	'_filter_block_template_part_area'                  => '5.9.0',
 	'get_default_block_template_types'                  => '5.9.0',
 	'_flatten_blocks'                                   => '5.9.0',
 ];
@@ -12,8 +14,6 @@ return [
 Not suitable in isolated PHPUnit env:
 
 get_block_theme_folders                                             // why: depends on WP_Theme and theme filesystem state.
-get_allowed_block_template_part_areas                               // why: depends on file-level template-area constants not provided by copied symbols.
-_filter_block_template_part_area                                    // why: depends on template-area constants and taxonomy term objects.
 _get_block_templates_paths                                          // why: scans theme filesystem directories.
 _get_block_template_file                                            // why: reads theme template files.
 _get_block_templates_files                                          // why: scans and reads theme template files.

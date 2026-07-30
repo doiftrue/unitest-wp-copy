@@ -7,6 +7,9 @@ return [
 	'wp_remote_retrieve_cookie'             => '4.4.0',
 	'wp_remote_retrieve_cookie_value'       => '4.4.0',
 	'wp_parse_url'                          => '4.4.0',
+	'get_allowed_http_origins'              => '3.4.0',
+	'is_allowed_http_origin'                => '3.4.0',
+	'get_http_origin'                       => '3.4.0 mockable',
 	'wp_http_validate_url'                  => '3.5.2',
 	'wp_remote_retrieve_headers'            => '2.7.0',
 	'wp_remote_retrieve_header'             => '2.7.0',
@@ -20,9 +23,6 @@ Not suitable in isolated PHPUnit env:
 
 _wp_http_get_object                  // why: requires WP_HTTP class stack/runtime.
 allowed_http_request_hosts           // why: HTTP policy/runtime dependency.
-get_allowed_http_origins             // why: CORS/runtime dependency.
-get_http_origin                      // why: request header runtime dependency.
-is_allowed_http_origin               // why: CORS/runtime dependency.
 ms_allowed_http_request_hosts        // why: multisite runtime dependency.
 send_origin_headers                  // why: sends headers/output side effects.
 wp_http_supports                     // why: transport/runtime dependency.

@@ -127,6 +127,113 @@ class load__mockable__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertFalse( wp_is_file_mod_allowed( 'test' ) );
 	}
 
+	public function test__is_login(): void {
+		$script_name = $_SERVER['SCRIPT_NAME'] ?? null;
+
+		$_SERVER['SCRIPT_NAME'] = '/wp-login.php';
+		$this->assertTrue( is_login() );
+
+		$_SERVER['SCRIPT_NAME'] = '/index.php';
+		$this->assertFalse( is_login() );
+
+		if ( null === $script_name ) {
+			unset( $_SERVER['SCRIPT_NAME'] );
+		} else {
+			$_SERVER['SCRIPT_NAME'] = $script_name;
+		}
+	}
+
+	public function test__is_login__mockable_handler(): void {
+		\WP_Mock::userFunction( 'is_login', [ 'return' => true ] );
+		$this->assertTrue( is_login() );
+	}
+
+	public function test__wp_is_json_request(): void {
+		$accept       = $_SERVER['HTTP_ACCEPT'] ?? null;
+		$content_type = $_SERVER['CONTENT_TYPE'] ?? null;
+
+		unset( $_SERVER['HTTP_ACCEPT'], $_SERVER['CONTENT_TYPE'] );
+		$this->assertFalse( wp_is_json_request() );
+
+		$_SERVER['HTTP_ACCEPT'] = 'text/html, application/json';
+		$this->assertTrue( wp_is_json_request() );
+
+		unset( $_SERVER['HTTP_ACCEPT'] );
+		$_SERVER['CONTENT_TYPE'] = 'application/activity+json';
+		$this->assertTrue( wp_is_json_request() );
+
+		if ( null === $accept ) {
+			unset( $_SERVER['HTTP_ACCEPT'] );
+		} else {
+			$_SERVER['HTTP_ACCEPT'] = $accept;
+		}
+		if ( null === $content_type ) {
+			unset( $_SERVER['CONTENT_TYPE'] );
+		} else {
+			$_SERVER['CONTENT_TYPE'] = $content_type;
+		}
+	}
+
+	public function test__wp_is_json_request__mockable_handler(): void {
+		\WP_Mock::userFunction( 'wp_is_json_request', [ 'return' => true ] );
+		$this->assertTrue( wp_is_json_request() );
+	}
+
+	public function test__wp_is_jsonp_request(): void {
+		$jsonp = $_GET['_jsonp'] ?? null;
+
+		unset( $_GET['_jsonp'] );
+		$this->assertFalse( wp_is_jsonp_request() );
+
+		$_GET['_jsonp'] = 'unitestCallback';
+		$this->assertTrue( wp_is_jsonp_request() );
+
+		$_GET['_jsonp'] = 'invalid callback';
+		$this->assertFalse( wp_is_jsonp_request() );
+
+		if ( null === $jsonp ) {
+			unset( $_GET['_jsonp'] );
+		} else {
+			$_GET['_jsonp'] = $jsonp;
+		}
+	}
+
+	public function test__wp_is_jsonp_request__mockable_handler(): void {
+		\WP_Mock::userFunction( 'wp_is_jsonp_request', [ 'return' => true ] );
+		$this->assertTrue( wp_is_jsonp_request() );
+	}
+
+	public function test__wp_is_xml_request(): void {
+		$accept       = $_SERVER['HTTP_ACCEPT'] ?? null;
+		$content_type = $_SERVER['CONTENT_TYPE'] ?? null;
+
+		unset( $_SERVER['HTTP_ACCEPT'], $_SERVER['CONTENT_TYPE'] );
+		$this->assertFalse( wp_is_xml_request() );
+
+		$_SERVER['HTTP_ACCEPT'] = 'text/html, application/rss+xml';
+		$this->assertTrue( wp_is_xml_request() );
+
+		unset( $_SERVER['HTTP_ACCEPT'] );
+		$_SERVER['CONTENT_TYPE'] = 'application/atom+xml';
+		$this->assertTrue( wp_is_xml_request() );
+
+		if ( null === $accept ) {
+			unset( $_SERVER['HTTP_ACCEPT'] );
+		} else {
+			$_SERVER['HTTP_ACCEPT'] = $accept;
+		}
+		if ( null === $content_type ) {
+			unset( $_SERVER['CONTENT_TYPE'] );
+		} else {
+			$_SERVER['CONTENT_TYPE'] = $content_type;
+		}
+	}
+
+	public function test__wp_is_xml_request__mockable_handler(): void {
+		\WP_Mock::userFunction( 'wp_is_xml_request', [ 'return' => true ] );
+		$this->assertTrue( wp_is_xml_request() );
+	}
+
 	public function test__is_blog_admin(): void {
 		$GLOBALS['current_screen'] = new class {
 			public function in_admin( $context = null ) {

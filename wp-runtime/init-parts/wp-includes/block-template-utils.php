@@ -1,0 +1,7 @@
+<?php
+
+defined( 'WP_TEMPLATE_PART_AREA_HEADER' ) || define( 'WP_TEMPLATE_PART_AREA_HEADER', 'header' );
+defined( 'WP_TEMPLATE_PART_AREA_FOOTER' ) || define( 'WP_TEMPLATE_PART_AREA_FOOTER', 'footer' );
+defined( 'WP_TEMPLATE_PART_AREA_SIDEBAR' ) || define( 'WP_TEMPLATE_PART_AREA_SIDEBAR', 'sidebar' );
+defined( 'WP_TEMPLATE_PART_AREA_UNCATEGORIZED' ) || define( 'WP_TEMPLATE_PART_AREA_UNCATEGORIZED', 'uncategorized' );
+defined( 'WP_TEMPLATE_PART_AREA_NAVIGATION_OVERLAY' ) || define( 'WP_TEMPLATE_PART_AREA_NAVIGATION_OVERLAY', 'navigation-overlay' );

@@ -1,15 +1,15 @@
 <?php
 
 return [
+	'wp_is_connector_registered'  => '7.0.0',
+	'wp_get_connector'            => '7.0.0',
+	'wp_get_connectors'           => '7.0.0',
 	'_wp_connectors_mask_api_key' => '7.0.0',
 ];
 
 /*
 Not suitable in isolated PHPUnit env:
 
-wp_is_connector_registered                         // why: depends on the unavailable WP_Connector_Registry singleton
-wp_get_connector                                   // why: depends on the unavailable WP_Connector_Registry singleton
-wp_get_connectors                                  // why: depends on the unavailable WP_Connector_Registry singleton
 _wp_connectors_resolve_ai_provider_logo_url        // why: depends on plugin filesystem constants and plugins_url()
 _wp_connectors_init                                // why: constructs the unavailable WP_Connector_Registry and initializes the connector lifecycle
 _wp_connectors_register_default_ai_providers       // why: depends on the external WP AI Client registry and provider classes

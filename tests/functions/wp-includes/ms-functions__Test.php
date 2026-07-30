@@ -5,8 +5,14 @@ require_once dirname( __DIR__, 3 ) . '/vendor/autoload.php';
 
 class ms_functions__Test extends \PHPUnit\Framework\TestCase {
 
+	private object $stub_wp_options;
+	private object $stub_wp_site_options;
+
 	protected function setUp(): void {
 		parent::setUp();
+
+		$this->stub_wp_options      = clone $GLOBALS['stub_wp_options'];
+		$this->stub_wp_site_options = clone $GLOBALS['stub_wp_site_options'];
 
 		global $wp_object_cache;
 		$wp_object_cache = new WP_Object_Cache();
@@ -16,8 +22,64 @@ class ms_functions__Test extends \PHPUnit\Framework\TestCase {
 	}
 
 	protected function tearDown(): void {
+		$GLOBALS['stub_wp_options']      = clone $this->stub_wp_options;
+		$GLOBALS['stub_wp_site_options'] = clone $this->stub_wp_site_options;
 		\WP_Mock::tearDown();
 		parent::tearDown();
+	}
+
+	public function test__is_email_address_unsafe() {
+		$GLOBALS['stub_wp_site_options']->banned_email_domains = [ 'blocked.test' ];
+
+		$this->assertTrue( is_email_address_unsafe( 'user@blocked.test' ) );
+		$this->assertTrue( is_email_address_unsafe( 'user@sub.blocked.test' ) );
+		$this->assertFalse( is_email_address_unsafe( 'user@allowed.test' ) );
+	}
+
+	public function test__check_upload_mimes() {
+		$GLOBALS['stub_wp_site_options']->upload_filetypes = 'jpg png';
+
+		$this->assertSame(
+			[
+				'jpg|jpeg|jpe' => 'image/jpeg',
+				'png'          => 'image/png',
+			],
+			check_upload_mimes( [
+				'jpg|jpeg|jpe' => 'image/jpeg',
+				'png'          => 'image/png',
+				'pdf'          => 'application/pdf',
+			] )
+		);
+	}
+
+	public function test__upload_is_file_too_big() {
+		$GLOBALS['stub_wp_site_options']->fileupload_maxk = 1;
+
+		$small = [ 'bits' => str_repeat( 'x', KB_IN_BYTES ) ];
+		$large = [ 'bits' => str_repeat( 'x', KB_IN_BYTES + 1 ) ];
+
+		$this->assertSame( $small, upload_is_file_too_big( $small ) );
+		$this->assertIsString( upload_is_file_too_big( $large ) );
+
+		$GLOBALS['stub_wp_site_options']->upload_space_check_disabled = true;
+		$this->assertSame( $large, upload_is_file_too_big( $large ) );
+	}
+
+	public function test__users_can_register_signup_filter() {
+		$GLOBALS['stub_wp_site_options']->registration = 'all';
+		$this->assertTrue( users_can_register_signup_filter() );
+
+		$GLOBALS['stub_wp_site_options']->registration = 'none';
+		$this->assertFalse( users_can_register_signup_filter() );
+	}
+
+	public function test__get_space_allowed() {
+		$GLOBALS['stub_wp_options']->blog_upload_space = 25;
+		$this->assertSame( 25, get_space_allowed() );
+
+		$GLOBALS['stub_wp_options']->blog_upload_space      = false;
+		$GLOBALS['stub_wp_site_options']->blog_upload_space = 50;
+		$this->assertSame( 50, get_space_allowed() );
 	}
 
 	public function test__force_ssl_content() {

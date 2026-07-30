@@ -9,6 +9,44 @@ class block_template_utils__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertArrayHasKey( '404', $types );
 	}
 
+	public function test__get_allowed_block_template_part_areas() {
+		$areas = array_column( get_allowed_block_template_part_areas(), 'area' );
+
+		$this->assertContains( WP_TEMPLATE_PART_AREA_UNCATEGORIZED, $areas );
+		$this->assertContains( WP_TEMPLATE_PART_AREA_HEADER, $areas );
+		$this->assertContains( WP_TEMPLATE_PART_AREA_FOOTER, $areas );
+	}
+
+	public function test___filter_block_template_part_area() {
+		$this->assertSame(
+			WP_TEMPLATE_PART_AREA_HEADER,
+			_filter_block_template_part_area( WP_TEMPLATE_PART_AREA_HEADER )
+		);
+
+		$warning = null;
+		if ( wp_version_compare( '< 7.0.0' ) ) {
+			set_error_handler(
+				static function ( $level, $message ) use ( &$warning ) {
+					$warning = $message;
+					return true;
+				},
+				E_USER_NOTICE
+			);
+			$result = _filter_block_template_part_area( 'unsupported' );
+			restore_error_handler();
+		} else {
+			$capture_warning = static function ( $function_name, $message ) use ( &$warning ) {
+				$warning = "$function_name: $message";
+			};
+			add_action( 'wp_trigger_error_always_run', $capture_warning, 10, 2 );
+			$result = _filter_block_template_part_area( 'unsupported' );
+			remove_action( 'wp_trigger_error_always_run', $capture_warning, 10 );
+		}
+
+		$this->assertSame( WP_TEMPLATE_PART_AREA_UNCATEGORIZED, $result );
+		$this->assertStringContainsString( 'unsupported', $warning );
+	}
+
 	public function test___flatten_blocks() {
 		$blocks = [ [
 			'blockName' => 'core/group',

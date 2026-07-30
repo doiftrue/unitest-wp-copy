@@ -35,6 +35,23 @@ class feed__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( 'application/octet-stream', feed_content_type( 'unknown' ) );
 	}
 
+	public function test__get_default_feed() {
+		$this->assertSame( 'rss2', get_default_feed() );
+
+		add_filter( 'default_feed', static fn() => 'atom' );
+		$this->assertSame( 'atom', get_default_feed() );
+	}
+
+	public function test__html_type_rss() {
+		$GLOBALS['stub_wp_options']->html_type = 'application/xhtml+xml';
+
+		ob_start();
+		html_type_rss();
+		$output = ob_get_clean();
+
+		$this->assertSame( 'xhtml', $output );
+	}
+
 	public function test__get_bloginfo_rss() {
 		$GLOBALS['stub_wp_options']->blogname        = '<strong>Site &amp; Feed</strong>';
 		$GLOBALS['stub_wp_options']->blogdescription = 'News &amp; Updates';

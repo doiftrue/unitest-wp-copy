@@ -32,13 +32,18 @@ Dependency documents:
 ## Workflow: Add Symbols
 
 1. Select candidate symbols from a concrete `wp-core` file.
-2. Validate symbol eligibility using rules in this document.
-3. For every eligible function, run the Auto-Mockable Review below.
-4. Update parser config for target WP line using rules from [config.md](config.md).
-5. Regenerate copies: `make parser.run`.
-6. Add/update tests following [tests.md](tests.md).
-7. Run full test suite: `make phpunit`.
-8. If symbol remains incompatible, keep it disabled/commented in config with reason.
+2. Check `config/not-suitable-files.md` and existing rejection comments before
+   repeating a file-level review.
+3. Validate symbol eligibility using rules in this document.
+4. For every eligible function, run the Auto-Mockable Review below.
+5. Update parser config for target WP line using rules from [config.md](config.md).
+6. Regenerate copies: `make parser.run`.
+7. Add/update tests following [tests.md](tests.md).
+8. Run full test suite: `make phpunit`.
+9. If symbol remains incompatible, keep it disabled/commented in config with reason.
+10. If the reviewed source file has no active configured functions, add its
+    `wp-core/`-relative path to `config/not-suitable-files.md`. Remove an existing
+    path when the file gains its first active function.
 
 
 ## Auto-Mockable Review

@@ -36,10 +36,15 @@ This document describes the WP-like runtime that this project provides to tests:
 - defines default WP-like constants when missing;
 - initializes `$GLOBALS['stub_wp_options']`;
 - initializes `$GLOBALS['stub_wp_site_options']` for multisite network-option values;
+- initializes the in-memory `$wp_registered_sidebars` registry;
+- defines block-template-part area constants used by copied template helpers;
 - sets `$_SERVER['HTTP_HOST']` from `$GLOBALS['stub_wp_options']->home`;
 - initializes required WP-like globals used by copied code.
 
 Runtime state is process-shared. Tests must restore changed globals/options in `setUp()`/`tearDown()`.
+
+The default option stores include deterministic values required by copied
+multisite upload/registration policy functions and HTTPS migration predicates.
 
 ### Runtime-adapted classes with copied methods
 

@@ -1,20 +1,20 @@
 <?php
 
 return [
-	'get_subdirectory_reserved_names' => '4.4.0',
-	'get_current_site'                => '3.9.0 mockable',
-	'force_ssl_content'               => '2.8.5',
-	'filter_SSL'                      => '2.8.5',
+	'get_subdirectory_reserved_names'  => '4.4.0',
+	'get_current_site'                 => '3.9.0 mockable',
+	'is_email_address_unsafe'          => '3.5.0',
+	'check_upload_mimes'               => '3.0.0',
+	'upload_is_file_too_big'           => '3.0.0',
+	'users_can_register_signup_filter' => '3.0.0',
+	'get_space_allowed'                => '3.0.0',
+	'force_ssl_content'                => '2.8.5',
+	'filter_SSL'                       => '2.8.5',
 ];
 
 /*
 Not suitable in isolated PHPUnit env:
 
-is_email_address_unsafe               // why: reads banned_email_domains site option (not in boot-wp-options.php)
-check_upload_mimes                    // why: reads upload_filetypes site option (not in boot-wp-options.php)
-upload_is_file_too_big                // why: reads upload_space_check_disabled, fileupload_maxk site options (not in boot-wp-options.php)
-users_can_register_signup_filter      // why: reads registration site option (not in boot-wp-options.php)
-get_space_allowed                     // why: reads blog_upload_space option/site option (not in boot-wp-options.php)
 get_sitestats                         // why: depends on get_blog_count(), get_user_count() (network options/DB)
 get_active_blog_for_user              // why: depends on get_blogs_of_user(), user meta (DB)
 get_blog_count                        // why: depends on get_network_option() (not available)

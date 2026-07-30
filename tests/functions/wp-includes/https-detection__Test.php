@@ -45,4 +45,19 @@ class https_detection__Test extends \PHPUnit\Framework\TestCase {
 		$GLOBALS['stub_wp_options']->siteurl = 'https://wp.test';
 		$this->assertFalse( wp_is_using_https() );
 	}
+
+	public function test__wp_is_local_html_output() {
+		remove_action( 'wp_head', 'rsd_link' );
+		remove_action( 'wp_head', 'rest_output_link_wp_head' );
+		$this->assertNull( wp_is_local_html_output( '<html></html>' ) );
+
+		add_action( 'wp_head', 'rsd_link' );
+		$this->assertTrue( wp_is_local_html_output( '<link href="//wp.test/xmlrpc.php?rsd">' ) );
+		$this->assertFalse( wp_is_local_html_output( '<html></html>' ) );
+		remove_action( 'wp_head', 'rsd_link' );
+
+		add_action( 'wp_head', 'rest_output_link_wp_head' );
+		$this->assertTrue( wp_is_local_html_output( '<link href="//wp.test/wp-json/">' ) );
+		remove_action( 'wp_head', 'rest_output_link_wp_head' );
+	}
 }

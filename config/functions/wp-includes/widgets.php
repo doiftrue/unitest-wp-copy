@@ -1,8 +1,12 @@
 <?php
 
 return [
-	'wp_parse_widget_id'  => '5.8.0',
-	'_get_widget_id_base' => '2.8.0',
+	'wp_parse_widget_id'    => '5.8.0',
+	'is_registered_sidebar' => '4.4.0',
+	'_get_widget_id_base'   => '2.8.0',
+	'register_sidebars'     => '2.2.0',
+	'register_sidebar'      => '2.2.0',
+	'unregister_sidebar'    => '2.2.0',
 ];
 
 /*
@@ -10,10 +14,6 @@ Not suitable in isolated PHPUnit env:
 
 register_widget                              // why: delegates to WP_Widget_Factory global
 unregister_widget                            // why: delegates to WP_Widget_Factory global
-register_sidebars                            // why: mutates the live theme widget registry through register_sidebar()
-register_sidebar                             // why: depends on theme support and mutates the live sidebar registry
-unregister_sidebar                           // why: mutates the live sidebar registry
-is_registered_sidebar                        // why: reads the live sidebar registry populated by the widget lifecycle
 wp_register_sidebar_widget                   // why: mutates widget registries and inspects WP_Widget object callbacks
 wp_widget_description                        // why: reads the live registered-widget registry
 wp_sidebar_description                       // why: reads the live registered-sidebar registry

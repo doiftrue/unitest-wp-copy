@@ -37,6 +37,18 @@ class http__Test extends \PHPUnit\Framework\TestCase {
 		remove_filter( 'http_request_host_is_external', $allow_local_host, 10 );
 	}
 
+	public function test__get_allowed_http_origins() {
+		$this->assertSame(
+			[ 'http://wp.test', 'https://wp.test' ],
+			array_values( get_allowed_http_origins() )
+		);
+	}
+
+	public function test__is_allowed_http_origin() {
+		$this->assertSame( 'https://wp.test', is_allowed_http_origin( 'https://wp.test' ) );
+		$this->assertSame( '', is_allowed_http_origin( 'https://example.com' ) );
+	}
+
 
 	private function sample_response(): array {
 		return [
