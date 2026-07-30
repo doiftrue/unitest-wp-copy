@@ -14,6 +14,18 @@ class Config__Test extends Project_TestCase {
 		$this->assertSame( '6.8', $result );
 	}
 
+	public function test__symbols_moved_config__contains_block_pattern_category_functions() {
+		$moves = require PROJECT_ROOT_DIR . '/config/symbols-moved.php';
+		$expected = [
+			'moved_in' => '7.0',
+			'from'    => 'wp-includes/class-wp-block-pattern-categories-registry.php',
+			'to'      => 'wp-includes/block-patterns.php',
+		];
+		foreach( [ 'register_block_pattern_category', 'unregister_block_pattern_category' ] as $function ){
+			$this->assertSame( $expected, $moves['functions'][ $function ] );
+		}
+	}
+
 	public function test__apply_moves_config__moves_for_older_version() {
 		$base_config = [
 			'wp-includes/load.php'      => [
