@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/blocks.php (WP 6.9.4)
+// wp-includes/blocks.php (WP 6.9.5)
 if( ! function_exists( 'extract_serialized_parent_block' ) ) :
 	function extract_serialized_parent_block( $serialized_block ) {
 		$start = strpos( $serialized_block, '-->' ) + strlen( '-->' );
@@ -11,7 +11,7 @@ if( ! function_exists( 'extract_serialized_parent_block' ) ) :
 	}
 endif;
 
-// wp-includes/blocks.php (WP 6.9.4)
+// wp-includes/blocks.php (WP 6.9.5)
 if( ! function_exists( 'remove_serialized_parent_block' ) ) :
 	function remove_serialized_parent_block( $serialized_block ) {
 		$start = strpos( $serialized_block, '-->' ) + strlen( '-->' );
@@ -20,7 +20,7 @@ if( ! function_exists( 'remove_serialized_parent_block' ) ) :
 	}
 endif;
 
-// wp-includes/blocks.php (WP 6.9.4)
+// wp-includes/blocks.php (WP 6.9.5)
 if( ! function_exists( 'insert_hooked_blocks_and_set_ignored_hooked_blocks_metadata' ) ) :
 	function insert_hooked_blocks_and_set_ignored_hooked_blocks_metadata( &$parsed_anchor_block, $relative_position, $hooked_blocks, $context ) {
 		$markup  = insert_hooked_blocks( $parsed_anchor_block, $relative_position, $hooked_blocks, $context );
@@ -30,7 +30,7 @@ if( ! function_exists( 'insert_hooked_blocks_and_set_ignored_hooked_blocks_metad
 	}
 endif;
 
-// wp-includes/blocks.php (WP 6.9.4)
+// wp-includes/blocks.php (WP 6.9.5)
 if( ! function_exists( 'filter_block_core_template_part_attributes' ) ) :
 	function filter_block_core_template_part_attributes( $attribute_value, $attribute_name, $allowed_html ) {
 		if ( empty( $attribute_value ) || 'tagName' !== $attribute_name ) {
@@ -43,7 +43,7 @@ if( ! function_exists( 'filter_block_core_template_part_attributes' ) ) :
 	}
 endif;
 
-// wp-includes/blocks.php (WP 6.9.4)
+// wp-includes/blocks.php (WP 6.9.5)
 if( ! function_exists( 'insert_hooked_blocks' ) ) :
 	function insert_hooked_blocks( &$parsed_anchor_block, $relative_position, $hooked_blocks, $context ) {
 		$anchor_block_type  = $parsed_anchor_block['blockName'];
@@ -122,7 +122,7 @@ if( ! function_exists( 'insert_hooked_blocks' ) ) :
 	}
 endif;
 
-// wp-includes/blocks.php (WP 6.9.4)
+// wp-includes/blocks.php (WP 6.9.5)
 if( ! function_exists( 'set_ignored_hooked_blocks_metadata' ) ) :
 	function set_ignored_hooked_blocks_metadata( &$parsed_anchor_block, $relative_position, $hooked_blocks, $context ) {
 		$anchor_block_type  = $parsed_anchor_block['blockName'];
@@ -171,7 +171,7 @@ if( ! function_exists( 'set_ignored_hooked_blocks_metadata' ) ) :
 	}
 endif;
 
-// wp-includes/blocks.php (WP 6.9.4)
+// wp-includes/blocks.php (WP 6.9.5)
 if( ! function_exists( 'make_after_block_visitor' ) ) :
 	function make_after_block_visitor( $hooked_blocks, $context, $callback = 'insert_hooked_blocks' ) {
 		/**
@@ -204,7 +204,7 @@ if( ! function_exists( 'make_after_block_visitor' ) ) :
 	}
 endif;
 
-// wp-includes/blocks.php (WP 6.9.4)
+// wp-includes/blocks.php (WP 6.9.5)
 if( ! function_exists( 'traverse_and_serialize_block' ) ) :
 	function traverse_and_serialize_block( $block, $pre_callback = null, $post_callback = null ) {
 		$block_content = '';
@@ -257,7 +257,7 @@ if( ! function_exists( 'traverse_and_serialize_block' ) ) :
 	}
 endif;
 
-// wp-includes/blocks.php (WP 6.9.4)
+// wp-includes/blocks.php (WP 6.9.5)
 if( ! function_exists( 'traverse_and_serialize_blocks' ) ) :
 	function traverse_and_serialize_blocks( $blocks, $pre_callback = null, $post_callback = null ) {
 		$result       = '';
@@ -297,7 +297,7 @@ if( ! function_exists( 'traverse_and_serialize_blocks' ) ) :
 	}
 endif;
 
-// wp-includes/blocks.php (WP 6.9.4)
+// wp-includes/blocks.php (WP 6.9.5)
 if( ! function_exists( '_wp_filter_post_meta_footnotes' ) ) :
 	function _wp_filter_post_meta_footnotes( $footnotes ) {
 		$footnotes_decoded = json_decode( $footnotes, true );
@@ -317,21 +317,21 @@ if( ! function_exists( '_wp_filter_post_meta_footnotes' ) ) :
 	}
 endif;
 
-// wp-includes/blocks.php (WP 6.9.4)
+// wp-includes/blocks.php (WP 6.9.5)
 if( ! function_exists( '_wp_footnotes_kses_init_filters' ) ) :
 	function _wp_footnotes_kses_init_filters() {
 		add_filter( 'sanitize_post_meta_footnotes', '_wp_filter_post_meta_footnotes' );
 	}
 endif;
 
-// wp-includes/blocks.php (WP 6.9.4)
+// wp-includes/blocks.php (WP 6.9.5)
 if( ! function_exists( '_wp_footnotes_remove_filters' ) ) :
 	function _wp_footnotes_remove_filters() {
 		remove_filter( 'sanitize_post_meta_footnotes', '_wp_filter_post_meta_footnotes' );
 	}
 endif;
 
-// wp-includes/blocks.php (WP 6.9.4)
+// wp-includes/blocks.php (WP 6.9.5)
 if( ! function_exists( '_wp_footnotes_force_filtered_html_on_import_filter' ) ) :
 	function _wp_footnotes_force_filtered_html_on_import_filter( $arg ) {
 		// If `force_filtered_html_on_import` is true, we need to init the global styles kses filters.
@@ -342,7 +342,7 @@ if( ! function_exists( '_wp_footnotes_force_filtered_html_on_import_filter' ) ) 
 	}
 endif;
 
-// wp-includes/blocks.php (WP 6.9.4)
+// wp-includes/blocks.php (WP 6.9.5)
 if( ! function_exists( 'excerpt_remove_footnotes' ) ) :
 	function excerpt_remove_footnotes( $content ) {
 		if ( ! str_contains( $content, 'data-fn=' ) ) {
@@ -357,14 +357,14 @@ if( ! function_exists( 'excerpt_remove_footnotes' ) ) :
 	}
 endif;
 
-// wp-includes/blocks.php (WP 6.9.4)
+// wp-includes/blocks.php (WP 6.9.5)
 if( ! function_exists( '_filter_block_content_callback' ) ) :
 	function _filter_block_content_callback( $matches ) {
 		return '<!--' . rtrim( $matches[1], '-' ) . '-->';
 	}
 endif;
 
-// wp-includes/blocks.php (WP 6.9.4)
+// wp-includes/blocks.php (WP 6.9.5)
 if( ! function_exists( 'get_comments_pagination_arrow' ) ) :
 	function get_comments_pagination_arrow( $block, $pagination_type = 'next' ) {
 		$arrow_map = array(
@@ -388,7 +388,7 @@ if( ! function_exists( 'get_comments_pagination_arrow' ) ) :
 	}
 endif;
 
-// wp-includes/blocks.php (WP 6.9.4)
+// wp-includes/blocks.php (WP 6.9.5)
 if( ! function_exists( 'get_query_pagination_arrow' ) ) :
 	function get_query_pagination_arrow( $block, $is_next ) {
 		$arrow_map = array(
@@ -413,7 +413,7 @@ if( ! function_exists( 'get_query_pagination_arrow' ) ) :
 	}
 endif;
 
-// wp-includes/blocks.php (WP 6.9.4)
+// wp-includes/blocks.php (WP 6.9.5)
 if( ! function_exists( 'block_has_support' ) ) :
 	function block_has_support( $block_type, $feature, $default_value = false ) {
 		$block_support = $default_value;
@@ -433,7 +433,7 @@ if( ! function_exists( 'block_has_support' ) ) :
 	}
 endif;
 
-// wp-includes/blocks.php (WP 6.9.4)
+// wp-includes/blocks.php (WP 6.9.5)
 if( ! function_exists( 'wp_migrate_old_typography_shape' ) ) :
 	function wp_migrate_old_typography_shape( $metadata ) {
 		if ( ! isset( $metadata['supports'] ) ) {
@@ -478,7 +478,7 @@ if( ! function_exists( 'wp_migrate_old_typography_shape' ) ) :
 	}
 endif;
 
-// wp-includes/blocks.php (WP 6.9.4)
+// wp-includes/blocks.php (WP 6.9.5)
 if( ! function_exists( 'remove_block_asset_path_prefix' ) ) :
 	function remove_block_asset_path_prefix( $asset_handle_or_path ) {
 		$path_prefix = 'file:';
@@ -496,7 +496,7 @@ if( ! function_exists( 'remove_block_asset_path_prefix' ) ) :
 	}
 endif;
 
-// wp-includes/blocks.php (WP 6.9.4)
+// wp-includes/blocks.php (WP 6.9.5)
 if( ! function_exists( 'generate_block_asset_handle' ) ) :
 	function generate_block_asset_handle( $block_name, $field_name, $index = 0 ) {
 		if ( str_starts_with( $block_name, 'core/' ) ) {
@@ -534,7 +534,7 @@ if( ! function_exists( 'generate_block_asset_handle' ) ) :
 	}
 endif;
 
-// wp-includes/blocks.php (WP 6.9.4)
+// wp-includes/blocks.php (WP 6.9.5)
 if( ! function_exists( 'serialize_block_attributes' ) ) :
 	function serialize_block_attributes( $block_attributes ) {
 		$encoded_attributes = wp_json_encode( $block_attributes, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );
@@ -553,7 +553,7 @@ if( ! function_exists( 'serialize_block_attributes' ) ) :
 	}
 endif;
 
-// wp-includes/blocks.php (WP 6.9.4)
+// wp-includes/blocks.php (WP 6.9.5)
 if( ! function_exists( 'strip_core_block_namespace' ) ) :
 	function strip_core_block_namespace( $block_name = null ) {
 		if ( is_string( $block_name ) && str_starts_with( $block_name, 'core/' ) ) {
@@ -564,7 +564,7 @@ if( ! function_exists( 'strip_core_block_namespace' ) ) :
 	}
 endif;
 
-// wp-includes/blocks.php (WP 6.9.4)
+// wp-includes/blocks.php (WP 6.9.5)
 if( ! function_exists( 'get_comment_delimited_block_content' ) ) :
 	function get_comment_delimited_block_content( $block_name, $block_attributes, $block_content ) {
 		if ( is_null( $block_name ) ) {
@@ -588,7 +588,7 @@ if( ! function_exists( 'get_comment_delimited_block_content' ) ) :
 	}
 endif;
 
-// wp-includes/blocks.php (WP 6.9.4)
+// wp-includes/blocks.php (WP 6.9.5)
 if( ! function_exists( 'serialize_block' ) ) :
 	function serialize_block( $block ) {
 		$block_content = '';
@@ -610,14 +610,14 @@ if( ! function_exists( 'serialize_block' ) ) :
 	}
 endif;
 
-// wp-includes/blocks.php (WP 6.9.4)
+// wp-includes/blocks.php (WP 6.9.5)
 if( ! function_exists( 'serialize_blocks' ) ) :
 	function serialize_blocks( $blocks ) {
 		return implode( '', array_map( 'serialize_block', $blocks ) );
 	}
 endif;
 
-// wp-includes/blocks.php (WP 6.9.4)
+// wp-includes/blocks.php (WP 6.9.5)
 if( ! function_exists( 'filter_block_content' ) ) :
 	function filter_block_content( $text, $allowed_html = 'post', $allowed_protocols = array() ) {
 		$result = '';
@@ -636,7 +636,7 @@ if( ! function_exists( 'filter_block_content' ) ) :
 	}
 endif;
 
-// wp-includes/blocks.php (WP 6.9.4)
+// wp-includes/blocks.php (WP 6.9.5)
 if( ! function_exists( 'filter_block_kses' ) ) :
 	function filter_block_kses( $block, $allowed_html, $allowed_protocols = array() ) {
 		$block['attrs'] = filter_block_kses_value( $block['attrs'], $allowed_html, $allowed_protocols, $block );
@@ -651,7 +651,7 @@ if( ! function_exists( 'filter_block_kses' ) ) :
 	}
 endif;
 
-// wp-includes/blocks.php (WP 6.9.4)
+// wp-includes/blocks.php (WP 6.9.5)
 if( ! function_exists( 'filter_block_kses_value' ) ) :
 	function filter_block_kses_value( $value, $allowed_html, $allowed_protocols = array(), $block_context = null ) {
 		if ( is_array( $value ) ) {
@@ -676,28 +676,28 @@ if( ! function_exists( 'filter_block_kses_value' ) ) :
 	}
 endif;
 
-// wp-includes/blocks.php (WP 6.9.4)
+// wp-includes/blocks.php (WP 6.9.5)
 if( ! function_exists( 'register_block_style' ) ) :
 	function register_block_style( $block_name, $style_properties ) {
 		return WP_Block_Styles_Registry::get_instance()->register( $block_name, $style_properties );
 	}
 endif;
 
-// wp-includes/blocks.php (WP 6.9.4)
+// wp-includes/blocks.php (WP 6.9.5)
 if( ! function_exists( 'unregister_block_style' ) ) :
 	function unregister_block_style( $block_name, $block_style_name ) {
 		return WP_Block_Styles_Registry::get_instance()->unregister( $block_name, $block_style_name );
 	}
 endif;
 
-// wp-includes/blocks.php (WP 6.9.4)
+// wp-includes/blocks.php (WP 6.9.5)
 if( ! function_exists( 'unregister_block_type' ) ) :
 	function unregister_block_type( $name ) {
 		return WP_Block_Type_Registry::get_instance()->unregister( $name );
 	}
 endif;
 
-// wp-includes/blocks.php (WP 6.9.4)
+// wp-includes/blocks.php (WP 6.9.5)
 if( ! function_exists( 'parse_blocks' ) ) :
 	function parse_blocks( $content ) {
 		/**
@@ -714,7 +714,7 @@ if( ! function_exists( 'parse_blocks' ) ) :
 	}
 endif;
 
-// wp-includes/blocks.php (WP 6.9.4)
+// wp-includes/blocks.php (WP 6.9.5)
 if( ! function_exists( '_restore_wpautop_hook' ) ) :
 	function _restore_wpautop_hook( $content ) {
 		$current_priority = has_filter( 'the_content', '_restore_wpautop_hook' );

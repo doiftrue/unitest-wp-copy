@@ -2,7 +2,44 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/l10n.php (WP 6.9.4)
+// wp-includes/l10n.php (WP 6.9.5)
+if( ! function_exists( 'wp_get_word_count_type' ) ) :
+	function wp_get_word_count_type() {
+		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+	
+		global $wp_locale;
+	
+		if ( ! ( $wp_locale instanceof WP_Locale ) ) {
+			// Default value of WP_Locale::get_word_count_type().
+			return 'words';
+		}
+	
+		return $wp_locale->get_word_count_type();
+	}
+endif;
+
+// wp-includes/l10n.php (WP 6.9.5)
+if( ! function_exists( 'wp_get_list_item_separator' ) ) :
+	function wp_get_list_item_separator() {
+		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+	
+		global $wp_locale;
+	
+		if ( ! ( $wp_locale instanceof WP_Locale ) ) {
+			// Default value of WP_Locale::get_list_item_separator().
+			/* translators: Used between list items, there is a space after the comma. */
+			return __( ', ' );
+		}
+	
+		return $wp_locale->get_list_item_separator();
+	}
+endif;
+
+// wp-includes/l10n.php (WP 6.9.5)
 if( ! function_exists( 'is_rtl' ) ) :
 	function is_rtl() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -17,7 +54,7 @@ if( ! function_exists( 'is_rtl' ) ) :
 	}
 endif;
 
-// wp-includes/l10n.php (WP 6.9.4)
+// wp-includes/l10n.php (WP 6.9.5)
 if( ! function_exists( 'get_locale' ) ) :
 	function get_locale() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {

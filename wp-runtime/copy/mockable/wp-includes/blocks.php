@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/blocks.php (WP 6.9.4)
+// wp-includes/blocks.php (WP 6.9.5)
 if( ! function_exists( 'get_hooked_blocks' ) ) :
 	function get_hooked_blocks() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -30,7 +30,7 @@ if( ! function_exists( 'get_hooked_blocks' ) ) :
 	}
 endif;
 
-// wp-includes/blocks.php (WP 6.9.4)
+// wp-includes/blocks.php (WP 6.9.5)
 if( ! function_exists( 'get_dynamic_block_names' ) ) :
 	function get_dynamic_block_names() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {

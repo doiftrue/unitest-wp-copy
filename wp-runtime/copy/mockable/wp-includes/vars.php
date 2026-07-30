@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/vars.php (WP 6.9.4)
+// wp-includes/vars.php (WP 6.9.5)
 if( ! function_exists( 'wp_is_mobile' ) ) :
 	function wp_is_mobile() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {

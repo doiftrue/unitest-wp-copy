@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/link-template.php (WP 6.9.4)
+// wp-includes/link-template.php (WP 6.9.5)
 if( ! function_exists( 'get_home_url' ) ) :
 	function get_home_url( $blog_id = null, $path = '', $scheme = null ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -48,7 +48,7 @@ if( ! function_exists( 'get_home_url' ) ) :
 	}
 endif;
 
-// wp-includes/link-template.php (WP 6.9.4)
+// wp-includes/link-template.php (WP 6.9.5)
 if( ! function_exists( 'get_site_url' ) ) :
 	function get_site_url( $blog_id = null, $path = '', $scheme = null ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -84,7 +84,7 @@ if( ! function_exists( 'get_site_url' ) ) :
 	}
 endif;
 
-// wp-includes/link-template.php (WP 6.9.4)
+// wp-includes/link-template.php (WP 6.9.5)
 if( ! function_exists( 'get_admin_url' ) ) :
 	function get_admin_url( $blog_id = null, $path = '', $scheme = 'admin' ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -113,7 +113,7 @@ if( ! function_exists( 'get_admin_url' ) ) :
 	}
 endif;
 
-// wp-includes/link-template.php (WP 6.9.4)
+// wp-includes/link-template.php (WP 6.9.5)
 if( ! function_exists( 'plugins_url' ) ) :
 	function plugins_url( $path = '', $plugin = '' ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -159,7 +159,7 @@ if( ! function_exists( 'plugins_url' ) ) :
 	}
 endif;
 
-// wp-includes/link-template.php (WP 6.9.4)
+// wp-includes/link-template.php (WP 6.9.5)
 if( ! function_exists( 'content_url' ) ) :
 	function content_url( $path = '' ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -185,7 +185,7 @@ if( ! function_exists( 'content_url' ) ) :
 	}
 endif;
 
-// wp-includes/link-template.php (WP 6.9.4)
+// wp-includes/link-template.php (WP 6.9.5)
 if( ! function_exists( 'includes_url' ) ) :
 	function includes_url( $path = '', $scheme = null ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {

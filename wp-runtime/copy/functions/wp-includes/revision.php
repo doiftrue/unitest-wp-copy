@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/revision.php (WP 6.9.4)
+// wp-includes/revision.php (WP 6.9.5)
 if( ! function_exists( '_wp_get_post_revision_version' ) ) :
 	function _wp_get_post_revision_version( $revision ) {
 		if ( is_object( $revision ) ) {

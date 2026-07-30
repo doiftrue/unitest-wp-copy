@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/block-editor.php (WP 6.9.4)
+// wp-includes/block-editor.php (WP 6.9.5)
 if( ! function_exists( 'wp_get_first_block' ) ) :
 	function wp_get_first_block( $blocks, $block_name ) {
 		foreach ( $blocks as $block ) {
@@ -22,7 +22,7 @@ if( ! function_exists( 'wp_get_first_block' ) ) :
 	}
 endif;
 
-// wp-includes/block-editor.php (WP 6.9.4)
+// wp-includes/block-editor.php (WP 6.9.5)
 if( ! function_exists( 'get_default_block_categories' ) ) :
 	function get_default_block_categories() {
 		return array(
@@ -65,7 +65,7 @@ if( ! function_exists( 'get_default_block_categories' ) ) :
 	}
 endif;
 
-// wp-includes/block-editor.php (WP 6.9.4)
+// wp-includes/block-editor.php (WP 6.9.5)
 if( ! function_exists( 'get_allowed_block_types' ) ) :
 	function get_allowed_block_types( $block_editor_context ) {
 		$allowed_block_types = true;

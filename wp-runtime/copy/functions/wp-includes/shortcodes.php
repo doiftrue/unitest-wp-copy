@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/shortcodes.php (WP 6.9.4)
+// wp-includes/shortcodes.php (WP 6.9.5)
 if( ! function_exists( 'get_shortcode_tags_in_content' ) ) :
 	function get_shortcode_tags_in_content( $content ) {
 		if ( ! str_contains( $content, '[' ) ) {
@@ -30,28 +30,28 @@ if( ! function_exists( 'get_shortcode_tags_in_content' ) ) :
 	}
 endif;
 
-// wp-includes/shortcodes.php (WP 6.9.4)
+// wp-includes/shortcodes.php (WP 6.9.5)
 if( ! function_exists( '_filter_do_shortcode_context' ) ) :
 	function _filter_do_shortcode_context() {
 		return 'do_shortcode';
 	}
 endif;
 
-// wp-includes/shortcodes.php (WP 6.9.4)
+// wp-includes/shortcodes.php (WP 6.9.5)
 if( ! function_exists( 'apply_shortcodes' ) ) :
 	function apply_shortcodes( $content, $ignore_html = false ) {
 		return do_shortcode( $content, $ignore_html );
 	}
 endif;
 
-// wp-includes/shortcodes.php (WP 6.9.4)
+// wp-includes/shortcodes.php (WP 6.9.5)
 if( ! function_exists( 'get_shortcode_atts_regex' ) ) :
 	function get_shortcode_atts_regex() {
 		return '/([\w-]+)\s*=\s*"([^"]*)"(?:\s|$)|([\w-]+)\s*=\s*\'([^\']*)\'(?:\s|$)|([\w-]+)\s*=\s*([^\s\'"]+)(?:\s|$)|"([^"]*)"(?:\s|$)|\'([^\']*)\'(?:\s|$)|(\S+)(?:\s|$)/';
 	}
 endif;
 
-// wp-includes/shortcodes.php (WP 6.9.4)
+// wp-includes/shortcodes.php (WP 6.9.5)
 if( ! function_exists( 'do_shortcodes_in_html_tags' ) ) :
 	function do_shortcodes_in_html_tags( $content, $ignore_html, $tagnames ) {
 		// Normalize entities in unfiltered HTML before adding placeholders.
@@ -155,7 +155,7 @@ if( ! function_exists( 'do_shortcodes_in_html_tags' ) ) :
 	}
 endif;
 
-// wp-includes/shortcodes.php (WP 6.9.4)
+// wp-includes/shortcodes.php (WP 6.9.5)
 if( ! function_exists( 'unescape_invalid_shortcodes' ) ) :
 	function unescape_invalid_shortcodes( $content ) {
 		// Clean up entire string, avoids re-parsing HTML.
@@ -170,7 +170,7 @@ if( ! function_exists( 'unescape_invalid_shortcodes' ) ) :
 	}
 endif;
 
-// wp-includes/shortcodes.php (WP 6.9.4)
+// wp-includes/shortcodes.php (WP 6.9.5)
 if( ! function_exists( 'shortcode_exists' ) ) :
 	function shortcode_exists( $tag ) {
 		global $shortcode_tags;
@@ -178,7 +178,7 @@ if( ! function_exists( 'shortcode_exists' ) ) :
 	}
 endif;
 
-// wp-includes/shortcodes.php (WP 6.9.4)
+// wp-includes/shortcodes.php (WP 6.9.5)
 if( ! function_exists( 'has_shortcode' ) ) :
 	function has_shortcode( $content, $tag ) {
 		if ( ! str_contains( $content, '[' ) ) {
@@ -203,7 +203,7 @@ if( ! function_exists( 'has_shortcode' ) ) :
 	}
 endif;
 
-// wp-includes/shortcodes.php (WP 6.9.4)
+// wp-includes/shortcodes.php (WP 6.9.5)
 if( ! function_exists( 'strip_shortcode_tag' ) ) :
 	function strip_shortcode_tag( $m ) {
 		// Allow [[foo]] syntax for escaping a tag.
@@ -215,7 +215,7 @@ if( ! function_exists( 'strip_shortcode_tag' ) ) :
 	}
 endif;
 
-// wp-includes/shortcodes.php (WP 6.9.4)
+// wp-includes/shortcodes.php (WP 6.9.5)
 if( ! function_exists( 'add_shortcode' ) ) :
 	function add_shortcode( $tag, $callback ) {
 		global $shortcode_tags;
@@ -247,7 +247,7 @@ if( ! function_exists( 'add_shortcode' ) ) :
 	}
 endif;
 
-// wp-includes/shortcodes.php (WP 6.9.4)
+// wp-includes/shortcodes.php (WP 6.9.5)
 if( ! function_exists( 'remove_shortcode' ) ) :
 	function remove_shortcode( $tag ) {
 		global $shortcode_tags;
@@ -256,7 +256,7 @@ if( ! function_exists( 'remove_shortcode' ) ) :
 	}
 endif;
 
-// wp-includes/shortcodes.php (WP 6.9.4)
+// wp-includes/shortcodes.php (WP 6.9.5)
 if( ! function_exists( 'remove_all_shortcodes' ) ) :
 	function remove_all_shortcodes() {
 		global $shortcode_tags;
@@ -265,7 +265,7 @@ if( ! function_exists( 'remove_all_shortcodes' ) ) :
 	}
 endif;
 
-// wp-includes/shortcodes.php (WP 6.9.4)
+// wp-includes/shortcodes.php (WP 6.9.5)
 if( ! function_exists( 'do_shortcode' ) ) :
 	function do_shortcode( $content, $ignore_html = false ) {
 		global $shortcode_tags;
@@ -311,7 +311,7 @@ if( ! function_exists( 'do_shortcode' ) ) :
 	}
 endif;
 
-// wp-includes/shortcodes.php (WP 6.9.4)
+// wp-includes/shortcodes.php (WP 6.9.5)
 if( ! function_exists( 'get_shortcode_regex' ) ) :
 	function get_shortcode_regex( $tagnames = null ) {
 		global $shortcode_tags;
@@ -359,7 +359,7 @@ if( ! function_exists( 'get_shortcode_regex' ) ) :
 	}
 endif;
 
-// wp-includes/shortcodes.php (WP 6.9.4)
+// wp-includes/shortcodes.php (WP 6.9.5)
 if( ! function_exists( 'do_shortcode_tag' ) ) :
 	function do_shortcode_tag( $m ) {
 		global $shortcode_tags;
@@ -420,7 +420,7 @@ if( ! function_exists( 'do_shortcode_tag' ) ) :
 	}
 endif;
 
-// wp-includes/shortcodes.php (WP 6.9.4)
+// wp-includes/shortcodes.php (WP 6.9.5)
 if( ! function_exists( 'shortcode_parse_atts' ) ) :
 	function shortcode_parse_atts( $text ) {
 		$atts    = array();
@@ -457,7 +457,7 @@ if( ! function_exists( 'shortcode_parse_atts' ) ) :
 	}
 endif;
 
-// wp-includes/shortcodes.php (WP 6.9.4)
+// wp-includes/shortcodes.php (WP 6.9.5)
 if( ! function_exists( 'shortcode_atts' ) ) :
 	function shortcode_atts( $pairs, $atts, $shortcode = '' ) {
 		$atts = (array) $atts;
@@ -492,7 +492,7 @@ if( ! function_exists( 'shortcode_atts' ) ) :
 	}
 endif;
 
-// wp-includes/shortcodes.php (WP 6.9.4)
+// wp-includes/shortcodes.php (WP 6.9.5)
 if( ! function_exists( 'strip_shortcodes' ) ) :
 	function strip_shortcodes( $content ) {
 		global $shortcode_tags;

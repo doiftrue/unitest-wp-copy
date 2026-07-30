@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/block-template-utils.php (WP 6.9.4)
+// wp-includes/block-template-utils.php (WP 6.9.5)
 if( ! function_exists( '_inject_theme_attribute_in_template_part_block' ) ) :
 	function _inject_theme_attribute_in_template_part_block( &$block ) {
 		if (
@@ -14,7 +14,7 @@ if( ! function_exists( '_inject_theme_attribute_in_template_part_block' ) ) :
 	}
 endif;
 
-// wp-includes/block-template-utils.php (WP 6.9.4)
+// wp-includes/block-template-utils.php (WP 6.9.5)
 if( ! function_exists( '_remove_theme_attribute_from_template_part_block' ) ) :
 	function _remove_theme_attribute_from_template_part_block( &$block ) {
 		if (
@@ -26,7 +26,7 @@ if( ! function_exists( '_remove_theme_attribute_from_template_part_block' ) ) :
 	}
 endif;
 
-// wp-includes/block-template-utils.php (WP 6.9.4)
+// wp-includes/block-template-utils.php (WP 6.9.5)
 if( ! function_exists( 'get_template_hierarchy' ) ) :
 	function get_template_hierarchy( $slug, $is_custom = false, $template_prefix = '' ) {
 		if ( 'index' === $slug ) {
@@ -121,7 +121,87 @@ if( ! function_exists( 'get_template_hierarchy' ) ) :
 	}
 endif;
 
-// wp-includes/block-template-utils.php (WP 6.9.4)
+// wp-includes/block-template-utils.php (WP 6.9.5)
+if( ! function_exists( 'get_allowed_block_template_part_areas' ) ) :
+	function get_allowed_block_template_part_areas() {
+		$default_area_definitions = array(
+			array(
+				'area'        => WP_TEMPLATE_PART_AREA_UNCATEGORIZED,
+				'label'       => _x( 'General', 'template part area' ),
+				'description' => __(
+					'General templates often perform a specific role like displaying post content, and are not tied to any particular area.'
+				),
+				'icon'        => 'layout',
+				'area_tag'    => 'div',
+			),
+			array(
+				'area'        => WP_TEMPLATE_PART_AREA_HEADER,
+				'label'       => _x( 'Header', 'template part area' ),
+				'description' => __(
+					'The Header template defines a page area that typically contains a title, logo, and main navigation.'
+				),
+				'icon'        => 'header',
+				'area_tag'    => 'header',
+			),
+			array(
+				'area'        => WP_TEMPLATE_PART_AREA_FOOTER,
+				'label'       => _x( 'Footer', 'template part area' ),
+				'description' => __(
+					'The Footer template defines a page area that typically contains site credits, social links, or any other combination of blocks.'
+				),
+				'icon'        => 'footer',
+				'area_tag'    => 'footer',
+			),
+		);
+	
+		/**
+		 * Filters the list of allowed template part area values.
+		 *
+		 * @since 5.9.0
+		 *
+		 * @param array[] $default_area_definitions {
+		 *     The allowed template part area values.
+		 *
+		 *     @type array ...$0 {
+		 *         Data for the template part area.
+		 *
+		 *         @type string $area        Template part area name.
+		 *         @type string $label       Template part area label.
+		 *         @type string $description Template part area description.
+		 *         @type string $icon        Template part area icon.
+		 *         @type string $area_tag    Template part area tag.
+		 *     }
+		 * }
+		 */
+		return apply_filters( 'default_wp_template_part_areas', $default_area_definitions );
+	}
+endif;
+
+// wp-includes/block-template-utils.php (WP 6.9.5)
+if( ! function_exists( '_filter_block_template_part_area' ) ) :
+	function _filter_block_template_part_area( $type ) {
+		$allowed_areas = array_map(
+			static function ( $item ) {
+				return $item['area'];
+			},
+			get_allowed_block_template_part_areas()
+		);
+		if ( in_array( $type, $allowed_areas, true ) ) {
+			return $type;
+		}
+	
+		$warning_message = sprintf(
+			/* translators: %1$s: Template area type, %2$s: the uncategorized template area value. */
+			__( '"%1$s" is not a supported wp_template_part area value and has been added as "%2$s".' ),
+			$type,
+			WP_TEMPLATE_PART_AREA_UNCATEGORIZED
+		);
+		wp_trigger_error( __FUNCTION__, $warning_message );
+		return WP_TEMPLATE_PART_AREA_UNCATEGORIZED;
+	}
+endif;
+
+// wp-includes/block-template-utils.php (WP 6.9.5)
 if( ! function_exists( 'get_default_block_template_types' ) ) :
 	function get_default_block_template_types() {
 		$default_template_types = array(
@@ -228,7 +308,7 @@ if( ! function_exists( 'get_default_block_template_types' ) ) :
 	}
 endif;
 
-// wp-includes/block-template-utils.php (WP 6.9.4)
+// wp-includes/block-template-utils.php (WP 6.9.5)
 if( ! function_exists( '_flatten_blocks' ) ) :
 	function _flatten_blocks( &$blocks ) {
 		$all_blocks = array();

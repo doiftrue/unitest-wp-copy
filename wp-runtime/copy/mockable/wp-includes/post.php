@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/post.php (WP 6.9.4)
+// wp-includes/post.php (WP 6.9.5)
 if( ! function_exists( 'is_post_status_viewable' ) ) :
 	function is_post_status_viewable( $post_status ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -49,7 +49,7 @@ if( ! function_exists( 'is_post_status_viewable' ) ) :
 	}
 endif;
 
-// wp-includes/post.php (WP 6.9.4)
+// wp-includes/post.php (WP 6.9.5)
 if( ! function_exists( 'get_post_types_by_support' ) ) :
 	function get_post_types_by_support( $feature, $operator = 'and' ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -64,7 +64,7 @@ if( ! function_exists( 'get_post_types_by_support' ) ) :
 	}
 endif;
 
-// wp-includes/post.php (WP 6.9.4)
+// wp-includes/post.php (WP 6.9.5)
 if( ! function_exists( 'is_post_type_viewable' ) ) :
 	function is_post_type_viewable( $post_type ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -103,7 +103,7 @@ if( ! function_exists( 'is_post_type_viewable' ) ) :
 	}
 endif;
 
-// wp-includes/post.php (WP 6.9.4)
+// wp-includes/post.php (WP 6.9.5)
 if( ! function_exists( 'get_all_post_type_supports' ) ) :
 	function get_all_post_type_supports( $post_type ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -120,7 +120,7 @@ if( ! function_exists( 'get_all_post_type_supports' ) ) :
 	}
 endif;
 
-// wp-includes/post.php (WP 6.9.4)
+// wp-includes/post.php (WP 6.9.5)
 if( ! function_exists( 'get_post_status_object' ) ) :
 	function get_post_status_object( $post_status ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -137,7 +137,7 @@ if( ! function_exists( 'get_post_status_object' ) ) :
 	}
 endif;
 
-// wp-includes/post.php (WP 6.9.4)
+// wp-includes/post.php (WP 6.9.5)
 if( ! function_exists( 'get_post_stati' ) ) :
 	function get_post_stati( $args = array(), $output = 'names', $operator = 'and' ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -152,7 +152,7 @@ if( ! function_exists( 'get_post_stati' ) ) :
 	}
 endif;
 
-// wp-includes/post.php (WP 6.9.4)
+// wp-includes/post.php (WP 6.9.5)
 if( ! function_exists( 'is_post_type_hierarchical' ) ) :
 	function is_post_type_hierarchical( $post_type ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -168,7 +168,7 @@ if( ! function_exists( 'is_post_type_hierarchical' ) ) :
 	}
 endif;
 
-// wp-includes/post.php (WP 6.9.4)
+// wp-includes/post.php (WP 6.9.5)
 if( ! function_exists( 'post_type_exists' ) ) :
 	function post_type_exists( $post_type ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -179,7 +179,7 @@ if( ! function_exists( 'post_type_exists' ) ) :
 	}
 endif;
 
-// wp-includes/post.php (WP 6.9.4)
+// wp-includes/post.php (WP 6.9.5)
 if( ! function_exists( 'get_post_type_object' ) ) :
 	function get_post_type_object( $post_type ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -196,7 +196,7 @@ if( ! function_exists( 'get_post_type_object' ) ) :
 	}
 endif;
 
-// wp-includes/post.php (WP 6.9.4)
+// wp-includes/post.php (WP 6.9.5)
 if( ! function_exists( 'post_type_supports' ) ) :
 	function post_type_supports( $post_type, $feature ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -209,7 +209,7 @@ if( ! function_exists( 'post_type_supports' ) ) :
 	}
 endif;
 
-// wp-includes/post.php (WP 6.9.4)
+// wp-includes/post.php (WP 6.9.5)
 if( ! function_exists( 'get_post_types' ) ) :
 	function get_post_types( $args = array(), $output = 'names', $operator = 'and' ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {

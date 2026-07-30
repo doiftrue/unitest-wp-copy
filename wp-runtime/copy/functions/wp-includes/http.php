@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/http.php (WP 6.9.4)
+// wp-includes/http.php (WP 6.9.5)
 if( ! function_exists( '_wp_translate_php_url_constant_to_key' ) ) :
 	function _wp_translate_php_url_constant_to_key( $constant ) {
 		$translation = array(
@@ -24,7 +24,7 @@ if( ! function_exists( '_wp_translate_php_url_constant_to_key' ) ) :
 	}
 endif;
 
-// wp-includes/http.php (WP 6.9.4)
+// wp-includes/http.php (WP 6.9.5)
 if( ! function_exists( '_get_component_from_parsed_url_array' ) ) :
 	function _get_component_from_parsed_url_array( $url_parts, $component = -1 ) {
 		if ( -1 === $component ) {
@@ -40,7 +40,7 @@ if( ! function_exists( '_get_component_from_parsed_url_array' ) ) :
 	}
 endif;
 
-// wp-includes/http.php (WP 6.9.4)
+// wp-includes/http.php (WP 6.9.5)
 if( ! function_exists( 'wp_remote_retrieve_cookies' ) ) :
 	function wp_remote_retrieve_cookies( $response ) {
 		if ( is_wp_error( $response ) || empty( $response['cookies'] ) ) {
@@ -51,7 +51,7 @@ if( ! function_exists( 'wp_remote_retrieve_cookies' ) ) :
 	}
 endif;
 
-// wp-includes/http.php (WP 6.9.4)
+// wp-includes/http.php (WP 6.9.5)
 if( ! function_exists( 'wp_remote_retrieve_cookie' ) ) :
 	function wp_remote_retrieve_cookie( $response, $name ) {
 		$cookies = wp_remote_retrieve_cookies( $response );
@@ -70,7 +70,7 @@ if( ! function_exists( 'wp_remote_retrieve_cookie' ) ) :
 	}
 endif;
 
-// wp-includes/http.php (WP 6.9.4)
+// wp-includes/http.php (WP 6.9.5)
 if( ! function_exists( 'wp_remote_retrieve_cookie_value' ) ) :
 	function wp_remote_retrieve_cookie_value( $response, $name ) {
 		$cookie = wp_remote_retrieve_cookie( $response, $name );
@@ -83,7 +83,7 @@ if( ! function_exists( 'wp_remote_retrieve_cookie_value' ) ) :
 	}
 endif;
 
-// wp-includes/http.php (WP 6.9.4)
+// wp-includes/http.php (WP 6.9.5)
 if( ! function_exists( 'wp_parse_url' ) ) :
 	function wp_parse_url( $url, $component = -1 ) {
 		$to_unset = array();
@@ -114,7 +114,59 @@ if( ! function_exists( 'wp_parse_url' ) ) :
 	}
 endif;
 
-// wp-includes/http.php (WP 6.9.4)
+// wp-includes/http.php (WP 6.9.5)
+if( ! function_exists( 'get_allowed_http_origins' ) ) :
+	function get_allowed_http_origins() {
+		$admin_origin = parse_url( admin_url() );
+		$home_origin  = parse_url( home_url() );
+	
+		// @todo Preserve port?
+		$allowed_origins = array_unique(
+			array(
+				'http://' . $admin_origin['host'],
+				'https://' . $admin_origin['host'],
+				'http://' . $home_origin['host'],
+				'https://' . $home_origin['host'],
+			)
+		);
+	
+		/**
+		 * Changes the origin types allowed for HTTP requests.
+		 *
+		 * @since 3.4.0
+		 *
+		 * @param string[] $allowed_origins Array of allowed HTTP origins.
+		 */
+		return apply_filters( 'allowed_http_origins', $allowed_origins );
+	}
+endif;
+
+// wp-includes/http.php (WP 6.9.5)
+if( ! function_exists( 'is_allowed_http_origin' ) ) :
+	function is_allowed_http_origin( $origin = null ) {
+		$origin_arg = $origin;
+	
+		if ( null === $origin ) {
+			$origin = get_http_origin();
+		}
+	
+		if ( $origin && ! in_array( $origin, get_allowed_http_origins(), true ) ) {
+			$origin = '';
+		}
+	
+		/**
+		 * Changes the allowed HTTP origin result.
+		 *
+		 * @since 3.4.0
+		 *
+		 * @param string $origin     Origin URL if allowed, empty string if not.
+		 * @param string $origin_arg Original origin string passed into is_allowed_http_origin function.
+		 */
+		return apply_filters( 'allowed_http_origin', $origin, $origin_arg );
+	}
+endif;
+
+// wp-includes/http.php (WP 6.9.5)
 if( ! function_exists( 'wp_http_validate_url' ) ) :
 	function wp_http_validate_url( $url ) {
 		if ( ! is_string( $url ) || '' === $url || is_numeric( $url ) ) {
@@ -209,7 +261,7 @@ if( ! function_exists( 'wp_http_validate_url' ) ) :
 	}
 endif;
 
-// wp-includes/http.php (WP 6.9.4)
+// wp-includes/http.php (WP 6.9.5)
 if( ! function_exists( 'wp_remote_retrieve_headers' ) ) :
 	function wp_remote_retrieve_headers( $response ) {
 		if ( is_wp_error( $response ) || ! isset( $response['headers'] ) ) {
@@ -220,7 +272,7 @@ if( ! function_exists( 'wp_remote_retrieve_headers' ) ) :
 	}
 endif;
 
-// wp-includes/http.php (WP 6.9.4)
+// wp-includes/http.php (WP 6.9.5)
 if( ! function_exists( 'wp_remote_retrieve_header' ) ) :
 	function wp_remote_retrieve_header( $response, $header ) {
 		if ( is_wp_error( $response ) || ! isset( $response['headers'] ) ) {
@@ -235,7 +287,7 @@ if( ! function_exists( 'wp_remote_retrieve_header' ) ) :
 	}
 endif;
 
-// wp-includes/http.php (WP 6.9.4)
+// wp-includes/http.php (WP 6.9.5)
 if( ! function_exists( 'wp_remote_retrieve_response_code' ) ) :
 	function wp_remote_retrieve_response_code( $response ) {
 		if ( is_wp_error( $response ) || ! isset( $response['response'] ) || ! is_array( $response['response'] ) ) {
@@ -246,7 +298,7 @@ if( ! function_exists( 'wp_remote_retrieve_response_code' ) ) :
 	}
 endif;
 
-// wp-includes/http.php (WP 6.9.4)
+// wp-includes/http.php (WP 6.9.5)
 if( ! function_exists( 'wp_remote_retrieve_response_message' ) ) :
 	function wp_remote_retrieve_response_message( $response ) {
 		if ( is_wp_error( $response ) || ! isset( $response['response'] ) || ! is_array( $response['response'] ) ) {
@@ -257,7 +309,7 @@ if( ! function_exists( 'wp_remote_retrieve_response_message' ) ) :
 	}
 endif;
 
-// wp-includes/http.php (WP 6.9.4)
+// wp-includes/http.php (WP 6.9.5)
 if( ! function_exists( 'wp_remote_retrieve_body' ) ) :
 	function wp_remote_retrieve_body( $response ) {
 		if ( is_wp_error( $response ) || ! isset( $response['body'] ) ) {

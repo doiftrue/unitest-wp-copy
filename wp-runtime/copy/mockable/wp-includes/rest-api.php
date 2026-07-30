@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/rest-api.php (WP 6.9.4)
+// wp-includes/rest-api.php (WP 6.9.5)
 if( ! function_exists( 'rest_handle_doing_it_wrong' ) ) :
 	function rest_handle_doing_it_wrong( $function_name, $message, $version ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -27,7 +27,7 @@ if( ! function_exists( 'rest_handle_doing_it_wrong' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 6.9.4)
+// wp-includes/rest-api.php (WP 6.9.5)
 if( ! function_exists( 'rest_handle_deprecated_function' ) ) :
 	function rest_handle_deprecated_function( $function_name, $replacement, $version ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -49,7 +49,7 @@ if( ! function_exists( 'rest_handle_deprecated_function' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 6.9.4)
+// wp-includes/rest-api.php (WP 6.9.5)
 if( ! function_exists( 'rest_handle_deprecated_argument' ) ) :
 	function rest_handle_deprecated_argument( $function_name, $message, $version ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {

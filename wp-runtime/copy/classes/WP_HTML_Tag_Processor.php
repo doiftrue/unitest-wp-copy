@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/html-api/class-wp-html-tag-processor.php (WP 6.9.4)
+// wp-includes/html-api/class-wp-html-tag-processor.php (WP 6.9.5)
 if( ! class_exists( 'WP_HTML_Tag_Processor' ) ) :
 	class WP_HTML_Tag_Processor {
 		/**
