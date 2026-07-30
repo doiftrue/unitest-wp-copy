@@ -1,9 +1,9 @@
 <?php
 
 return [
-	'wp_is_connector_registered'  => '7.0.0',
-	'wp_get_connector'            => '7.0.0',
-	'wp_get_connectors'           => '7.0.0',
+	'wp_is_connector_registered'  => '7.0.0 mockable',
+	'wp_get_connector'            => '7.0.0 mockable',
+	'wp_get_connectors'           => '7.0.0 mockable',
 	'_wp_connectors_mask_api_key' => '7.0.0',
 ];
 

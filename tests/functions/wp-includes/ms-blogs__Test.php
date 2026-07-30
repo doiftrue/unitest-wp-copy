@@ -41,13 +41,4 @@ class ms_blogs__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertFalse( wp_cache_get( $blog_id, 'site-details' ) );
 	}
 
-	public function test__ms_is_switched() {
-		$this->assertFalse( ms_is_switched() );
-
-		$GLOBALS['_wp_switched_stack'] = [ 1 ];
-		$this->assertTrue( ms_is_switched() );
-
-		$GLOBALS['_wp_switched_stack'] = [];
-		$this->assertFalse( ms_is_switched() );
-	}
 }

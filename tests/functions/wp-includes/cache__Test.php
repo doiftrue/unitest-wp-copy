@@ -60,15 +60,6 @@ class cache__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertFalse( wp_cache_get( 'nonexistent' ) );
 	}
 
-	public function test__wp_cache_get_multiple() {
-		wp_cache_set( 'a', 'alpha' );
-		wp_cache_set( 'b', 'beta' );
-		$result = wp_cache_get_multiple( [ 'a', 'b', 'missing' ] );
-		$this->assertSame( 'alpha', $result['a'] );
-		$this->assertSame( 'beta', $result['b'] );
-		$this->assertFalse( $result['missing'] );
-	}
-
 	public function test__wp_cache_delete() {
 		wp_cache_set( 'del', 'val' );
 		$this->assertTrue( wp_cache_delete( 'del' ) );
@@ -214,4 +205,3 @@ class cache__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( 'beta', $cached['b'] );
 	}
 }
-

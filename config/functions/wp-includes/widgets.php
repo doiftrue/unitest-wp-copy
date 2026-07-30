@@ -2,7 +2,7 @@
 
 return [
 	'wp_parse_widget_id'    => '5.8.0',
-	'is_registered_sidebar' => '4.4.0',
+	'is_registered_sidebar' => '4.4.0 mockable',
 	'_get_widget_id_base'   => '2.8.0',
 	'register_sidebars'     => '2.2.0',
 	'register_sidebar'      => '2.2.0',

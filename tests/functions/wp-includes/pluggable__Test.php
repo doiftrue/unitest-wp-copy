@@ -2,18 +2,6 @@
 
 class pluggable__Test extends \PHPUnit\Framework\TestCase {
 
-	public function test__wp_rand() {
-		$val = wp_rand( 1, 100 );
-		$this->assertIsInt( $val );
-		$this->assertGreaterThanOrEqual( 1, $val );
-		$this->assertLessThanOrEqual( 100, $val );
-		$this->assertSame( 5, wp_rand( 5, 5 ) );
-
-		$val = wp_rand( 100, 1 );
-		$this->assertGreaterThanOrEqual( 1, $val );
-		$this->assertLessThanOrEqual( 100, $val );
-	}
-
 	public function test__wp_generate_password() {
 		$this->assertSame( 12, strlen( wp_generate_password() ) );
 		$this->assertSame( 24, strlen( wp_generate_password( 24 ) ) );

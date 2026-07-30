@@ -7,7 +7,7 @@ return [
 	'wp_cache_set_multiple'              => '6.0.0',
 	'wp_cache_delete_multiple'           => '6.0.0',
 	'wp_cache_flush_runtime'             => '6.0.0',
-	'wp_cache_get_multiple'              => '5.5.0',
+	'wp_cache_get_multiple'              => '5.5.0 mockable',
 	'wp_cache_switch_to_blog'            => '3.5.0',
 	'wp_cache_incr'                      => '3.3.0',
 	'wp_cache_decr'                      => '3.3.0',

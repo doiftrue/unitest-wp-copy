@@ -1,7 +1,7 @@
 <?php
 
 return [
-	'ms_is_switched'           => '3.5.0',
+	'ms_is_switched'           => '3.5.0 mockable',
 	'clean_site_details_cache' => '4.7.0',
 ];
 

@@ -32,12 +32,4 @@ class l10n__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( 'many', translate_nooped_plural( $nooped, 2 ) );
 	}
 
-	public function test__wp_get_list_item_separator() {
-		$this->assertSame( ', ', wp_get_list_item_separator() );
-	}
-
-	public function test__wp_get_word_count_type() {
-		$this->assertSame( 'words', wp_get_word_count_type() );
-	}
-
 }

@@ -1,8 +1,8 @@
 <?php
 
 return [
-	'wp_get_word_count_type'     => '6.2.0',
-	'wp_get_list_item_separator' => '6.0.0',
+	'wp_get_word_count_type'     => '6.2.0 mockable',
+	'wp_get_list_item_separator' => '6.0.0 mockable',
 	'translate_nooped_plural'    => '3.1.0',
 	'is_rtl'                     => '3.0.0 mockable',
 	'_nx_noop'                   => '2.8.0',

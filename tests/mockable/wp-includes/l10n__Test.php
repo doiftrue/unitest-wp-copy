@@ -22,4 +22,22 @@ class l10n__mockable__Test extends \PHPUnit\Framework\TestCase {
 		\WP_Mock::userFunction( 'is_rtl', [ 'return' => true ] );
 		$this->assertTrue( is_rtl() );
 	}
+
+	public function test__wp_get_list_item_separator(): void {
+		$this->assertSame( ', ', wp_get_list_item_separator() );
+	}
+
+	public function test__wp_get_list_item_separator__mockable_handler(): void {
+		\WP_Mock::userFunction( 'wp_get_list_item_separator', [ 'return' => '; ' ] );
+		$this->assertSame( '; ', wp_get_list_item_separator() );
+	}
+
+	public function test__wp_get_word_count_type(): void {
+		$this->assertSame( 'words', wp_get_word_count_type() );
+	}
+
+	public function test__wp_get_word_count_type__mockable_handler(): void {
+		\WP_Mock::userFunction( 'wp_get_word_count_type', [ 'return' => 'characters_including_spaces' ] );
+		$this->assertSame( 'characters_including_spaces', wp_get_word_count_type() );
+	}
 }

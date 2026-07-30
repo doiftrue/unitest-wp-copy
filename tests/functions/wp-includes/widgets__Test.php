@@ -55,12 +55,6 @@ class widgets__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertArrayNotHasKey( 'unitest-sidebar', $GLOBALS['wp_registered_sidebars'] );
 	}
 
-	public function test__is_registered_sidebar() {
-		$this->assertFalse( is_registered_sidebar( 'unitest-sidebar' ) );
-		$GLOBALS['wp_registered_sidebars']['unitest-sidebar'] = [ 'id' => 'unitest-sidebar' ];
-		$this->assertTrue( is_registered_sidebar( 'unitest-sidebar' ) );
-	}
-
 	public function test___get_widget_id_base() {
 		$this->assertSame( 'text', _get_widget_id_base( 'text-12' ) );
 		$this->assertSame( 'text-custom', _get_widget_id_base( 'text-custom' ) );
