@@ -108,6 +108,37 @@ if( ! function_exists( 'esc_xml' ) ) :
 endif;
 
 // wp-includes/formatting.php (WP 7.0)
+if( ! function_exists( 'wp_pre_kses_block_attributes' ) ) :
+	function wp_pre_kses_block_attributes( $content, $allowed_html, $allowed_protocols ) {
+		/*
+		 * `filter_block_content` is expected to call `wp_kses`. Temporarily remove
+		 * the filter to avoid recursion.
+		 */
+		remove_filter( 'pre_kses', 'wp_pre_kses_block_attributes', 10 );
+		$content = filter_block_content( $content, $allowed_html, $allowed_protocols );
+		add_filter( 'pre_kses', 'wp_pre_kses_block_attributes', 10, 3 );
+	
+		return $content;
+	}
+endif;
+
+// wp-includes/formatting.php (WP 7.0)
+if( ! function_exists( 'wp_rel_ugc' ) ) :
+	function wp_rel_ugc( $text ) {
+		// This is a pre-save filter, so text is already escaped.
+		$text = stripslashes( $text );
+		$text = preg_replace_callback(
+			'|<a (.+?)>|i',
+			static function ( $matches ) {
+				return wp_rel_callback( $matches, 'nofollow ugc' );
+			},
+			$text
+		);
+		return wp_slash( $text );
+	}
+endif;
+
+// wp-includes/formatting.php (WP 7.0)
 if( ! function_exists( 'wp_rel_callback' ) ) :
 	function wp_rel_callback( $matches, $rel ) {
 		$text = $matches[1];

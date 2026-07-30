@@ -72,6 +72,36 @@ if( ! function_exists( 'prep_atom_text_construct' ) ) :
 endif;
 
 // wp-includes/feed.php (WP 7.0)
+if( ! function_exists( 'get_default_feed' ) ) :
+	function get_default_feed() {
+		/**
+		 * Filters the default feed type.
+		 *
+		 * @since 2.5.0
+		 *
+		 * @param string $feed_type Type of default feed. Possible values include 'rss2', 'atom'.
+		 *                          Default 'rss2'.
+		 */
+		$default_feed = apply_filters( 'default_feed', 'rss2' );
+	
+		return ( 'rss' === $default_feed ) ? 'rss2' : $default_feed;
+	}
+endif;
+
+// wp-includes/feed.php (WP 7.0)
+if( ! function_exists( 'html_type_rss' ) ) :
+	function html_type_rss() {
+		$type = get_bloginfo( 'html_type' );
+		if ( str_contains( $type, 'xhtml' ) ) {
+			$type = 'xhtml';
+		} else {
+			$type = 'html';
+		}
+		echo $type;
+	}
+endif;
+
+// wp-includes/feed.php (WP 7.0)
 if( ! function_exists( 'get_bloginfo_rss' ) ) :
 	function get_bloginfo_rss( $show = '' ) {
 		$info = strip_tags( get_bloginfo( $show ) );
