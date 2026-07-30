@@ -31,6 +31,7 @@ return [
 	'wp_cache_get_last_changed'              => '4.7.0',
 	'wp_check_jsonp_callback'                => '4.6.0',
 	'wp_get_ext_types'                       => '4.6.0',
+	'_deprecated_constructor'                => '4.3.0',
 	'_deprecated_hook'                       => '4.6.0', // note: need as deps
 	'_wp_json_prepare_data'                  => '4.4.0',
 	'wp_is_numeric_array'                    => '4.4.0',
@@ -67,6 +68,7 @@ return [
 	'wp_filter_object_list'                  => '3.0.0',
 	'wp_parse_id_list'                       => '3.0.0',
 	'_deprecated_argument'                   => '3.0.0',
+	'_wp_mysql_week'                         => '3.0.0',
 	'get_file_data'                          => '2.9.0',
 	'get_allowed_mime_types'                 => '2.8.6',
 	'_cleanup_header_comment'                => '2.8.0',
@@ -112,7 +114,6 @@ _config_wp_siteurl                           // why: mutates global config/runti
 _default_wp_die_handler                      // why: requires full WP request context.
 _delete_option_fresh_site                    // why: depends on options lifecycle/full install flow.
 _deprecated_class                            // why: tied to legacy runtime notices/bootstrapping.
-_deprecated_constructor                      // why: tied to legacy runtime notices/bootstrapping.
 _deprecated_file                             // why: tied to include/runtime loading flow.
 _device_can_upload                           // why: depends on request headers/client runtime.
 _json_wp_die_handler                         // why: requires full HTTP output/wp_die runtime flow.
@@ -122,7 +123,6 @@ _scalar_wp_die_handler                       // why: requires full HTTP output/w
 _wp_check_alternate_file_names               // why: filesystem/media upload dependency.
 _wp_check_existing_file_names                // why: filesystem/media upload dependency.
 _wp_die_process_input                        // why: requires wp_die request lifecycle.
-_wp_mysql_week                               // why: tied to DB date query behavior.
 _wp_timezone_choice_usort_callback           // why: used only with full timezone list UI flow.
 _wp_upload_dir                               // why: filesystem + uploads runtime dependency.
 _xml_wp_die_handler                          // why: requires full HTTP output/wp_die runtime flow.

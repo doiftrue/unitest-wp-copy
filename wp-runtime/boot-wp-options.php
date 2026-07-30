@@ -5,6 +5,7 @@ $default_stub_wp_options = [
 	'siteurl'                     => 'https://wp.test',
 	'gmt_offset'                  => 0,
 	'timezone_string'             => 'UTC',
+	'start_of_week'               => 1,
 	'language'                    => 'en-US',
 	'blogname'                    => 'Unitest WP Copy',
 	'blogdescription'             => 'unitest-wp-copy runtime',

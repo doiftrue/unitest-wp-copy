@@ -44,6 +44,9 @@ Dependency documents:
 10. If the reviewed source file has no active configured functions, add its
     `wp-core/`-relative path to `config/not-suitable-files.md`. Remove an existing
     path when the file gains its first active function.
+11. For a complete class review, record unresolved boundary decisions in
+    `docs/symbol-eligibility-discussion.md` and fully rejected class files/scopes
+    in `config/not-suitable-files.md`.
 
 
 ## Auto-Mockable Review

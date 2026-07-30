@@ -19,5 +19,9 @@ class WPDB_Runtime__Test extends \PHPUnit\Framework\TestCase {
 		);
 		$this->assertSame( 'a\\%\\_b', $wpdb->esc_like( 'a%_b' ) );
 		$this->assertSame( '100%', $wpdb->remove_placeholder_escape( $wpdb->add_placeholder_escape( '100%' ) ) );
+		$this->assertSame( 'wp_posts', $wpdb->posts );
+		$this->assertSame( 'wp_comments', $wpdb->comments );
+		$this->assertSame( 'wp_users', $wpdb->users );
+		$this->assertSame( 'wp_blogs', $wpdb->blogs );
 	}
 }

@@ -56,7 +56,7 @@ Current consumers:
 
 | Runtime adapter | Generated trait      | Manual adaptation |
 | --- |----------------------| --- |
-| `WPDB_Runtime` | `wpdb__Copied_Methods` | `_real_escape()` uses `addslashes()` because the runtime has no database connection. |
+| `WPDB_Runtime` | `wpdb__Copied_Methods` | `_real_escape()` uses `addslashes()` because the runtime has no database connection; standard table-name properties support SQL builders. |
 
 ### `get_option()` and `get_site_option()` are runtime-adapted manual mocks.
 

@@ -315,6 +315,16 @@ class functions__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertFalse( wp_checkdate( 2, 31, 2024, 'bad' ) );
 	}
 
+	public function test___wp_mysql_week() {
+		$this->assertSame( 'WEEK( wp_posts.post_date, 1 )', _wp_mysql_week( 'wp_posts.post_date' ) );
+	}
+
+	public function test___deprecated_constructor() {
+		$this->expectNotToPerformAssertions();
+
+		_deprecated_constructor( 'Legacy_Class', '1.0.0' );
+	}
+
 	public function test__is_utf8_charset() {
 		if( $wp_ver = wp_version_compare( '< 6.6.0' ) ){
 			$this->markTestSkipped( "is_utf8_charset() not exists on WP $wp_ver" );
