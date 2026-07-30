@@ -11,11 +11,17 @@ class WP_HTML_Open_Elements__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertTrue( $elements->contains_node( $token ) );
 		$this->assertSame( $token, $elements->current_node() );
 		$this->assertSame( 1, $elements->count() );
-		$this->assertTrue( $elements->pop() );
-		$this->assertSame( 0, $elements->count() );
 
 		if( wp_version_compare( '>= 6.7.0' ) ){
 			$this->assertTrue( $elements->contains( 'DIV' ) );
+		}
+
+		$this->assertTrue( $elements->pop() );
+		$this->assertSame( 0, $elements->count() );
+		$this->assertFalse( $elements->contains_node( $token ) );
+
+		if( wp_version_compare( '>= 6.7.0' ) ){
+			$this->assertFalse( $elements->contains( 'DIV' ) );
 		}
 	}
 }
