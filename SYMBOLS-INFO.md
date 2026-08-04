@@ -1,5 +1,23 @@
 The following functions and classes are available in this (unit test) environment. Symbols are copied from WordPress 6.6.5.
 
+Runtime-adapted classes (NOT mockable via WP_Mock).
+Partially copied WordPress classes provided by the runtime. Use them directly or extend them to build your own mock.
+Method marks: `[wp]` — unchanged copied WordPress method, `[adapted]` — runtime-specific implementation.
+```text
+\Unitest_WP_Copy\WPDB_Runtime
+    Non-querying wpdb adapter used by SQL-building WordPress utilities.
+    Methods:
+        _escape()                    [wp]
+        _real_escape()               [adapted]
+        add_placeholder_escape()     [wp]
+        esc_like()                   [wp]
+        placeholder_escape()         [wp]
+        prepare()                    [wp]
+        remove_placeholder_escape()  [wp]
+    Public properties:
+        $posts, $comments, $users, $blogs, $postmeta, $commentmeta, $termmeta, $usermeta, $blogmeta, $sitemeta
+```
+
 Custom-adapted WordPress symbols (Mockable via WP_Mock):
 ```text
 __()
