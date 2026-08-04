@@ -49,6 +49,7 @@ class Copied_Lister__Test extends Project_TestCase {
 
 		$this->assertStringNotContainsString( 'get_option()', $info );
 		$this->assertStringNotContainsString( 'get_site_option()', $info );
+		$this->assertStringContainsString( 'Runtime-adapted classes', $info );
 	}
 
 }

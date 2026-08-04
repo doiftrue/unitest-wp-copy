@@ -52,6 +52,8 @@ When a class cannot be copied as a whole, a custom runtime adapter may use a tra
 
 Generated traits are available under the `Unitest_WP_Copy` namespace in `wp-runtime/copy/traits/` and may be used by manual mocks that need the configured original WordPress methods. The consuming mock must provide every property and excluded method referenced through `$this`.
 
+The public surface of every runtime adapter (methods, properties, `[wp]`/`[adapted]` origin marks) is auto-generated into the first section of `SYMBOLS-INFO.md`; see [parser.md](parser.md#symbol-list-generation).
+
 Current consumers:
 
 | Runtime adapter | Generated trait      | Manual adaptation |

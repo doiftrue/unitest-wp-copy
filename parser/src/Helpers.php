@@ -1,7 +1,35 @@
 <?php
 namespace Parser;
 
+use FilesystemIterator;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+
 class Helpers {
+
+	/**
+	 * Finds all PHP files in the directory tree.
+	 *
+	 * @return string[] Sorted file paths.
+	 */
+	public static function find_php_files( string $dir ): array {
+		$files = [];
+
+		$iterator = new RecursiveIteratorIterator(
+			new RecursiveDirectoryIterator( $dir, FilesystemIterator::SKIP_DOTS ),
+			RecursiveIteratorIterator::LEAVES_ONLY
+		);
+
+		foreach( $iterator as $file_info ){
+			if( $file_info->isFile() && $file_info->getExtension() === 'php' ){
+				$files[] = $file_info->getPathname();
+			}
+		}
+
+		sort( $files );
+
+		return $files;
+	}
 
 	/**
 	 * Cuts classes, functions and stores all their data in a variable: names, code and line numbers.

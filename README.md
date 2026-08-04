@@ -81,6 +81,41 @@ Available Symbols
 For the full list of available classes/functions, see:
 [`SYMBOLS-INFO.md`](SYMBOLS-INFO.md). It separately lists symbols that are mockable via WP_Mock.
 
+### Runtime-Adapted Classes
+
+Some WordPress classes cannot be copied as a whole, so the runtime provides a partial adapter instead. Such classes are listed in the first section of [`SYMBOLS-INFO.md`](SYMBOLS-INFO.md) together with their public methods and properties, where `[wp]` marks an unchanged copied WordPress method and `[adapted]` marks a runtime-specific implementation.
+
+They are regular PHP classes, not WP_Mock symbols: use an instance directly, or extend it to build your own mock.
+
+Currently available: `\Unitest_WP_Copy\WPDB_Runtime` — a non-querying `wpdb` adapter for SQL-building code. Bootstrap assigns an instance to the `$wpdb` global.
+
+```php
+global $wpdb;
+
+$query = $wpdb->prepare( "SELECT * FROM {$wpdb->posts} WHERE post_title = %s", "O'Reilly" );
+$this->assertSame(
+	"SELECT * FROM wp_posts WHERE post_title = 'O\\'Reilly'",
+	$wpdb->remove_placeholder_escape( $query )
+);
+```
+
+Extend it when your code needs querying methods:
+
+```php
+class My_WPDB extends \Unitest_WP_Copy\WPDB_Runtime {
+
+	public array $results = [];
+
+	public function get_results( $query = null, $output = OBJECT ) {
+		return $this->results;
+	}
+}
+
+$GLOBALS['wpdb'] = new My_WPDB();
+```
+
+Restore `$GLOBALS['wpdb']` in `tearDown()` if a test replaces it.
+
 Supported WordPress Lines
 -------------------------
 Use the package line that matches your WP version:
@@ -284,6 +319,6 @@ This project uses `doiftrue/unitest-wp-copy` with `WP_Mock` for PHPUnit tests.
 Before writing or changing tests:
 
 1. Read `vendor/doiftrue/unitest-wp-copy/README.md` to understand the test runtime.
-2. Check `vendor/doiftrue/unitest-wp-copy/SYMBOLS-INFO.md` for the WordPress functions and classes available in the runtime.
+2. Check `vendor/doiftrue/unitest-wp-copy/SYMBOLS-INFO.md` for the WordPress functions and classes available in the runtime. Its first section lists runtime-adapted classes (like `\Unitest_WP_Copy\WPDB_Runtime`) with their public methods — use or extend them instead of WP_Mock.
 3. Use `WP_Mock` when a runtime function listed as mockable needs to be mocked.
 ```

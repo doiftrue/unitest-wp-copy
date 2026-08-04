@@ -2,10 +2,6 @@
 
 namespace Parser;
 
-use FilesystemIterator;
-use RecursiveDirectoryIterator;
-use RecursiveIteratorIterator;
-
 class Symbols_Lister {
 	/**
 	 * Infrastructure mocks intentionally omitted from the public symbol list.
@@ -26,6 +22,13 @@ class Symbols_Lister {
 
 	private string $content = <<<MD
 		The following functions and classes are available in this (unit test) environment. Symbols are copied from WordPress {WP_VERSION}.
+		
+		Runtime-adapted classes (NOT mockable via WP_Mock).
+		Partially copied WordPress classes provided by the runtime. Use them directly or extend them to build your own mock.
+		Method marks: `[wp]` — unchanged copied WordPress method, `[adapted]` — runtime-specific implementation.
+		```text
+		{CLASSES_LIST}
+		```
 		
 		Custom-adapted WordPress symbols (Mockable via WP_Mock):
 		```text
@@ -73,6 +76,7 @@ class Symbols_Lister {
 			'{MOCKABLE_LIST}' => $mockable_names ? implode( "\n", $mockable_names ) : '(none)',
 			'{MOCKS_LIST}'    => $mocks_names ? implode( "\n", $mocks_names ) : '(none)',
 			'{COPIED_LIST}'   => $copied_names ? implode( "\n", $copied_names ) : '(none)',
+			'{CLASSES_LIST}'  => new Runtime_Classes_Doc_Builder( "$config->runtime_dir/custom-mocks", "$config->copy_dir/traits" )->build(),
 		] );
 
 		$project_dir = dirname( $config->runtime_dir );
@@ -80,23 +84,10 @@ class Symbols_Lister {
 	}
 
 	private function get_mock_function_names( string $mocks_dir ): array {
-		if( ! is_dir( $mocks_dir ) ){
-			return [];
-		}
-
 		$names = [];
 
-		$iterator = new RecursiveIteratorIterator(
-			new RecursiveDirectoryIterator( $mocks_dir, FilesystemIterator::SKIP_DOTS ),
-			RecursiveIteratorIterator::LEAVES_ONLY
-		);
-
-		foreach( $iterator as $file_info ){
-			if( ! $file_info->isFile() || $file_info->getExtension() !== 'php' ){
-				continue;
-			}
-
-			$file_content = file_get_contents( $file_info->getPathname() );
+		foreach( Helpers::find_php_files( $mocks_dir ) as $file_path ){
+			$file_content = file_get_contents( $file_path );
 			$func_names = array_keys( Helpers::get_class_func_code_from_php_code( $file_content, [ 'type' => 'func' ] ) );
 
 			foreach( $func_names as $func_name ){
