@@ -2,11 +2,31 @@ About
 =====
 Helper library for PHPUnit tests. It provides selected WordPress core functions and classes that can run without full WordPress bootstrap (database or external services).
 
-The goal is to test real WP pure-PHP behavior instead of mocking everything.
+Use it with [WP_Mock](https://github.com/10up/wp_mock). The runtime keeps real WordPress pure-PHP behavior, while WP_Mock lets tests replace functions marked as mockable when that is needed — which is almost always the case in unit tests.
 
 
-Quick Example (Why This Helps)
-------------------------------
+Quick Start
+-----------
+1. Install the package line matching your WordPress version, plus WP_Mock:
+
+	```shell
+	composer require --dev doiftrue/unitest-wp-copy:6.9.* 
+	composer require --dev 10up/wp_mock
+	```
+
+2. Initialize both in the PHPUnit bootstrap. Unitest_WP_Copy must initialize first:
+
+	File: `tests/bootstrap.php`
+	```php
+	require_once __DIR__ . '/../vendor/autoload.php';
+
+	\Unitest_WP_Copy\Bootstrap::init();
+	\WP_Mock::bootstrap();
+	```
+
+
+Quick Example
+-------------
 Suppose your code turns a raw, user-submitted comment into safe HTML:
 
 ```php
@@ -18,48 +38,83 @@ function render_comment( string $raw ): string {
 }
 ```
 
-To mock this you would have to hardcode the expected output of each function, so the test would no longer verify any real WordPress behavior.
-
-With this library the real implementations run in plain PHPUnit:
+The test uses real WordPress sanitizing and formatting behavior, but can still mock a supported boundary when necessary:
 
 ```php
-require_once __DIR__ . '/vendor/autoload.php';
-\Unitest_WP_Copy\Bootstrap::init();
+class RenderCommentTest extends \PHPUnit\Framework\TestCase {
 
-$html = render_comment(
-	'Great post! <script>alert(1)</script> visit https://example.com <b>thanks</b>'
-);
+	protected function setUp(): void {
+		parent::setUp();
+		WP_Mock::setUp();
+	}
 
-$this->assertStringNotContainsString( '<script>', $html );                   // kses removed it
-$this->assertStringContainsString( '<a href="https://example.com"', $html ); // linkified
-$this->assertStringContainsString( '<b>thanks</b>', $html );                 // allowed tag kept
+	protected function tearDown(): void {
+		WP_Mock::tearDown();
+		parent::tearDown();
+	}
+
+	public function test__renders_safe_html(): void {
+		$html = render_comment(
+			'Great post! <script>alert(1)</script> visit https://example.com <b>thanks</b>'
+		);
+
+		$this->assertStringNotContainsString( '<script>', $html );                   // kses removed it
+		$this->assertStringContainsString( '<a href="https://example.com"', $html ); // linkified
+		$this->assertStringContainsString( '<b>thanks</b>', $html );                 // allowed tag kept
+	}
+
+	public function test__mocks_a_supported_function(): void {
+		WP_Mock::userFunction( 'is_multisite' )->andReturn( true );
+		$this->assertTrue( is_multisite() );
+	}
+}
 ```
+
+
+Without WP_Mock
+---------------
+You may initialize only `\Unitest_WP_Copy\Bootstrap::init()` and use the real runtime. However, you will not be able to conveniently mock functions that the runtime has already loaded.
 
 
 Available Symbols
 -----------------
 For the full list of available classes/functions, see:
-[`SYMBOLS-INFO.md`](SYMBOLS-INFO.md)
+[`SYMBOLS-INFO.md`](SYMBOLS-INFO.md). It separately lists symbols that are mockable via WP_Mock.
 
+### Runtime-Adapted Classes
 
+Some WordPress classes cannot be copied as a whole, so the runtime provides a partial adapter instead. Such classes are listed in the first section of [`SYMBOLS-INFO.md`](SYMBOLS-INFO.md) together with their public methods and properties, where `[wp]` marks an unchanged copied WordPress method and `[adapted]` marks a runtime-specific implementation.
 
-Quick Start
------------
-1. Install a package line that matches your WordPress version line:
-	
-	```shell
-	composer require --dev doiftrue/unitest-wp-copy:6.9.*
-	```
+They are regular PHP classes, not WP_Mock symbols: use an instance directly, or extend it to build your own mock.
 
-2. Initialize the runtime in your PHPUnit bootstrap:
-	
-	```php
-	require_once __DIR__ . '/vendor/autoload.php';
-	\Unitest_WP_Copy\Bootstrap::init();
-	```
+Currently available: `\Unitest_WP_Copy\WPDB_Runtime` — a non-querying `wpdb` adapter for SQL-building code. Bootstrap assigns an instance to the `$wpdb` global.
 
-3. Write unit tests where many WordPress calls do not need mocking.
+```php
+global $wpdb;
 
+$query = $wpdb->prepare( "SELECT * FROM {$wpdb->posts} WHERE post_title = %s", "O'Reilly" );
+$this->assertSame(
+	"SELECT * FROM wp_posts WHERE post_title = 'O\\'Reilly'",
+	$wpdb->remove_placeholder_escape( $query )
+);
+```
+
+Extend it when your code needs querying methods:
+
+```php
+class My_WPDB extends \Unitest_WP_Copy\WPDB_Runtime {
+
+	public array $results = [];
+
+	public function get_results( $query = null, $output = OBJECT ) {
+		return $this->results;
+	}
+}
+
+$GLOBALS['wpdb'] = new My_WPDB();
+```
+
+Restore `$GLOBALS['wpdb']` in `tearDown()` if a test replaces it.
 
 Supported WordPress Lines
 -------------------------
@@ -129,6 +184,7 @@ $GLOBALS['stub_wp_site_options'] = (object) [
 
 require_once __DIR__ . '/vendor/autoload.php';
 \Unitest_WP_Copy\Bootstrap::init();
+\WP_Mock::bootstrap();
 ```
 
 ### Redefine Runtime Globals
@@ -251,47 +307,18 @@ Do not use it when:
 
 
 
-WP_Mock Integration (Optional)
-------------------------------
-If you need handler-based mocking for supported functions, install WP_Mock:
+Instructions for AI Agents
+--------------------------
+Add the following to the testing section of your project's `AGENTS.md`:
 
-```shell
-composer require --dev 10up/wp_mock
+```md
+### Tests Runtime
+
+This project uses `doiftrue/unitest-wp-copy` with `WP_Mock` for PHPUnit tests.
+
+Before writing or changing tests:
+
+1. Read `vendor/doiftrue/unitest-wp-copy/README.md` to understand the test runtime.
+2. Check `vendor/doiftrue/unitest-wp-copy/SYMBOLS-INFO.md` for the WordPress functions and classes available in the runtime. Its first section lists runtime-adapted classes (like `\Unitest_WP_Copy\WPDB_Runtime`) with their public methods — use or extend them instead of WP_Mock.
+3. Use `WP_Mock` when a runtime function listed as mockable needs to be mocked.
 ```
-
-Then use WP_Mock:
-
-```php
-// tests/bootstrap.php
-require_once __DIR__ . '/../vendor/autoload.php';
-
-\Unitest_WP_Copy\Bootstrap::init(); // must be before WP_Mock
-\WP_Mock::bootstrap();
-```
-
-> **Note:** Initialize Unitest_WP_Copy first. Otherwise, WP_Mock initialization will init some WordPress functions that Unitest_WP_Copy already provides, and them will not work as real WordPress functions. At the same time you can use WP_Mock to mock functions that Unitest_WP_Copy setup in any time.
-
-```php
-class ExampleTest extends \PHPUnit\Framework\TestCase {
-
-	protected function setUp(): void {
-		parent::setUp();
-		WP_Mock::setUp();
-	}
-
-	protected function tearDown(): void {
-		WP_Mock::tearDown();
-		parent::tearDown();
-	}
-
-	public function test__is_multisite_mocked() {
-		WP_Mock::userFunction( 'is_multisite' )->andReturn( true );
-		$this->assertTrue( is_multisite() );
-	}
-}
-```
-
-For mock-friendly symbols, check:
-[`SYMBOLS-INFO.md`](SYMBOLS-INFO.md)
-
-See also: https://github.com/10up/wp_mock
