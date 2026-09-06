@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/interactivity-api/class-wp-interactivity-api-directives-processor.php (WP 6.8.6)
+// wp-includes/interactivity-api/class-wp-interactivity-api-directives-processor.php (WP 6.8.8)
 if( ! class_exists( 'WP_Interactivity_API_Directives_Processor' ) ) :
 	class WP_Interactivity_API_Directives_Processor extends WP_HTML_Tag_Processor {
 		/**

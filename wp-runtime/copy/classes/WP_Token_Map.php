@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-token-map.php (WP 6.8.6)
+// wp-includes/class-wp-token-map.php (WP 6.8.8)
 if( ! class_exists( 'WP_Token_Map' ) ) :
 	class WP_Token_Map {
 		/**

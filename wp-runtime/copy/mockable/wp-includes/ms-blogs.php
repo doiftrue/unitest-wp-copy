@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/ms-blogs.php (WP 6.8.6)
+// wp-includes/ms-blogs.php (WP 6.8.8)
 if( ! function_exists( 'ms_is_switched' ) ) :
 	function ms_is_switched() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {

@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/sitemaps/class-wp-sitemaps-provider.php (WP 6.8.6)
+// wp-includes/sitemaps/class-wp-sitemaps-provider.php (WP 6.8.8)
 if( ! class_exists( 'WP_Sitemaps_Provider' ) ) :
 	abstract class WP_Sitemaps_Provider {
 		/**

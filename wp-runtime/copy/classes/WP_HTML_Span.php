@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/html-api/class-wp-html-span.php (WP 6.8.6)
+// wp-includes/html-api/class-wp-html-span.php (WP 6.8.8)
 if( ! class_exists( 'WP_HTML_Span' ) ) :
 	class WP_HTML_Span {
 		/**

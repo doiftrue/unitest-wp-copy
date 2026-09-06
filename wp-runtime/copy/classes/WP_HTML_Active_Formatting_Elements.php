@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/html-api/class-wp-html-active-formatting-elements.php (WP 6.8.6)
+// wp-includes/html-api/class-wp-html-active-formatting-elements.php (WP 6.8.8)
 if( ! class_exists( 'WP_HTML_Active_Formatting_Elements' ) ) :
 	class WP_HTML_Active_Formatting_Elements {
 		/**

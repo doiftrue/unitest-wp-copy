@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-speculation-rules.php (WP 6.8.6)
+// wp-includes/class-wp-speculation-rules.php (WP 6.8.8)
 if( ! class_exists( 'WP_Speculation_Rules' ) ) :
 	class WP_Speculation_Rules implements JsonSerializable {
 	
