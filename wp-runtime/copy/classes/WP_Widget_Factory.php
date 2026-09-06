@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-widget-factory.php (WP 6.7.5)
+// wp-includes/class-wp-widget-factory.php (WP 6.7.7)
 if( ! class_exists( 'WP_Widget_Factory' ) ) :
 	class WP_Widget_Factory {
 	

@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-dependencies.php (WP 6.7.5)
+// wp-includes/class-wp-dependencies.php (WP 6.7.7)
 if( ! class_exists( 'WP_Dependencies' ) ) :
 	class WP_Dependencies {
 		/**

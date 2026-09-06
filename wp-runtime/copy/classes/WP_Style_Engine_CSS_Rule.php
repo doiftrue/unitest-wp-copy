@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/style-engine/class-wp-style-engine-css-rule.php (WP 6.7.5)
+// wp-includes/style-engine/class-wp-style-engine-css-rule.php (WP 6.7.7)
 if( ! class_exists( 'WP_Style_Engine_CSS_Rule' ) ) :
 	class WP_Style_Engine_CSS_Rule {
 	

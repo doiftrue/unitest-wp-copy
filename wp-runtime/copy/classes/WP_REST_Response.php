@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/rest-api/class-wp-rest-response.php (WP 6.7.5)
+// wp-includes/rest-api/class-wp-rest-response.php (WP 6.7.7)
 if( ! class_exists( 'WP_REST_Response' ) ) :
 	class WP_REST_Response extends WP_HTTP_Response {
 	

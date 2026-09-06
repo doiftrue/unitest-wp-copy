@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/compat.php (WP 6.7.5)
+// wp-includes/compat.php (WP 6.7.7)
 if( ! function_exists( '_is_utf8_charset' ) ) :
 	function _is_utf8_charset( $charset_slug ) {
 		if ( ! is_string( $charset_slug ) ) {
@@ -16,7 +16,7 @@ if( ! function_exists( '_is_utf8_charset' ) ) :
 	}
 endif;
 
-// wp-includes/compat.php (WP 6.7.5)
+// wp-includes/compat.php (WP 6.7.7)
 if( ! function_exists( 'array_is_list' ) ) :
 		function array_is_list( $arr ) {
 			if ( ( array() === $arr ) || ( array_values( $arr ) === $arr ) ) {
@@ -35,7 +35,7 @@ if( ! function_exists( 'array_is_list' ) ) :
 		}
 endif;
 
-// wp-includes/compat.php (WP 6.7.5)
+// wp-includes/compat.php (WP 6.7.7)
 if( ! function_exists( 'array_key_first' ) ) :
 		function array_key_first( array $array ) { // phpcs:ignore Universal.NamingConventions.NoReservedKeywordParameterNames.arrayFound
 			foreach ( $array as $key => $value ) {
@@ -44,7 +44,7 @@ if( ! function_exists( 'array_key_first' ) ) :
 		}
 endif;
 
-// wp-includes/compat.php (WP 6.7.5)
+// wp-includes/compat.php (WP 6.7.7)
 if( ! function_exists( 'array_key_last' ) ) :
 		function array_key_last( array $array ) { // phpcs:ignore Universal.NamingConventions.NoReservedKeywordParameterNames.arrayFound
 			if ( empty( $array ) ) {
@@ -57,7 +57,7 @@ if( ! function_exists( 'array_key_last' ) ) :
 		}
 endif;
 
-// wp-includes/compat.php (WP 6.7.5)
+// wp-includes/compat.php (WP 6.7.7)
 if( ! function_exists( 'str_contains' ) ) :
 		function str_contains( $haystack, $needle ) {
 			if ( '' === $needle ) {
@@ -68,7 +68,7 @@ if( ! function_exists( 'str_contains' ) ) :
 		}
 endif;
 
-// wp-includes/compat.php (WP 6.7.5)
+// wp-includes/compat.php (WP 6.7.7)
 if( ! function_exists( 'str_starts_with' ) ) :
 		function str_starts_with( $haystack, $needle ) {
 			if ( '' === $needle ) {
@@ -79,7 +79,7 @@ if( ! function_exists( 'str_starts_with' ) ) :
 		}
 endif;
 
-// wp-includes/compat.php (WP 6.7.5)
+// wp-includes/compat.php (WP 6.7.7)
 if( ! function_exists( 'str_ends_with' ) ) :
 		function str_ends_with( $haystack, $needle ) {
 			if ( '' === $haystack ) {
@@ -92,7 +92,7 @@ if( ! function_exists( 'str_ends_with' ) ) :
 		}
 endif;
 
-// wp-includes/compat.php (WP 6.7.5)
+// wp-includes/compat.php (WP 6.7.7)
 if( ! function_exists( 'is_countable' ) ) :
 		function is_countable( $value ) {
 			return ( is_array( $value )
@@ -103,7 +103,7 @@ if( ! function_exists( 'is_countable' ) ) :
 		}
 endif;
 
-// wp-includes/compat.php (WP 6.7.5)
+// wp-includes/compat.php (WP 6.7.7)
 if( ! function_exists( '_mb_strlen' ) ) :
 	function _mb_strlen( $str, $encoding = null ) {
 		if ( null === $encoding ) {
@@ -160,14 +160,14 @@ if( ! function_exists( '_mb_strlen' ) ) :
 	}
 endif;
 
-// wp-includes/compat.php (WP 6.7.5)
+// wp-includes/compat.php (WP 6.7.7)
 if( ! function_exists( 'mb_strlen' ) ) :
 		function mb_strlen( $string, $encoding = null ) { // phpcs:ignore Universal.NamingConventions.NoReservedKeywordParameterNames.stringFound
 			return _mb_strlen( $string, $encoding );
 		}
 endif;
 
-// wp-includes/compat.php (WP 6.7.5)
+// wp-includes/compat.php (WP 6.7.7)
 if( ! function_exists( '_mb_substr' ) ) :
 	function _mb_substr( $str, $start, $length = null, $encoding = null ) {
 		if ( null === $str ) {
@@ -227,14 +227,14 @@ if( ! function_exists( '_mb_substr' ) ) :
 	}
 endif;
 
-// wp-includes/compat.php (WP 6.7.5)
+// wp-includes/compat.php (WP 6.7.7)
 if( ! function_exists( 'mb_substr' ) ) :
 		function mb_substr( $string, $start, $length = null, $encoding = null ) { // phpcs:ignore Universal.NamingConventions.NoReservedKeywordParameterNames.stringFound
 			return _mb_substr( $string, $start, $length, $encoding );
 		}
 endif;
 
-// wp-includes/compat.php (WP 6.7.5)
+// wp-includes/compat.php (WP 6.7.7)
 if( ! function_exists( '_' ) ) :
 		function _( $message ) {
 			return $message;

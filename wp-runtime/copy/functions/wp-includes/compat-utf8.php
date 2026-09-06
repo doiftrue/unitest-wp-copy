@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/compat-utf8.php (WP 7.0.2)
+// wp-includes/compat-utf8.php (WP 7.1)
 if( ! function_exists( '_wp_scan_utf8' ) ) :
 	function _wp_scan_utf8( string $bytes, int &$at, int &$invalid_length, ?int $max_bytes = null, ?int $max_code_points = null, ?bool &$has_noncharacters = null ): int {
 		$byte_length       = strlen( $bytes );
@@ -25,7 +25,7 @@ if( ! function_exists( '_wp_scan_utf8' ) ) :
 				"\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f" .
 				" !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\x7f",
 				$i,
-				$end - $i
+				min( $end - $i, $max_count - $count )
 			);
 	
 			if ( $count + $ascii_byte_count >= $max_count ) {
@@ -205,7 +205,7 @@ if( ! function_exists( '_wp_scan_utf8' ) ) :
 	}
 endif;
 
-// wp-includes/compat-utf8.php (WP 7.0.2)
+// wp-includes/compat-utf8.php (WP 7.1)
 if( ! function_exists( '_wp_is_valid_utf8_fallback' ) ) :
 	function _wp_is_valid_utf8_fallback( string $bytes ): bool {
 		$bytes_length = strlen( $bytes );
@@ -222,7 +222,7 @@ if( ! function_exists( '_wp_is_valid_utf8_fallback' ) ) :
 	}
 endif;
 
-// wp-includes/compat-utf8.php (WP 7.0.2)
+// wp-includes/compat-utf8.php (WP 7.1)
 if( ! function_exists( '_wp_scrub_utf8_fallback' ) ) :
 	function _wp_scrub_utf8_fallback( string $bytes ): string {
 		$bytes_length   = strlen( $bytes );
@@ -253,7 +253,7 @@ if( ! function_exists( '_wp_scrub_utf8_fallback' ) ) :
 	}
 endif;
 
-// wp-includes/compat-utf8.php (WP 7.0.2)
+// wp-includes/compat-utf8.php (WP 7.1)
 if( ! function_exists( '_wp_utf8_codepoint_count' ) ) :
 	function _wp_utf8_codepoint_count( string $text, ?int $byte_offset = 0, ?int $max_byte_length = PHP_INT_MAX ): int {
 		if ( $byte_offset < 0 ) {
@@ -276,7 +276,7 @@ if( ! function_exists( '_wp_utf8_codepoint_count' ) ) :
 	}
 endif;
 
-// wp-includes/compat-utf8.php (WP 7.0.2)
+// wp-includes/compat-utf8.php (WP 7.1)
 if( ! function_exists( '_wp_utf8_codepoint_span' ) ) :
 	function _wp_utf8_codepoint_span( string $text, int $byte_offset, int $max_code_points, ?int &$found_code_points = 0 ): int {
 		$was_at            = $byte_offset;
@@ -301,24 +301,16 @@ if( ! function_exists( '_wp_utf8_codepoint_span' ) ) :
 	}
 endif;
 
-// wp-includes/compat-utf8.php (WP 7.0.2)
+// wp-includes/compat-utf8.php (WP 7.1)
 if( ! function_exists( '_wp_has_noncharacters_fallback' ) ) :
 	function _wp_has_noncharacters_fallback( string $text ): bool {
-		$at                = 0;
-		$invalid_length    = 0;
-		$has_noncharacters = false;
-		$end               = strlen( $text );
+		_deprecated_function( __FUNCTION__, '7.1.0' );
 	
-		while ( $at < $end && ! $has_noncharacters ) {
-			_wp_scan_utf8( $text, $at, $invalid_length, null, null, $has_noncharacters );
-			$at += $invalid_length;
-		}
-	
-		return $has_noncharacters;
+		return wp_has_noncharacters( $text );
 	}
 endif;
 
-// wp-includes/compat-utf8.php (WP 7.0.2)
+// wp-includes/compat-utf8.php (WP 7.1)
 if( ! function_exists( '_wp_utf8_encode_fallback' ) ) :
 	function _wp_utf8_encode_fallback( $iso_8859_1_text ) {
 		$iso_8859_1_text = (string) $iso_8859_1_text;
@@ -363,7 +355,7 @@ if( ! function_exists( '_wp_utf8_encode_fallback' ) ) :
 	}
 endif;
 
-// wp-includes/compat-utf8.php (WP 7.0.2)
+// wp-includes/compat-utf8.php (WP 7.1)
 if( ! function_exists( '_wp_utf8_decode_fallback' ) ) :
 	function _wp_utf8_decode_fallback( $utf8_text ) {
 		$utf8_text       = (string) $utf8_text;
