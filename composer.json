@@ -8,7 +8,7 @@
   },
   "require-dev": {
     "composer/installers": "*",
-    "wordpress/wordpress": "7.0.*",
+    "wordpress/wordpress": "7.1.*",
     "phpunit/phpunit": "^9",
     "10up/wp_mock": "*"
   },
