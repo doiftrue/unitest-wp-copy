@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/pluggable.php (WP 6.9.5)
+// wp-includes/pluggable.php (WP 6.9.7)
 if( ! function_exists( 'wp_password_needs_rehash' ) ) :
 		function wp_password_needs_rehash( $hash, $user_id = '' ) {
 			global $wp_hasher;
@@ -41,14 +41,14 @@ if( ! function_exists( 'wp_password_needs_rehash' ) ) :
 		}
 endif;
 
-// wp-includes/pluggable.php (WP 6.9.5)
+// wp-includes/pluggable.php (WP 6.9.7)
 if( ! function_exists( '_wp_sanitize_utf8_in_redirect' ) ) :
 		function _wp_sanitize_utf8_in_redirect( $matches ) {
 			return urlencode( $matches[0] );
 		}
 endif;
 
-// wp-includes/pluggable.php (WP 6.9.5)
+// wp-includes/pluggable.php (WP 6.9.7)
 if( ! function_exists( 'wp_validate_redirect' ) ) :
 		function wp_validate_redirect( $location, $fallback_url = '' ) {
 			$location = wp_sanitize_redirect( trim( $location, " \t\n\r\0\x08\x0B" ) );
@@ -120,7 +120,7 @@ if( ! function_exists( 'wp_validate_redirect' ) ) :
 		}
 endif;
 
-// wp-includes/pluggable.php (WP 6.9.5)
+// wp-includes/pluggable.php (WP 6.9.7)
 if( ! function_exists( 'wp_hash_password' ) ) :
 		function wp_hash_password(
 			#[\SensitiveParameter]
@@ -191,7 +191,7 @@ if( ! function_exists( 'wp_hash_password' ) ) :
 		}
 endif;
 
-// wp-includes/pluggable.php (WP 6.9.5)
+// wp-includes/pluggable.php (WP 6.9.7)
 if( ! function_exists( 'wp_generate_password' ) ) :
 		function wp_generate_password( $length = 12, $special_chars = true, $extra_special_chars = false ) {
 			$chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -222,7 +222,7 @@ if( ! function_exists( 'wp_generate_password' ) ) :
 		}
 endif;
 
-// wp-includes/pluggable.php (WP 6.9.5)
+// wp-includes/pluggable.php (WP 6.9.7)
 if( ! function_exists( 'wp_parse_auth_cookie' ) ) :
 		function wp_parse_auth_cookie( $cookie = '', $scheme = '' ) {
 			if ( empty( $cookie ) ) {
@@ -263,7 +263,7 @@ if( ! function_exists( 'wp_parse_auth_cookie' ) ) :
 		}
 endif;
 
-// wp-includes/pluggable.php (WP 6.9.5)
+// wp-includes/pluggable.php (WP 6.9.7)
 if( ! function_exists( 'wp_sanitize_redirect' ) ) :
 		function wp_sanitize_redirect( $location ) {
 			// Encode spaces.
@@ -291,7 +291,7 @@ if( ! function_exists( 'wp_sanitize_redirect' ) ) :
 		}
 endif;
 
-// wp-includes/pluggable.php (WP 6.9.5)
+// wp-includes/pluggable.php (WP 6.9.7)
 if( ! function_exists( 'wp_hash' ) ) :
 		function wp_hash( $data, $scheme = 'auth', $algo = 'md5' ) {
 			$salt = wp_salt( $scheme );

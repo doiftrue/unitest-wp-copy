@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-script-modules.php (WP 6.9.5)
+// wp-includes/class-wp-script-modules.php (WP 6.9.7)
 if( ! class_exists( 'WP_Script_Modules' ) ) :
 	class WP_Script_Modules {
 		/**
@@ -863,11 +863,11 @@ if( ! class_exists( 'WP_Script_Modules' ) ) :
 				 *
 				 * Example:
 				 *
-				 *     const dataContainer = document.getElementById( 'wp-script-module-data-MyScriptModuleID' );
+				 *     const dataContainer = document.querySelector( 'script[id="wp-script-module-data-MyScriptModuleID"]' );
 				 *     let data = {};
-				 *     if ( dataContainer ) {
+				 *     if ( dataContainer instanceof HTMLScriptElement ) {
 				 *         try {
-				 *             data = JSON.parse( dataContainer.textContent );
+				 *             data = JSON.parse( dataContainer.text );
 				 *         } catch {}
 				 *     }
 				 *     // data.dataForClient === 'ok';

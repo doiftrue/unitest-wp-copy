@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/pomo/plural-forms.php (WP 6.9.5)
+// wp-includes/pomo/plural-forms.php (WP 6.9.7)
 if( ! class_exists( 'Plural_Forms' ) ) :
 		class Plural_Forms {
 			/**

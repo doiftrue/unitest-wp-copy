@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-hook.php (WP 6.9.5)
+// wp-includes/class-wp-hook.php (WP 6.9.7)
 if( ! class_exists( 'WP_Hook' ) ) :
 	class WP_Hook implements Iterator, ArrayAccess {
 	

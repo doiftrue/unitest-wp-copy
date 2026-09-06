@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/abilities-api/class-wp-ability.php (WP 6.9.5)
+// wp-includes/abilities-api/class-wp-ability.php (WP 6.9.7)
 if( ! class_exists( 'WP_Ability' ) ) :
 	class WP_Ability {
 	

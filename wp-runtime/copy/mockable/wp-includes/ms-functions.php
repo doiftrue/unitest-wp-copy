@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/ms-functions.php (WP 6.9.5)
+// wp-includes/ms-functions.php (WP 6.9.7)
 if( ! function_exists( 'get_current_site' ) ) :
 	function get_current_site() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
