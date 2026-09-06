@@ -109,6 +109,8 @@ if ( ! CUSTOM_TAGS ) {
 		),
 		'br'         => array(),
 		'button'     => array(
+			'command'             => true,
+			'commandfor'          => true,
 			'disabled'            => true,
 			'name'                => true,
 			'type'                => true,
@@ -156,9 +158,10 @@ if ( ! CUSTOM_TAGS ) {
 			'popover' => true,
 		),
 		'dialog'     => array(
-			'closedby' => true,
-			'open'     => true,
-			'popover'  => true,
+			'closedby'  => true,
+			'open'      => true,
+			'popover'   => true,
+			'autofocus' => true,
 		),
 		'dl'         => array(),
 		'dt'         => array(),

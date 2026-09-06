@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/pomo/streams.php (WP 7.0.2)
+// wp-includes/pomo/streams.php (WP 7.1)
 if( ! class_exists( 'POMO_StringReader' ) ) :
 		class POMO_StringReader extends POMO_Reader {
 	

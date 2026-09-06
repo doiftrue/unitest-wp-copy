@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-block-pattern-categories-registry.php (WP 7.0.2)
+// wp-includes/class-wp-block-pattern-categories-registry.php (WP 7.1)
 if( ! class_exists( 'WP_Block_Pattern_Categories_Registry' ) ) :
 	class WP_Block_Pattern_Categories_Registry {
 		/**

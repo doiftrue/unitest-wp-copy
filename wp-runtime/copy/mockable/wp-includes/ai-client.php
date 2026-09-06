@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/ai-client.php (WP 7.0.2)
+// wp-includes/ai-client.php (WP 7.1)
 if( ! function_exists( 'wp_supports_ai' ) ) :
 	function wp_supports_ai(): bool {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {

@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/html-api/class-wp-html-active-formatting-elements.php (WP 7.0.2)
+// wp-includes/html-api/class-wp-html-active-formatting-elements.php (WP 7.1)
 if( ! class_exists( 'WP_HTML_Active_Formatting_Elements' ) ) :
 	class WP_HTML_Active_Formatting_Elements {
 		/**
@@ -37,7 +37,7 @@ if( ! class_exists( 'WP_HTML_Active_Formatting_Elements' ) ) :
 		 *
 		 * @since 6.4.0
 		 *
-		 * @return int How many node are in the stack of active formatting elements.
+		 * @return int How many nodes are in the stack of active formatting elements.
 		 */
 		public function count() {
 			return count( $this->stack );

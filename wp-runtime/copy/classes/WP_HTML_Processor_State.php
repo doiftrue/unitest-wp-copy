@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/html-api/class-wp-html-processor-state.php (WP 7.0.2)
+// wp-includes/html-api/class-wp-html-processor-state.php (WP 7.1)
 if( ! class_exists( 'WP_HTML_Processor_State' ) ) :
 	class WP_HTML_Processor_State {
 		/*
@@ -193,7 +193,9 @@ if( ! class_exists( 'WP_HTML_Processor_State' ) ) :
 		 *
 		 * @since 6.7.0
 		 *
-		 * @see https://html.spec.whatwg.org/#parsing-main-inselect
+		 * @deprecated 7.1.0 The "in select" insertion mode was removed from the standard.
+		 * @ignore
+		 *
 		 * @see WP_HTML_Processor_State::$insertion_mode
 		 *
 		 * @var string
@@ -205,7 +207,9 @@ if( ! class_exists( 'WP_HTML_Processor_State' ) ) :
 		 *
 		 * @since 6.7.0
 		 *
-		 * @see https://html.spec.whatwg.org/#parsing-main-inselectintable
+		 * @deprecated 7.1.0 The "in select in table" insertion mode was removed from the standard.
+		 * @ignore
+		 *
 		 * @see WP_HTML_Processor_State::$insertion_mode
 		 *
 		 * @var string

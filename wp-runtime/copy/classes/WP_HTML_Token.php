@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/html-api/class-wp-html-token.php (WP 7.0.2)
+// wp-includes/html-api/class-wp-html-token.php (WP 7.1)
 if( ! class_exists( 'WP_HTML_Token' ) ) :
 	class WP_HTML_Token {
 		/**
@@ -14,7 +14,7 @@ if( ! class_exists( 'WP_HTML_Token' ) ) :
 		 *
 		 * @since 6.4.0
 		 *
-		 * @var string
+		 * @var string|null
 		 */
 		public $bookmark_name = null;
 	

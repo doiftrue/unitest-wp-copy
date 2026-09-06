@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-block-type-registry.php (WP 7.0.2)
+// wp-includes/class-wp-block-type-registry.php (WP 7.1)
 if( ! class_exists( 'WP_Block_Type_Registry' ) ) :
 	class WP_Block_Type_Registry {
 		/**
@@ -46,7 +46,8 @@ if( ! class_exists( 'WP_Block_Type_Registry' ) ) :
 			if ( ! is_string( $name ) ) {
 				_doing_it_wrong(
 					__METHOD__,
-					__( 'Block type names must be strings.' ),
+					/* translators: %s: The received block type name type. */
+					sprintf( __( 'Block type names must be strings, received %s.' ), gettype( $name ) ),
 					'5.0.0'
 				);
 				return false;
@@ -55,7 +56,8 @@ if( ! class_exists( 'WP_Block_Type_Registry' ) ) :
 			if ( preg_match( '/[A-Z]+/', $name ) ) {
 				_doing_it_wrong(
 					__METHOD__,
-					__( 'Block type names must not contain uppercase characters.' ),
+					/* translators: %s: Block name. */
+					sprintf( __( 'Block type names must not contain uppercase characters. "%s" was given.' ), esc_html( $name ) ),
 					'5.0.0'
 				);
 				return false;
@@ -65,7 +67,8 @@ if( ! class_exists( 'WP_Block_Type_Registry' ) ) :
 			if ( ! preg_match( $name_matcher, $name ) ) {
 				_doing_it_wrong(
 					__METHOD__,
-					__( 'Block type names must contain a namespace prefix. Example: my-plugin/my-custom-block-type' ),
+					/* translators: %s: Block name. */
+					sprintf( __( 'Block type names must contain a namespace prefix. Example: my-plugin/my-custom-block-type. "%s" was given.' ), esc_html( $name ) ),
 					'5.0.0'
 				);
 				return false;
