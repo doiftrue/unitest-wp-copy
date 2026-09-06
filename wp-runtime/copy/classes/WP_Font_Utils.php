@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/fonts/class-wp-font-utils.php (WP 7.0.2)
+// wp-includes/fonts/class-wp-font-utils.php (WP 7.0.4)
 if( ! class_exists( 'WP_Font_Utils' ) ) :
 	class WP_Font_Utils {
 		/**

@@ -1,10 +1,39 @@
-The following functions and classes are available in this (unit test) environment. Symbols are copied from WordPress 7.0.2.
+The following functions and classes are available in this (unit test) environment. Symbols are copied from WordPress 7.0.4.
 
 Runtime-adapted classes (NOT mockable via WP_Mock).
 Partially copied WordPress classes provided by the runtime. Use them directly or extend them to build your own mock.
 Method marks: `[wp]` — unchanged copied WordPress method, `[adapted]` — runtime-specific implementation.
 ```text
-\Unitest_WP_Copy\WPDB_Runtime
+\Unitest_WP_Copy\WP_REST_Server__Runtime
+    In-memory WordPress REST server adapter for route dispatch in unit tests.
+    Methods:
+        __construct()                [wp]
+        check_authentication()       [wp]
+        dispatch()                   [wp]
+        envelope_response()          [wp]
+        get_compact_response_links() [wp]
+        get_data_for_route()         [wp]
+        get_data_for_routes()        [wp]
+        get_headers()                [wp]
+        get_index()                  [adapted]
+        get_namespace_index()        [wp]
+        get_namespaces()             [wp]
+        get_raw_data()               [adapted]
+        get_response_links()         [wp]
+        get_route_options()          [wp]
+        get_routes()                 [wp]
+        is_dispatching()             [wp]
+        register_route()             [wp]
+        remove_header()              [adapted]
+        response_to_data()           [wp]
+        send_header()                [adapted]
+        send_headers()               [wp]
+        serve_batch_request_v1()     [wp]
+        serve_request()              [adapted]
+    Public properties:
+        $sent_headers, $sent_status
+
+\Unitest_WP_Copy\wpdb__Runtime
     Non-querying wpdb adapter used by SQL-building WordPress utilities.
     Methods:
         _escape()                    [wp]
@@ -25,6 +54,7 @@ _e()
 _n()
 _nx()
 _x()
+current_user_can()
 esc_attr__()
 esc_attr_e()
 esc_attr_x()
@@ -37,6 +67,7 @@ get_stylesheet_directory()
 get_stylesheet_directory_uri()
 get_template_directory()
 get_template_directory_uri()
+is_user_logged_in()
 restore_current_blog()
 switch_to_blog()
 wp_get_wp_version()
@@ -202,6 +233,8 @@ WP_Locale{}
 WP_MatchesMapRegex{}
 WP_Meta_Query{}
 WP_Object_Cache{}
+WP_REST_Controller{}
+WP_REST_Request{}
 WP_REST_Response{}
 WP_Screen{}
 WP_Script_Modules{}
@@ -525,6 +558,7 @@ register_nav_menu()
 register_nav_menus()
 register_post_status()
 register_rest_field()
+register_rest_route()
 register_setting()
 register_sidebar()
 register_sidebars()
@@ -547,8 +581,14 @@ remove_shortcode()
 remove_theme_support()
 reset_mbstring_encoding()
 rest_are_values_equal()
+rest_authorization_required_code()
+rest_convert_error_to_response()
 rest_default_additional_properties_to_false()
+rest_do_request()
+rest_ensure_request()
+rest_ensure_response()
 rest_filter_response_by_context()
+rest_filter_response_fields()
 rest_find_any_matching_schema()
 rest_find_matching_pattern_property_schema()
 rest_find_one_matching_schema()
@@ -558,8 +598,11 @@ rest_get_avatar_sizes()
 rest_get_best_type_for_value()
 rest_get_combining_operation_error()
 rest_get_date_with_gmt()
+rest_get_endpoint_args_for_schema()
+rest_get_server()
 rest_get_url_prefix()
 rest_handle_multi_type_schema()
+rest_handle_options_request()
 rest_is_array()
 rest_is_boolean()
 rest_is_field_included()
@@ -575,6 +618,7 @@ rest_sanitize_boolean()
 rest_sanitize_object()
 rest_sanitize_request_arg()
 rest_sanitize_value_from_schema()
+rest_send_allow_header()
 rest_stabilize_value()
 rest_url()
 rest_validate_array_contains_unique_items()
