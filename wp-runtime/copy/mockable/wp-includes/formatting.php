@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/formatting.php (WP 7.0.2)
+// wp-includes/formatting.php (WP 7.1)
 if( ! function_exists( 'balanceTags' ) ) :
 	function balanceTags( $text, $force = false ) {  // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -17,32 +17,63 @@ if( ! function_exists( 'balanceTags' ) ) :
 	}
 endif;
 
-// wp-includes/formatting.php (WP 7.0.2)
+// wp-includes/formatting.php (WP 7.1)
 if( ! function_exists( 'antispambot' ) ) :
 	function antispambot( $email_address, $hex_encoding = 0 ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
 			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
 		}
 	
-		$email_no_spam_address = '';
+		$obfuscated     = '';
+		$at             = 0;
+		$end            = strlen( $email_address );
+		$invalid_length = 0;
 	
-		for ( $i = 0, $len = strlen( $email_address ); $i < $len; $i++ ) {
-			$j = rand( 0, 1 + $hex_encoding );
-	
-			if ( 0 === $j ) {
-				$email_no_spam_address .= '&#' . ord( $email_address[ $i ] ) . ';';
-			} elseif ( 1 === $j ) {
-				$email_no_spam_address .= $email_address[ $i ];
-			} elseif ( 2 === $j ) {
-				$email_no_spam_address .= '%' . zeroise( dechex( ord( $email_address[ $i ] ) ), 2 );
+		while ( $at < $end ) {
+			$was_at = $at;
+			if (
+				0 === _wp_scan_utf8( $email_address, $at, $invalid_length, null, 1 ) &&
+				0 === $invalid_length
+			) {
+				break;
 			}
+	
+			$character_length = $at - $was_at;
+	
+			if ( $character_length > 0 ) {
+				$character = substr( $email_address, $was_at, $character_length );
+	
+				switch ( rand( 0, 1 + $hex_encoding ) ) {
+					case 0:
+						$code_point  = mb_ord( $character );
+						$obfuscated .= "&#{$code_point};";
+						break;
+	
+					case 1:
+						$obfuscated .= $character;
+						break;
+	
+					case 2:
+						for ( $i = 0; $i < $character_length; $i++ ) {
+							$hex_value   = bin2hex( $character[ $i ] );
+							$obfuscated .= "%{$hex_value}";
+						}
+						break;
+				}
+			}
+	
+			if ( 0 !== $invalid_length ) {
+				$obfuscated .= substr( $email_address, $at, $invalid_length );
+			}
+	
+			$at += $invalid_length;
 		}
 	
-		return str_replace( '@', '&#64;', $email_no_spam_address );
+		return str_replace( '@', '&#64;', $obfuscated );
 	}
 endif;
 
-// wp-includes/formatting.php (WP 7.0.2)
+// wp-includes/formatting.php (WP 7.1)
 if( ! function_exists( 'convert_smilies' ) ) :
 	function convert_smilies( $text ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {

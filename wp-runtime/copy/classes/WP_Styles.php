@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-styles.php (WP 7.0.2)
+// wp-includes/class-wp-styles.php (WP 7.1)
 if( ! class_exists( 'WP_Styles' ) ) :
 	class WP_Styles extends WP_Dependencies {
 		/**
@@ -448,12 +448,7 @@ if( ! class_exists( 'WP_Styles' ) ) :
 				return true;
 			}
 	
-			foreach ( (array) $this->default_dirs as $test ) {
-				if ( str_starts_with( $src, $test ) ) {
-					return true;
-				}
-			}
-			return false;
+			return array_any( (array) $this->default_dirs, fn( $test ) => str_starts_with( $src, $test ) );
 		}
 	
 		/**

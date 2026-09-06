@@ -2,14 +2,14 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/utf8.php (WP 7.0.2)
+// wp-includes/utf8.php (WP 7.1)
 if( ! function_exists( 'wp_is_valid_utf8' ) ) :
 		function wp_is_valid_utf8( string $bytes ): bool {
 			return mb_check_encoding( $bytes, 'UTF-8' );
 		}
 endif;
 
-// wp-includes/utf8.php (WP 7.0.2)
+// wp-includes/utf8.php (WP 7.1)
 if( ! function_exists( 'wp_scrub_utf8' ) ) :
 		function wp_scrub_utf8( $text ) {
 			/*
@@ -27,13 +27,23 @@ if( ! function_exists( 'wp_scrub_utf8' ) ) :
 		}
 endif;
 
-// wp-includes/utf8.php (WP 7.0.2)
+// wp-includes/utf8.php (WP 7.1)
 if( ! function_exists( 'wp_has_noncharacters' ) ) :
-		function wp_has_noncharacters( string $text ): bool {
-			return 1 === preg_match(
-				'/[\x{FDD0}-\x{FDEF}\x{FFFE}\x{FFFF}\x{1FFFE}\x{1FFFF}\x{2FFFE}\x{2FFFF}\x{3FFFE}\x{3FFFF}\x{4FFFE}\x{4FFFF}\x{5FFFE}\x{5FFFF}\x{6FFFE}\x{6FFFF}\x{7FFFE}\x{7FFFF}\x{8FFFE}\x{8FFFF}\x{9FFFE}\x{9FFFF}\x{AFFFE}\x{AFFFF}\x{BFFFE}\x{BFFFF}\x{CFFFE}\x{CFFFF}\x{DFFFE}\x{DFFFF}\x{EFFFE}\x{EFFFF}\x{FFFFE}\x{FFFFF}\x{10FFFE}\x{10FFFF}]/u',
-				$text
-			);
-		}
+	function wp_has_noncharacters( string $text ): bool {
+		/*
+		 * Match the UTF-8 byte sequences directly so malformed UTF-8 elsewhere
+		 * in the subject does not cause PCRE's Unicode mode to reject the string.
+		 */
+		return 1 === preg_match(
+			'~
+				# U+FDD0-U+FDEF, U+FFFE-U+FFFF
+				\xEF(?:\xB7[\x90-\xAF]|\xBF[\xBE\xBF])
+				|
+				# U+nFFFE/U+nFFFF
+				(?:\xF0[\x9F\xAF\xBF]|[\xF1-\xF3][\x8F\x9F\xAF\xBF]|\xF4\x8F)\xBF[\xBE\xBF]
+			~x',
+			$text
+		);
+	}
 endif;
 

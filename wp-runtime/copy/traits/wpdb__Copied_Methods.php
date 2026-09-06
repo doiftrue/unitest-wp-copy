@@ -4,7 +4,7 @@
 
 namespace Unitest_WP_Copy;
 
-// wp-includes/class-wpdb.php (WP 7.0.2)
+// wp-includes/class-wpdb.php (WP 7.1)
 trait wpdb__Copied_Methods {
 
 	public function _escape( $data ) {
@@ -29,7 +29,7 @@ trait wpdb__Copied_Methods {
 
 	public function prepare( $query, ...$args ) {
 		if ( is_null( $query ) ) {
-			return;
+			return null;
 		}
 
 		/*
@@ -238,7 +238,7 @@ trait wpdb__Copied_Methods {
 				'6.2.0'
 			);
 
-			return;
+			return null;
 		}
 
 		$args_count = count( $args );
@@ -256,7 +256,7 @@ trait wpdb__Copied_Methods {
 					'4.9.0'
 				);
 
-				return;
+				return null;
 			} else {
 				/*
 				 * If we don't have the right number of placeholders,

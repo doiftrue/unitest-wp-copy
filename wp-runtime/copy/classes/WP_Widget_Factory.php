@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-widget-factory.php (WP 7.0.2)
+// wp-includes/class-wp-widget-factory.php (WP 7.1)
 if( ! class_exists( 'WP_Widget_Factory' ) ) :
 	class WP_Widget_Factory {
 	
@@ -47,7 +47,7 @@ if( ! class_exists( 'WP_Widget_Factory' ) ) :
 		 */
 		public function register( $widget ) {
 			if ( $widget instanceof WP_Widget ) {
-				$this->widgets[ spl_object_hash( $widget ) ] = $widget;
+				$this->widgets[ spl_object_id( $widget ) ] = $widget;
 			} else {
 				$this->widgets[ $widget ] = new $widget();
 			}
@@ -64,7 +64,7 @@ if( ! class_exists( 'WP_Widget_Factory' ) ) :
 		 */
 		public function unregister( $widget ) {
 			if ( $widget instanceof WP_Widget ) {
-				unset( $this->widgets[ spl_object_hash( $widget ) ] );
+				unset( $this->widgets[ spl_object_id( $widget ) ] );
 			} else {
 				unset( $this->widgets[ $widget ] );
 			}

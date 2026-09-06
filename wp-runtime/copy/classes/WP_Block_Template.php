@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-block-template.php (WP 7.0.2)
+// wp-includes/class-wp-block-template.php (WP 7.1)
 if( ! class_exists( 'WP_Block_Template' ) ) :
 	class WP_Block_Template {
 	
@@ -154,6 +154,14 @@ if( ! class_exists( 'WP_Block_Template' ) ) :
 		 * @var string|null
 		 */
 		public $modified;
+	
+		/**
+		 * Date.
+		 *
+		 * @since 7.1.0
+		 * @var string|null
+		 */
+		public $date;
 	}
 endif;
 

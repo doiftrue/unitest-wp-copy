@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/pomo/plural-forms.php (WP 7.0.2)
+// wp-includes/pomo/plural-forms.php (WP 7.1)
 if( ! class_exists( 'Plural_Forms' ) ) :
 		class Plural_Forms {
 			/**
@@ -125,7 +125,7 @@ if( ! class_exists( 'Plural_Forms' ) ) :
 						case ')':
 							$found = false;
 							while ( ! empty( $stack ) ) {
-								$o2 = $stack[ count( $stack ) - 1 ];
+								$o2 = array_last( $stack );
 								if ( '(' !== $o2 ) {
 									$output[] = array( 'op', array_pop( $stack ) );
 									continue;
@@ -160,7 +160,7 @@ if( ! class_exists( 'Plural_Forms' ) ) :
 							}
 	
 							while ( ! empty( $stack ) ) {
-								$o2 = $stack[ count( $stack ) - 1 ];
+								$o2 = array_last( $stack );
 	
 								// Ternary is right-associative in C.
 								if ( '?:' === $operator || '?' === $operator ) {

@@ -2,12 +2,13 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/block-bindings.php (WP 7.0.2)
+// wp-includes/block-bindings.php (WP 7.1)
 if( ! function_exists( 'get_block_bindings_supported_attributes' ) ) :
 	function get_block_bindings_supported_attributes( $block_type ) {
 		$block_bindings_supported_attributes = array(
 			'core/paragraph'          => array( 'content' ),
 			'core/heading'            => array( 'content' ),
+			'core/list-item'          => array( 'content' ),
 			'core/image'              => array( 'id', 'url', 'title', 'alt', 'caption' ),
 			'core/button'             => array( 'url', 'text', 'linkTarget', 'rel' ),
 			'core/post-date'          => array( 'datetime' ),
@@ -53,14 +54,14 @@ if( ! function_exists( 'get_block_bindings_supported_attributes' ) ) :
 	}
 endif;
 
-// wp-includes/block-bindings.php (WP 7.0.2)
+// wp-includes/block-bindings.php (WP 7.1)
 if( ! function_exists( 'register_block_bindings_source' ) ) :
 	function register_block_bindings_source( string $source_name, array $source_properties ) {
 		return WP_Block_Bindings_Registry::get_instance()->register( $source_name, $source_properties );
 	}
 endif;
 
-// wp-includes/block-bindings.php (WP 7.0.2)
+// wp-includes/block-bindings.php (WP 7.1)
 if( ! function_exists( 'unregister_block_bindings_source' ) ) :
 	function unregister_block_bindings_source( string $source_name ) {
 		return WP_Block_Bindings_Registry::get_instance()->unregister( $source_name );

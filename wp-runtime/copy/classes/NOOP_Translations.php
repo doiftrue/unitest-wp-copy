@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/pomo/translations.php (WP 7.0.2)
+// wp-includes/pomo/translations.php (WP 7.1)
 if( ! class_exists( 'NOOP_Translations' ) ) :
 		class NOOP_Translations {
 			/**

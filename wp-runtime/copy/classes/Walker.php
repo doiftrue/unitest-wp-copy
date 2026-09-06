@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-walker.php (WP 7.0.2)
+// wp-includes/class-wp-walker.php (WP 7.1)
 if( ! class_exists( 'Walker' ) ) :
 	class Walker {
 		/**
@@ -226,8 +226,7 @@ if( ! class_exists( 'Walker' ) ) :
 			 */
 			if ( empty( $top_level_elements ) ) {
 	
-				$first = array_slice( $elements, 0, 1 );
-				$root  = $first[0];
+				$root = array_first( $elements );
 	
 				$top_level_elements = array();
 				$children_elements  = array();

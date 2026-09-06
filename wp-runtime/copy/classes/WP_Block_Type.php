@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-block-type.php (WP 7.0.2)
+// wp-includes/class-wp-block-type.php (WP 7.1)
 if( ! class_exists( 'WP_Block_Type' ) ) :
 	class WP_Block_Type {
 	
@@ -347,8 +347,8 @@ if( ! class_exists( 'WP_Block_Type' ) ) :
 		 *
 		 * @param string $name Deprecated property name.
 		 *
-		 * @return string|string[]|null|void The value read from the new property if the first item in the array provided,
-		 *                                   null when value not found, or void when unknown property name provided.
+		 * @return string|string[]|null The value read from the new property if the first item in the array provided,
+		 *                              null when value not found or when unknown property name provided.
 		 */
 		public function __get( $name ) {
 			if ( 'variations' === $name ) {
@@ -360,7 +360,7 @@ if( ! class_exists( 'WP_Block_Type' ) ) :
 			}
 	
 			if ( ! in_array( $name, $this->deprecated_properties, true ) ) {
-				return;
+				return null;
 			}
 	
 			$new_name = $name . '_handles';

@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/kses.php (WP 7.0.2)
+// wp-includes/kses.php (WP 7.1)
 if( ! function_exists( 'wp_filter_global_styles_post' ) ) :
 	function wp_filter_global_styles_post( $data ) {
 		$decoded_data        = json_decode( wp_unslash( $data ), true );
@@ -30,7 +30,7 @@ if( ! function_exists( 'wp_filter_global_styles_post' ) ) :
 	}
 endif;
 
-// wp-includes/kses.php (WP 7.0.2)
+// wp-includes/kses.php (WP 7.1)
 if( ! function_exists( 'wp_kses_xml_named_entities' ) ) :
 	function wp_kses_xml_named_entities( $matches ) {
 		global $allowedentitynames, $allowedxmlentitynames;
@@ -51,7 +51,7 @@ if( ! function_exists( 'wp_kses_xml_named_entities' ) ) :
 	}
 endif;
 
-// wp-includes/kses.php (WP 7.0.2)
+// wp-includes/kses.php (WP 7.1)
 if( ! function_exists( 'wp_kses_uri_attributes' ) ) :
 	function wp_kses_uri_attributes() {
 		$uri_attributes = array(
@@ -90,14 +90,14 @@ if( ! function_exists( 'wp_kses_uri_attributes' ) ) :
 	}
 endif;
 
-// wp-includes/kses.php (WP 7.0.2)
+// wp-includes/kses.php (WP 7.1)
 if( ! function_exists( 'wp_kses_post_deep' ) ) :
 	function wp_kses_post_deep( $data ) {
 		return map_deep( $data, 'wp_kses_post' );
 	}
 endif;
 
-// wp-includes/kses.php (WP 7.0.2)
+// wp-includes/kses.php (WP 7.1)
 if( ! function_exists( 'wp_kses_one_attr' ) ) :
 	function wp_kses_one_attr( $attr, $element ) {
 		$uris              = wp_kses_uri_attributes();
@@ -164,7 +164,7 @@ if( ! function_exists( 'wp_kses_one_attr' ) ) :
 	}
 endif;
 
-// wp-includes/kses.php (WP 7.0.2)
+// wp-includes/kses.php (WP 7.1)
 if( ! function_exists( 'wp_kses_attr_check' ) ) :
 	function wp_kses_attr_check( &$name, &$value, &$whole, $vless, $element, $allowed_html ) {
 		$name_low    = strtolower( $name );
@@ -239,7 +239,7 @@ if( ! function_exists( 'wp_kses_attr_check' ) ) :
 	}
 endif;
 
-// wp-includes/kses.php (WP 7.0.2)
+// wp-includes/kses.php (WP 7.1)
 if( ! function_exists( 'wp_kses_attr_parse' ) ) :
 	function wp_kses_attr_parse( $element ) {
 		$valid = preg_match( '%^(<\s*)(/\s*)?([a-zA-Z0-9]+\s*)([^>]*)(>?)$%', $element, $matches );
@@ -280,7 +280,7 @@ if( ! function_exists( 'wp_kses_attr_parse' ) ) :
 	}
 endif;
 
-// wp-includes/kses.php (WP 7.0.2)
+// wp-includes/kses.php (WP 7.1)
 if( ! function_exists( 'wp_kses_hair_parse' ) ) :
 	function wp_kses_hair_parse( $attr ) {
 		if ( '' === $attr ) {
@@ -328,7 +328,7 @@ if( ! function_exists( 'wp_kses_hair_parse' ) ) :
 	}
 endif;
 
-// wp-includes/kses.php (WP 7.0.2)
+// wp-includes/kses.php (WP 7.1)
 if( ! function_exists( 'wp_kses_allowed_html' ) ) :
 	function wp_kses_allowed_html( $context = '' ) {
 		global $allowedposttags, $allowedtags, $allowedentitynames;
@@ -403,7 +403,7 @@ if( ! function_exists( 'wp_kses_allowed_html' ) ) :
 	}
 endif;
 
-// wp-includes/kses.php (WP 7.0.2)
+// wp-includes/kses.php (WP 7.1)
 if( ! function_exists( '_wp_add_global_attributes' ) ) :
 	function _wp_add_global_attributes( $value ) {
 		$global_attributes = array(
@@ -423,6 +423,7 @@ if( ! function_exists( '_wp_add_global_attributes' ) ) :
 			'id'               => true,
 			'lang'             => true,
 			'style'            => true,
+			'tabindex'         => true,
 			'title'            => true,
 			'role'             => true,
 			'xml:lang'         => true,
@@ -440,7 +441,7 @@ if( ! function_exists( '_wp_add_global_attributes' ) ) :
 	}
 endif;
 
-// wp-includes/kses.php (WP 7.0.2)
+// wp-includes/kses.php (WP 7.1)
 if( ! function_exists( '_wp_kses_split_callback' ) ) :
 	function _wp_kses_split_callback( $matches ) {
 		global $pass_allowed_html, $pass_allowed_protocols;
@@ -449,7 +450,7 @@ if( ! function_exists( '_wp_kses_split_callback' ) ) :
 	}
 endif;
 
-// wp-includes/kses.php (WP 7.0.2)
+// wp-includes/kses.php (WP 7.1)
 if( ! function_exists( 'wp_kses_named_entities' ) ) :
 	function wp_kses_named_entities( $matches ) {
 		global $allowedentitynames;
@@ -463,35 +464,35 @@ if( ! function_exists( 'wp_kses_named_entities' ) ) :
 	}
 endif;
 
-// wp-includes/kses.php (WP 7.0.2)
+// wp-includes/kses.php (WP 7.1)
 if( ! function_exists( '_wp_kses_decode_entities_chr' ) ) :
 	function _wp_kses_decode_entities_chr( $matches ) {
 		return chr( $matches[1] );
 	}
 endif;
 
-// wp-includes/kses.php (WP 7.0.2)
+// wp-includes/kses.php (WP 7.1)
 if( ! function_exists( '_wp_kses_decode_entities_chr_hexdec' ) ) :
 	function _wp_kses_decode_entities_chr_hexdec( $matches ) {
 		return chr( hexdec( $matches[1] ) );
 	}
 endif;
 
-// wp-includes/kses.php (WP 7.0.2)
+// wp-includes/kses.php (WP 7.1)
 if( ! function_exists( 'wp_kses_data' ) ) :
 	function wp_kses_data( $data ) {
 		return wp_kses( $data, current_filter() );
 	}
 endif;
 
-// wp-includes/kses.php (WP 7.0.2)
+// wp-includes/kses.php (WP 7.1)
 if( ! function_exists( 'wp_kses_post' ) ) :
 	function wp_kses_post( $data ) {
 		return wp_kses( $data, 'post' );
 	}
 endif;
 
-// wp-includes/kses.php (WP 7.0.2)
+// wp-includes/kses.php (WP 7.1)
 if( ! function_exists( 'safecss_filter_attr' ) ) :
 	function safecss_filter_attr( $css, $deprecated = '' ) {
 		if ( ! empty( $deprecated ) ) {
@@ -510,6 +511,7 @@ if( ! function_exists( 'safecss_filter_attr' ) ) :
 		 * Filters the list of allowed CSS attributes.
 		 *
 		 * @since 2.8.1
+		 * @since 7.1.0 Added support for SVG presentation attributes.
 		 *
 		 * @param string[] $attr Array of allowed CSS attributes.
 		 */
@@ -668,6 +670,71 @@ if( ! function_exists( 'safecss_filter_attr' ) ) :
 				'aspect-ratio',
 				'container-type',
 	
+				'fill',
+				'fill-opacity',
+				'fill-rule',
+	
+				'stroke',
+				'stroke-dasharray',
+				'stroke-dashoffset',
+				'stroke-linecap',
+				'stroke-linejoin',
+				'stroke-miterlimit',
+				'stroke-opacity',
+				'stroke-width',
+	
+				'color-interpolation',
+				'color-interpolation-filters',
+				'paint-order',
+				'stop-color',
+				'stop-opacity',
+				'flood-color',
+				'flood-opacity',
+				'lighting-color',
+	
+				'marker',
+				'marker-end',
+				'marker-mid',
+				'marker-start',
+	
+				'clip-path',
+				'clip-rule',
+				'mask',
+				'mask-type',
+	
+				'cx',
+				'cy',
+				'r',
+				'rx',
+				'ry',
+				'x',
+				'y',
+				'd',
+	
+				'alignment-baseline',
+				'baseline-shift',
+				'dominant-baseline',
+				'glyph-orientation-horizontal',
+				'glyph-orientation-vertical',
+				'text-anchor',
+				'unicode-bidi',
+				'word-spacing',
+	
+				'font-size-adjust',
+				'font-stretch',
+	
+				'color-rendering',
+				'image-rendering',
+				'shape-rendering',
+				'text-rendering',
+				'vector-effect',
+	
+				'transform',
+				'transform-origin',
+	
+				'pointer-events',
+				'visibility',
+	
 				// Custom CSS properties.
 				'--*',
 			)
@@ -690,6 +757,16 @@ if( ! function_exists( 'safecss_filter_attr' ) ) :
 	
 			'list-style',
 			'list-style-image',
+	
+			// SVG presentation properties that accept url() references.
+			'clip-path',
+			'fill',
+			'marker',
+			'marker-end',
+			'marker-mid',
+			'marker-start',
+			'mask',
+			'stroke',
 		);
 	
 		/*
@@ -769,10 +846,16 @@ if( ! function_exists( 'safecss_filter_attr' ) ) :
 			}
 	
 			if ( $found && $gradient_attr ) {
-				$css_value = trim( $parts[1] );
-				if ( preg_match( '/^(repeating-)?(linear|radial|conic)-gradient\(([^()]|rgb[a]?\([^()]*\))*\)$/', $css_value ) ) {
-					// Remove the whole `gradient` bit that was matched above from the CSS.
-					$css_test_string = str_replace( $css_value, '', $css_test_string );
+				/*
+				 * Match every `*-gradient()` in the value, allowing one level of nested functions
+				 * (e.g. rgb(), hsl(), var()). Matching each occurrence, rather than requiring the
+				 * whole value to be a single gradient, lets a gradient combine with a url() image.
+				 */
+				preg_match_all( '/(?:repeating-)?(?:linear|radial|conic)-gradient\((?:[^()]|\([^()]*\))*\)/', $css_test_string, $gradient_matches );
+	
+				foreach ( $gradient_matches[0] as $gradient_match ) {
+					// Remove each `gradient()` bit that was matched above from the CSS.
+					$css_test_string = str_replace( $gradient_match, '', $css_test_string );
 				}
 			}
 	
@@ -782,16 +865,32 @@ if( ! function_exists( 'safecss_filter_attr' ) ) :
 				 * Nested functions and parentheses are also removed, so long as the parentheses are balanced.
 				 */
 				$css_test_string = preg_replace(
-					'/\b(?:var|calc|min|max|minmax|clamp|repeat)(\((?:[^()]|(?1))*\))/',
+					'/\b(?:'
+						// General purpose value functions.
+						. 'var|calc|min|max|minmax|clamp|repeat'
+						// Transform functions.
+						. '|matrix|matrix3d|perspective'
+						. '|rotate|rotate3d|rotateX|rotateY|rotateZ'
+						. '|scale|scale3d|scaleX|scaleY|scaleZ'
+						. '|skew|skewX|skewY'
+						. '|translate|translate3d|translateX|translateY|translateZ'
+						// Basic shape functions, as used by `clip-path`.
+						. '|circle|ellipse|inset|path|polygon|rect|shape|xywh'
+					. ')(\((?:[^()]|(?1))*\))/',
 					'',
 					$css_test_string
 				);
+	
+				// Bail if the recursive function stripping hit a PCRE error (e.g. stack/backtrack limit).
+				if ( null === $css_test_string ) {
+					continue;
+				}
 	
 				/*
 				 * Disallow CSS containing \ ( & } = or comments, except for within url(), var(), calc(), etc.
 				 * which were removed from the test string above.
 				 */
-				$allow_css = ! preg_match( '%[\\\(&=}]|/\*%', $css_test_string );
+				$allow_css = 0 === preg_match( '%[\\\(&=}]|/\*%', $css_test_string );
 	
 				/**
 				 * Filters the check for unsafe CSS in `safecss_filter_attr`.
@@ -822,7 +921,7 @@ if( ! function_exists( 'safecss_filter_attr' ) ) :
 	}
 endif;
 
-// wp-includes/kses.php (WP 7.0.2)
+// wp-includes/kses.php (WP 7.1)
 if( ! function_exists( 'wp_kses_normalize_entities3' ) ) :
 	function wp_kses_normalize_entities3( $matches ) {
 		if ( empty( $matches[1] ) ) {
@@ -835,7 +934,7 @@ if( ! function_exists( 'wp_kses_normalize_entities3' ) ) :
 	}
 endif;
 
-// wp-includes/kses.php (WP 7.0.2)
+// wp-includes/kses.php (WP 7.1)
 if( ! function_exists( 'valid_unicode' ) ) :
 	function valid_unicode( $i ) {
 		$i = (int) $i;
@@ -856,21 +955,21 @@ if( ! function_exists( 'valid_unicode' ) ) :
 	}
 endif;
 
-// wp-includes/kses.php (WP 7.0.2)
+// wp-includes/kses.php (WP 7.1)
 if( ! function_exists( 'wp_filter_nohtml_kses' ) ) :
 	function wp_filter_nohtml_kses( $data ) {
 		return addslashes( wp_kses( stripslashes( $data ), 'strip' ) );
 	}
 endif;
 
-// wp-includes/kses.php (WP 7.0.2)
+// wp-includes/kses.php (WP 7.1)
 if( ! function_exists( 'wp_filter_post_kses' ) ) :
 	function wp_filter_post_kses( $data ) {
 		return addslashes( wp_kses( stripslashes( $data ), 'post' ) );
 	}
 endif;
 
-// wp-includes/kses.php (WP 7.0.2)
+// wp-includes/kses.php (WP 7.1)
 if( ! function_exists( 'wp_kses' ) ) :
 	function wp_kses( $content, $allowed_html, $allowed_protocols = array() ) {
 		if ( empty( $allowed_protocols ) ) {
@@ -885,7 +984,7 @@ if( ! function_exists( 'wp_kses' ) ) :
 	}
 endif;
 
-// wp-includes/kses.php (WP 7.0.2)
+// wp-includes/kses.php (WP 7.1)
 if( ! function_exists( 'wp_kses_hook' ) ) :
 	function wp_kses_hook( $content, $allowed_html, $allowed_protocols ) {
 		/**
@@ -903,14 +1002,14 @@ if( ! function_exists( 'wp_kses_hook' ) ) :
 	}
 endif;
 
-// wp-includes/kses.php (WP 7.0.2)
+// wp-includes/kses.php (WP 7.1)
 if( ! function_exists( 'wp_kses_version' ) ) :
 	function wp_kses_version() {
 		return '0.2.2';
 	}
 endif;
 
-// wp-includes/kses.php (WP 7.0.2)
+// wp-includes/kses.php (WP 7.1)
 if( ! function_exists( 'wp_kses_split' ) ) :
 	function wp_kses_split( $content, $allowed_html, $allowed_protocols ) {
 		global $pass_allowed_html, $pass_allowed_protocols;
@@ -936,7 +1035,7 @@ if( ! function_exists( 'wp_kses_split' ) ) :
 	}
 endif;
 
-// wp-includes/kses.php (WP 7.0.2)
+// wp-includes/kses.php (WP 7.1)
 if( ! function_exists( 'wp_kses_split2' ) ) :
 	function wp_kses_split2( $content, $allowed_html, $allowed_protocols ) {
 		$content = wp_kses_stripslashes( $content );
@@ -1037,7 +1136,7 @@ if( ! function_exists( 'wp_kses_split2' ) ) :
 	}
 endif;
 
-// wp-includes/kses.php (WP 7.0.2)
+// wp-includes/kses.php (WP 7.1)
 if( ! function_exists( 'wp_kses_attr' ) ) :
 	function wp_kses_attr( $element, $attr, $allowed_html, $allowed_protocols ) {
 		if ( ! is_array( $allowed_html ) ) {
@@ -1108,7 +1207,7 @@ if( ! function_exists( 'wp_kses_attr' ) ) :
 	}
 endif;
 
-// wp-includes/kses.php (WP 7.0.2)
+// wp-includes/kses.php (WP 7.1)
 if( ! function_exists( 'wp_kses_hair' ) ) :
 	function wp_kses_hair( $attr, $allowed_protocols ) {
 		$attributes = array();
@@ -1153,7 +1252,7 @@ if( ! function_exists( 'wp_kses_hair' ) ) :
 	}
 endif;
 
-// wp-includes/kses.php (WP 7.0.2)
+// wp-includes/kses.php (WP 7.1)
 if( ! function_exists( 'wp_kses_check_attr_val' ) ) :
 	function wp_kses_check_attr_val( $value, $vless, $checkname, $checkvalue ) {
 		$ok = true;
@@ -1232,7 +1331,7 @@ if( ! function_exists( 'wp_kses_check_attr_val' ) ) :
 				 * has one of the given values.
 				 */
 	
-				if ( false === array_search( strtolower( $value ), $checkvalue, true ) ) {
+				if ( ! in_array( strtolower( $value ), $checkvalue, true ) ) {
 					$ok = false;
 				}
 				break;
@@ -1253,7 +1352,7 @@ if( ! function_exists( 'wp_kses_check_attr_val' ) ) :
 	}
 endif;
 
-// wp-includes/kses.php (WP 7.0.2)
+// wp-includes/kses.php (WP 7.1)
 if( ! function_exists( 'wp_kses_bad_protocol' ) ) :
 	function wp_kses_bad_protocol( $content, $allowed_protocols ) {
 		$content = wp_kses_no_null( $content );
@@ -1281,7 +1380,7 @@ if( ! function_exists( 'wp_kses_bad_protocol' ) ) :
 	}
 endif;
 
-// wp-includes/kses.php (WP 7.0.2)
+// wp-includes/kses.php (WP 7.1)
 if( ! function_exists( 'wp_kses_no_null' ) ) :
 	function wp_kses_no_null( $content, $options = null ) {
 		if ( ! isset( $options['slash_zero'] ) ) {
@@ -1297,14 +1396,14 @@ if( ! function_exists( 'wp_kses_no_null' ) ) :
 	}
 endif;
 
-// wp-includes/kses.php (WP 7.0.2)
+// wp-includes/kses.php (WP 7.1)
 if( ! function_exists( 'wp_kses_stripslashes' ) ) :
 	function wp_kses_stripslashes( $content ) {
 		return preg_replace( '%\\\\"%', '"', $content );
 	}
 endif;
 
-// wp-includes/kses.php (WP 7.0.2)
+// wp-includes/kses.php (WP 7.1)
 if( ! function_exists( 'wp_kses_array_lc' ) ) :
 	function wp_kses_array_lc( $inarray ) {
 		$outarray = array();
@@ -1323,14 +1422,14 @@ if( ! function_exists( 'wp_kses_array_lc' ) ) :
 	}
 endif;
 
-// wp-includes/kses.php (WP 7.0.2)
+// wp-includes/kses.php (WP 7.1)
 if( ! function_exists( 'wp_kses_html_error' ) ) :
 	function wp_kses_html_error( $attr ) {
 		return preg_replace( '/^("[^"]*("|$)|\'[^\']*(\'|$)|\S)*\s*/', '', $attr );
 	}
 endif;
 
-// wp-includes/kses.php (WP 7.0.2)
+// wp-includes/kses.php (WP 7.1)
 if( ! function_exists( 'wp_kses_bad_protocol_once' ) ) :
 	function wp_kses_bad_protocol_once( $content, $allowed_protocols, $count = 1 ) {
 		$content  = preg_replace( '/(&#0*58(?![;0-9])|&#x0*3a(?![;a-f0-9]))/i', '$1;', $content );
@@ -1355,7 +1454,7 @@ if( ! function_exists( 'wp_kses_bad_protocol_once' ) ) :
 	}
 endif;
 
-// wp-includes/kses.php (WP 7.0.2)
+// wp-includes/kses.php (WP 7.1)
 if( ! function_exists( 'wp_kses_bad_protocol_once2' ) ) :
 	function wp_kses_bad_protocol_once2( $scheme, $allowed_protocols ) {
 		$scheme = wp_kses_decode_entities( $scheme );
@@ -1363,13 +1462,7 @@ if( ! function_exists( 'wp_kses_bad_protocol_once2' ) ) :
 		$scheme = wp_kses_no_null( $scheme );
 		$scheme = strtolower( $scheme );
 	
-		$allowed = false;
-		foreach ( (array) $allowed_protocols as $one_protocol ) {
-			if ( strtolower( $one_protocol ) === $scheme ) {
-				$allowed = true;
-				break;
-			}
-		}
+		$allowed = array_any( (array) $allowed_protocols, fn( $protocol ) => strtolower( $protocol ) === $scheme );
 	
 		if ( $allowed ) {
 			return "$scheme:";
@@ -1379,7 +1472,7 @@ if( ! function_exists( 'wp_kses_bad_protocol_once2' ) ) :
 	}
 endif;
 
-// wp-includes/kses.php (WP 7.0.2)
+// wp-includes/kses.php (WP 7.1)
 if( ! function_exists( 'wp_kses_normalize_entities' ) ) :
 	function wp_kses_normalize_entities( $content, $context = 'html' ) {
 		// Disarm all entities by converting & to &amp;
@@ -1429,7 +1522,7 @@ if( ! function_exists( 'wp_kses_normalize_entities' ) ) :
 	}
 endif;
 
-// wp-includes/kses.php (WP 7.0.2)
+// wp-includes/kses.php (WP 7.1)
 if( ! function_exists( 'wp_kses_normalize_entities2' ) ) :
 	function wp_kses_normalize_entities2( $matches ) {
 		if ( empty( $matches[1] ) ) {
@@ -1449,7 +1542,7 @@ if( ! function_exists( 'wp_kses_normalize_entities2' ) ) :
 	}
 endif;
 
-// wp-includes/kses.php (WP 7.0.2)
+// wp-includes/kses.php (WP 7.1)
 if( ! function_exists( 'wp_kses_decode_entities' ) ) :
 	function wp_kses_decode_entities( $content ) {
 		$content = preg_replace_callback( '/&#([0-9]+);/', '_wp_kses_decode_entities_chr', $content );
@@ -1459,7 +1552,7 @@ if( ! function_exists( 'wp_kses_decode_entities' ) ) :
 	}
 endif;
 
-// wp-includes/kses.php (WP 7.0.2)
+// wp-includes/kses.php (WP 7.1)
 if( ! function_exists( 'wp_filter_kses' ) ) :
 	function wp_filter_kses( $data ) {
 		return addslashes( wp_kses( stripslashes( $data ), current_filter() ) );
