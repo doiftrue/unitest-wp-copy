@@ -15,4 +15,3 @@ if( ! function_exists( 'unregister_block_pattern_category' ) ) :
 		return WP_Block_Pattern_Categories_Registry::get_instance()->unregister( $category_name );
 	}
 endif;
-

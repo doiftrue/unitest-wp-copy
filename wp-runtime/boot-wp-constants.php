@@ -5,6 +5,7 @@ defined( 'WPINC' )               || define( 'WPINC', 'wp-includes' );
 defined( 'WP_CONTENT_DIR' )      || define( 'WP_CONTENT_DIR', '/path/to/wp/wp-content' );
 defined( 'WP_CONTENT_URL' )      || define( 'WP_CONTENT_URL', 'https://wp.test/wp-content' );
 defined( 'WP_ENVIRONMENT_TYPE' ) || define( 'WP_ENVIRONMENT_TYPE', 'local' );
+defined( 'REST_API_VERSION' )    || define( 'REST_API_VERSION', '2.0' );
 
 /// Salt constants for wp_salt() / wp_hash() — unique test values.
 defined( 'AUTH_KEY' )         || define( 'AUTH_KEY',         'test-auth-key-unitest-wp-copy' );

@@ -3,6 +3,56 @@
 // ------------------auto-generated---------------------
 
 // wp-includes/rest-api.php (WP 7.1)
+if( ! function_exists( 'rest_convert_error_to_response' ) ) :
+	function rest_convert_error_to_response( $error ) {
+		$status = array_reduce(
+			$error->get_all_error_data(),
+			/**
+			 * @param int   $status     Status.
+			 * @param mixed $error_data Error data.
+			 */
+			static function ( int $status, $error_data ): int {
+				if ( is_array( $error_data ) && isset( $error_data['status'] ) && is_numeric( $error_data['status'] ) ) {
+					$status = (int) $error_data['status'];
+				}
+				return $status;
+			},
+			500
+		);
+	
+		$errors = array();
+	
+		foreach ( (array) $error->errors as $code => $messages ) {
+			$all_data  = $error->get_all_error_data( $code );
+			$last_data = array_pop( $all_data );
+	
+			foreach ( (array) $messages as $message ) {
+				$formatted = array(
+					'code'    => $code,
+					'message' => $message,
+					'data'    => $last_data,
+				);
+	
+				if ( $all_data ) {
+					$formatted['additional_data'] = $all_data;
+				}
+	
+				$errors[] = $formatted;
+			}
+		}
+	
+		$data = $errors[0];
+		if ( count( $errors ) > 1 ) {
+			// Remove the primary error.
+			array_shift( $errors );
+			$data['additional_errors'] = $errors;
+		}
+	
+		return new WP_REST_Response( $data, $status );
+	}
+endif;
+
+// wp-includes/rest-api.php (WP 7.1)
 if( ! function_exists( 'rest_are_values_equal' ) ) :
 	function rest_are_values_equal( $value1, $value2 ) {
 		if ( is_array( $value1 ) && is_array( $value2 ) ) {
@@ -455,6 +505,63 @@ if( ! function_exists( 'rest_validate_integer_value_from_schema' ) ) :
 		}
 	
 		return true;
+	}
+endif;
+
+// wp-includes/rest-api.php (WP 7.1)
+if( ! function_exists( 'rest_get_endpoint_args_for_schema' ) ) :
+	function rest_get_endpoint_args_for_schema( $schema, $method = WP_REST_Server::CREATABLE ) {
+	
+		$schema_properties       = ! empty( $schema['properties'] ) ? $schema['properties'] : array();
+		$endpoint_args           = array();
+		$valid_schema_properties = rest_get_allowed_schema_keywords();
+		$valid_schema_properties = array_diff( $valid_schema_properties, array( 'default', 'required' ) );
+	
+		foreach ( $schema_properties as $field_id => $params ) {
+	
+			// Arguments specified as `readonly` are not allowed to be set.
+			if ( ! empty( $params['readonly'] ) ) {
+				continue;
+			}
+	
+			$endpoint_args[ $field_id ] = array(
+				'validate_callback' => 'rest_validate_request_arg',
+				'sanitize_callback' => 'rest_sanitize_request_arg',
+			);
+	
+			if ( WP_REST_Server::CREATABLE === $method && isset( $params['default'] ) ) {
+				$endpoint_args[ $field_id ]['default'] = $params['default'];
+			}
+	
+			if ( WP_REST_Server::CREATABLE === $method && ! empty( $params['required'] ) ) {
+				$endpoint_args[ $field_id ]['required'] = true;
+			}
+	
+			foreach ( $valid_schema_properties as $schema_prop ) {
+				if ( isset( $params[ $schema_prop ] ) ) {
+					$endpoint_args[ $field_id ][ $schema_prop ] = $params[ $schema_prop ];
+				}
+			}
+	
+			// Merge in any options provided by the schema property.
+			if ( isset( $params['arg_options'] ) ) {
+	
+				// Only use required / default from arg_options on CREATABLE endpoints.
+				if ( WP_REST_Server::CREATABLE !== $method ) {
+					$params['arg_options'] = array_diff_key(
+						$params['arg_options'],
+						array(
+							'required' => '',
+							'default'  => '',
+						)
+					);
+				}
+	
+				$endpoint_args[ $field_id ] = array_merge( $endpoint_args[ $field_id ], $params['arg_options'] );
+			}
+		}
+	
+		return $endpoint_args;
 	}
 endif;
 
@@ -1103,6 +1210,64 @@ if( ! function_exists( 'rest_is_field_included' ) ) :
 endif;
 
 // wp-includes/rest-api.php (WP 7.1)
+if( ! function_exists( 'rest_filter_response_fields' ) ) :
+	function rest_filter_response_fields( $response, $server, $request ) {
+		if ( ! isset( $request['_fields'] ) || $response->is_error() ) {
+			return $response;
+		}
+	
+		$data = $response->get_data();
+	
+		$fields = wp_parse_list( $request['_fields'] );
+	
+		if ( 0 === count( $fields ) ) {
+			return $response;
+		}
+	
+		// Trim off outside whitespace from the comma delimited list.
+		$fields = array_map( 'trim', $fields );
+	
+		// Create nested array of accepted field hierarchy.
+		$fields_as_keyed = array();
+		foreach ( $fields as $field ) {
+			$parts = explode( '.', $field );
+			$ref   = &$fields_as_keyed;
+			while ( count( $parts ) > 1 ) {
+				$next = array_shift( $parts );
+				if ( isset( $ref[ $next ] ) && true === $ref[ $next ] ) {
+					// Skip any sub-properties if their parent prop is already marked for inclusion.
+					break 2;
+				}
+				$ref[ $next ] = $ref[ $next ] ?? array();
+				$ref          = &$ref[ $next ];
+			}
+			$last         = array_shift( $parts );
+			$ref[ $last ] = true;
+		}
+	
+		if ( wp_is_numeric_array( $data ) ) {
+			$new_data = array();
+			foreach ( $data as $item ) {
+				$new_data[] = _rest_array_intersect_key_recursive( $item, $fields_as_keyed );
+			}
+		} else {
+			$new_data = _rest_array_intersect_key_recursive( $data, $fields_as_keyed );
+		}
+	
+		$response->set_data( $new_data );
+	
+		return $response;
+	}
+endif;
+
+// wp-includes/rest-api.php (WP 7.1)
+if( ! function_exists( 'rest_authorization_required_code' ) ) :
+	function rest_authorization_required_code() {
+		return is_user_logged_in() ? 403 : 401;
+	}
+endif;
+
+// wp-includes/rest-api.php (WP 7.1)
 if( ! function_exists( 'register_rest_field' ) ) :
 	function register_rest_field( $object_type, $attribute, $args = array() ) {
 		global $wp_rest_additional_fields;
@@ -1529,6 +1694,298 @@ if( ! function_exists( 'rest_sanitize_value_from_schema' ) ) :
 		}
 	
 		return $value;
+	}
+endif;
+
+// wp-includes/rest-api.php (WP 7.1)
+if( ! function_exists( 'rest_get_server' ) ) :
+	function rest_get_server() {
+		/* @var WP_REST_Server $wp_rest_server */
+		global $wp_rest_server;
+	
+		if ( empty( $wp_rest_server ) ) {
+			/**
+			 * Filters the REST Server Class.
+			 *
+			 * This filter allows you to adjust the server class used by the REST API, using a
+			 * different class to handle requests.
+			 *
+			 * @since 4.4.0
+			 *
+			 * @param string $class_name The name of the server class. Default 'WP_REST_Server'.
+			 */
+			$wp_rest_server_class = apply_filters( 'wp_rest_server_class', 'WP_REST_Server' );
+			$wp_rest_server       = new $wp_rest_server_class();
+	
+			/**
+			 * Fires when preparing to serve a REST API request.
+			 *
+			 * Endpoint objects should be created and register their hooks on this action rather
+			 * than another action to ensure they're only loaded when needed.
+			 *
+			 * @since 4.4.0
+			 *
+			 * @param WP_REST_Server $wp_rest_server Server object.
+			 */
+			do_action( 'rest_api_init', $wp_rest_server );
+		}
+	
+		return $wp_rest_server;
+	}
+endif;
+
+// wp-includes/rest-api.php (WP 7.1)
+if( ! function_exists( 'register_rest_route' ) ) :
+	function register_rest_route( $route_namespace, $route, $args = array(), $override = false ) {
+		if ( empty( $route_namespace ) ) {
+			/*
+			 * Non-namespaced routes are not allowed, with the exception of the main
+			 * and namespace indexes. If you really need to register a
+			 * non-namespaced route, call `WP_REST_Server::register_route` directly.
+			 */
+			_doing_it_wrong(
+				__FUNCTION__,
+				sprintf(
+					/* translators: 1: string value of the namespace, 2: string value of the route. */
+					__( 'Routes must be namespaced with plugin or theme name and version. Instead there seems to be an empty namespace \'%1$s\' for route \'%2$s\'.' ),
+					'<code>' . $route_namespace . '</code>',
+					'<code>' . $route . '</code>'
+				),
+				'4.4.0'
+			);
+			return false;
+		} elseif ( empty( $route ) ) {
+			_doing_it_wrong(
+				__FUNCTION__,
+				sprintf(
+					/* translators: 1: string value of the namespace, 2: string value of the route. */
+					__( 'Route must be specified. Instead within the namespace \'%1$s\', there seems to be an empty route \'%2$s\'.' ),
+					'<code>' . $route_namespace . '</code>',
+					'<code>' . $route . '</code>'
+				),
+				'4.4.0'
+			);
+			return false;
+		}
+	
+		$clean_namespace = trim( $route_namespace, '/' );
+	
+		if ( $clean_namespace !== $route_namespace ) {
+			_doing_it_wrong(
+				__FUNCTION__,
+				sprintf(
+					/* translators: 1: string value of the namespace, 2: string value of the route. */
+					__( 'Namespace must not start or end with a slash. Instead namespace \'%1$s\' for route \'%2$s\' seems to contain a slash.' ),
+					'<code>' . $route_namespace . '</code>',
+					'<code>' . $route . '</code>'
+				),
+				'5.4.2'
+			);
+		}
+	
+		if ( ! did_action( 'rest_api_init' ) ) {
+			_doing_it_wrong(
+				__FUNCTION__,
+				sprintf(
+					/* translators: 1: rest_api_init, 2: string value of the route, 3: string value of the namespace. */
+					__( 'REST API routes must be registered on the %1$s action. Instead route \'%2$s\' with namespace \'%3$s\' was not registered on this action.' ),
+					'<code>rest_api_init</code>',
+					'<code>' . $route . '</code>',
+					'<code>' . $route_namespace . '</code>'
+				),
+				'5.1.0'
+			);
+		}
+	
+		if ( isset( $args['args'] ) ) {
+			$common_args = $args['args'];
+			unset( $args['args'] );
+		} else {
+			$common_args = array();
+		}
+	
+		if ( isset( $args['callback'] ) ) {
+			// Upgrade a single set to multiple.
+			$args = array( $args );
+		}
+	
+		$defaults = array(
+			'methods'  => 'GET',
+			'callback' => null,
+			'args'     => array(),
+		);
+	
+		foreach ( $args as $key => &$arg_group ) {
+			if ( ! is_numeric( $key ) ) {
+				// Route option, skip here.
+				continue;
+			}
+	
+			$arg_group         = array_merge( $defaults, $arg_group );
+			$arg_group['args'] = array_merge( $common_args, $arg_group['args'] );
+	
+			if ( ! isset( $arg_group['permission_callback'] ) ) {
+				_doing_it_wrong(
+					__FUNCTION__,
+					sprintf(
+						/* translators: 1: The REST API route being registered, 2: The argument name, 3: The suggested function name. */
+						__( 'The REST API route definition for %1$s is missing the required %2$s argument. For REST API routes that are intended to be public, use %3$s as the permission callback.' ),
+						'<code>' . $clean_namespace . '/' . trim( $route, '/' ) . '</code>',
+						'<code>permission_callback</code>',
+						'<code>__return_true</code>'
+					),
+					'5.5.0'
+				);
+			}
+	
+			foreach ( $arg_group['args'] as $arg ) {
+				if ( ! is_array( $arg ) ) {
+					_doing_it_wrong(
+						__FUNCTION__,
+						sprintf(
+							/* translators: 1: $args, 2: The REST API route being registered. */
+							__( 'REST API %1$s should be an array of arrays. Non-array value detected for %2$s.' ),
+							'<code>$args</code>',
+							'<code>' . $clean_namespace . '/' . trim( $route, '/' ) . '</code>'
+						),
+						'6.1.0'
+					);
+					break; // Leave the foreach loop once a non-array argument was found.
+				}
+			}
+		}
+	
+		$full_route = '/' . $clean_namespace . '/' . trim( $route, '/' );
+		rest_get_server()->register_route( $clean_namespace, $full_route, $args, $override );
+		return true;
+	}
+endif;
+
+// wp-includes/rest-api.php (WP 7.1)
+if( ! function_exists( 'rest_do_request' ) ) :
+	function rest_do_request( $request ) {
+		$request = rest_ensure_request( $request );
+		return rest_get_server()->dispatch( $request );
+	}
+endif;
+
+// wp-includes/rest-api.php (WP 7.1)
+if( ! function_exists( 'rest_ensure_request' ) ) :
+	function rest_ensure_request( $request ) {
+		if ( $request instanceof WP_REST_Request ) {
+			return $request;
+		}
+	
+		if ( is_string( $request ) ) {
+			return new WP_REST_Request( 'GET', $request );
+		}
+	
+		return new WP_REST_Request( 'GET', '', $request );
+	}
+endif;
+
+// wp-includes/rest-api.php (WP 7.1)
+if( ! function_exists( 'rest_ensure_response' ) ) :
+	function rest_ensure_response( $response ) {
+		if ( is_wp_error( $response ) ) {
+			return $response;
+		}
+	
+		if ( $response instanceof WP_REST_Response ) {
+			return $response;
+		}
+	
+		/*
+		 * While WP_HTTP_Response is the base class of WP_REST_Response, it doesn't provide
+		 * all the required methods used in WP_REST_Server::dispatch().
+		 */
+		if ( $response instanceof WP_HTTP_Response ) {
+			return new WP_REST_Response(
+				$response->get_data(),
+				$response->get_status(),
+				$response->get_headers()
+			);
+		}
+	
+		return new WP_REST_Response( $response );
+	}
+endif;
+
+// wp-includes/rest-api.php (WP 7.1)
+if( ! function_exists( 'rest_handle_options_request' ) ) :
+	function rest_handle_options_request( $response, $handler, $request ) {
+		if ( ! empty( $response ) || $request->get_method() !== 'OPTIONS' ) {
+			return $response;
+		}
+	
+		$response = new WP_REST_Response();
+		$data     = array();
+	
+		foreach ( $handler->get_routes() as $route => $endpoints ) {
+			$match = preg_match( '@^' . $route . '$@i', $request->get_route(), $matches );
+	
+			if ( ! $match ) {
+				continue;
+			}
+	
+			$args = array();
+			foreach ( $matches as $param => $value ) {
+				if ( ! is_int( $param ) ) {
+					$args[ $param ] = $value;
+				}
+			}
+	
+			foreach ( $endpoints as $endpoint ) {
+				$request->set_url_params( $args );
+				$request->set_attributes( $endpoint );
+			}
+	
+			$data = $handler->get_data_for_route( $route, $endpoints, 'help' );
+			$response->set_matched_route( $route );
+			break;
+		}
+	
+		$response->set_data( $data );
+		return $response;
+	}
+endif;
+
+// wp-includes/rest-api.php (WP 7.1)
+if( ! function_exists( 'rest_send_allow_header' ) ) :
+	function rest_send_allow_header( $response, $server, $request ) {
+		$matched_route = $response->get_matched_route();
+	
+		if ( ! $matched_route ) {
+			return $response;
+		}
+	
+		$routes = $server->get_routes();
+	
+		$allowed_methods = array();
+	
+		// Get the allowed methods across the routes.
+		foreach ( $routes[ $matched_route ] as $_handler ) {
+			foreach ( $_handler['methods'] as $handler_method => $value ) {
+	
+				if ( ! empty( $_handler['permission_callback'] ) ) {
+	
+					$permission = call_user_func( $_handler['permission_callback'], $request );
+	
+					$allowed_methods[ $handler_method ] = true === $permission;
+				} else {
+					$allowed_methods[ $handler_method ] = true;
+				}
+			}
+		}
+	
+		// Strip out all the methods that are not allowed (false values).
+		$allowed_methods = array_filter( $allowed_methods );
+	
+		if ( $allowed_methods ) {
+			$response->header( 'Allow', implode( ', ', array_map( 'strtoupper', array_keys( $allowed_methods ) ) ) );
+		}
+	
+		return $response;
 	}
 endif;
 
