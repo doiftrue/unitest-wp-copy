@@ -7,6 +7,8 @@
 return [
 	'wp-includes/class-wp-error.php'           => [ 'WP_Error' => '2.1.0' ],
 	'wp-includes/class-wp-exception.php'       => [ 'WP_Exception' => '6.7.0' ],
+	// Identity marker used to distinguish an unchanged filter value from any user value.
+	'wp-includes/class-wp-filter-sentinel.php' => [ 'WP_Filter_Sentinel' => '7.1.0' ],
 	'wp-includes/class-wp-list-util.php'       => [ 'WP_List_Util' => '4.7.0' ],
 	// Date-query normalization and SQL generation; all option/function dependencies are deterministic in runtime.
 	'wp-includes/class-wp-date-query.php'      => [ 'WP_Date_Query' => '3.7.0' ],
