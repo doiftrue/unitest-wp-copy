@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-block-bindings-source.php (WP 6.6.5)
+// wp-includes/class-wp-block-bindings-source.php (WP 6.6.7)
 if( ! class_exists( 'WP_Block_Bindings_Source' ) ) :
 	class WP_Block_Bindings_Source {
 	

@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/html-api/class-wp-html-decoder.php (WP 6.6.5)
+// wp-includes/html-api/class-wp-html-decoder.php (WP 6.6.7)
 if( ! class_exists( 'WP_HTML_Decoder' ) ) :
 	class WP_HTML_Decoder {
 		/**

@@ -67,6 +67,8 @@ class Bootstrap {
 
 		require_once "$this->base_dir/boot-wp-globals.php";
 		$this->load_init_parts();
+
+		require_once "$this->base_dir/boot-wp-hooks.php";
 	}
 
 	private function load_init_parts(): void {

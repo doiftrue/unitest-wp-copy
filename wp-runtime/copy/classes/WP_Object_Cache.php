@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-object-cache.php (WP 6.6.5)
+// wp-includes/class-wp-object-cache.php (WP 6.6.7)
 if( ! class_exists( 'WP_Object_Cache' ) ) :
 	class WP_Object_Cache {
 	
@@ -86,7 +86,9 @@ if( ! class_exists( 'WP_Object_Cache' ) ) :
 		 * @return mixed Newly-set property.
 		 */
 		public function __set( $name, $value ) {
-			return $this->$name = $value;
+			$this->$name = $value;
+	
+			return $value;
 		}
 	
 		/**

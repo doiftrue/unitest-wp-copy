@@ -7,6 +7,19 @@
 use Unitest_WP_Copy\WP_Mock_Utils;
 
 /**
+ * Runtime adaptation of is_user_logged_in() without a user/session database.
+ */
+if ( ! function_exists( 'is_user_logged_in' ) ) :
+	function is_user_logged_in() {
+		if ( WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+
+		return false;
+	}
+endif;
+
+/**
  * Runtime adaptation of wp_salt() from WordPress 7.0 wp-includes/pluggable.php.
  */
 if ( ! function_exists( 'wp_salt' ) ) :

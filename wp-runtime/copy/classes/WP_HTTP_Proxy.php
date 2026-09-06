@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-http-proxy.php (WP 6.6.5)
+// wp-includes/class-wp-http-proxy.php (WP 6.6.7)
 if( ! class_exists( 'WP_HTTP_Proxy' ) ) :
 	class WP_HTTP_Proxy {
 	

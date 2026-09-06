@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/sitemaps/class-wp-sitemaps-registry.php (WP 6.6.5)
+// wp-includes/sitemaps/class-wp-sitemaps-registry.php (WP 6.6.7)
 if( ! class_exists( 'WP_Sitemaps_Registry' ) ) :
 	class WP_Sitemaps_Registry {
 		/**

@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/ms-network.php (WP 6.6.5)
+// wp-includes/ms-network.php (WP 6.6.7)
 if( ! function_exists( 'clean_network_cache' ) ) :
 	function clean_network_cache( $ids ) {
 		global $_wp_suspend_cache_invalidation;
@@ -29,7 +29,7 @@ if( ! function_exists( 'clean_network_cache' ) ) :
 	}
 endif;
 
-// wp-includes/ms-network.php (WP 6.6.5)
+// wp-includes/ms-network.php (WP 6.6.7)
 if( ! function_exists( 'update_network_cache' ) ) :
 	function update_network_cache( $networks ) {
 		$data = array();

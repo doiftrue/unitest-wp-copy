@@ -33,6 +33,12 @@ $wp_registered_sidebars = is_array( $wp_registered_sidebars ?? null ) ? $wp_regi
 global $wp_meta_keys;
 $wp_meta_keys = [];
 
+global $wp_rest_additional_fields;
+$wp_rest_additional_fields = is_array( $wp_rest_additional_fields ?? null ) ? $wp_rest_additional_fields : [];
+
+global $wp_rest_server;
+$wp_rest_server ??= null;
+
 // from wp-includes/version.php
 global $wp_version, $wp_db_version, $tinymce_version, $required_php_version, $required_php_extensions, $required_mysql_version;
 require_once "$this->line_extra_dir/wp-includes/version.php";
@@ -48,4 +54,4 @@ if ( version_compare( $wp_version, '6.8', '<' ) ) {
 // SQL-string adapter only. It exposes metadata table names and escaping helpers,
 // but intentionally has no database connection or query methods.
 global $wpdb;
-$wpdb || $wpdb = new \Unitest_WP_Copy\WPDB_Runtime();
+$wpdb || $wpdb = new \Unitest_WP_Copy\wpdb__Runtime();
