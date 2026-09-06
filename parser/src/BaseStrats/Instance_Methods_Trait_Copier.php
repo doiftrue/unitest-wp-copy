@@ -24,6 +24,7 @@ class Instance_Methods_Trait_Copier extends Symbols_Copy_Strategy {
 				'rel_file'     => $rel_file,
 				'class_name'   => $class_name,
 				'trait_name'   => $trait_name,
+				'imports'      => $config['imports'] ?? [],
 				'method_names' => $this->filter_supported_methods( $method_names ),
 			];
 		}
@@ -38,6 +39,7 @@ class Instance_Methods_Trait_Copier extends Symbols_Copy_Strategy {
 	public function generate_content( array $item ): string {
 		$rel_file = $item['rel_file'];
 		$trait_name = $item['trait_name'];
+		$imports_list = $item['imports'];
 		$method_names = $item['method_names'];
 
 		$core_file_content = file_get_contents( "{$this->config->wp_core_dir}/$rel_file" );
@@ -68,12 +70,14 @@ class Instance_Methods_Trait_Copier extends Symbols_Copy_Strategy {
 		}
 
 		$comment = $this->get_file_comment( $rel_file );
+		$imports = implode( "\n", array_map( fn( $class_name ) => "use \\$class_name;", $imports_list ) );
+		$imports = $imports ? "\n$imports\n" : '';
 
 		$methods_code = "\n" . implode( "\n\n", $methods_code ) . "\n";
 
 		return <<<CODE
 			namespace Unitest_WP_Copy;
-
+			$imports
 			$comment
 			trait $trait_name {
 			$methods_code

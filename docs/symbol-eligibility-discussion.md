@@ -6,11 +6,10 @@ The WordPress 7.0 core review covered all 756 named class declarations in 723
 files under `wp-core/wp-includes/` and `wp-core/wp-admin/`, including declarations
 nested inside `class_exists()` guards.
 
-- 70 classes are active in `config/classes.php`.
+- 72 classes are active in `config/classes.php`.
 - 18 classes below require an explicit runtime-boundary decision.
-- 4 REST classes are tracked separately in [symbol-eligibility-discussion-rest-api.md](symbol-eligibility-discussion-rest-api.md).
 - 1 sitemap class is tracked separately in [symbol-eligibility-discussion-sitemap.md](symbol-eligibility-discussion-sitemap.md).
-- The remaining 663 declarations are covered by `config/not-suitable-files.md`.
+- The remaining 664 declarations are covered by `config/not-suitable-files.md`.
 
 
 ## Block Rendering and Theme JSON Boundary

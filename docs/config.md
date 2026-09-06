@@ -83,11 +83,14 @@ Instance methods copied into a trait:
   'path/to/class-file.php' => [
       'class'   => 'SourceClass',
       'trait'   => '{SourceClass}__Copied_Methods',
+      'imports' => [ 'GlobalDependencyClass' ],
       'methods' => [ 'methodName' => '<since-version>' ],
   ]
   ```
 - `class` selects the source class in the WordPress file;
 - `trait` defines the generated trait and output filename;
+- optional `imports` adds global class imports required after the methods move
+  into the `Unitest_WP_Copy` namespace;
 - `methods` maps original instance method names to the WordPress version where each method was introduced;
 
 

@@ -3,13 +3,13 @@
 return [
 	'wp_maybe_grant_resume_extensions_caps' => '5.2.0',
 	'wp_maybe_grant_install_languages_cap'  => '4.9.0',
+	// 'current_user_can'                    => '2.0.0', // why: custom mock
 ];
 
 /*
 Not suitable in isolated PHPUnit env:
 
 map_meta_cap              // why: massive switch; depends on get_post, get_option, get_post_type_object + DB
-current_user_can          // why: depends on wp_get_current_user (DB)
 current_user_can_for_site // why: depends on current_user_can (DB)
 author_can                // why: depends on get_post + get_userdata (DB)
 user_can                  // why: depends on get_userdata (DB) + WP_User::has_cap

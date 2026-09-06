@@ -87,7 +87,10 @@ Some WordPress classes cannot be copied as a whole, so the runtime provides a pa
 
 They are regular PHP classes, not WP_Mock symbols: use an instance directly, or extend it to build your own mock.
 
-Currently available: `\Unitest_WP_Copy\WPDB_Runtime` — a non-querying `wpdb` adapter for SQL-building code. Bootstrap assigns an instance to the `$wpdb` global.
+Currently available:
+
+- `\Unitest_WP_Copy\wpdb__Runtime` — a non-querying `wpdb` adapter for SQL-building code. Bootstrap assigns an instance to the `$wpdb` global.
+- `\Unitest_WP_Copy\WP_REST_Server__Runtime` — an in-memory REST route registry and dispatcher, also available through the WordPress-compatible `WP_REST_Server` alias.
 
 ```php
 global $wpdb;
@@ -102,7 +105,7 @@ $this->assertSame(
 Extend it when your code needs querying methods:
 
 ```php
-class My_WPDB extends \Unitest_WP_Copy\WPDB_Runtime {
+class My_WPDB extends \Unitest_WP_Copy\wpdb__Runtime {
 
 	public array $results = [];
 
@@ -116,12 +119,68 @@ $GLOBALS['wpdb'] = new My_WPDB();
 
 Restore `$GLOBALS['wpdb']` in `tearDown()` if a test replaces it.
 
+### REST API route tests
+
+The runtime supports route registration, in-memory dispatch, request
+validation/sanitization, response links, OPTIONS handling, batch requests, and
+custom controllers. Live HTTP serving and WordPress core endpoint controllers
+remain out of scope. `rest_do_request()` follows WordPress core and returns the
+direct dispatch result; post-dispatch serving filters such as `_fields` trimming
+and automatic `Allow` headers are available as functions but are not applied
+automatically.
+
+```php
+protected function tearDown(): void {
+	unset( $GLOBALS['wp_rest_server'] );
+	parent::tearDown();
+}
+
+public function test__item_route(): void {
+	$server = rest_get_server();
+
+	$server->register_route(
+		'my/v1',
+		'/my/v1/items/(?P<id>\d+)',
+		[
+			[
+				'methods'             => 'GET',
+				'callback'            => static fn( WP_REST_Request $request ) => [
+					'id' => $request['id'],
+				],
+				'permission_callback' => '__return_true',
+				'args'                => [
+					'id' => [ 'type' => 'integer' ],
+				],
+			],
+		]
+	);
+
+	$response = rest_do_request( new WP_REST_Request( 'GET', '/my/v1/items/42' ) );
+
+	$this->assertSame( 200, $response->get_status() );
+	$this->assertSame( [ 'id' => 42 ], $response->get_data() );
+}
+```
+
+`register_rest_route()` is also available and retains its WordPress
+`rest_api_init` timing check. The check is observable through
+`doing_it_wrong_run`; PHP notices remain silent unless the test enables the
+corresponding WordPress debug behavior. Use direct
+`WP_REST_Server::register_route()` when lifecycle timing is not part of the
+test.
+
+The root index intentionally omits active-theme, site-logo, site-icon, and
+client-side media enrichment because those paths require the live theme, post,
+attachment, and capability runtimes. It still exposes site metadata,
+namespaces, registered routes, and the standard help link.
+
 Supported WordPress Lines
 -------------------------
 Use the package line that matches your WP version:
 
 | WordPress line | Composer constraint              |
 |----------------|----------------------------------|
+| 7.1            | `doiftrue/unitest-wp-copy:7.1.*` |
 | 7.0            | `doiftrue/unitest-wp-copy:7.0.*` |
 | 6.9            | `doiftrue/unitest-wp-copy:6.9.*` |
 | 6.8            | `doiftrue/unitest-wp-copy:6.8.*` |
@@ -319,6 +378,6 @@ This project uses `doiftrue/unitest-wp-copy` with `WP_Mock` for PHPUnit tests.
 Before writing or changing tests:
 
 1. Read `vendor/doiftrue/unitest-wp-copy/README.md` to understand the test runtime.
-2. Check `vendor/doiftrue/unitest-wp-copy/SYMBOLS-INFO.md` for the WordPress functions and classes available in the runtime. Its first section lists runtime-adapted classes (like `\Unitest_WP_Copy\WPDB_Runtime`) with their public methods — use or extend them instead of WP_Mock.
+2. Check `vendor/doiftrue/unitest-wp-copy/SYMBOLS-INFO.md` for the WordPress functions and classes available in the runtime. Its first section lists runtime-adapted classes (like `\Unitest_WP_Copy\wpdb__Runtime`) with their public methods — use or extend them instead of WP_Mock.
 3. Use `WP_Mock` when a runtime function listed as mockable needs to be mocked.
 ```

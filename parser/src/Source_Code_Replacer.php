@@ -6,6 +6,9 @@ class Source_Code_Replacer {
 	private static array $runtime_compat = [
 		// Keep rest_is_ip_address() runtime-safe without Requests autoloader.
 		'WpOrg\\Requests\\Ipv6::check_ipv6(' => 'WP_Http__is_ip_address(',
+		// REST request/dispatch only needs these status constants, not the HTTP transport class.
+		'WP_Http::BAD_REQUEST'                => '400',
+		'WP_Http::MULTI_STATUS'               => '207',
 	];
 
 	public function __construct(

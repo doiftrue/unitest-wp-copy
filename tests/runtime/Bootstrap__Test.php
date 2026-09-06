@@ -9,6 +9,17 @@ class Bootstrap__Test extends Project_TestCase {
 	public function test__init(): void {
 		// NOTE: Bootstrap::init() already run on test init
 		$this->assertTrue( Bootstrap::init() instanceof Bootstrap );
+		$this->assertSame( '2.0', REST_API_VERSION );
+	}
+
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState disabled
+	 */
+	public function test__init__loads_rest_dispatch_filters(): void {
+		$this->assertSame( 10, has_filter( 'rest_pre_dispatch', 'rest_handle_options_request' ) );
+		$this->assertFalse( has_filter( 'rest_post_dispatch', 'rest_send_allow_header' ) );
+		$this->assertFalse( has_filter( 'rest_post_dispatch', 'rest_filter_response_fields' ) );
 	}
 
 	public function test__detect_wp_line(): void {

@@ -1,9 +1,9 @@
 <?php
 
-class WPDB_Runtime__Test extends \PHPUnit\Framework\TestCase {
+class wpdb__Runtime__Test extends \PHPUnit\Framework\TestCase {
 
 	public function test__public_methods() {
-		$wpdb = new \Unitest_WP_Copy\WPDB_Runtime();
+		$wpdb = new \Unitest_WP_Copy\wpdb__Runtime();
 
 		$query = $wpdb->prepare(
 			'SELECT * FROM %i WHERE title = %s AND count = %d AND ratio = %f',

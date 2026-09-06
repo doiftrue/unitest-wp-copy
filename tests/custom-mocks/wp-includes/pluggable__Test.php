@@ -15,6 +15,14 @@ class pluggable__custom_mocks__Test extends \PHPUnit\Framework\TestCase {
 		parent::tearDown();
 	}
 
+	public function test__is_user_logged_in() {
+		$this->assertFalse( is_user_logged_in() );
+
+		\WP_Mock::userFunction( 'is_user_logged_in' )->andReturn( true );
+
+		$this->assertTrue( is_user_logged_in() );
+	}
+
 	public function test__wp_salt() {
 		$salt = wp_salt( 'auth' );
 		$this->assertIsString( $salt );

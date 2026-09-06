@@ -44,6 +44,20 @@ Parser-specific flow is described in [parser.md](parser.md).
 - Keep functions isolated in tests; avoid multi-function combined assertions that hide failing symbol behavior.
 
 
+## REST State Isolation
+
+`rest_get_server()` caches the server in the process-wide
+`$GLOBALS['wp_rest_server']`. Any test that registers routes must remove that
+instance in `tearDown()` so routes do not leak into later tests:
+
+```php
+protected function tearDown(): void {
+	unset( $GLOBALS['wp_rest_server'] );
+	parent::tearDown();
+}
+```
+
+
 ## WordPress Version Compatibility
 
 This library supports multiple WP lines (see `README.md`). Tests run against all of them. The parser skips symbols whose `since` version is higher than the current WP line, so the function simply won't exist in older runtimes.

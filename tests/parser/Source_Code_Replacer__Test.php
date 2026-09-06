@@ -13,10 +13,25 @@ class Source_Code_Replacer__Test extends Project_TestCase {
 			] )
 		);
 
-		$input  = 'return WpOrg\\Requests\\Ipv6::check_ipv6( $ip );';
+		$input  = <<<'PHP'
+			return [
+				WpOrg\Requests\Ipv6::check_ipv6( $ip ),
+				WP_Http::BAD_REQUEST,
+				WP_Http::MULTI_STATUS,
+			];
+			PHP;
 		$output = $replacer->replace_in_code( $input );
 
-		$this->assertSame( 'return WP_Http__is_ip_address( $ip );', $output );
+		$this->assertSame(
+			<<<'PHP'
+				return [
+					WP_Http__is_ip_address( $ip ),
+					400,
+					207,
+				];
+				PHP,
+			$output
+		);
 	}
 
 	public function test__replace_in_code__replaces_configured_static_methods(): void {

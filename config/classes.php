@@ -39,7 +39,10 @@ return [
 	'wp-includes/class-wp-http-proxy.php'      => [ 'WP_HTTP_Proxy' => '4.4.0' ],
 	// In-memory HTTP and REST response value objects.
 	'wp-includes/class-wp-http-response.php'              => [ 'WP_HTTP_Response' => '4.4.0' ],
+	'wp-includes/rest-api/class-wp-rest-request.php'      => [ 'WP_REST_Request' => '4.4.0' ],
 	'wp-includes/rest-api/class-wp-rest-response.php'     => [ 'WP_REST_Response' => '4.4.0' ],
+	// Base class for custom in-memory REST controllers.
+	'wp-includes/rest-api/endpoints/class-wp-rest-controller.php' => [ 'WP_REST_Controller' => '4.7.0' ],
 	// Dependency chain for WP_HTML_Tag_Processor (HTML API).
 	// These classes must be included together for the WP_HTML_Tag_Processor to work correctly:
 	// - WP_HTML_Attribute_Token

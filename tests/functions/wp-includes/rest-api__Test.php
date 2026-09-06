@@ -14,6 +14,8 @@ class RestApiRequestStub {
 
 }
 
+class RestApiServerStub extends \Unitest_WP_Copy\WP_REST_Server__Runtime {}
+
 class rest_api__Test extends \PHPUnit\Framework\TestCase {
 
 	protected function setUp(): void {
@@ -24,6 +26,236 @@ class rest_api__Test extends \PHPUnit\Framework\TestCase {
 		$GLOBALS['wp_filters'] = [];
 		$GLOBALS['wp_current_filter'] = [];
 		$GLOBALS['wp_rest_additional_fields'] = [];
+		$GLOBALS['wp_rest_server'] = null;
+
+		add_filter( 'rest_pre_dispatch', 'rest_handle_options_request', 10, 3 );
+	}
+
+	protected function tearDown(): void {
+		unset( $GLOBALS['wp_rest_server'] );
+		$GLOBALS['wp_rest_additional_fields'] = [];
+
+		parent::tearDown();
+	}
+
+	public function test__register_rest_route() {
+		$server = new WP_REST_Server();
+		$GLOBALS['wp_rest_server'] = $server;
+		do_action( 'rest_api_init', $server );
+
+		$this->assertTrue(
+			register_rest_route(
+				'demo/v1',
+				'/items',
+				[
+					'methods'             => 'GET',
+					'callback'            => '__return_true',
+					'permission_callback' => '__return_true',
+				]
+			)
+		);
+		$this->assertArrayHasKey( '/demo/v1/items', $server->get_routes() );
+	}
+
+	public function test__rest_do_request() {
+		$server = new WP_REST_Server();
+		$GLOBALS['wp_rest_server'] = $server;
+		$server->register_route(
+			'demo/v1',
+			'/demo/v1/items/(?P<id>\d+)',
+			[
+				[
+					'methods'             => 'GET',
+					'callback'            => static function ( WP_REST_Request $request ) {
+						$response = new WP_REST_Response( [ 'id' => $request['id'], 'hidden' => 'removed' ], 201 );
+						$response->header( 'X-Test', 'yes' );
+						$response->add_link( 'item', rest_url( '/demo/v1/items/' . $request['id'] ) );
+						return $response;
+					},
+					'permission_callback' => '__return_true',
+					'args'                => [
+						'id' => [ 'type' => 'integer' ],
+					],
+				],
+			]
+		);
+
+		$request = new WP_REST_Request( 'GET', '/demo/v1/items/42' );
+		$request['_fields'] = 'id';
+		$response = rest_do_request( $request );
+
+		$this->assertSame( 201, $response->get_status() );
+		$this->assertSame( [ 'id' => 42, 'hidden' => 'removed' ], $response->get_data() );
+		$this->assertSame( 'yes', $response->get_headers()['X-Test'] );
+		$this->assertSame( 'https://wp.test/wp-json/demo/v1/items/42', $response->get_links()['item'][0]['href'] );
+
+		$invalid = rest_do_request( new WP_REST_Request( 'GET', '/demo/v1/items/not-an-integer' ) );
+		$this->assertSame( 404, $invalid->get_status() );
+		$this->assertSame( 'rest_no_route', $invalid->get_data()['code'] );
+
+		$server->register_route(
+			'demo/v1',
+			'/demo/v1/validate/(?P<id>[^/]+)',
+			[
+				[
+					'methods'             => 'GET',
+					'callback'            => '__return_true',
+					'permission_callback' => '__return_true',
+					'args'                => [
+						'id' => [
+							'type'              => 'integer',
+							'validate_callback' => 'rest_validate_request_arg',
+						],
+					],
+				],
+			]
+		);
+		$invalid_param = rest_do_request( new WP_REST_Request( 'GET', '/demo/v1/validate/nope' ) );
+		$this->assertSame( 400, $invalid_param->get_status() );
+		$this->assertSame( 'rest_invalid_param', $invalid_param->get_data()['code'] );
+
+		$server->register_route(
+			'demo/v1',
+			'/demo/v1/forbidden',
+			[
+				[
+					'methods'             => 'GET',
+					'callback'            => '__return_true',
+					'permission_callback' => '__return_false',
+				],
+			]
+		);
+		$forbidden = rest_do_request( new WP_REST_Request( 'GET', '/demo/v1/forbidden' ) );
+		$this->assertSame( 401, $forbidden->get_status() );
+		$this->assertSame( 'rest_forbidden', $forbidden->get_data()['code'] );
+	}
+
+	public function test__rest_get_server() {
+		$server = rest_get_server();
+
+		$this->assertInstanceOf( \Unitest_WP_Copy\WP_REST_Server__Runtime::class, $server );
+		$this->assertSame( $server, rest_get_server() );
+
+		$GLOBALS['wp_rest_server'] = null;
+		$initialized = null;
+
+		add_action(
+			'rest_api_init',
+			static function ( $server ) use ( &$initialized ) {
+				$initialized = $server;
+			}
+		);
+		add_filter( 'wp_rest_server_class', static fn() => RestApiServerStub::class );
+
+		$filtered_server = rest_get_server();
+
+		$this->assertInstanceOf( RestApiServerStub::class, $filtered_server );
+		$this->assertSame( $filtered_server, $initialized );
+		$this->assertSame( $filtered_server, rest_get_server() );
+	}
+
+	public function test__rest_ensure_request() {
+		$request = rest_ensure_request( '/demo/v1/items' );
+
+		$this->assertInstanceOf( WP_REST_Request::class, $request );
+		$this->assertSame( '/demo/v1/items', $request->get_route() );
+	}
+
+	public function test__rest_ensure_response() {
+		$response = rest_ensure_response( [ 'ok' => true ] );
+
+		$this->assertInstanceOf( WP_REST_Response::class, $response );
+		$this->assertSame( [ 'ok' => true ], $response->get_data() );
+	}
+
+	public function test__rest_handle_options_request() {
+		$server = new WP_REST_Server();
+		$server->register_route(
+			'demo/v1',
+			'/demo/v1/items',
+			[
+				[
+					'methods'             => 'GET',
+					'callback'            => '__return_true',
+					'permission_callback' => '__return_true',
+				],
+			]
+		);
+		$request = new WP_REST_Request( 'OPTIONS', '/demo/v1/items' );
+
+		$response = rest_handle_options_request( null, $server, $request );
+
+		$this->assertInstanceOf( WP_REST_Response::class, $response );
+		$this->assertSame( '/demo/v1/items', $response->get_matched_route() );
+		$this->assertContains( 'GET', $response->get_data()['methods'] );
+	}
+
+	public function test__rest_send_allow_header() {
+		$server = new WP_REST_Server();
+		$server->register_route(
+			'demo/v1',
+			'/demo/v1/items',
+			[
+				[
+					'methods'             => 'GET, POST',
+					'callback'            => '__return_true',
+					'permission_callback' => '__return_true',
+				],
+			]
+		);
+		$request = new WP_REST_Request( 'GET', '/demo/v1/items' );
+		$response = new WP_REST_Response();
+		$response->set_matched_route( '/demo/v1/items' );
+
+		rest_send_allow_header( $response, $server, $request );
+
+		$this->assertSame( 'GET, POST', $response->get_headers()['Allow'] );
+	}
+
+	public function test__rest_filter_response_fields() {
+		$request = new WP_REST_Request( 'GET', '/demo/v1/items' );
+		$request['_fields'] = 'id,nested.name';
+		$response = new WP_REST_Response(
+			[
+				'id'     => 1,
+				'title'  => 'Hidden',
+				'nested' => [ 'name' => 'Visible', 'secret' => 'Hidden' ],
+			]
+		);
+
+		rest_filter_response_fields( $response, new WP_REST_Server(), $request );
+
+		$this->assertSame( [ 'id' => 1, 'nested' => [ 'name' => 'Visible' ] ], $response->get_data() );
+	}
+
+	public function test__rest_authorization_required_code() {
+		$this->assertSame( 401, rest_authorization_required_code() );
+	}
+
+	public function test__rest_get_endpoint_args_for_schema() {
+		$args = rest_get_endpoint_args_for_schema(
+			[
+				'type'       => 'object',
+				'properties' => [
+					'id'    => [ 'type' => 'integer', 'readonly' => true ],
+					'title' => [ 'type' => 'string', 'required' => true, 'default' => 'Draft' ],
+				],
+			]
+		);
+
+		$this->assertArrayNotHasKey( 'id', $args );
+		$this->assertTrue( $args['title']['required'] );
+		$this->assertSame( 'Draft', $args['title']['default'] );
+	}
+
+	public function test__rest_convert_error_to_response() {
+		$response = rest_convert_error_to_response(
+			new WP_Error( 'demo_error', 'Broken', [ 'status' => 422, 'detail' => 'value' ] )
+		);
+
+		$this->assertSame( 422, $response->get_status() );
+		$this->assertSame( 'demo_error', $response->get_data()['code'] );
+		$this->assertSame( 'value', $response->get_data()['data']['detail'] );
 	}
 
 	public function test__register_rest_field() {

@@ -11,6 +11,7 @@ return [
 	'wp_parse_auth_cookie'          => '2.5.0',
 	'wp_sanitize_redirect'          => '2.3.0',
 	'wp_hash'                       => '2.0.3',
+	// 'is_user_logged_in'          => '2.0.0', // why: custom mock
 	// 'wp_salt'                     => '', // why: custom mock without DB fallback
 ];
 
@@ -29,7 +30,6 @@ wp_validate_auth_cookie   // why: depends on get_user_by + session tokens (DB)
 wp_generate_auth_cookie   // why: depends on wp_get_session_token + user sessions
 wp_set_auth_cookie        // why: sets HTTP cookies via setcookie()
 wp_clear_auth_cookie      // why: clears HTTP cookies via setcookie()
-is_user_logged_in         // why: depends on wp_get_current_user (DB)
 auth_redirect             // why: sends HTTP headers/redirect
 check_admin_referer       // why: depends on wp_verify_nonce → wp_get_current_user (DB)
 check_ajax_referer        // why: depends on wp_verify_nonce → wp_get_current_user (DB)

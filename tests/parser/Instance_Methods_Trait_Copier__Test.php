@@ -30,6 +30,10 @@ class Instance_Methods_Trait_Copier__Test extends Project_TestCase {
 					return $this->helper( $value );
 				}
 
+				public static function selected_static() {
+					return 'static';
+				}
+
 				public function skipped() {}
 			}
 			PHP
@@ -43,9 +47,11 @@ class Instance_Methods_Trait_Copier__Test extends Project_TestCase {
 				'wp-includes/class-source.php' => [
 					'class'     => 'Source_Class',
 					'trait'     => 'Runtime_Methods',
+					'imports'   => [ 'WP_Error' ],
 					'methods'   => [
-						'helper'   => '1.0.0',
-						'selected' => '2.0.0',
+						'helper'          => '1.0.0',
+						'selected'        => '2.0.0',
+						'selected_static' => '2.0.0',
 					],
 				],
 			],
@@ -56,9 +62,11 @@ class Instance_Methods_Trait_Copier__Test extends Project_TestCase {
 
 		$this->assertSame( "$tmp_dir/wp-runtime/copy/traits/Runtime_Methods.php", $copier->get_dest_file( $item ) );
 		$this->assertStringContainsString( 'namespace Unitest_WP_Copy;', $content );
+		$this->assertStringContainsString( 'use \\WP_Error;', $content );
 		$this->assertStringContainsString( 'trait Runtime_Methods {', $content );
 		$this->assertStringContainsString( 'private function helper( $value )', $content );
 		$this->assertStringContainsString( 'public function selected( $value )', $content );
+		$this->assertStringContainsString( 'public static function selected_static()', $content );
 		$this->assertStringNotContainsString( "return 'wrong class';", $content );
 		$this->assertStringNotContainsString( 'function skipped()', $content );
 	}

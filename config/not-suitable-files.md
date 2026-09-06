@@ -25,10 +25,11 @@ recorded blockers.
 The WordPress 7.0 review covered 756 named class declarations in 723 files. The
 inventory includes declarations nested inside `class_exists()` guards.
 
-- 70 classes are active in `config/classes.php`.
-- 23 classes requiring a runtime-boundary decision are listed in
+- 72 classes are active in `config/classes.php`.
+- 19 classes requiring a runtime-boundary decision are listed in
   `docs/symbol-eligibility-discussion.md`.
-- The remaining 663 declarations are unsuitable for the isolated runtime and are
+- `WP_REST_Server` is supported through the runtime-adapter mechanism.
+- The remaining 664 declarations are unsuitable for the isolated runtime and are
   covered below.
 
 Directory entries cover every class-bearing PHP file below that directory unless
@@ -58,11 +59,10 @@ that the class-body copier intentionally does not provide.
 - `wp-includes/customize/`
 - `wp-includes/widgets/`
 - `wp-includes/ai-client/`
-- `wp-includes/rest-api/endpoints/` — except discussion candidate
+- `wp-includes/rest-api/endpoints/` — except active
   `wp-includes/rest-api/endpoints/class-wp-rest-controller.php`
 - `wp-includes/rest-api/fields/`
-- `wp-includes/rest-api/search/` — except discussion candidate
-  `wp-includes/rest-api/search/class-wp-rest-search-handler.php`
+- `wp-includes/rest-api/search/`
 
 These subsystems require admin/request lifecycle, DB-backed entities and queries,
 live REST dispatch, network transports, or unavailable namespaced AI client

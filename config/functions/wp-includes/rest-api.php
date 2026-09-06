@@ -1,6 +1,7 @@
 <?php
 
 return [
+	'rest_convert_error_to_response'              => '5.7.0',
 	'rest_are_values_equal'                       => '5.7.0',
 	'rest_validate_enum'                          => '5.7.0',
 	'rest_validate_null_value_from_schema'        => '5.7.0',
@@ -10,6 +11,7 @@ return [
 	'rest_validate_number_value_from_schema'      => '5.7.0',
 	'rest_validate_string_value_from_schema'      => '5.7.0',
 	'rest_validate_integer_value_from_schema'     => '5.7.0',
+	'rest_get_endpoint_args_for_schema'           => '5.6.0',
 	'rest_validate_json_schema_pattern'           => '5.6.0',
 	'rest_find_matching_pattern_property_schema'  => '5.6.0',
 	'rest_format_combining_operation_error'       => '5.6.0', // Schema combining-operation helpers.
@@ -33,6 +35,8 @@ return [
 	'rest_parse_embed_param'                      => '5.4.0', // Utility helpers used by preload/context filtering logic.
 	'_rest_array_intersect_key_recursive'         => '5.3.0', // Pure recursive array helper.
 	'rest_is_field_included'                      => '5.3.0', // Pure field-name inclusion helper.
+	'rest_filter_response_fields'                 => '4.8.0',
+	'rest_authorization_required_code'            => '4.7.0',
 	'register_rest_field'                         => '4.7.0', // Pure registry utility for additional REST fields.
 	'rest_get_avatar_sizes'                       => '4.7.0', // Simple filtered static list.
 	'rest_validate_request_arg'                   => '4.7.0', // Request-arg schema adapters (work with any object exposing get_attributes()).
@@ -43,6 +47,13 @@ return [
 	'rest_is_boolean'                             => '4.7.0',
 	'rest_validate_value_from_schema'             => '4.7.0',
 	'rest_sanitize_value_from_schema'             => '4.7.0',
+	'rest_get_server'                             => '4.5.0',
+	'register_rest_route'                         => '4.4.0',
+	'rest_do_request'                             => '4.4.0',
+	'rest_ensure_request'                         => '4.4.0',
+	'rest_ensure_response'                        => '4.4.0',
+	'rest_handle_options_request'                 => '4.4.0',
+	'rest_send_allow_header'                      => '4.4.0',
 	'rest_get_url_prefix'                         => '4.4.0', // Pure prefix accessor.
 	'rest_url'                                    => '4.4.0',
 	'rest_parse_date'                             => '4.4.0', // Pure date/color parsing helpers.
@@ -56,20 +67,12 @@ return [
 /*
 Not suitable in isolated PHPUnit env:
 
-register_rest_route                       // why: depends on rest_get_server() + WP_REST_Server runtime.
 rest_api_init                             // why: depends on full WP query/rewrite runtime.
 rest_api_register_rewrites                // why: depends on add_rewrite_rule() and WP_Rewrite globals.
 rest_api_default_filters                  // why: runtime hook wiring for full REST serving lifecycle.
 create_initial_rest_routes                // why: requires many WP_REST_* controllers/registries.
 rest_api_loaded                           // why: requires live server request dispatch.
-rest_do_request                           // why: depends on WP_REST_Request / WP_REST_Server.
-rest_get_server                           // why: instantiates WP_REST_Server (class not copied here).
-rest_ensure_request                       // why: constructs WP_REST_Request.
-rest_ensure_response                      // why: depends on WP_REST_Response / WP_HTTP_Response classes.
 rest_send_cors_headers                    // why: depends on get_http_origin() (not included in this project).
-rest_handle_options_request               // why: constructs WP_REST_Response and depends on REST server route objects.
-rest_send_allow_header                    // why: depends on WP_REST_Response/WP_REST_Server interfaces.
-rest_filter_response_fields               // why: depends on WP_REST_Response methods.
 rest_output_rsd                           // why: depends on get_rest_url().
 rest_output_link_wp_head                  // why: depends on get_rest_url() and queried-resource route runtime.
 rest_output_link_header                   // why: depends on get_rest_url() and queried-resource route runtime.
@@ -80,14 +83,11 @@ rest_get_authenticated_app_password       // why: depends on WP_Application_Pass
 rest_application_password_check_errors    // why: depends on WP_Application_Passwords runtime.
 rest_add_application_passwords_to_index   // why: depends on WP_REST_Response object + app-password runtime.
 rest_get_avatar_urls                      // why: depends on get_avatar_url() not included.
-rest_authorization_required_code          // why: depends on is_user_logged_in() which is not available in this env.
 rest_preload_api_request                  // why: depends on WP_REST_Request / WP_REST_Server / response objects.
 rest_get_route_for_post                   // why: depends on WP_Post model + post-type runtime.
 rest_get_route_for_post_type_items        // why: depends on get_post_type_object() runtime registry.
 rest_get_route_for_term                   // why: depends on WP_Term model + taxonomy runtime.
 rest_get_route_for_taxonomy_items         // why: depends on get_taxonomy() runtime registry.
 rest_get_queried_resource_route           // why: depends on global query conditionals.
-rest_get_endpoint_args_for_schema         // why: default arg uses WP_REST_Server::CREATABLE.
-rest_convert_error_to_response            // why: returns WP_REST_Response (class not copied here).
 wp_is_rest_endpoint                       // why: depends on wp_is_serving_rest_request() and WP_REST_Server runtime.
 */
