@@ -81,6 +81,8 @@ Available Symbols
 For the full list of available classes/functions, see:
 [`SYMBOLS-INFO.md`](SYMBOLS-INFO.md). It separately lists symbols that are mockable via WP_Mock.
 
+For differences between runtime releases, see [`CHANGELOG.md`](CHANGELOG.md).
+
 ### Runtime-Adapted Classes
 
 Some WordPress classes cannot be copied as a whole, so the runtime provides a partial adapter instead. Such classes are listed in the first section of [`SYMBOLS-INFO.md`](SYMBOLS-INFO.md) together with their public methods and properties, where `[wp]` marks an unchanged copied WordPress method and `[adapted]` marks a runtime-specific implementation.
