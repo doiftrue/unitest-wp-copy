@@ -69,6 +69,16 @@ worktrees.status: ## Git status in release worktrees
 		echo; \
 	done
 
+worktree.add: ## Create WP line worktree. Eg: make worktree.add  WP_LINE=7.1  FROM_WP_LINE=7.0
+	@[ -n "$(WP_LINE)" ] && [ -n "$(FROM_WP_LINE)" ] || { echo 'Use: make worktree.add WP_LINE=7.1 FROM_WP_LINE=7.0'; exit 1; }
+	@branch="wp-$(WP_LINE)"; \
+	dir="worktrees/$$branch"; \
+	if git worktree list --porcelain | grep -Fqx "worktree $$(realpath -m "$$dir")"; then \
+		echo "Worktree $$dir already exists."; exit 0; \
+	fi; \
+	git worktree add -b "$$branch" "$$dir" "wp-$(FROM_WP_LINE)"
+
+
 php.run: ## Run PHP code. Eg: make php.run code='echo "$wp_version\n";'
 	@if [ -z "$(strip $(value code))" ]; then \
 		echo 'Use: make php.run code='\''include "wp-core/wp-includes/version.php"; echo $$wp_version, "\\n";'\'''; \
