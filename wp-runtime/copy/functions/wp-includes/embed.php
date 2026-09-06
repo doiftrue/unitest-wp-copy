@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/embed.php (WP 6.5.8)
+// wp-includes/embed.php (WP 6.5.10)
 if( ! function_exists( 'wp_maybe_enqueue_oembed_host_js' ) ) :
 	function wp_maybe_enqueue_oembed_host_js( $html ) {
 		if (
@@ -16,7 +16,7 @@ if( ! function_exists( 'wp_maybe_enqueue_oembed_host_js' ) ) :
 	}
 endif;
 
-// wp-includes/embed.php (WP 6.5.8)
+// wp-includes/embed.php (WP 6.5.10)
 if( ! function_exists( 'wp_filter_oembed_iframe_title_attribute' ) ) :
 	function wp_filter_oembed_iframe_title_attribute( $result, $data, $url ) {
 		if ( false === $result || ! in_array( $data->type, array( 'rich', 'video' ), true ) ) {
@@ -70,7 +70,7 @@ if( ! function_exists( 'wp_filter_oembed_iframe_title_attribute' ) ) :
 	}
 endif;
 
-// wp-includes/embed.php (WP 6.5.8)
+// wp-includes/embed.php (WP 6.5.10)
 if( ! function_exists( 'wp_oembed_ensure_format' ) ) :
 	function wp_oembed_ensure_format( $format ) {
 		if ( ! in_array( $format, array( 'json', 'xml' ), true ) ) {
@@ -81,7 +81,7 @@ if( ! function_exists( 'wp_oembed_ensure_format' ) ) :
 	}
 endif;
 
-// wp-includes/embed.php (WP 6.5.8)
+// wp-includes/embed.php (WP 6.5.10)
 if( ! function_exists( '_oembed_create_xml' ) ) :
 	function _oembed_create_xml( $data, $node = null ) {
 		if ( ! is_array( $data ) || empty( $data ) ) {
@@ -109,14 +109,14 @@ if( ! function_exists( '_oembed_create_xml' ) ) :
 	}
 endif;
 
-// wp-includes/embed.php (WP 6.5.8)
+// wp-includes/embed.php (WP 6.5.10)
 if( ! function_exists( '_oembed_filter_feed_content' ) ) :
 	function _oembed_filter_feed_content( $content ) {
 		return str_replace( '<iframe class="wp-embedded-content" sandbox="allow-scripts" security="restricted" style="position: absolute; clip: rect(1px, 1px, 1px, 1px);"', '<iframe class="wp-embedded-content" sandbox="allow-scripts" security="restricted"', $content );
 	}
 endif;
 
-// wp-includes/embed.php (WP 6.5.8)
+// wp-includes/embed.php (WP 6.5.10)
 if( ! function_exists( 'wp_embed_handler_audio' ) ) :
 	function wp_embed_handler_audio( $matches, $attr, $url, $rawattr ) {
 		$audio = sprintf( '[audio src="%s" /]', esc_url( $url ) );
@@ -135,7 +135,7 @@ if( ! function_exists( 'wp_embed_handler_audio' ) ) :
 	}
 endif;
 
-// wp-includes/embed.php (WP 6.5.8)
+// wp-includes/embed.php (WP 6.5.10)
 if( ! function_exists( 'wp_embed_handler_video' ) ) :
 	function wp_embed_handler_video( $matches, $attr, $url, $rawattr ) {
 		$dimensions = '';
@@ -159,7 +159,7 @@ if( ! function_exists( 'wp_embed_handler_video' ) ) :
 	}
 endif;
 
-// wp-includes/embed.php (WP 6.5.8)
+// wp-includes/embed.php (WP 6.5.10)
 if( ! function_exists( 'wp_embed_defaults' ) ) :
 	function wp_embed_defaults( $url = '' ) {
 		if ( ! empty( $GLOBALS['content_width'] ) ) {

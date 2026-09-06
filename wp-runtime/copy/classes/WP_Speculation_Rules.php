@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-speculation-rules.php (WP 7.0.2)
+// wp-includes/class-wp-speculation-rules.php (WP 7.1)
 if( ! class_exists( 'WP_Speculation_Rules' ) ) :
 	class WP_Speculation_Rules implements JsonSerializable {
 	
@@ -250,24 +250,30 @@ if( ! class_exists( 'WP_Speculation_Rules' ) ) :
 		 * Checks whether the given speculation rules mode is valid.
 		 *
 		 * @since 6.8.0
+		 * @since 7.1.0 The $mode param now allows mixed and not just string.
 		 *
-		 * @param string $mode Speculation rules mode.
+		 * @param mixed $mode Speculation rules mode.
 		 * @return bool True if valid, false otherwise.
+		 *
+		 * @phpstan-assert-if-true 'prefetch'|'prerender' $mode
 		 */
-		public static function is_valid_mode( string $mode ): bool {
-			return isset( self::$mode_allowlist[ $mode ] );
+		public static function is_valid_mode( $mode ): bool {
+			return is_string( $mode ) && isset( self::$mode_allowlist[ $mode ] );
 		}
 	
 		/**
 		 * Checks whether the given speculation rules eagerness is valid.
 		 *
 		 * @since 6.8.0
+		 * @since 7.1.0 The $eagerness param now allows mixed and not just string.
 		 *
-		 * @param string $eagerness Speculation rules eagerness.
+		 * @param mixed $eagerness Speculation rules eagerness.
 		 * @return bool True if valid, false otherwise.
+		 *
+		 * @phpstan-assert-if-true 'conservative'|'moderate'|'eager'|'immediate' $eagerness
 		 */
-		public static function is_valid_eagerness( string $eagerness ): bool {
-			return isset( self::$eagerness_allowlist[ $eagerness ] );
+		public static function is_valid_eagerness( $eagerness ): bool {
+			return is_string( $eagerness ) && isset( self::$eagerness_allowlist[ $eagerness ] );
 		}
 	
 		/**

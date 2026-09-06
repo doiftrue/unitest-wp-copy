@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-http-cookie.php (WP 6.5.8)
+// wp-includes/class-wp-http-cookie.php (WP 6.5.10)
 if( ! class_exists( 'WP_Http_Cookie' ) ) :
 	class WP_Http_Cookie {
 	

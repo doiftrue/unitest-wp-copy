@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/theme.php (WP 6.5.8)
+// wp-includes/theme.php (WP 6.5.10)
 if( ! function_exists( 'register_theme_feature' ) ) :
 	function register_theme_feature( $feature, $args = array() ) {
 		global $_wp_registered_theme_features;
@@ -112,7 +112,7 @@ if( ! function_exists( 'register_theme_feature' ) ) :
 	}
 endif;
 
-// wp-includes/theme.php (WP 6.5.8)
+// wp-includes/theme.php (WP 6.5.10)
 if( ! function_exists( 'create_initial_theme_features' ) ) :
 	function create_initial_theme_features() {
 		register_theme_feature(
@@ -500,7 +500,7 @@ if( ! function_exists( 'create_initial_theme_features' ) ) :
 	}
 endif;
 
-// wp-includes/theme.php (WP 6.5.8)
+// wp-includes/theme.php (WP 6.5.10)
 if( ! function_exists( '_remove_theme_support' ) ) :
 	function _remove_theme_support( $feature ) {
 		global $_wp_theme_features;
@@ -552,7 +552,7 @@ if( ! function_exists( '_remove_theme_support' ) ) :
 	}
 endif;
 
-// wp-includes/theme.php (WP 6.5.8)
+// wp-includes/theme.php (WP 6.5.10)
 if( ! function_exists( 'remove_theme_support' ) ) :
 	function remove_theme_support( $feature ) {
 		// Do not remove internal registrations that are not used directly by themes.
@@ -564,7 +564,7 @@ if( ! function_exists( 'remove_theme_support' ) ) :
 	}
 endif;
 
-// wp-includes/theme.php (WP 6.5.8)
+// wp-includes/theme.php (WP 6.5.10)
 if( ! function_exists( 'add_theme_support' ) ) :
 	function add_theme_support( $feature, ...$args ) {
 		global $_wp_theme_features;
@@ -819,7 +819,7 @@ if( ! function_exists( 'add_theme_support' ) ) :
 	}
 endif;
 
-// wp-includes/theme.php (WP 6.5.8)
+// wp-includes/theme.php (WP 6.5.10)
 if( ! function_exists( 'get_locale_stylesheet_uri' ) ) :
 	function get_locale_stylesheet_uri() {
 		global $wp_locale;
@@ -845,7 +845,7 @@ if( ! function_exists( 'get_locale_stylesheet_uri' ) ) :
 	}
 endif;
 
-// wp-includes/theme.php (WP 6.5.8)
+// wp-includes/theme.php (WP 6.5.10)
 if( ! function_exists( 'get_stylesheet_uri' ) ) :
 	function get_stylesheet_uri() {
 		$stylesheet_dir_uri = get_stylesheet_directory_uri();

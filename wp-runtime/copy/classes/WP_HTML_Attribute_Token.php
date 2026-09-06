@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/html-api/class-wp-html-attribute-token.php (WP 6.5.8)
+// wp-includes/html-api/class-wp-html-attribute-token.php (WP 6.5.10)
 if( ! class_exists( 'WP_HTML_Attribute_Token' ) ) :
 	class WP_HTML_Attribute_Token {
 		/**
