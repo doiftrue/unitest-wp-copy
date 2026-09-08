@@ -202,6 +202,7 @@ WP_Block_Type{}
 WP_Date_Query{}
 WP_Dependencies{}
 WP_Error{}
+WP_Font_Face{}
 WP_Font_Utils{}
 WP_HTML_Active_Formatting_Elements{}
 WP_HTML_Attribute_Token{}
