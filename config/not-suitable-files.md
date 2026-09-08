@@ -25,8 +25,8 @@ recorded blockers.
 The WordPress 7.0 review covered 756 named class declarations in 723 files. The
 inventory includes declarations nested inside `class_exists()` guards.
 
-- 72 classes are active in `config/classes.php`.
-- 19 classes requiring a runtime-boundary decision are listed in
+- 77 classes are active in `config/classes.php`.
+- 14 classes requiring a runtime-boundary decision are listed in
   `docs/symbol-eligibility-discussion.md`.
 - `WP_REST_Server` is supported through the runtime-adapter mechanism.
 - The remaining 664 declarations are unsuitable for the isolated runtime and are

@@ -1,111 +1,133 @@
-# Symbol Eligibility Discussion
+Symbol Eligibility Discussion
+=======
 
-## Core Class Review Status
+Review Status
+------
+The candidate decisions below were refreshed against WordPress 7.1 source.
 
-The WordPress 7.0 core review covered all 756 named class declarations in 723
-files under `wp-core/wp-includes/` and `wp-core/wp-admin/`, including declarations
-nested inside `class_exists()` guards.
-
-- 72 classes are active in `config/classes.php`.
-- 18 classes below require an explicit runtime-boundary decision.
+- 77 classes are active in `config/classes.php`.
+- 13 classes below still require a runtime-boundary or adapter decision.
 - 1 sitemap class is tracked separately in [symbol-eligibility-discussion-sitemap.md](symbol-eligibility-discussion-sitemap.md).
-- The remaining 664 declarations are covered by `config/not-suitable-files.md`.
+- `WP_REST_Server` is supported through the runtime-adapter mechanism.
+- The remaining 664 declarations from the complete 7.0 inventory are covered by
+  `config/not-suitable-files.md`.
 
 
-## Block Rendering and Theme JSON Boundary
+Added After Re-review
+------
+These classes have dependency-complete, predictable behavior in the isolated
+runtime and are now active:
 
-### Candidates
+- `WP_Block_Processor` — pure streaming parsing of block delimiters, HTML spans,
+  and JSON attributes; depends only on `WP_HTML_Span` and available PHP/WP
+  compatibility functions.
+- `WP_Block_Templates_Registry` — in-memory plugin-template registry; its
+  `WP_Block_Template`, `WP_Error`, `get_stylesheet()`,
+  `get_default_block_template_types()`, and `wp_parse_args()` dependencies are
+  available. The `register_block_template()` and
+  `unregister_block_template()` wrappers are included with it.
+- `WP_Font_Face` — validates caller-provided font declarations and generates CSS
+  in memory before printing a `<style>` element; it does not resolve or read font
+  files.
+- `WP_Abilities_Registry` and `WP_Ability_Categories_Registry` — in-memory
+  lifecycle-aware registries. Their complete public function surface is included;
+  callers must fire `init` and register values on the corresponding
+  `wp_abilities_api_*_init` actions, as in WordPress.
+
+
+Block Rendering and Theme JSON Boundary
+------
+### Requires a reduced block-rendering adapter
 
 - `WP_Block` — `wp-includes/class-wp-block.php`
 - `WP_Block_List` — `wp-includes/class-wp-block-list.php`
-- `WP_Block_Processor` — `wp-includes/class-wp-block-processor.php`
+
+`WP_Block_List` is only useful with `WP_Block`. The `WP_Block` constructor and
+context propagation are mostly in-memory, but `render()` crosses registered
+render callbacks, block bindings/supports, Interactivity API processing, script
+and style queues, and script modules. Add these only after defining a
+runtime-adapted `WP_Block` whose supported rendering contract and omitted
+enqueue/interactivity behavior are explicit.
+
+### Requires a block-support initialization contract
+
 - `WP_Block_Supports` — `wp-includes/class-wp-block-supports.php`
+
+The registry itself is in-memory, but useful behavior depends on the complete set
+of support callbacks normally installed during WordPress bootstrap. Adding only
+the class would expose an empty registry and incomplete public behavior. To add
+it, select the supported block-support modules, include their callback dependency
+chains, and initialize them deterministically in the runtime.
+
+### Requires file/path policy or an in-memory-only adapter
+
 - `WP_Block_Metadata_Registry` — `wp-includes/class-wp-block-metadata-registry.php`
-- `WP_Block_Templates_Registry` — `wp-includes/class-wp-block-templates-registry.php`
 - `WP_Block_Patterns_Registry` — `wp-includes/class-wp-block-patterns-registry.php`
+
+The metadata registry is centered on manifest discovery, WordPress root
+constants, theme/plugin paths, and filesystem reads. The patterns registry can
+store inline content, but its public retrieval path also loads PHP/HTML files and
+applies block hooks. Add either only after defining allowed roots and file loading,
+or provide an adapter that accepts preloaded metadata/content and clearly omits
+WordPress discovery semantics.
+
+### Requires the complete Theme JSON subsystem
+
 - `WP_Theme_JSON` — `wp-includes/class-wp-theme-json.php`
 - `WP_Theme_JSON_Data` — `wp-includes/class-wp-theme-json-data.php`
 - `WP_Theme_JSON_Resolver` — `wp-includes/class-wp-theme-json-resolver.php`
 - `WP_Theme_JSON_Schema` — `wp-includes/class-wp-theme-json-schema.php`
 - `WP_Duotone` — `wp-includes/class-wp-duotone.php`
+
+`WP_Theme_JSON_Schema` is a deterministic array migrator, but its public default
+references `WP_Theme_JSON::LATEST_SCHEMA`, so copying it alone leaves a fatal
+default path. `WP_Theme_JSON_Data` also directly requires the full class.
+`WP_Theme_JSON`, the resolver, and duotone rendering depend on block metadata,
+style-engine helpers, theme files, global styles/options, upload URLs, and enqueue
+state. Add this group only as a deliberately supported Theme JSON subsystem, or
+extract a narrowly scoped schema adapter with its own schema-version constant.
+
+### Requires an uploads URL provider
+
 - `WP_URL_Pattern_Prefixer` — `wp-includes/class-wp-url-pattern-prefixer.php`
 
-### Why Discussion Is Required
-
-- The block object/list/processor chain is in-memory at its core, but meaningful
-  rendering crosses into registered block callbacks, global context, filters,
-  block supports, and theme settings.
-- Metadata, template, and pattern registries read manifests or PHP files and depend
-  on theme/plugin path policy.
-- `WP_Theme_JSON_Schema` is nearly pure, but its default path requires
-  `WP_Theme_JSON::LATEST_SCHEMA`; adding it alone leaves a public default fatal.
-- `WP_Theme_JSON`, its data wrapper, resolver, duotone processing, and URL prefixing
-  form one broad theme/bootstrap subsystem with theme files, options, global styles,
-  upload URLs, and runtime-dependent roots.
-
-### Decision Needed
-
-Choose whether to support a reduced block-render/theme-json subsystem, and define
-which file/path/theme providers must be mocked versus intentionally omitted.
+Caller-provided contexts make prefixing pure, and most default URL providers are
+already available. The default constructor still calls `wp_upload_dir()`, whose
+WordPress implementation is intentionally excluded because it includes upload
+path, option, and filesystem behavior. Add the class only after introducing a
+runtime-adapted uploads URL provider or changing the adapter contract to require
+explicit contexts.
 
 
-## Font Rendering Boundary
+Font Resolution Boundary
+------
+### Requires Theme JSON providers
 
-### Candidates
-
-- `WP_Font_Face` — `wp-includes/fonts/class-wp-font-face.php`
 - `WP_Font_Face_Resolver` — `wp-includes/fonts/class-wp-font-face-resolver.php`
 
-### Why Discussion Is Required
+Its conversion helpers are deterministic, but both public entry points depend on
+unavailable Theme JSON state: `wp_get_global_settings()` and
+`WP_Theme_JSON_Resolver::get_style_variations()`. Add it with the complete Theme
+JSON subsystem, or provide an adapter that accepts settings/style variations as
+arguments while retaining the original conversion logic.
 
-- `WP_Font_Face` can format declarations in memory, but its main rendering flow is
-  tied to font sources and HTML/style output.
-- `WP_Font_Face_Resolver` depends on the Theme JSON resolver and theme-file URI
-  resolution.
-- `WP_Font_Collection` and `WP_Font_Library` are not candidates: their public
-  collection contract includes filesystem and remote JSON loading and is recorded
-  as unsuitable.
-
-### Decision Needed
-
-Decide whether font-face rendering should consume only caller-provided in-memory
-data or retain WordPress file/theme resolution semantics.
+`WP_Font_Collection` and `WP_Font_Library` remain unsuitable because filesystem
+and remote JSON loading are central to their public contract.
 
 
-## Abilities Registry Lifecycle
-
-### Candidates
-
-- `WP_Abilities_Registry` — `wp-includes/abilities-api/class-wp-abilities-registry.php`
-- `WP_Ability_Categories_Registry` — `wp-includes/abilities-api/class-wp-ability-categories-registry.php`
-
-### Why Discussion Is Required
-
-- The `WP_Ability` and `WP_Ability_Category` value objects are already copied.
-- Registry initialization is gated on the WordPress `init` action and emits
-  subsystem initialization actions.
-- `WP_Abilities_Registry` also requires the currently unavailable
-  `wp_has_ability_category()` API.
-
-### Decision Needed
-
-Decide whether to add the complete Abilities registration-function surface and
-model `init`, or keep only directly constructible value objects.
-
-
-## Interactivity Runtime Boundary
-
-### Candidate
+Interactivity Runtime Boundary
+------
+### Requires a processing-only adapter
 
 - `WP_Interactivity_API` — `wp-includes/interactivity-api/class-wp-interactivity-api.php`
 
-### Why Discussion Is Required
+The copied directives processor is deterministic, but the full API also owns
+process-global state, derived-state callbacks, script-module filters,
+client-navigation attributes, request URL resolution, router styles, footer
+output, and direct markup output. Do not copy the full class unchanged.
 
-- The directives processor is already copied and operates on in-memory HTML.
-- The main API manages global state, directive evaluation, server-side rendering,
-  script-module integration, and output lifecycle behavior.
-
-### Decision Needed
-
-Define whether server-side Interactivity API rendering is an intended runtime
-feature or whether only the deterministic directives processor should remain.
+If stateful server-side directive rendering is needed, add a reduced adapter
+limited to `state()`, `config()`, `process_directives()`, and processing-time
+context/element access. Router markup, style enqueueing, footer hooks, and
+script-module registration should remain unsupported unless the project adopts
+those lifecycle boundaries explicitly.

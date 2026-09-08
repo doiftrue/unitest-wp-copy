@@ -75,10 +75,14 @@ return [
 	'wp-includes/class-wp-block-parser.php'       => [ 'WP_Block_Parser' => '5.0.0' ],
 	'wp-includes/class-wp-block-parser-block.php' => [ 'WP_Block_Parser_Block' => '5.0.0' ],
 	'wp-includes/class-wp-block-parser-frame.php' => [ 'WP_Block_Parser_Frame' => '5.0.0' ],
+	// Streaming block-delimiter parser; pure string/JSON processing.
+	'wp-includes/class-wp-block-processor.php'    => [ 'WP_Block_Processor' => '6.9.0' ],
 	'wp-includes/class-wp-block-type.php'         => [ 'WP_Block_Type' => '5.0.0' ],
 	// Block editor/template data holders; no live editor or template lifecycle.
 	'wp-includes/class-wp-block-editor-context.php' => [ 'WP_Block_Editor_Context' => '5.8.0' ],
 	'wp-includes/class-wp-block-template.php'       => [ 'WP_Block_Template' => '5.8.0' ],
+	// In-memory registry for plugin-provided block templates.
+	'wp-includes/class-wp-block-templates-registry.php' => [ 'WP_Block_Templates_Registry' => '6.7.0' ],
 	// In-memory registry used by block type lookup helpers.
 	'wp-includes/class-wp-block-type-registry.php' => [ 'WP_Block_Type_Registry' => '5.0.0' ],
 	// In-memory Block Bindings source model and registry.
@@ -108,9 +112,15 @@ return [
 	'wp-includes/style-engine/class-wp-style-engine.php' => [ 'WP_Style_Engine' => '6.1.0' ],
 	// Font value sanitization and normalization helpers; no file or network access.
 	'wp-includes/fonts/class-wp-font-utils.php' => [ 'WP_Font_Utils' => '6.5.0' ],
-	// Abilities value objects execute supplied callbacks against copied schema validation helpers.
+	// In-memory font-face CSS generation and output.
+	'wp-includes/fonts/class-wp-font-face.php' => [ 'WP_Font_Face' => '6.4.0' ],
+	// Abilities value objects and lifecycle-aware in-memory registries.
 	'wp-includes/abilities-api/class-wp-ability.php'          => [ 'WP_Ability' => '6.9.0' ],
 	'wp-includes/abilities-api/class-wp-ability-category.php' => [ 'WP_Ability_Category' => '6.9.0' ],
+	'wp-includes/abilities-api/class-wp-abilities-registry.php' => [ 'WP_Abilities_Registry' => '6.9.0' ],
+	'wp-includes/abilities-api/class-wp-ability-categories-registry.php' => [
+		'WP_Ability_Categories_Registry' => '6.9.0',
+	],
 	// In-memory POMO models, plural evaluator, translation catalog, and string reader.
 	'wp-includes/pomo/entry.php' => [ 'Translation_Entry' => '2.8.0' ],
 	'wp-includes/pomo/plural-forms.php' => [ 'Plural_Forms' => '4.9.0' ],
