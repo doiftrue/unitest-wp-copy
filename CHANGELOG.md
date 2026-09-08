@@ -19,6 +19,23 @@ because its changes are shared by all WordPress-line tags that publish it.
 Availability for a particular WordPress line can be checked in the repository
 tags.
 
+## 4.1 - 2026-09-08
+
+### Added
+
+- Added the WordPress abilities API and in-memory ability and ability-category
+  registries.
+- Added `WP_Block_Processor`, `WP_Block_Templates_Registry`, and block-template
+  registration helpers.
+- Added `WP_Font_Face` for in-memory font-face CSS generation.
+- Added `make phpunit.all` to switch through and test every supported WordPress
+  line.
+
+### Changed
+
+- Updated generated runtime copies and version overlays for the latest supported
+  WordPress patch releases.
+
 ## 4.0 - 2026-09-06
 
 ### Added

@@ -2,6 +2,7 @@
 /config          export-ignore
 /tests           export-ignore
 AGENTS.md        export-ignore
+CHANGELOG.md     export-ignore
 Makefile         export-ignore
 composer.lock    export-ignore
 phpunit.xml      export-ignore
