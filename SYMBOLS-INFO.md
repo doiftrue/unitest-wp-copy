@@ -188,6 +188,8 @@ PasswordHash{}
 Plural_Forms{}
 Translation_Entry{}
 Translations{}
+WP_Abilities_Registry{}
+WP_Ability_Categories_Registry{}
 WP_Ability_Category{}
 WP_Ability{}
 WP_Block_Bindings_Registry{}
@@ -197,7 +199,9 @@ WP_Block_Parser_Block{}
 WP_Block_Parser_Frame{}
 WP_Block_Parser{}
 WP_Block_Pattern_Categories_Registry{}
+WP_Block_Processor{}
 WP_Block_Styles_Registry{}
+WP_Block_Templates_Registry{}
 WP_Block_Template{}
 WP_Block_Type_Registry{}
 WP_Block_Type{}
@@ -206,6 +210,7 @@ WP_Date_Query{}
 WP_Dependencies{}
 WP_Error{}
 WP_Exception{}
+WP_Font_Face{}
 WP_Font_Utils{}
 WP_HTML_Active_Formatting_Elements{}
 WP_HTML_Attribute_Token{}
@@ -552,6 +557,7 @@ register_activation_hook()
 register_block_bindings_source()
 register_block_pattern_category()
 register_block_style()
+register_block_template()
 register_deactivation_hook()
 register_meta()
 register_nav_menu()
@@ -697,6 +703,7 @@ unescape_invalid_shortcodes()
 unregister_block_bindings_source()
 unregister_block_pattern_category()
 unregister_block_style()
+unregister_block_template()
 unregister_block_type()
 unregister_meta_key()
 unregister_nav_menu()
@@ -793,6 +800,10 @@ wp_functionality_constants()
 wp_fuzzy_number_match()
 wp_generate_password()
 wp_generate_tag_cloud()
+wp_get_abilities()
+wp_get_ability()
+wp_get_ability_categories()
+wp_get_ability_category()
 wp_get_attachment_id3_keys()
 wp_get_audio_extensions()
 wp_get_block_name_from_theme_json_path()
@@ -809,6 +820,8 @@ wp_get_password_hint()
 wp_get_registered_image_subsizes()
 wp_get_script_tag()
 wp_get_video_extensions()
+wp_has_ability()
+wp_has_ability_category()
 wp_has_noncharacters()
 wp_hash()
 wp_hash_password()
@@ -920,6 +933,8 @@ wp_privacy_anonymize_ip()
 wp_prototype_before_jquery()
 wp_readonly()
 wp_recursive_ksort()
+wp_register_ability()
+wp_register_ability_category()
 wp_register_comment_personal_data_eraser()
 wp_register_comment_personal_data_exporter()
 wp_register_plugin_realpath()
@@ -978,6 +993,8 @@ wp_timezone()
 wp_trim_excerpt()
 wp_trim_words()
 wp_unique_id_from_values()
+wp_unregister_ability()
+wp_unregister_ability_category()
 wp_unslash()
 wp_untrash_post_set_previous_status()
 wp_user_request_action_description()
