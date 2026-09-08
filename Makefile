@@ -28,8 +28,16 @@ composer.update: ## Update dependencies
 phpunit: ## Run tests. Optional: make phpunit WP_LINE=6.8
 	$(call php_run, -e WP_LINE="$(WP_LINE)", composer run phpunit -- --colors=always)
 
-parser.run: ## Generate WP copies
-	$(call php_run, , php parser/run.php --verbose)
+WP_LINES := $(notdir $(patsubst %/,%,$(wildcard wp-runtime/wp-line-extra/*/)))
+phpunit.all: ## Switch and run tests for all WP lines
+	@for wp_line in $(WP_LINES); do \
+		printf "\033[35m\n============== PHPUNIT WP $$wp_line ==============\n\n\033[0m"; \
+		$(MAKE) switch WP_LINE="$$wp_line" QUIET=1 && $(MAKE) phpunit || exit $$?; \
+		echo; \
+	done
+
+parser.run: ## Generate WP copies. Optional: make parser.run QUIET=1
+	$(call php_run, , php parser/run.php $(if $(QUIET),,--verbose))
 
 switch: ## Switch WP version. Eg: make switch  WP_LINE=6.8
 	@[ -n "$(WP_LINE)" ] || { echo 'Use: make switch WP_LINE=6.8'; exit 1; }
@@ -39,7 +47,6 @@ switch: ## Switch WP version. Eg: make switch  WP_LINE=6.8
 release: ## Release WP line. Eg: make release  WP_LINE=6.8  NOT_PUSH=1
 	WP_LINE="$(WP_LINE)" NOT_PUSH="$(NOT_PUSH)" bash releaser/release.sh
 
-WP_LINES := $(notdir $(patsubst %/,%,$(wildcard wp-runtime/wp-line-extra/*/)))
 release.all: ## Release all WP lines
 	@status=0; \
 	for wp_line in $(WP_LINES); do \
