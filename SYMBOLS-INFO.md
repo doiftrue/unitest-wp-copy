@@ -196,6 +196,7 @@ WP_Block_Parser_Frame{}
 WP_Block_Parser{}
 WP_Block_Pattern_Categories_Registry{}
 WP_Block_Styles_Registry{}
+WP_Block_Templates_Registry{}
 WP_Block_Template{}
 WP_Block_Type_Registry{}
 WP_Block_Type{}
@@ -203,6 +204,7 @@ WP_Date_Query{}
 WP_Dependencies{}
 WP_Error{}
 WP_Exception{}
+WP_Font_Face{}
 WP_Font_Utils{}
 WP_HTML_Active_Formatting_Elements{}
 WP_HTML_Attribute_Token{}
@@ -533,6 +535,7 @@ register_activation_hook()
 register_block_bindings_source()
 register_block_pattern_category()
 register_block_style()
+register_block_template()
 register_deactivation_hook()
 register_meta()
 register_nav_menu()
@@ -678,6 +681,7 @@ unescape_invalid_shortcodes()
 unregister_block_bindings_source()
 unregister_block_pattern_category()
 unregister_block_style()
+unregister_block_template()
 unregister_block_type()
 unregister_meta_key()
 unregister_nav_menu()
