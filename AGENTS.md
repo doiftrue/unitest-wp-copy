@@ -9,6 +9,7 @@ User-facing usage belongs to `README.md`.
 ## Agent Invariants
 
 - Project code and code comments must be written in English.
+- Do not create commits automatically. Leave changes in the working tree unless the user explicitly asks to commit them.
 - Treat `wp-runtime/copy/` as generated output. Do not manually edit generated logic.
 - Do not use `worktrees/` for regular development. It is an artifact area for release branches only.
 - When adding/updating copied symbols, update `config/*` first, then regenerate via parser, then rerun tests.

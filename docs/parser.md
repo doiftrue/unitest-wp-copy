@@ -50,10 +50,18 @@ The generated trait is internal implementation support and is not listed as a sy
 A new manual class placed in `wp-runtime/custom-mocks/*` is documented automatically; no config or doc entry is required. To keep an entry useful, give the class file or the class itself a one-line docblock summary and mark runtime deviations in method docblocks.
 
 
-## How `wp-line-extra` should be used
+## How `wp-line-extra` is loaded
 
-All inside `wp-runtime/wp-line-extra/<wp-line>/*` should override `wp-runtime/*` if relative path matches.
-Example: `wp-runtime/wp-line-extra/6.8/init-parts/wp-includes/kses.php` overrides `wp-runtime/init-parts/wp-includes/kses.php` for the WP 6.8 line.
+`wp-runtime/wp-line-extra/<wp-line>/` contains WordPress-line-specific overlays.
+Bootstrap loads every file matched by
+`wp-line-extra/<wp-line>/init-parts/wp-includes/*.php` for the detected line.
+An init-part needed by a particular line must therefore be copied into that
+directory; it does not replace or fall back to a base init-part by path.
+
+Base init-parts that require runtime-specific modifications live in
+`wp-runtime/init-parts-modified/` and are intentionally listed directly in
+`Bootstrap::load_init_parts()`. Keep that list short and explicit. Use a WP-line
+init-part when its source or behavior can differ between WordPress lines.
 
 
 ## Parser Code Style

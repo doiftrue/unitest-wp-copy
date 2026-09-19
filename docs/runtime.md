@@ -18,14 +18,14 @@ This document describes the WP-like runtime that this project provides to tests:
 - `wp-runtime/boot-wp-globals.php`: WP PHP globals variables initialization.
 - `wp-runtime/boot-wp-hooks.php`: runtime-specific subset of WordPress default hook registration.
 - `wp-runtime/boot-wp-options.php`: option-like sources via `$GLOBALS['stub_wp_options']` and `$GLOBALS['stub_wp_site_options']`.
-- `wp-runtime/init-parts/*`: extra init fragments required by some copied symbols.
+- `wp-runtime/init-parts-modified/*`: manually adapted base init fragments explicitly loaded by Bootstrap for all supported WP lines.
 - `wp-runtime/copy/functions/*`: parser-generated copied functions.
 - `wp-runtime/copy/classes/*`: parser-generated copied classes.
 - `wp-runtime/copy/mockable/*`: parser-generated functions with WP_Mock handler injection.
 - `wp-runtime/copy/classes-statics/*`: parser-generated static-method compatibility functions.
 - `wp-runtime/copy/traits/*`: parser-generated traits containing selected original instance methods for runtime-adapted classes.
 - `wp-runtime/custom-mocks/*`: manual runtime-adapted mocks.
-- `wp-runtime/wp-line-extra/<wp-line>/*`: WP-line specific mocks, overlays, init-parts etc. (override mechanism: [parser.md](parser.md)).
+- `wp-runtime/wp-line-extra/<wp-line>/*`: WP-line specific mocks, overlays, and init-parts. Bootstrap loads every PHP file from `init-parts/wp-includes/` for the detected WP line (details: [parser.md](parser.md)).
 - `wp-runtime/wp-line-extra/<wp-line>/overlaps.php`: WP-line specific mocks that overlay copied symbols.
 - `SYMBOLS-INFO.md` (repo root): index of all available symbols (functions, classes).
 
