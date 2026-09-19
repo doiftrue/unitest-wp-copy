@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/fonts/class-wp-font-face.php (WP 6.5.10)
+// wp-includes/fonts/class-wp-font-face.php (WP 6.5.11)
 if( ! class_exists( 'WP_Font_Face' ) ) :
 	class WP_Font_Face {
 	

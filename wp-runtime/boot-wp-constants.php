@@ -1,5 +1,6 @@
 <?php
 
+/// Bootstrapping WordPress constants for unit tests.
 defined( 'ABSPATH' )             || define( 'ABSPATH', '/path/to/wp/' );
 defined( 'WPINC' )               || define( 'WPINC', 'wp-includes' );
 defined( 'WP_CONTENT_DIR' )      || define( 'WP_CONTENT_DIR', '/path/to/wp/wp-content' );
@@ -18,10 +19,17 @@ defined( 'LOGGED_IN_SALT' )   || define( 'LOGGED_IN_SALT',   'test-logged-in-sal
 defined( 'NONCE_SALT' )       || define( 'NONCE_SALT',       'test-nonce-salt-unitest-wp-copy' );
 defined( 'SECRET_KEY' )       || define( 'SECRET_KEY',       'test-secret-key-unitest-wp-copy' );
 
-/// from class-wpdb.php
+/// from "wp-includes/class-wpdb.php"
 defined( 'EZSQL_VERSION' ) || define( 'EZSQL_VERSION', 'WP1.25' );
 defined( 'OBJECT' )        || define( 'OBJECT', 'OBJECT' );
 defined( 'object' )        || define( 'object', 'OBJECT' );
 defined( 'OBJECT_K' )      || define( 'OBJECT_K', 'OBJECT_K' );
 defined( 'ARRAY_A' )       || define( 'ARRAY_A', 'ARRAY_A' );
 defined( 'ARRAY_N' )       || define( 'ARRAY_N', 'ARRAY_N' );
+
+/// From "wp-includes/block-template-utils.php"
+defined( 'WP_TEMPLATE_PART_AREA_HEADER' ) || define( 'WP_TEMPLATE_PART_AREA_HEADER', 'header' );
+defined( 'WP_TEMPLATE_PART_AREA_FOOTER' ) || define( 'WP_TEMPLATE_PART_AREA_FOOTER', 'footer' );
+defined( 'WP_TEMPLATE_PART_AREA_SIDEBAR' ) || define( 'WP_TEMPLATE_PART_AREA_SIDEBAR', 'sidebar' );
+defined( 'WP_TEMPLATE_PART_AREA_UNCATEGORIZED' ) || define( 'WP_TEMPLATE_PART_AREA_UNCATEGORIZED', 'uncategorized' );
+defined( 'WP_TEMPLATE_PART_AREA_NAVIGATION_OVERLAY' ) || define( 'WP_TEMPLATE_PART_AREA_NAVIGATION_OVERLAY', 'navigation-overlay' );

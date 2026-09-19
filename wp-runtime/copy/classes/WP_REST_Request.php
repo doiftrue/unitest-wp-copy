@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/rest-api/class-wp-rest-request.php (WP 6.5.10)
+// wp-includes/rest-api/class-wp-rest-request.php (WP 6.5.11)
 if( ! class_exists( 'WP_REST_Request' ) ) :
 	class WP_REST_Request implements ArrayAccess {
 	

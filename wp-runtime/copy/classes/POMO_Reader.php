@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/pomo/streams.php (WP 6.5.10)
+// wp-includes/pomo/streams.php (WP 6.5.11)
 if( ! class_exists( 'POMO_Reader' ) ) :
 		class POMO_Reader {
 	

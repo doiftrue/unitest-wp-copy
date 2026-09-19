@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-object-cache.php (WP 6.5.10)
+// wp-includes/class-wp-object-cache.php (WP 6.5.11)
 if( ! class_exists( 'WP_Object_Cache' ) ) :
 	class WP_Object_Cache {
 	

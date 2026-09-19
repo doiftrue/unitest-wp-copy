@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-block-templates-registry.php (WP 7.1)
+// wp-includes/class-wp-block-templates-registry.php (WP 7.1.1)
 if( ! class_exists( 'WP_Block_Templates_Registry' ) ) :
 	class WP_Block_Templates_Registry {
 		/**
