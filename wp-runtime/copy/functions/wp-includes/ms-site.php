@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/ms-site.php (WP 7.1)
+// wp-includes/ms-site.php (WP 7.1.1)
 if( ! function_exists( 'wp_cache_set_sites_last_changed' ) ) :
 	function wp_cache_set_sites_last_changed() {
 		wp_cache_set_last_changed( 'sites' );

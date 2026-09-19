@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/json-schema.php (WP 7.1)
+// wp-includes/json-schema.php (WP 7.1.1)
 if( ! function_exists( 'wp_get_json_schema_allowed_keywords' ) ) :
 	function wp_get_json_schema_allowed_keywords( string $schema_profile = 'rest-api' ): array {
 		$rest_keywords = rest_get_allowed_schema_keywords();

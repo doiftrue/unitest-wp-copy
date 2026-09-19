@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-script-modules.php (WP 7.1)
+// wp-includes/class-wp-script-modules.php (WP 7.1.1)
 if( ! class_exists( 'WP_Script_Modules' ) ) :
 	class WP_Script_Modules {
 		/**

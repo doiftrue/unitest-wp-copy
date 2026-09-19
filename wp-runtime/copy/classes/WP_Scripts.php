@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-scripts.php (WP 7.1)
+// wp-includes/class-wp-scripts.php (WP 7.1.1)
 if( ! class_exists( 'WP_Scripts' ) ) :
 	class WP_Scripts extends WP_Dependencies {
 		/**

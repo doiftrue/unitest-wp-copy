@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-hook.php (WP 7.1)
+// wp-includes/class-wp-hook.php (WP 7.1.1)
 if( ! class_exists( 'WP_Hook' ) ) :
 	class WP_Hook implements Iterator, ArrayAccess {
 	
@@ -11,7 +11,7 @@ if( ! class_exists( 'WP_Hook' ) ) :
 		 *
 		 * @since 4.7.0
 		 * @var array
-		 * @phpstan-var array<int, array<string, Hook_Callback>>
+		 * @phpstan-var array<int, array<non-decimal-int-string, Hook_Callback>>
 		 */
 		public $callbacks = array();
 	
@@ -482,7 +482,7 @@ if( ! class_exists( 'WP_Hook' ) ) :
 		 *
 		 * @param int $offset The offset to retrieve.
 		 * @return array|null If set, the value at the specified offset, null otherwise.
-		 * @phpstan-return array<string, Hook_Callback>|null
+		 * @phpstan-return array<non-decimal-int-string, Hook_Callback>|null
 		 */
 		#[ReturnTypeWillChange]
 		public function offsetGet( $offset ) {
@@ -498,7 +498,7 @@ if( ! class_exists( 'WP_Hook' ) ) :
 		 *
 		 * @param int|null $offset The offset to assign the value to.
 		 * @param array    $value The value to set.
-		 * @phpstan-param array<string, Hook_Callback> $value
+		 * @phpstan-param array<non-decimal-int-string, Hook_Callback> $value
 		 */
 		#[ReturnTypeWillChange]
 		public function offsetSet( $offset, $value ) {
@@ -534,7 +534,7 @@ if( ! class_exists( 'WP_Hook' ) ) :
 		 * @link https://www.php.net/manual/en/iterator.current.php
 		 *
 		 * @return array|false Array of callbacks at current priority, false if there are no more elements.
-		 * @phpstan-return array<string, Hook_Callback>|false
+		 * @phpstan-return array<non-decimal-int-string, Hook_Callback>|false
 		 */
 		#[ReturnTypeWillChange]
 		public function current() {
@@ -549,7 +549,7 @@ if( ! class_exists( 'WP_Hook' ) ) :
 		 * @link https://www.php.net/manual/en/iterator.next.php
 		 *
 		 * @return array|false Array of callbacks at next priority, false if there are no more elements.
-		 * @phpstan-return array<string, Hook_Callback>|false
+		 * @phpstan-return array<non-decimal-int-string, Hook_Callback>|false
 		 */
 		#[ReturnTypeWillChange]
 		public function next() {
