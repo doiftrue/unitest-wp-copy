@@ -8,7 +8,7 @@ return [
 	'wp_hash_password'              => '2.5.0',
 	'wp_generate_password'          => '2.5.0',
 	'wp_nonce_tick'                 => '2.5.0 mockable',
-	'wp_parse_auth_cookie'          => '2.5.0',
+	'wp_parse_auth_cookie'          => '2.5.0 mockable',
 	'wp_sanitize_redirect'          => '2.3.0',
 	'wp_hash'                       => '2.0.3',
 	// 'is_user_logged_in'          => '2.0.0', // why: custom mock

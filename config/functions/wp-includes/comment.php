@@ -1,6 +1,7 @@
 <?php
 
 return [
+	'wp_should_disable_pings_for_environment'            => '7.1.0',
 	'wp_cache_set_comments_last_changed'                 => '5.0.0',
 	'wp_register_comment_personal_data_exporter'         => '4.9.6',
 	'wp_register_comment_personal_data_eraser'           => '4.9.6',

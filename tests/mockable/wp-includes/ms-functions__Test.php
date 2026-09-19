@@ -36,4 +36,9 @@ class ms_functions__mockable__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( $fake_site, $result );
 		$this->assertSame( 5, $result->id );
 	}
+
+	public function test__force_ssl_content__mockable_handler(): void {
+		\WP_Mock::userFunction( 'force_ssl_content', [ 'return' => true ] );
+		$this->assertTrue( force_ssl_content() );
+	}
 }

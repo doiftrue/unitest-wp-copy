@@ -42,4 +42,20 @@ class functions__mockable__Test extends \PHPUnit\Framework\TestCase {
 		\WP_Mock::userFunction( 'wp_unique_prefixed_id', [ 'return' => 'fixed-prefixed-id' ] );
 		$this->assertSame( 'fixed-prefixed-id', wp_unique_prefixed_id( 'prefix-' ) );
 	}
+
+	public function test__current_datetime__mockable_handler(): void {
+		$datetime = new DateTimeImmutable( '2026-01-01 00:00:00', new DateTimeZone( 'UTC' ) );
+		\WP_Mock::userFunction( 'current_datetime', [ 'return' => $datetime ] );
+		$this->assertSame( $datetime, current_datetime() );
+	}
+
+	public function test__runtime_helpers__mockable_handlers(): void {
+		\WP_Mock::userFunction( 'wp_timezone_override_offset', [ 'return' => 4.5 ] );
+		\WP_Mock::userFunction( 'wp_is_serving_rest_request', [ 'return' => true ] );
+		\WP_Mock::userFunction( 'is_php_version_compatible', [ 'return' => false ] );
+
+		$this->assertSame( 4.5, wp_timezone_override_offset() );
+		$this->assertTrue( wp_is_serving_rest_request() );
+		$this->assertFalse( is_php_version_compatible( '1.0' ) );
+	}
 }

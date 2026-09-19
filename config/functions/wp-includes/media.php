@@ -1,6 +1,8 @@
 <?php
 
 return [
+	'wp_get_image_encode_quality'               => '7.1.0',
+	'wp_get_chromium_major_version'             => '7.1.0 mockable',
 	'wp_img_tag_add_auto_sizes'                 => '6.7.0',
 	'wp_sizes_attribute_includes_valid_auto'    => '6.7.0',
 	'wp_get_image_editor_output_format'         => '6.7.0',
@@ -8,7 +10,7 @@ return [
 	'_wp_post_thumbnail_context_filter_add'     => '6.3.0',
 	'_wp_post_thumbnail_context_filter_remove'  => '6.3.0',
 	'wp_maybe_add_fetchpriority_high_attr'      => '6.3.0',
-	'wp_high_priority_element_flag'             => '6.3.0',
+	'wp_high_priority_element_flag'             => '6.3.0 mockable',
 	'wp_omit_loading_attr_threshold'            => '5.9.0',
 	'wp_increase_content_media_count'           => '5.9.0',
 	'wp_image_file_matches_image_meta'          => '5.5.0',
@@ -26,6 +28,7 @@ return [
 	'wp_mediaelement_fallback'                  => '3.6.0',
 	'wp_get_audio_extensions'                   => '3.6.0',
 	'wp_get_video_extensions'                   => '3.6.0',
+	'get_taxonomies_for_attachments'            => '3.5.0',
 	'get_intermediate_image_sizes'              => '3.0.0',
 	'_wp_post_thumbnail_class_filter'           => '2.9.0',
 	'_wp_post_thumbnail_class_filter_add'       => '2.9.0',
@@ -76,7 +79,6 @@ next_image_link                        // why: depends on adjacent attachment DB
 get_adjacent_image_link                // why: depends on get_children DB query
 adjacent_image_link                    // why: depends on get_adjacent_image_link DB chain
 get_attachment_taxonomies             // why: depends on post and taxonomy registries
-get_taxonomies_for_attachments         // why: depends on taxonomy registry state
 is_gd_image                            // why: positive behavior requires unavailable GD runtime
 wp_imagecreatetruecolor                // why: requires the optional GD runtime
 wp_get_image_editor                    // why: depends on WP_Image_Editor implementations and filesystem

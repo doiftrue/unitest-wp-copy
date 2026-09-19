@@ -9,6 +9,7 @@ $default_stub_wp_options = [
 	'language'                    => 'en-US',
 	'blogname'                    => 'Unitest WP Copy',
 	'blogdescription'             => 'unitest-wp-copy runtime',
+	'blog_public'                 => '1',
 	'admin_email'                 => 'admin@wp.test',
 	'stylesheet'                  => 'wp-test-stylesheet',
 	'template'                    => 'wp-test-template',

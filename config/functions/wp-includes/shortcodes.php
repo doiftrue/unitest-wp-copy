@@ -7,7 +7,7 @@ return [
 	'get_shortcode_atts_regex'      => '4.4.0',
 	'do_shortcodes_in_html_tags'    => '4.2.3',
 	'unescape_invalid_shortcodes'   => '4.2.3',
-	'shortcode_exists'              => '3.6.0',
+	'shortcode_exists'              => '3.6.0 mockable',
 	'has_shortcode'                 => '3.6.0',
 	'strip_shortcode_tag'           => '3.3.0',
 	'add_shortcode'                 => '2.5.0',

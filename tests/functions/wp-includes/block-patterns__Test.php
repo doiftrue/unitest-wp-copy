@@ -40,4 +40,11 @@ class block_patterns__Test extends \PHPUnit\Framework\TestCase {
 			WP_Block_Pattern_Categories_Registry::get_instance()->is_registered( 'unitest' )
 		);
 	}
+
+	public function test__wp_normalize_remote_block_pattern(): void {
+		$this->assertSame(
+			[ 'blockTypes' => [ 'core/paragraph' ], 'viewportWidth' => 600 ],
+			wp_normalize_remote_block_pattern( [ 'block_types' => [ 'core/paragraph' ], 'viewport_width' => 600 ] )
+		);
+	}
 }

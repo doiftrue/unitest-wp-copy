@@ -28,6 +28,9 @@ class Files_Copier__Test extends Project_TestCase {
 			function wp_kses() {}
 			PHP
 		);
+		$html_entities_file = "$wp_core_dir/wp-includes/html-api/html5-named-character-references.php";
+		mkdir( dirname( $html_entities_file ), 0777, true );
+		file_put_contents( $html_entities_file, "<?php\n\$html5_named_character_references = [];\n" );
 
 		$config = $this->make_config( [
 			'wp_core_dir' => $wp_core_dir,
@@ -40,10 +43,13 @@ class Files_Copier__Test extends Project_TestCase {
 
 		$dest_file = "$runtime_dir/wp-line-extra/9.9/wp-includes/version.php";
 		$init_part_file = "$runtime_dir/wp-line-extra/9.9/init-parts/wp-includes/kses.php";
+		$html_entities_dest_file = "$runtime_dir/wp-line-extra/9.9/init-parts/wp-includes/html5-named-character-references.php";
 
 		$this->assertFileExists( $dest_file );
 		$this->assertFileExists( $init_part_file );
+		$this->assertFileExists( $html_entities_dest_file );
 		$this->assertSame( file_get_contents( $src_file ), file_get_contents( $dest_file ) );
+		$this->assertSame( file_get_contents( $html_entities_file ), file_get_contents( $html_entities_dest_file ) );
 		$this->assertSame(
 			<<<'PHP'
 			<?php
@@ -70,7 +76,7 @@ class Files_Copier__Test extends Project_TestCase {
 		$config = $this->make_config( [
 			'wp_core_dir' => $wp_core_dir,
 			'runtime_dir' => "$tmp_dir/wp-runtime",
-			'wp_version_line' => '9.9',
+			'wp_version_line' => '6.5',
 		] );
 
 		$this->expectException( RuntimeException::class );

@@ -10,6 +10,7 @@ class Bootstrap__Test extends Project_TestCase {
 		// NOTE: Bootstrap::init() already run on test init
 		$this->assertTrue( Bootstrap::init() instanceof Bootstrap );
 		$this->assertSame( '2.0', REST_API_VERSION );
+		$this->assertSame( '1', $GLOBALS['stub_wp_options']->blog_public );
 	}
 
 	/**
@@ -28,28 +29,19 @@ class Bootstrap__Test extends Project_TestCase {
 		$this->assertMatchesRegularExpression( '/^\d+\.\d+$/', $wp_line );
 	}
 
-	public function test__resolve_wp_line_extra_file__uses_wp_line_extra(): void {
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState disabled
+	 */
+	public function test__load_init_parts__loads_base_and_wp_line_files(): void {
 		[ $bootstrap, $base_dir, $over_dir ] = $this->make_bootstrap_with_test_dirs();
-		$base_file = "$base_dir/init-parts/wp-includes/kses.php";
-		$over_file = "$over_dir/init-parts/wp-includes/kses.php";
 
-		file_put_contents( $base_file, "<?php\n" );
-		file_put_contents( $over_file, "<?php\n" );
+		file_put_contents( "$base_dir/init-parts-modified/wp-includes/plugin.php", "<?php\n\$GLOBALS['bootstrap_init_parts_test'][] = 'base-plugin';\n" );
+		file_put_contents( "$over_dir/init-parts/wp-includes/kses.php", "<?php\n\$GLOBALS['bootstrap_init_parts_test'][] = 'line-kses';\n" );
 
-		$resolved = Closure::bind( fn() => $this->resolve_wp_line_extra_file( $base_file ), $bootstrap, Bootstrap::class )();
+		Closure::bind( fn() => $this->load_init_parts(), $bootstrap, Bootstrap::class )();
 
-		$this->assertSame( $over_file, $resolved );
-	}
-
-	public function test__resolve_wp_line_extra_file__falls_back_to_base(): void {
-		[ $bootstrap, $base_dir ] = $this->make_bootstrap_with_test_dirs();
-		$base_file = "$base_dir/init-parts/wp-includes/plugin.php";
-
-		file_put_contents( $base_file, "<?php\n" );
-
-		$resolved = Closure::bind( fn() => $this->resolve_wp_line_extra_file( $base_file ), $bootstrap, Bootstrap::class )();
-
-		$this->assertSame( $base_file, $resolved );
+		$this->assertSame( [ 'base-plugin', 'line-kses' ], $GLOBALS['bootstrap_init_parts_test'] );
 	}
 
 	private function make_bootstrap_with_test_dirs(): array {
@@ -57,7 +49,7 @@ class Bootstrap__Test extends Project_TestCase {
 		$base_dir = "$tmp_dir/base";
 		$over_dir = "$tmp_dir/wp-line-extra/9.9";
 
-		mkdir( "$base_dir/init-parts/wp-includes", 0777, true );
+		mkdir( "$base_dir/init-parts-modified/wp-includes", 0777, true );
 		mkdir( "$over_dir/init-parts/wp-includes", 0777, true );
 
 		$bootstrap = new Bootstrap();

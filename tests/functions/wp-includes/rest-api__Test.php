@@ -668,4 +668,9 @@ class rest_api__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertFalse( $result['properties']['meta']['properties']['items']['items']['additionalProperties'] );
 	}
 
+	public function test__rest_get_route_for_missing_item_types(): void {
+		$this->assertSame( '', rest_get_route_for_post_type_items( 'missing-unitest' ) );
+		$this->assertSame( '', rest_get_route_for_taxonomy_items( 'missing-unitest' ) );
+	}
+
 }

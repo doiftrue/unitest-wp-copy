@@ -1,6 +1,8 @@
 <?php
 
 return [
+	'rest_get_route_for_post_type_items'          => '5.9.0',
+	'rest_get_route_for_taxonomy_items'           => '5.9.0',
 	'rest_convert_error_to_response'              => '5.7.0',
 	'rest_are_values_equal'                       => '5.7.0',
 	'rest_validate_enum'                          => '5.7.0',
@@ -85,9 +87,7 @@ rest_add_application_passwords_to_index   // why: depends on WP_REST_Response ob
 rest_get_avatar_urls                      // why: depends on get_avatar_url() not included.
 rest_preload_api_request                  // why: depends on WP_REST_Request / WP_REST_Server / response objects.
 rest_get_route_for_post                   // why: depends on WP_Post model + post-type runtime.
-rest_get_route_for_post_type_items        // why: depends on get_post_type_object() runtime registry.
 rest_get_route_for_term                   // why: depends on WP_Term model + taxonomy runtime.
-rest_get_route_for_taxonomy_items         // why: depends on get_taxonomy() runtime registry.
 rest_get_queried_resource_route           // why: depends on global query conditionals.
 wp_is_rest_endpoint                       // why: depends on wp_is_serving_rest_request() and WP_REST_Server runtime.
 */

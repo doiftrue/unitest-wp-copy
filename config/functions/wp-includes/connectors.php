@@ -1,6 +1,7 @@
 <?php
 
 return [
+	'wp_connectors_parse_application_password_credentials' => '7.1.0',
 	'wp_is_connector_registered'  => '7.0.0 mockable',
 	'wp_get_connector'            => '7.0.0 mockable',
 	'wp_get_connectors'           => '7.0.0 mockable',

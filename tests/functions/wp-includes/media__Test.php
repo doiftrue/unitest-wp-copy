@@ -235,4 +235,13 @@ class media__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( 'image/jpeg', $formats['image/heic'] );
 		$this->assertArrayNotHasKey( 'image/png', $formats );
 	}
+
+	public function test__media_helpers_added_by_the_audit(): void {
+		if ( $wp_ver = wp_version_compare( '< 7.1.0' ) ) {
+			$this->markTestSkipped( "New media helpers not exist on WP $wp_ver" );
+		}
+
+		$this->assertSame( 82, wp_get_image_encode_quality( 'image/jpeg' ) );
+		$this->assertSame( [], get_taxonomies_for_attachments() );
+	}
 }

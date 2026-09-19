@@ -27,4 +27,14 @@ class media__mockable__Test extends \PHPUnit\Framework\TestCase {
 		\WP_Mock::userFunction( 'wp_get_additional_image_sizes', [ 'return' => [ 'mocked' => [ 'width' => 10 ] ] ] );
 		$this->assertSame( [ 'mocked' => [ 'width' => 10 ] ], wp_get_additional_image_sizes() );
 	}
+
+	public function test__media_flags__mockable_handlers(): void {
+		\WP_Mock::userFunction( 'wp_high_priority_element_flag', [ 'return' => false ] );
+		$this->assertFalse( wp_high_priority_element_flag() );
+
+		if ( wp_version_compare( '>= 7.1.0' ) ) {
+			\WP_Mock::userFunction( 'wp_get_chromium_major_version', [ 'return' => 123 ] );
+			$this->assertSame( 123, wp_get_chromium_major_version() );
+		}
+	}
 }

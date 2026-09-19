@@ -370,7 +370,9 @@ class formatting__Test extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function test__links_add_base(): void {
-		$this->assertStringContainsString( 'http://e.com', _links_add_base( '<a href="/x">x</a>', 'http://e.com', ['a'] ) );
+		$GLOBALS['_links_add_base'] = 'http://e.com';
+		$this->assertSame( 'href="http://e.com/x"', _links_add_base( [ 'href="/x"', 'href', '"', '/x' ] ) );
+		unset( $GLOBALS['_links_add_base'] );
 	}
 
 	/**

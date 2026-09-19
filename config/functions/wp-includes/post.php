@@ -5,6 +5,7 @@ return [
 	'wp_resolve_post_date'                => '5.7.0',
 	'wp_untrash_post_set_previous_status' => '5.6.0',
 	'use_block_editor_for_post_type'      => '5.0.0',
+	'wp_cache_set_posts_last_changed'     => '5.0.0',
 	'_wp_privacy_statuses'                => '4.9.6',
 	'get_post_types_by_support'           => '4.5.0 mockable',
 	'is_post_type_viewable'               => '4.4.0 mockable',
@@ -145,7 +146,6 @@ _prime_post_caches                             // why: cache/query runtime depen
 _prime_post_parent_id_caches                   // why: DB/cache runtime dependency.
 wp_add_trashed_suffix_to_post_name_for_trashed_posts // why: depends on get_posts() query runtime.
 wp_add_trashed_suffix_to_post_name_for_post    // why: depends on get_post()/meta/DB runtime chain.
-wp_cache_set_posts_last_changed                // why: depends on object-cache runtime function not included.
 get_available_post_mime_types                  // why: DB query runtime dependency.
 wp_get_original_image_path                     // why: attachment metadata/filesystem runtime dependency.
 wp_get_original_image_url                      // why: attachment metadata/url runtime dependency.

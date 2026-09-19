@@ -109,6 +109,7 @@ class Instance_Methods_Trait_Copier__Test extends Project_TestCase {
 			'rel_file' => 'source.php',
 			'class_name' => 'Source_Class',
 			'trait_name' => 'Runtime_Methods',
+			'imports' => [],
 			'method_names' => [ 'missing' => '' ],
 		] );
 	}

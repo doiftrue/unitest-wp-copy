@@ -11,10 +11,17 @@ class functions__Test extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function test__number_format_i18n() {
-		unset( $GLOBALS['wp_locale'] );
-		$this->assertSame( '1,234', number_format_i18n( 1234, 0 ) );
-		$GLOBALS['wp_locale'] = (object) [ 'number_format' => [ 'decimal_point' => ',', 'thousands_sep' => ' ' ] ];
-		$this->assertSame( '1 234,50', number_format_i18n( 1234.5, 2 ) );
+		$original_locale = $GLOBALS['wp_locale'] ?? null;
+
+		try {
+			unset( $GLOBALS['wp_locale'] );
+			$this->assertSame( '1,234', number_format_i18n( 1234, 0 ) );
+			$GLOBALS['wp_locale'] = (object) [ 'number_format' => [ 'decimal_point' => ',', 'thousands_sep' => ' ' ] ];
+			$this->assertSame( '1 234,50', number_format_i18n( 1234.5, 2 ) );
+		}
+		finally {
+			$GLOBALS['wp_locale'] = $original_locale;
+		}
 	}
 
 	public function test__size_format() {
@@ -440,6 +447,17 @@ class functions__Test extends \PHPUnit\Framework\TestCase {
 
 	public function test__wp_date() {
 		$this->assertSame( '1970-01-01 00:00', wp_date( 'Y-m-d H:i', 0, new DateTimeZone( 'UTC' ) ) );
+	}
+
+	public function test__wp_maybe_decline_date(): void {
+		$this->assertSame( '2026-01-02', wp_maybe_decline_date( '2026-01-02' ) );
+	}
+
+	public function test__utility_helpers_added_by_the_audit(): void {
+		$this->assertSame( [ 'start' => -259200, 'end' => 345599 ], get_weekstartend( '1970-01-01' ) );
+		$this->assertSame( [ 'https://example.com/a', 'http://example.org/b' ], wp_extract_urls( 'https://example.com/a http://example.org/b' ) );
+		$this->assertContains( 'saved', wp_removable_query_args() );
+		$this->assertTrue( is_wp_version_compatible( '1.0' ) );
 	}
 
 	public function test__wp_cache_get_last_changed() {

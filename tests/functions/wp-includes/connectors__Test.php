@@ -11,4 +11,15 @@ class connectors__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( str_repeat( "\u{2022}", 6 ) . '7890', _wp_connectors_mask_api_key( '1234567890' ) );
 		$this->assertSame( str_repeat( "\u{2022}", 16 ) . '7890', _wp_connectors_mask_api_key( str_repeat( 'x', 20 ) . '7890' ) );
 	}
+
+	public function test__wp_connectors_parse_application_password_credentials(): void {
+		if ( $wp_ver = wp_version_compare( '< 7.1.0' ) ) {
+			$this->markTestSkipped( "Credential parser not exists on WP $wp_ver" );
+		}
+
+		$this->assertSame(
+			[ 'username' => 'user', 'password' => 'secret' ],
+			wp_connectors_parse_application_password_credentials( ' user : secret ' )
+		);
+	}
 }

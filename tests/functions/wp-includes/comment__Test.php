@@ -49,4 +49,12 @@ class comment__Test extends \PHPUnit\Framework\TestCase {
 		wp_cache_set_comments_last_changed();
 		$this->assertNotFalse( wp_cache_get( 'last_changed', 'comment' ) );
 	}
+
+	public function test__wp_should_disable_pings_for_environment(): void {
+		if ( $wp_ver = wp_version_compare( '< 7.1.0' ) ) {
+			$this->markTestSkipped( "wp_should_disable_pings_for_environment() not exists on WP $wp_ver" );
+		}
+
+		$this->assertIsBool( wp_should_disable_pings_for_environment() );
+	}
 }

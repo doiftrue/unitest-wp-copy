@@ -412,4 +412,9 @@ class post__Test extends \PHPUnit\Framework\TestCase {
 		);
 		$this->assertFalse( use_block_editor_for_post_type( 'book' ) );
 	}
+
+	public function test__wp_cache_set_posts_last_changed(): void {
+		wp_cache_set_posts_last_changed();
+		$this->assertNotFalse( wp_cache_get( 'last_changed', 'posts' ) );
+	}
 }

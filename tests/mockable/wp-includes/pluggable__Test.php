@@ -39,4 +39,9 @@ class pluggable__mockable__Test extends \PHPUnit\Framework\TestCase {
 		\WP_Mock::userFunction( 'wp_nonce_tick', [ 'return' => 42 ] );
 		$this->assertSame( 42, wp_nonce_tick() );
 	}
+
+	public function test__wp_parse_auth_cookie__mockable_handler(): void {
+		\WP_Mock::userFunction( 'wp_parse_auth_cookie', [ 'return' => [ 'username' => 'unitest' ] ] );
+		$this->assertSame( [ 'username' => 'unitest' ], wp_parse_auth_cookie() );
+	}
 }

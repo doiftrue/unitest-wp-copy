@@ -4,6 +4,7 @@ return [
 	'wp_unique_id_from_values'               => '6.8.0',
 	'wp_is_heic_image_mime_type'             => '6.7.0',
 	'is_utf8_charset'                        => '6.6.0 mockable',
+	'wp_is_serving_rest_request'             => '6.5.0 mockable',
 	'wp_unique_prefixed_id'                  => '6.4.0 mockable',
 	'wp_trigger_error'                       => '6.4.0 mockable',
 	'wp_cache_set_last_changed'              => '6.3.0',
@@ -16,8 +17,10 @@ return [
 	'wp_fuzzy_number_match'                  => '5.3.0',
 	'wp_timezone'                            => '5.3.0',
 	'wp_timezone_string'                     => '5.3.0 mockable',
-	'current_datetime'                       => '5.3.0',
+	'current_datetime'                       => '5.3.0 mockable',
 	'wp_date'                                => '5.3.0',
+	'is_php_version_compatible'              => '5.2.0 mockable',
+	'is_wp_version_compatible'               => '5.2.0 mockable',
 	'human_readable_duration'                => '5.1.0',
 	'wp_parse_list'                          => '5.1.0',
 	'wp_unique_id'                           => '5.0.3 mockable',
@@ -33,9 +36,10 @@ return [
 	'wp_get_ext_types'                       => '4.6.0',
 	'_deprecated_constructor'                => '4.3.0',
 	'_deprecated_hook'                       => '4.6.0', // note: need as deps
-	'_wp_json_prepare_data'                  => '4.4.0',
+	'wp_maybe_decline_date'                  => '4.4.0',
 	'wp_is_numeric_array'                    => '4.4.0',
 	'mysql_to_rfc3339'                       => '4.4.0',
+	'_wp_json_prepare_data'                  => '4.4.0',
 	'_wp_json_convert_string'                => '4.1.0',
 	'_wp_json_sanity_check'                  => '4.1.0',
 	'wp_json_encode'                         => '4.1.0',
@@ -49,6 +53,7 @@ return [
 	'wp_checkdate'                           => '3.5.0',
 	'wp_get_mime_types'                      => '3.5.0',
 	'wp_is_stream'                           => '3.5.0',
+	'wp_removable_query_args'                => '3.4.0',
 	'__return_null'                          => '3.4.0',
 	'wp_debug_backtrace_summary'             => '3.4.0',
 	'_get_non_cached_ids'                    => '3.4.0',
@@ -74,6 +79,7 @@ return [
 	'_cleanup_header_comment'                => '2.8.0',
 	'wp_get_nocache_headers'                 => '2.8.0',
 	'wp_suspend_cache_invalidation'          => '2.7.0',
+	'wp_timezone_override_offset'            => '2.8.0 mockable',
 	'force_ssl_admin'                        => '2.6.0 mockable',
 	'path_is_absolute'                       => '2.5.0',
 	'path_join'                              => '2.5.0',
@@ -95,6 +101,8 @@ return [
 	'validate_file'                          => '1.2.0',
 	'bool_from_yn'                           => '1.0.0',
 	'current_time'                           => '1.0.0 mockable',
+	'get_weekstartend'                       => '0.71',
+	'wp_extract_urls'                        => '0.71',
 	'date_i18n'                              => '0.71',
 	'mysql2date'                             => '0.71',
 	'_wp_to_kebab_case'                      => '0.0.0',
@@ -103,8 +111,6 @@ return [
 /*
 Not suitable in isolated PHPUnit env:
 
-is_php_version_compatible                    // why: better to leave mockable.
-is_wp_version_compatible                     // why: better to leave mockable.
 wp_fast_hash                                 // why: requires sodium.
 wp_get_wp_version                            // why: requires full WP file tree via ABSPATH/WPINC.
 wp_verify_fast_hash                          // why: not used in this project (legacy branch requires full WP file tree).
@@ -145,7 +151,6 @@ get_main_network_id                          // why: multisite DB/runtime depend
 get_main_site_id                             // why: multisite DB/runtime dependency.
 get_num_queries                              // why: DB/runtime dependency.
 get_temp_dir                                 // why: filesystem/environment dependency.
-get_weekstartend                             // why: option + locale runtime dependency.
 iis7_supports_permalinks                     // why: server-environment specific runtime behavior.
 is_blog_installed                            // why: DB/runtime dependency.
 is_lighttpd_before_150                       // why: server-environment specific runtime behavior.
@@ -170,7 +175,6 @@ wp_delete_file                               // why: filesystem side effects.
 wp_delete_file_from_directory                // why: filesystem side effects.
 wp_die                                       // why: full request/output lifecycle.
 wp_direct_php_update_button                  // why: admin UI/runtime dependency.
-wp_extract_urls                              // why: currently not used by this package.
 wp_filesize                                  // why: filesystem runtime dependency.
 wp_get_admin_notice                          // why: admin notice/runtime dependency.
 wp_get_default_update_https_url              // why: admin/update runtime dependency.
@@ -186,9 +190,7 @@ wp_get_update_php_annotation                 // why: admin/update runtime depend
 wp_get_update_php_url                        // why: admin/update runtime dependency.
 wp_get_upload_dir                            // why: filesystem/uploads runtime dependency.
 wp_guess_url                                 // why: server/request runtime dependency.
-wp_is_serving_rest_request                   // why: REST request runtime dependency.
 wp_is_writable                               // why: filesystem/environment dependency.
-wp_maybe_decline_date                        // why: locale/i18n runtime dependency chain.
 wp_maybe_load_widgets                        // why: widgets runtime bootstrap dependency.
 wp_mkdir_p                                   // why: filesystem side effects.
 wp_nonce_ays                                 // why: nonce/auth request lifecycle dependency.
@@ -203,7 +205,6 @@ wp_privacy_exports_url                       // why: URL + uploads runtime depen
 wp_raise_memory_limit                        // why: runtime ini mutation.
 wp_referer_field                             // why: request/auth runtime dependency.
 wp_remote_fopen                              // why: remote HTTP/network dependency.
-wp_removable_query_args                      // why: admin/request runtime dependency.
 wp_schedule_delete_old_privacy_export_files  // why: cron runtime dependency.
 wp_scheduled_delete                          // why: cron/runtime dependency.
 wp_send_json                                 // why: HTTP output side effects.
@@ -211,7 +212,6 @@ wp_send_json_error                           // why: HTTP output side effects.
 wp_send_json_success                         // why: HTTP output side effects.
 wp_site_admin_email_change_notification      // why: option/mail runtime dependency.
 wp_timezone_choice                           // why: admin UI/runtime dependency.
-wp_timezone_override_offset                  // why: option/timezone runtime dependency.
 wp_unique_filename                           // why: filesystem/uploads runtime dependency.
 wp_update_php_annotation                     // why: admin/update runtime dependency.
 wp_upload_bits                               // why: filesystem/uploads side effects.

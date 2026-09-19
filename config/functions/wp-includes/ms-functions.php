@@ -8,7 +8,7 @@ return [
 	'upload_is_file_too_big'           => '3.0.0',
 	'users_can_register_signup_filter' => '3.0.0',
 	'get_space_allowed'                => '3.0.0',
-	'force_ssl_content'                => '2.8.5',
+	'force_ssl_content'                => '2.8.5 mockable',
 	'filter_SSL'                       => '2.8.5',
 ];
 
