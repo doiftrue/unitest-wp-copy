@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-list-util.php (WP 7.1)
+// wp-includes/class-wp-list-util.php (WP 7.1.1)
 if( ! class_exists( 'WP_List_Util' ) ) :
 	class WP_List_Util {
 		/**

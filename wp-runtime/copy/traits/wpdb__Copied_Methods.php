@@ -4,7 +4,7 @@
 
 namespace Unitest_WP_Copy;
 
-// wp-includes/class-wpdb.php (WP 7.1)
+// wp-includes/class-wpdb.php (WP 7.1.1)
 trait wpdb__Copied_Methods {
 
 	public function _escape( $data ) {

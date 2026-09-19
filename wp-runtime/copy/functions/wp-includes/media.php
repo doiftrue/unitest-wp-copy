@@ -2,7 +2,43 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/media.php (WP 7.1)
+// wp-includes/media.php (WP 7.1.1)
+if( ! function_exists( 'wp_get_image_encode_quality' ) ) :
+	function wp_get_image_encode_quality( string $mime_type, array $size = array(), ?int $default_quality = null ): int {
+		if ( null === $default_quality ) {
+			// Mirror WP_Image_Editor::get_default_quality(): WebP defaults to 86, everything else to 82.
+			$default_quality = ( 'image/webp' === $mime_type ) ? 86 : 82;
+		}
+	
+		/** This filter is documented in wp-includes/class-wp-image-editor.php */
+		$quality = apply_filters( 'wp_editor_set_quality', $default_quality, $mime_type, $size );
+	
+		if ( 'image/jpeg' === $mime_type ) {
+			/** This filter is documented in wp-includes/class-wp-image-editor.php */
+			$quality = apply_filters( 'jpeg_quality', $quality, 'image_resize' );
+		}
+	
+		if ( ! is_numeric( $quality ) ) {
+			$quality = $default_quality;
+		} else {
+			$quality = (int) $quality;
+		}
+	
+		// Reset out-of-range values to the default, matching WP_Image_Editor::set_quality().
+		if ( $quality < 0 || $quality > 100 ) {
+			$quality = $default_quality;
+		}
+	
+		// Allow 0, but squash to 1, matching WP_Image_Editor::set_quality().
+		if ( 0 === $quality ) {
+			$quality = 1;
+		}
+	
+		return $quality;
+	}
+endif;
+
+// wp-includes/media.php (WP 7.1.1)
 if( ! function_exists( 'wp_img_tag_add_auto_sizes' ) ) :
 	function wp_img_tag_add_auto_sizes( string $image ): string {
 		/**
@@ -57,7 +93,7 @@ if( ! function_exists( 'wp_img_tag_add_auto_sizes' ) ) :
 	}
 endif;
 
-// wp-includes/media.php (WP 7.1)
+// wp-includes/media.php (WP 7.1.1)
 if( ! function_exists( 'wp_sizes_attribute_includes_valid_auto' ) ) :
 	function wp_sizes_attribute_includes_valid_auto( string $sizes_attr ): bool {
 		list( $first_size ) = explode( ',', $sizes_attr, 2 );
@@ -65,7 +101,7 @@ if( ! function_exists( 'wp_sizes_attribute_includes_valid_auto' ) ) :
 	}
 endif;
 
-// wp-includes/media.php (WP 7.1)
+// wp-includes/media.php (WP 7.1.1)
 if( ! function_exists( 'wp_get_image_editor_output_format' ) ) :
 	function wp_get_image_editor_output_format( $filename, $mime_type ) {
 		$output_format = array(
@@ -96,28 +132,28 @@ if( ! function_exists( 'wp_get_image_editor_output_format' ) ) :
 	}
 endif;
 
-// wp-includes/media.php (WP 7.1)
+// wp-includes/media.php (WP 7.1.1)
 if( ! function_exists( '_wp_post_thumbnail_context_filter' ) ) :
 	function _wp_post_thumbnail_context_filter( $context ) {
 		return 'the_post_thumbnail';
 	}
 endif;
 
-// wp-includes/media.php (WP 7.1)
+// wp-includes/media.php (WP 7.1.1)
 if( ! function_exists( '_wp_post_thumbnail_context_filter_add' ) ) :
 	function _wp_post_thumbnail_context_filter_add() {
 		add_filter( 'wp_get_attachment_image_context', '_wp_post_thumbnail_context_filter' );
 	}
 endif;
 
-// wp-includes/media.php (WP 7.1)
+// wp-includes/media.php (WP 7.1.1)
 if( ! function_exists( '_wp_post_thumbnail_context_filter_remove' ) ) :
 	function _wp_post_thumbnail_context_filter_remove() {
 		remove_filter( 'wp_get_attachment_image_context', '_wp_post_thumbnail_context_filter' );
 	}
 endif;
 
-// wp-includes/media.php (WP 7.1)
+// wp-includes/media.php (WP 7.1.1)
 if( ! function_exists( 'wp_maybe_add_fetchpriority_high_attr' ) ) :
 	function wp_maybe_add_fetchpriority_high_attr( $loading_attrs, $tag_name, $attr ) {
 		// For now, adding `fetchpriority="high"` is only supported for images.
@@ -172,20 +208,7 @@ if( ! function_exists( 'wp_maybe_add_fetchpriority_high_attr' ) ) :
 	}
 endif;
 
-// wp-includes/media.php (WP 7.1)
-if( ! function_exists( 'wp_high_priority_element_flag' ) ) :
-	function wp_high_priority_element_flag( $value = null ): bool {
-		static $high_priority_element = true;
-	
-		if ( is_bool( $value ) ) {
-			$high_priority_element = $value;
-		}
-	
-		return $high_priority_element;
-	}
-endif;
-
-// wp-includes/media.php (WP 7.1)
+// wp-includes/media.php (WP 7.1.1)
 if( ! function_exists( 'wp_omit_loading_attr_threshold' ) ) :
 	function wp_omit_loading_attr_threshold( $force = false ) {
 		static $omit_threshold;
@@ -210,7 +233,7 @@ if( ! function_exists( 'wp_omit_loading_attr_threshold' ) ) :
 	}
 endif;
 
-// wp-includes/media.php (WP 7.1)
+// wp-includes/media.php (WP 7.1.1)
 if( ! function_exists( 'wp_increase_content_media_count' ) ) :
 	function wp_increase_content_media_count( $amount = 1 ) {
 		static $content_media_count = 0;
@@ -221,7 +244,7 @@ if( ! function_exists( 'wp_increase_content_media_count' ) ) :
 	}
 endif;
 
-// wp-includes/media.php (WP 7.1)
+// wp-includes/media.php (WP 7.1.1)
 if( ! function_exists( 'wp_image_file_matches_image_meta' ) ) :
 	function wp_image_file_matches_image_meta( $image_location, $image_meta, $attachment_id = 0 ) {
 		$match = false;
@@ -278,7 +301,7 @@ if( ! function_exists( 'wp_image_file_matches_image_meta' ) ) :
 	}
 endif;
 
-// wp-includes/media.php (WP 7.1)
+// wp-includes/media.php (WP 7.1.1)
 if( ! function_exists( 'wp_image_src_get_dimensions' ) ) :
 	function wp_image_src_get_dimensions( $image_src, $image_meta, $attachment_id = 0 ) {
 		$dimensions = false;
@@ -326,7 +349,7 @@ if( ! function_exists( 'wp_image_src_get_dimensions' ) ) :
 	}
 endif;
 
-// wp-includes/media.php (WP 7.1)
+// wp-includes/media.php (WP 7.1.1)
 if( ! function_exists( 'wp_lazy_loading_enabled' ) ) :
 	function wp_lazy_loading_enabled( $tag_name, $context ) {
 		/*
@@ -350,7 +373,7 @@ if( ! function_exists( 'wp_lazy_loading_enabled' ) ) :
 	}
 endif;
 
-// wp-includes/media.php (WP 7.1)
+// wp-includes/media.php (WP 7.1.1)
 if( ! function_exists( '_wp_add_additional_image_sizes' ) ) :
 	function _wp_add_additional_image_sizes() {
 		// 2x medium_large size.
@@ -360,7 +383,7 @@ if( ! function_exists( '_wp_add_additional_image_sizes' ) ) :
 	}
 endif;
 
-// wp-includes/media.php (WP 7.1)
+// wp-includes/media.php (WP 7.1.1)
 if( ! function_exists( 'wp_get_registered_image_subsizes' ) ) :
 	function wp_get_registered_image_subsizes(): array {
 		$additional_sizes = wp_get_additional_image_sizes();
@@ -409,7 +432,7 @@ if( ! function_exists( 'wp_get_registered_image_subsizes' ) ) :
 	}
 endif;
 
-// wp-includes/media.php (WP 7.1)
+// wp-includes/media.php (WP 7.1.1)
 if( ! function_exists( 'wp_image_matches_ratio' ) ) :
 	function wp_image_matches_ratio( $source_width, $source_height, $target_width, $target_height ) {
 		/*
@@ -431,7 +454,7 @@ if( ! function_exists( 'wp_image_matches_ratio' ) ) :
 	}
 endif;
 
-// wp-includes/media.php (WP 7.1)
+// wp-includes/media.php (WP 7.1.1)
 if( ! function_exists( '_wp_get_attachment_relative_path' ) ) :
 	function _wp_get_attachment_relative_path( $file ) {
 		$dirname = dirname( $file );
@@ -450,7 +473,7 @@ if( ! function_exists( '_wp_get_attachment_relative_path' ) ) :
 	}
 endif;
 
-// wp-includes/media.php (WP 7.1)
+// wp-includes/media.php (WP 7.1.1)
 if( ! function_exists( '_wp_get_image_size_from_meta' ) ) :
 	function _wp_get_image_size_from_meta( $size_name, $image_meta ) {
 		if ( 'full' === $size_name ) {
@@ -469,7 +492,7 @@ if( ! function_exists( '_wp_get_image_size_from_meta' ) ) :
 	}
 endif;
 
-// wp-includes/media.php (WP 7.1)
+// wp-includes/media.php (WP 7.1.1)
 if( ! function_exists( 'has_image_size' ) ) :
 	function has_image_size( $name ) {
 		$sizes = wp_get_additional_image_sizes();
@@ -477,7 +500,7 @@ if( ! function_exists( 'has_image_size' ) ) :
 	}
 endif;
 
-// wp-includes/media.php (WP 7.1)
+// wp-includes/media.php (WP 7.1.1)
 if( ! function_exists( 'remove_image_size' ) ) :
 	function remove_image_size( $name ) {
 		global $_wp_additional_image_sizes;
@@ -491,7 +514,7 @@ if( ! function_exists( 'remove_image_size' ) ) :
 	}
 endif;
 
-// wp-includes/media.php (WP 7.1)
+// wp-includes/media.php (WP 7.1.1)
 if( ! function_exists( 'wp_get_attachment_id3_keys' ) ) :
 	function wp_get_attachment_id3_keys( $attachment, $context = 'display' ) {
 		$fields = array(
@@ -521,7 +544,7 @@ if( ! function_exists( 'wp_get_attachment_id3_keys' ) ) :
 	}
 endif;
 
-// wp-includes/media.php (WP 7.1)
+// wp-includes/media.php (WP 7.1.1)
 if( ! function_exists( 'wp_mediaelement_fallback' ) ) :
 	function wp_mediaelement_fallback( $url ) {
 		/**
@@ -536,7 +559,7 @@ if( ! function_exists( 'wp_mediaelement_fallback' ) ) :
 	}
 endif;
 
-// wp-includes/media.php (WP 7.1)
+// wp-includes/media.php (WP 7.1.1)
 if( ! function_exists( 'wp_get_audio_extensions' ) ) :
 	function wp_get_audio_extensions() {
 		/**
@@ -551,7 +574,7 @@ if( ! function_exists( 'wp_get_audio_extensions' ) ) :
 	}
 endif;
 
-// wp-includes/media.php (WP 7.1)
+// wp-includes/media.php (WP 7.1.1)
 if( ! function_exists( 'wp_get_video_extensions' ) ) :
 	function wp_get_video_extensions() {
 		/**
@@ -566,7 +589,29 @@ if( ! function_exists( 'wp_get_video_extensions' ) ) :
 	}
 endif;
 
-// wp-includes/media.php (WP 7.1)
+// wp-includes/media.php (WP 7.1.1)
+if( ! function_exists( 'get_taxonomies_for_attachments' ) ) :
+	function get_taxonomies_for_attachments( $output = 'names' ) {
+		$taxonomies = array();
+	
+		foreach ( get_taxonomies( array(), 'objects' ) as $taxonomy ) {
+			foreach ( $taxonomy->object_type as $object_type ) {
+				if ( 'attachment' === $object_type || str_starts_with( $object_type, 'attachment:' ) ) {
+					if ( 'names' === $output ) {
+						$taxonomies[] = $taxonomy->name;
+					} else {
+						$taxonomies[ $taxonomy->name ] = $taxonomy;
+					}
+					break;
+				}
+			}
+		}
+	
+		return $taxonomies;
+	}
+endif;
+
+// wp-includes/media.php (WP 7.1.1)
 if( ! function_exists( 'get_intermediate_image_sizes' ) ) :
 	function get_intermediate_image_sizes() {
 		$default_sizes    = array( 'thumbnail', 'medium', 'medium_large', 'large' );
@@ -588,7 +633,7 @@ if( ! function_exists( 'get_intermediate_image_sizes' ) ) :
 	}
 endif;
 
-// wp-includes/media.php (WP 7.1)
+// wp-includes/media.php (WP 7.1.1)
 if( ! function_exists( '_wp_post_thumbnail_class_filter' ) ) :
 	function _wp_post_thumbnail_class_filter( $attr ) {
 		$attr['class'] .= ' wp-post-image';
@@ -596,21 +641,21 @@ if( ! function_exists( '_wp_post_thumbnail_class_filter' ) ) :
 	}
 endif;
 
-// wp-includes/media.php (WP 7.1)
+// wp-includes/media.php (WP 7.1.1)
 if( ! function_exists( '_wp_post_thumbnail_class_filter_add' ) ) :
 	function _wp_post_thumbnail_class_filter_add( $attr ) {
 		add_filter( 'wp_get_attachment_image_attributes', '_wp_post_thumbnail_class_filter' );
 	}
 endif;
 
-// wp-includes/media.php (WP 7.1)
+// wp-includes/media.php (WP 7.1.1)
 if( ! function_exists( '_wp_post_thumbnail_class_filter_remove' ) ) :
 	function _wp_post_thumbnail_class_filter_remove( $attr ) {
 		remove_filter( 'wp_get_attachment_image_attributes', '_wp_post_thumbnail_class_filter' );
 	}
 endif;
 
-// wp-includes/media.php (WP 7.1)
+// wp-includes/media.php (WP 7.1.1)
 if( ! function_exists( 'wp_expand_dimensions' ) ) :
 	function wp_expand_dimensions( $example_width, $example_height, $max_width, $max_height ) {
 		$example_width  = (int) $example_width;
@@ -622,7 +667,7 @@ if( ! function_exists( 'wp_expand_dimensions' ) ) :
 	}
 endif;
 
-// wp-includes/media.php (WP 7.1)
+// wp-includes/media.php (WP 7.1.1)
 if( ! function_exists( 'wp_max_upload_size' ) ) :
 	function wp_max_upload_size() {
 		$u_bytes = wp_convert_hr_to_bytes( ini_get( 'upload_max_filesize' ) );
@@ -641,7 +686,7 @@ if( ! function_exists( 'wp_max_upload_size' ) ) :
 	}
 endif;
 
-// wp-includes/media.php (WP 7.1)
+// wp-includes/media.php (WP 7.1.1)
 if( ! function_exists( 'wp_constrain_dimensions' ) ) :
 	function wp_constrain_dimensions( $current_width, $current_height, $max_width = 0, $max_height = 0 ) {
 		if ( ! $max_width && ! $max_height ) {
@@ -717,7 +762,7 @@ if( ! function_exists( 'wp_constrain_dimensions' ) ) :
 	}
 endif;
 
-// wp-includes/media.php (WP 7.1)
+// wp-includes/media.php (WP 7.1.1)
 if( ! function_exists( 'image_resize_dimensions' ) ) :
 	function image_resize_dimensions( $orig_w, $orig_h, $dest_w, $dest_h, $crop = false ) {
 	
@@ -852,7 +897,7 @@ if( ! function_exists( 'image_resize_dimensions' ) ) :
 	}
 endif;
 
-// wp-includes/media.php (WP 7.1)
+// wp-includes/media.php (WP 7.1.1)
 if( ! function_exists( 'get_media_embedded_in_content' ) ) :
 	function get_media_embedded_in_content( $content, $types = null ) {
 		$html = array();
@@ -887,7 +932,7 @@ if( ! function_exists( 'get_media_embedded_in_content' ) ) :
 	}
 endif;
 
-// wp-includes/media.php (WP 7.1)
+// wp-includes/media.php (WP 7.1.1)
 if( ! function_exists( 'add_image_size' ) ) :
 	function add_image_size( $name, $width = 0, $height = 0, $crop = false ) {
 		global $_wp_additional_image_sizes;
@@ -900,14 +945,14 @@ if( ! function_exists( 'add_image_size' ) ) :
 	}
 endif;
 
-// wp-includes/media.php (WP 7.1)
+// wp-includes/media.php (WP 7.1.1)
 if( ! function_exists( 'set_post_thumbnail_size' ) ) :
 	function set_post_thumbnail_size( $width = 0, $height = 0, $crop = false ) {
 		add_image_size( 'post-thumbnail', $width, $height, $crop );
 	}
 endif;
 
-// wp-includes/media.php (WP 7.1)
+// wp-includes/media.php (WP 7.1.1)
 if( ! function_exists( 'image_constrain_size_for_editor' ) ) :
 	function image_constrain_size_for_editor( $width, $height, $size = 'medium', $context = null ) {
 		global $content_width;
@@ -988,7 +1033,7 @@ if( ! function_exists( 'image_constrain_size_for_editor' ) ) :
 	}
 endif;
 
-// wp-includes/media.php (WP 7.1)
+// wp-includes/media.php (WP 7.1.1)
 if( ! function_exists( 'image_hwstring' ) ) :
 	function image_hwstring( $width, $height ) {
 		$out = '';

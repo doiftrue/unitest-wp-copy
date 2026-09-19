@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/html-api/class-wp-html-unsupported-exception.php (WP 7.1)
+// wp-includes/html-api/class-wp-html-unsupported-exception.php (WP 7.1.1)
 if( ! class_exists( 'WP_HTML_Unsupported_Exception' ) ) :
 	class WP_HTML_Unsupported_Exception extends Exception {
 		/**

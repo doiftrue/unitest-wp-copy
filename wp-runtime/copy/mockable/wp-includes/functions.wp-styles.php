@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/functions.wp-styles.php (WP 7.1)
+// wp-includes/functions.wp-styles.php (WP 7.1.1)
 if( ! function_exists( 'wp_styles' ) ) :
 	function wp_styles() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
