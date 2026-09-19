@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/widgets.php (WP 6.9.7)
+// wp-includes/widgets.php (WP 6.9.8)
 if( ! function_exists( 'is_registered_sidebar' ) ) :
 	function is_registered_sidebar( $sidebar_id ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {

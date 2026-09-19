@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/abilities-api/class-wp-ability-categories-registry.php (WP 6.9.7)
+// wp-includes/abilities-api/class-wp-ability-categories-registry.php (WP 6.9.8)
 if( ! class_exists( 'WP_Ability_Categories_Registry' ) ) :
 	class WP_Ability_Categories_Registry {
 		/**

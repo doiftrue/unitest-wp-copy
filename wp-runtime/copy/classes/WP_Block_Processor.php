@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-block-processor.php (WP 6.9.7)
+// wp-includes/class-wp-block-processor.php (WP 6.9.8)
 if( ! class_exists( 'WP_Block_Processor' ) ) :
 	class WP_Block_Processor {
 		/**
