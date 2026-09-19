@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/html-api/class-wp-html-open-elements.php (WP 7.0.4)
+// wp-includes/html-api/class-wp-html-open-elements.php (WP 7.0.5)
 if( ! class_exists( 'WP_HTML_Open_Elements' ) ) :
 	class WP_HTML_Open_Elements {
 		/**

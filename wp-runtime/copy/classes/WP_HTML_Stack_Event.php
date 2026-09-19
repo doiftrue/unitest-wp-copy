@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/html-api/class-wp-html-stack-event.php (WP 7.0.4)
+// wp-includes/html-api/class-wp-html-stack-event.php (WP 7.0.5)
 if( ! class_exists( 'WP_HTML_Stack_Event' ) ) :
 	class WP_HTML_Stack_Event {
 		/**

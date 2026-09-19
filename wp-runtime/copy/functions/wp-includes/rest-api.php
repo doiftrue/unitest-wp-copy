@@ -2,7 +2,63 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
+if( ! function_exists( 'rest_get_route_for_post_type_items' ) ) :
+	function rest_get_route_for_post_type_items( $post_type ) {
+		$post_type = get_post_type_object( $post_type );
+		if ( ! $post_type ) {
+			return '';
+		}
+	
+		if ( ! $post_type->show_in_rest ) {
+			return '';
+		}
+	
+		$namespace = ! empty( $post_type->rest_namespace ) ? $post_type->rest_namespace : 'wp/v2';
+		$rest_base = ! empty( $post_type->rest_base ) ? $post_type->rest_base : $post_type->name;
+		$route     = sprintf( '/%s/%s', $namespace, $rest_base );
+	
+		/**
+		 * Filters the REST API route for a post type.
+		 *
+		 * @since 5.9.0
+		 *
+		 * @param string       $route      The route path.
+		 * @param WP_Post_Type $post_type  The post type object.
+		 */
+		return apply_filters( 'rest_route_for_post_type_items', $route, $post_type );
+	}
+endif;
+
+// wp-includes/rest-api.php (WP 7.0.5)
+if( ! function_exists( 'rest_get_route_for_taxonomy_items' ) ) :
+	function rest_get_route_for_taxonomy_items( $taxonomy ) {
+		$taxonomy = get_taxonomy( $taxonomy );
+		if ( ! $taxonomy ) {
+			return '';
+		}
+	
+		if ( ! $taxonomy->show_in_rest ) {
+			return '';
+		}
+	
+		$namespace = ! empty( $taxonomy->rest_namespace ) ? $taxonomy->rest_namespace : 'wp/v2';
+		$rest_base = ! empty( $taxonomy->rest_base ) ? $taxonomy->rest_base : $taxonomy->name;
+		$route     = sprintf( '/%s/%s', $namespace, $rest_base );
+	
+		/**
+		 * Filters the REST API route for a taxonomy.
+		 *
+		 * @since 5.9.0
+		 *
+		 * @param string      $route    The route path.
+		 * @param WP_Taxonomy $taxonomy The taxonomy object.
+		 */
+		return apply_filters( 'rest_route_for_taxonomy_items', $route, $taxonomy );
+	}
+endif;
+
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_convert_error_to_response' ) ) :
 	function rest_convert_error_to_response( $error ) {
 		$status = array_reduce(
@@ -52,7 +108,7 @@ if( ! function_exists( 'rest_convert_error_to_response' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_are_values_equal' ) ) :
 	function rest_are_values_equal( $value1, $value2 ) {
 		if ( is_array( $value1 ) && is_array( $value2 ) ) {
@@ -79,7 +135,7 @@ if( ! function_exists( 'rest_are_values_equal' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_validate_enum' ) ) :
 	function rest_validate_enum( $value, $args, $param ) {
 		$sanitized_value = rest_sanitize_value_from_schema( $value, $args, $param );
@@ -108,7 +164,7 @@ if( ! function_exists( 'rest_validate_enum' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_validate_null_value_from_schema' ) ) :
 	function rest_validate_null_value_from_schema( $value, $param ) {
 		if ( null !== $value ) {
@@ -124,7 +180,7 @@ if( ! function_exists( 'rest_validate_null_value_from_schema' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_validate_boolean_value_from_schema' ) ) :
 	function rest_validate_boolean_value_from_schema( $value, $param ) {
 		if ( ! rest_is_boolean( $value ) ) {
@@ -140,7 +196,7 @@ if( ! function_exists( 'rest_validate_boolean_value_from_schema' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_validate_object_value_from_schema' ) ) :
 	function rest_validate_object_value_from_schema( $value, $args, $param ) {
 		if ( ! rest_is_object( $value ) ) {
@@ -248,7 +304,7 @@ if( ! function_exists( 'rest_validate_object_value_from_schema' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_validate_array_value_from_schema' ) ) :
 	function rest_validate_array_value_from_schema( $value, $args, $param ) {
 		if ( ! rest_is_array( $value ) ) {
@@ -312,7 +368,7 @@ if( ! function_exists( 'rest_validate_array_value_from_schema' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_validate_number_value_from_schema' ) ) :
 	function rest_validate_number_value_from_schema( $value, $args, $param ) {
 		if ( ! is_numeric( $value ) ) {
@@ -434,7 +490,7 @@ if( ! function_exists( 'rest_validate_number_value_from_schema' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_validate_string_value_from_schema' ) ) :
 	function rest_validate_string_value_from_schema( $value, $args, $param ) {
 		if ( ! is_string( $value ) ) {
@@ -490,7 +546,7 @@ if( ! function_exists( 'rest_validate_string_value_from_schema' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_validate_integer_value_from_schema' ) ) :
 	function rest_validate_integer_value_from_schema( $value, $args, $param ) {
 		$is_valid_number = rest_validate_number_value_from_schema( $value, $args, $param );
@@ -511,7 +567,7 @@ if( ! function_exists( 'rest_validate_integer_value_from_schema' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_get_endpoint_args_for_schema' ) ) :
 	function rest_get_endpoint_args_for_schema( $schema, $method = WP_REST_Server::CREATABLE ) {
 	
@@ -568,7 +624,7 @@ if( ! function_exists( 'rest_get_endpoint_args_for_schema' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_validate_json_schema_pattern' ) ) :
 	function rest_validate_json_schema_pattern( $pattern, $value ) {
 		$escaped_pattern = str_replace( '#', '\\#', $pattern );
@@ -577,7 +633,7 @@ if( ! function_exists( 'rest_validate_json_schema_pattern' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_find_matching_pattern_property_schema' ) ) :
 	function rest_find_matching_pattern_property_schema( $property, $args ) {
 		if ( isset( $args['patternProperties'] ) ) {
@@ -592,7 +648,7 @@ if( ! function_exists( 'rest_find_matching_pattern_property_schema' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_format_combining_operation_error' ) ) :
 	function rest_format_combining_operation_error( $param, $error ) {
 		$position = $error['index'];
@@ -618,7 +674,7 @@ if( ! function_exists( 'rest_format_combining_operation_error' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_get_combining_operation_error' ) ) :
 	function rest_get_combining_operation_error( $value, $param, $errors ) {
 		// If there is only one error, simply return it.
@@ -680,7 +736,7 @@ if( ! function_exists( 'rest_get_combining_operation_error' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_find_any_matching_schema' ) ) :
 	function rest_find_any_matching_schema( $value, $args, $param ) {
 		$errors = array();
@@ -706,7 +762,7 @@ if( ! function_exists( 'rest_find_any_matching_schema' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_find_one_matching_schema' ) ) :
 	function rest_find_one_matching_schema( $value, $args, $param, $stop_after_first_match = false ) {
 		$matching_schemas = array();
@@ -774,7 +830,7 @@ if( ! function_exists( 'rest_find_one_matching_schema' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_get_allowed_schema_keywords' ) ) :
 	function rest_get_allowed_schema_keywords() {
 		return array(
@@ -807,14 +863,14 @@ if( ! function_exists( 'rest_get_allowed_schema_keywords' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_is_integer' ) ) :
 	function rest_is_integer( $maybe_integer ) {
 		return is_numeric( $maybe_integer ) && round( (float) $maybe_integer ) === (float) $maybe_integer;
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_is_array' ) ) :
 	function rest_is_array( $maybe_array ) {
 		if ( is_scalar( $maybe_array ) ) {
@@ -825,7 +881,7 @@ if( ! function_exists( 'rest_is_array' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_sanitize_array' ) ) :
 	function rest_sanitize_array( $maybe_array ) {
 		if ( is_scalar( $maybe_array ) ) {
@@ -841,7 +897,7 @@ if( ! function_exists( 'rest_sanitize_array' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_is_object' ) ) :
 	function rest_is_object( $maybe_object ) {
 		if ( '' === $maybe_object ) {
@@ -860,7 +916,7 @@ if( ! function_exists( 'rest_is_object' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_sanitize_object' ) ) :
 	function rest_sanitize_object( $maybe_object ) {
 		if ( '' === $maybe_object ) {
@@ -883,7 +939,7 @@ if( ! function_exists( 'rest_sanitize_object' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_get_best_type_for_value' ) ) :
 	function rest_get_best_type_for_value( $value, $types ) {
 		static $checks = array(
@@ -914,7 +970,7 @@ if( ! function_exists( 'rest_get_best_type_for_value' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_handle_multi_type_schema' ) ) :
 	function rest_handle_multi_type_schema( $value, $args, $param = '' ) {
 		$allowed_types = array( 'array', 'object', 'string', 'number', 'integer', 'boolean', 'null' );
@@ -944,7 +1000,7 @@ if( ! function_exists( 'rest_handle_multi_type_schema' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_validate_array_contains_unique_items' ) ) :
 	function rest_validate_array_contains_unique_items( $input_array ) {
 		$seen = array();
@@ -966,7 +1022,7 @@ if( ! function_exists( 'rest_validate_array_contains_unique_items' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_stabilize_value' ) ) :
 	function rest_stabilize_value( $value ) {
 		if ( is_scalar( $value ) || is_null( $value ) ) {
@@ -989,7 +1045,7 @@ if( ! function_exists( 'rest_stabilize_value' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_filter_response_by_context' ) ) :
 	function rest_filter_response_by_context( $response_data, $schema, $context ) {
 		if ( isset( $schema['anyOf'] ) ) {
@@ -1088,7 +1144,7 @@ if( ! function_exists( 'rest_filter_response_by_context' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_default_additional_properties_to_false' ) ) :
 	function rest_default_additional_properties_to_false( $schema ) {
 		$type = (array) $schema['type'];
@@ -1121,7 +1177,7 @@ if( ! function_exists( 'rest_default_additional_properties_to_false' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_parse_hex_color' ) ) :
 	function rest_parse_hex_color( $color ) {
 		$regex = '|^#([A-Fa-f0-9]{3}){1,2}$|';
@@ -1133,7 +1189,7 @@ if( ! function_exists( 'rest_parse_hex_color' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_parse_embed_param' ) ) :
 	function rest_parse_embed_param( $embed ) {
 		if ( ! $embed || 'true' === $embed || '1' === $embed ) {
@@ -1150,7 +1206,7 @@ if( ! function_exists( 'rest_parse_embed_param' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( '_rest_array_intersect_key_recursive' ) ) :
 	function _rest_array_intersect_key_recursive( $array1, $array2 ) {
 		$array1 = array_intersect_key( $array1, $array2 );
@@ -1163,7 +1219,7 @@ if( ! function_exists( '_rest_array_intersect_key_recursive' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_is_field_included' ) ) :
 	function rest_is_field_included( $field, $fields ) {
 		if ( in_array( $field, $fields, true ) ) {
@@ -1191,7 +1247,7 @@ if( ! function_exists( 'rest_is_field_included' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_filter_response_fields' ) ) :
 	function rest_filter_response_fields( $response, $server, $request ) {
 		if ( ! isset( $request['_fields'] ) || $response->is_error() ) {
@@ -1242,14 +1298,14 @@ if( ! function_exists( 'rest_filter_response_fields' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_authorization_required_code' ) ) :
 	function rest_authorization_required_code() {
 		return is_user_logged_in() ? 403 : 401;
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'register_rest_field' ) ) :
 	function register_rest_field( $object_type, $attribute, $args = array() ) {
 		global $wp_rest_additional_fields;
@@ -1270,7 +1326,7 @@ if( ! function_exists( 'register_rest_field' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_get_avatar_sizes' ) ) :
 	function rest_get_avatar_sizes() {
 		/**
@@ -1288,7 +1344,7 @@ if( ! function_exists( 'rest_get_avatar_sizes' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_validate_request_arg' ) ) :
 	function rest_validate_request_arg( $value, $request, $param ) {
 		$attributes = $request->get_attributes();
@@ -1301,7 +1357,7 @@ if( ! function_exists( 'rest_validate_request_arg' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_sanitize_request_arg' ) ) :
 	function rest_sanitize_request_arg( $value, $request, $param ) {
 		$attributes = $request->get_attributes();
@@ -1314,7 +1370,7 @@ if( ! function_exists( 'rest_sanitize_request_arg' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_parse_request_arg' ) ) :
 	function rest_parse_request_arg( $value, $request, $param ) {
 		$is_valid = rest_validate_request_arg( $value, $request, $param );
@@ -1329,7 +1385,7 @@ if( ! function_exists( 'rest_parse_request_arg' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_is_ip_address' ) ) :
 	function rest_is_ip_address( $ip ) {
 		$ipv4_pattern = '/^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/';
@@ -1342,7 +1398,7 @@ if( ! function_exists( 'rest_is_ip_address' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_sanitize_boolean' ) ) :
 	function rest_sanitize_boolean( $value ) {
 		// String values are translated to `true`; make sure 'false' is false.
@@ -1358,7 +1414,7 @@ if( ! function_exists( 'rest_sanitize_boolean' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_is_boolean' ) ) :
 	function rest_is_boolean( $maybe_bool ) {
 		if ( is_bool( $maybe_bool ) ) {
@@ -1386,7 +1442,7 @@ if( ! function_exists( 'rest_is_boolean' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_validate_value_from_schema' ) ) :
 	function rest_validate_value_from_schema( $value, $args, $param = '' ) {
 		if ( isset( $args['anyOf'] ) ) {
@@ -1524,7 +1580,7 @@ if( ! function_exists( 'rest_validate_value_from_schema' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_sanitize_value_from_schema' ) ) :
 	function rest_sanitize_value_from_schema( $value, $args, $param = '' ) {
 		if ( isset( $args['anyOf'] ) ) {
@@ -1679,7 +1735,7 @@ if( ! function_exists( 'rest_sanitize_value_from_schema' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_get_server' ) ) :
 	function rest_get_server() {
 		/* @var WP_REST_Server $wp_rest_server */
@@ -1716,7 +1772,7 @@ if( ! function_exists( 'rest_get_server' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'register_rest_route' ) ) :
 	function register_rest_route( $route_namespace, $route, $args = array(), $override = false ) {
 		if ( empty( $route_namespace ) ) {
@@ -1843,7 +1899,7 @@ if( ! function_exists( 'register_rest_route' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_do_request' ) ) :
 	function rest_do_request( $request ) {
 		$request = rest_ensure_request( $request );
@@ -1851,7 +1907,7 @@ if( ! function_exists( 'rest_do_request' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_ensure_request' ) ) :
 	function rest_ensure_request( $request ) {
 		if ( $request instanceof WP_REST_Request ) {
@@ -1866,7 +1922,7 @@ if( ! function_exists( 'rest_ensure_request' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_ensure_response' ) ) :
 	function rest_ensure_response( $response ) {
 		if ( is_wp_error( $response ) ) {
@@ -1893,7 +1949,7 @@ if( ! function_exists( 'rest_ensure_response' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_handle_options_request' ) ) :
 	function rest_handle_options_request( $response, $handler, $request ) {
 		if ( ! empty( $response ) || $request->get_method() !== 'OPTIONS' ) {
@@ -1932,7 +1988,7 @@ if( ! function_exists( 'rest_handle_options_request' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_send_allow_header' ) ) :
 	function rest_send_allow_header( $response, $server, $request ) {
 		$matched_route = $response->get_matched_route();
@@ -1971,7 +2027,7 @@ if( ! function_exists( 'rest_send_allow_header' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_get_url_prefix' ) ) :
 	function rest_get_url_prefix() {
 		/**
@@ -1985,14 +2041,14 @@ if( ! function_exists( 'rest_get_url_prefix' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_url' ) ) :
 	function rest_url( $path = '', $scheme = 'rest' ) {
 		return get_rest_url( null, $path, $scheme );
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_parse_date' ) ) :
 	function rest_parse_date( $date, $force_utc = false ) {
 		if ( $force_utc ) {
@@ -2009,7 +2065,7 @@ if( ! function_exists( 'rest_parse_date' ) ) :
 	}
 endif;
 
-// wp-includes/rest-api.php (WP 7.0.4)
+// wp-includes/rest-api.php (WP 7.0.5)
 if( ! function_exists( 'rest_get_date_with_gmt' ) ) :
 	function rest_get_date_with_gmt( $date, $is_utc = false ) {
 		/*

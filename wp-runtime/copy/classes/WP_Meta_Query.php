@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-meta-query.php (WP 7.0.4)
+// wp-includes/class-wp-meta-query.php (WP 7.0.5)
 if( ! class_exists( 'WP_Meta_Query' ) ) :
 	class WP_Meta_Query {
 		/**
