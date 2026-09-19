@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/style-engine/class-wp-style-engine.php (WP 6.8.8)
+// wp-includes/style-engine/class-wp-style-engine.php (WP 6.8.9)
 if( ! class_exists( 'WP_Style_Engine' ) ) :
 	class WP_Style_Engine {
 		/**

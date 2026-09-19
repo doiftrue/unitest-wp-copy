@@ -73,22 +73,9 @@ class Bootstrap {
 
 	private function load_init_parts(): void {
 		$this->require_files( [
-			...array_map(
-				fn( string $file ) => $this->resolve_wp_line_extra_file( $file ),
-				glob( "$this->base_dir/init-parts/wp-includes/*.php" )
-			),
+			"$this->base_dir/init-parts-modified/wp-includes/plugin.php",
+			...glob( "$this->line_extra_dir/init-parts/wp-includes/*.php" ),
 		] );
-	}
-
-	private function resolve_wp_line_extra_file( string $file ): string {
-		$base_path = "$this->base_dir/";
-		if ( ! str_starts_with( $file, $base_path ) ) {
-			return $file;
-		}
-
-		$new_file = str_replace( $base_path, "$this->line_extra_dir/", $file );
-
-		return is_file( $new_file ) ? $new_file : $file;
 	}
 
 	private function setup_wp_constants(): void {

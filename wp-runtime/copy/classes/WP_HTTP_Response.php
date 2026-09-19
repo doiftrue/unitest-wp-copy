@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-http-response.php (WP 6.8.8)
+// wp-includes/class-wp-http-response.php (WP 6.8.9)
 if( ! class_exists( 'WP_HTTP_Response' ) ) :
 	class WP_HTTP_Response {
 	

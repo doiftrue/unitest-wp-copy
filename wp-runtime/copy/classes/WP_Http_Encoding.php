@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-http-encoding.php (WP 6.8.8)
+// wp-includes/class-wp-http-encoding.php (WP 6.8.9)
 if( ! class_exists( 'WP_Http_Encoding' ) ) :
 	class WP_Http_Encoding {
 	

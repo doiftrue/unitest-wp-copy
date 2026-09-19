@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-block-parser-frame.php (WP 6.8.8)
+// wp-includes/class-wp-block-parser-frame.php (WP 6.8.9)
 if( ! class_exists( 'WP_Block_Parser_Frame' ) ) :
 	class WP_Block_Parser_Frame {
 		/**

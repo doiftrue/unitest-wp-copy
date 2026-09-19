@@ -2,35 +2,35 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/block-template.php (WP 6.8.8)
+// wp-includes/block-template.php (WP 6.8.9)
 if( ! function_exists( 'register_block_template' ) ) :
 	function register_block_template( $template_name, $args = array() ) {
 		return WP_Block_Templates_Registry::get_instance()->register( $template_name, $args );
 	}
 endif;
 
-// wp-includes/block-template.php (WP 6.8.8)
+// wp-includes/block-template.php (WP 6.8.9)
 if( ! function_exists( 'unregister_block_template' ) ) :
 	function unregister_block_template( $template_name ) {
 		return WP_Block_Templates_Registry::get_instance()->unregister( $template_name );
 	}
 endif;
 
-// wp-includes/block-template.php (WP 6.8.8)
+// wp-includes/block-template.php (WP 6.8.9)
 if( ! function_exists( '_block_template_viewport_meta_tag' ) ) :
 	function _block_template_viewport_meta_tag() {
 		echo '<meta name="viewport" content="width=device-width, initial-scale=1" />' . "\n";
 	}
 endif;
 
-// wp-includes/block-template.php (WP 6.8.8)
+// wp-includes/block-template.php (WP 6.8.9)
 if( ! function_exists( '_strip_template_file_suffix' ) ) :
 	function _strip_template_file_suffix( $template_file ) {
 		return preg_replace( '/\.(php|html)$/', '', $template_file );
 	}
 endif;
 
-// wp-includes/block-template.php (WP 6.8.8)
+// wp-includes/block-template.php (WP 6.8.9)
 if( ! function_exists( '_block_template_render_without_post_block_context' ) ) :
 	function _block_template_render_without_post_block_context( $context ) {
 		/*

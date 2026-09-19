@@ -8,7 +8,7 @@ use \WP_Error;
 use \WP_REST_Request;
 use \WP_REST_Response;
 
-// wp-includes/rest-api/class-wp-rest-server.php (WP 6.8.8)
+// wp-includes/rest-api/class-wp-rest-server.php (WP 6.8.9)
 trait WP_REST_Server__Copied_Methods {
 
 	public function __construct() {
