@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/pluggable.php (WP 6.6.7)
+// wp-includes/pluggable.php (WP 6.6.8)
 if( ! function_exists( 'wp_rand' ) ) :
 		function wp_rand( $min = null, $max = null ) {
 			if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -83,7 +83,7 @@ if( ! function_exists( 'wp_rand' ) ) :
 		}
 endif;
 
-// wp-includes/pluggable.php (WP 6.6.7)
+// wp-includes/pluggable.php (WP 6.6.8)
 if( ! function_exists( 'wp_nonce_tick' ) ) :
 		function wp_nonce_tick( $action = -1 ) {
 			if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -102,6 +102,51 @@ if( ! function_exists( 'wp_nonce_tick' ) ) :
 			$nonce_life = apply_filters( 'nonce_life', DAY_IN_SECONDS, $action );
 	
 			return ceil( time() / ( $nonce_life / 2 ) );
+		}
+endif;
+
+// wp-includes/pluggable.php (WP 6.6.8)
+if( ! function_exists( 'wp_parse_auth_cookie' ) ) :
+		function wp_parse_auth_cookie( $cookie = '', $scheme = '' ) {
+			if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+				return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+			}
+	
+			if ( empty( $cookie ) ) {
+				switch ( $scheme ) {
+					case 'auth':
+						$cookie_name = AUTH_COOKIE;
+						break;
+					case 'secure_auth':
+						$cookie_name = SECURE_AUTH_COOKIE;
+						break;
+					case 'logged_in':
+						$cookie_name = LOGGED_IN_COOKIE;
+						break;
+					default:
+						if ( is_ssl() ) {
+							$cookie_name = SECURE_AUTH_COOKIE;
+							$scheme      = 'secure_auth';
+						} else {
+							$cookie_name = AUTH_COOKIE;
+							$scheme      = 'auth';
+						}
+				}
+	
+				if ( empty( $_COOKIE[ $cookie_name ] ) ) {
+					return false;
+				}
+				$cookie = $_COOKIE[ $cookie_name ];
+			}
+	
+			$cookie_elements = explode( '|', $cookie );
+			if ( count( $cookie_elements ) !== 4 ) {
+				return false;
+			}
+	
+			list( $username, $expiration, $token, $hmac ) = $cookie_elements;
+	
+			return compact( 'username', 'expiration', 'token', 'hmac', 'scheme' );
 		}
 endif;
 

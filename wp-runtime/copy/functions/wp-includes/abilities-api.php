@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/abilities-api.php (WP 7.1)
+// wp-includes/abilities-api.php (WP 7.1.1)
 if( ! function_exists( '_wp_get_abilities_match_meta' ) ) :
 	function _wp_get_abilities_match_meta( array $meta, array $conditions ): bool {
 		foreach ( $conditions as $key => $value ) {
@@ -23,7 +23,7 @@ if( ! function_exists( '_wp_get_abilities_match_meta' ) ) :
 	}
 endif;
 
-// wp-includes/abilities-api.php (WP 7.1)
+// wp-includes/abilities-api.php (WP 7.1.1)
 if( ! function_exists( 'wp_register_ability' ) ) :
 	function wp_register_ability( string $name, array $args ): ?WP_Ability {
 		if ( ! doing_action( 'wp_abilities_api_init' ) ) {
@@ -49,7 +49,7 @@ if( ! function_exists( 'wp_register_ability' ) ) :
 	}
 endif;
 
-// wp-includes/abilities-api.php (WP 7.1)
+// wp-includes/abilities-api.php (WP 7.1.1)
 if( ! function_exists( 'wp_unregister_ability' ) ) :
 	function wp_unregister_ability( string $name ): ?WP_Ability {
 		$registry = WP_Abilities_Registry::get_instance();
@@ -61,31 +61,7 @@ if( ! function_exists( 'wp_unregister_ability' ) ) :
 	}
 endif;
 
-// wp-includes/abilities-api.php (WP 7.1)
-if( ! function_exists( 'wp_has_ability' ) ) :
-	function wp_has_ability( string $name ): bool {
-		$registry = WP_Abilities_Registry::get_instance();
-		if ( null === $registry ) {
-			return false;
-		}
-	
-		return $registry->is_registered( $name );
-	}
-endif;
-
-// wp-includes/abilities-api.php (WP 7.1)
-if( ! function_exists( 'wp_get_ability' ) ) :
-	function wp_get_ability( string $name ): ?WP_Ability {
-		$registry = WP_Abilities_Registry::get_instance();
-		if ( null === $registry ) {
-			return null;
-		}
-	
-		return $registry->get_registered( $name );
-	}
-endif;
-
-// wp-includes/abilities-api.php (WP 7.1)
+// wp-includes/abilities-api.php (WP 7.1.1)
 if( ! function_exists( 'wp_get_abilities' ) ) :
 	function wp_get_abilities( array $args = array() ): array {
 		$registry = WP_Abilities_Registry::get_instance();
@@ -165,7 +141,7 @@ if( ! function_exists( 'wp_get_abilities' ) ) :
 	}
 endif;
 
-// wp-includes/abilities-api.php (WP 7.1)
+// wp-includes/abilities-api.php (WP 7.1.1)
 if( ! function_exists( 'wp_register_ability_category' ) ) :
 	function wp_register_ability_category( string $slug, array $args ): ?WP_Ability_Category {
 		if ( ! doing_action( 'wp_abilities_api_categories_init' ) ) {
@@ -191,7 +167,7 @@ if( ! function_exists( 'wp_register_ability_category' ) ) :
 	}
 endif;
 
-// wp-includes/abilities-api.php (WP 7.1)
+// wp-includes/abilities-api.php (WP 7.1.1)
 if( ! function_exists( 'wp_unregister_ability_category' ) ) :
 	function wp_unregister_ability_category( string $slug ): ?WP_Ability_Category {
 		$registry = WP_Ability_Categories_Registry::get_instance();
@@ -200,42 +176,6 @@ if( ! function_exists( 'wp_unregister_ability_category' ) ) :
 		}
 	
 		return $registry->unregister( $slug );
-	}
-endif;
-
-// wp-includes/abilities-api.php (WP 7.1)
-if( ! function_exists( 'wp_has_ability_category' ) ) :
-	function wp_has_ability_category( string $slug ): bool {
-		$registry = WP_Ability_Categories_Registry::get_instance();
-		if ( null === $registry ) {
-			return false;
-		}
-	
-		return $registry->is_registered( $slug );
-	}
-endif;
-
-// wp-includes/abilities-api.php (WP 7.1)
-if( ! function_exists( 'wp_get_ability_category' ) ) :
-	function wp_get_ability_category( string $slug ): ?WP_Ability_Category {
-		$registry = WP_Ability_Categories_Registry::get_instance();
-		if ( null === $registry ) {
-			return null;
-		}
-	
-		return $registry->get_registered( $slug );
-	}
-endif;
-
-// wp-includes/abilities-api.php (WP 7.1)
-if( ! function_exists( 'wp_get_ability_categories' ) ) :
-	function wp_get_ability_categories(): array {
-		$registry = WP_Ability_Categories_Registry::get_instance();
-		if ( null === $registry ) {
-			return array();
-		}
-	
-		return $registry->get_all_registered();
 	}
 endif;
 

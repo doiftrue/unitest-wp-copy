@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-connector-registry.php (WP 7.1)
+// wp-includes/class-wp-connector-registry.php (WP 7.1.1)
 if( ! class_exists( 'WP_Connector_Registry' ) ) :
 	class WP_Connector_Registry {
 		/**
