@@ -19,6 +19,26 @@ because its changes are shared by all WordPress-line tags that publish it.
 Availability for a particular WordPress line can be checked in the repository
 tags.
 
+## 4.2 - 2026-09-19
+
+### Added
+
+- Added 22 dependency-safe WordPress helpers, including URL extraction,
+  cron schedules, date and timezone helpers, remote block-pattern
+  normalization, image-quality and connector-credential helpers, Style Engine
+  stylesheet helpers, cache invalidation, and REST route helpers.
+- Added WordPress 7.1 helpers for environment-aware ping disabling, Chromium
+  version detection, image encode quality, connector credentials, and entity
+  view-config hook names.
+
+### Changed
+
+- Updated the runtime for WordPress 7.1.1 and regenerated copied symbols.
+- Reclassified registry, clock, request, version, shortcode, media-priority,
+  SSL, and authentication-cookie boundaries as mockable where appropriate.
+- Loaded HTML named-character-reference data for every supported WordPress
+  line, restoring named-entity handling in the HTML API.
+
 ## 4.1 - 2026-09-08
 
 ### Added
