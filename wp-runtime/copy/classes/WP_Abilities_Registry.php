@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/abilities-api/class-wp-abilities-registry.php (WP 7.1)
+// wp-includes/abilities-api/class-wp-abilities-registry.php (WP 7.1.1)
 if( ! class_exists( 'WP_Abilities_Registry' ) ) :
 	class WP_Abilities_Registry {
 		/**
