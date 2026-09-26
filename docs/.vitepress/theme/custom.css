@@ -30,7 +30,12 @@
 	font-size: 90%;
 }
 
-.vp-doc th,
-.vp-doc td {
+.vp-doc :is(th,td) {
 	padding: 6px 8px;
+}
+
+/* Hide the title of info blocks */
+.custom-block {
+	padding: 10px 16px 8px;
+	.custom-block-title { display: none; }
 }

@@ -14,7 +14,7 @@ hero:
       link: /guide/getting-started
     - theme: alt
       text: Set up plugin tests
-      link: /guide/plugin-unit-tests
+      link: /guide/full-unit-test-setup
 
 features:
   - title: Real WordPress behavior

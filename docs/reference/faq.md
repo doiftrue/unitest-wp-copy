@@ -21,8 +21,9 @@ No. Only functions in the **Copied mockable functions** section of
 
 ## Why is my `get_option()` mock ignored?
 
-Values in `$GLOBALS['stub_wp_options']` take priority. Change the stored value or
-mock an option name that is absent from the store.
+Values in `$GLOBALS['stub_wp_options']` are checked before WP_Mock handlers.
+Change the stored value or mock an option name that is absent from the store.
+See [Options](/reference/options) for the complete lookup order and examples.
 
 ## Which package version should I install?
 

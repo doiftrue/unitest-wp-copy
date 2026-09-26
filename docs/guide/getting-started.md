@@ -28,6 +28,14 @@ The order matters: Unitest WP Copy defines the WordPress functions, then WP_Mock
 adds mock handlers for supported functions.
 :::
 
+## Check available functions and classes
+
+See [`SYMBOLS-INFO.md`](https://github.com/doiftrue/unitest-wp-copy/blob/main/SYMBOLS-INFO.md):
+
+```text
+vendor/doiftrue/unitest-wp-copy/SYMBOLS-INFO.md
+```
+
 ## Write a test
 
 ```php
@@ -51,12 +59,19 @@ final class CommentTest extends TestCase {
 }
 ```
 
+::: info
 This test runs the real WordPress implementations of `wp_kses_post()`,
 `make_clickable()`, and `wpautop()`. The WP_Mock test case handles setup and
 cleanup automatically.
+::: 
 
 ## Mock a WordPress boundary
 
+
+::: info 
+Only functions listed as **mockable** support this. See
+[`SYMBOLS-INFO.md`](https://github.com/doiftrue/unitest-wp-copy/blob/main/SYMBOLS-INFO.md).
+:::
 Some runtime functions can be controlled through WP_Mock:
 
 ```php
@@ -65,16 +80,14 @@ Some runtime functions can be controlled through WP_Mock:
 self::assertTrue( is_multisite() );
 ```
 
-Only functions listed as **mockable** support this. See
-[`SYMBOLS-INFO.md`](https://github.com/doiftrue/unitest-wp-copy/blob/main/SYMBOLS-INFO.md).
+## Configure the runtime
 
-## Check available functions and classes
+Runtime configuration has two parts:
 
-Open [`SYMBOLS-INFO.md`](https://github.com/doiftrue/unitest-wp-copy/blob/main/SYMBOLS-INFO.md):
+- [Constants](/reference/constants) — immutable filesystem paths, URLs,
+  environment type, debug mode, and other values defined before bootstrap.
+- [Options](/reference/options) — mutable site and network values stored in
+  memory, including defaults, lookup order, mocking, and cleanup.
 
-```text
-vendor/doiftrue/unitest-wp-copy/SYMBOLS-INFO.md
-```
-
-This file matches the installed runtime version and is the authoritative symbol
-list.
+Configure constants before `\Unitest_WP_Copy\Bootstrap::init()`. Options can be
+provided before bootstrap or changed afterward.

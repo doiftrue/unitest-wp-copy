@@ -1,4 +1,4 @@
-# Set up unit tests for a WordPress plugin
+# Full unit test setup for a WordPress plugin
 
 This is the minimum complete setup needed to run the first isolated unit test
 for a WordPress plugin.

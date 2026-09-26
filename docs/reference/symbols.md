@@ -25,6 +25,12 @@ WordPress line and package version.
 For runtime-adapted classes, `[wp]` marks an unchanged WordPress method and
 `[adapted]` marks runtime-specific behavior.
 
+See [Runtime-adapted classes](/reference/runtime-classes) for examples of
+extending `WP_REST_Server__Runtime` and `wpdb__Runtime`.
+
+See [Override functions](/reference/override-functions) to replace a
+runtime-provided function before bootstrap.
+
 ## If a symbol is missing
 
 Do not add an ad-hoc global stub automatically. Prefer one of these:

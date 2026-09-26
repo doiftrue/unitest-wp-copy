@@ -2,26 +2,24 @@ import { defineConfig } from 'vitepress';
 
 const guideSidebar = [
 	{ text: 'Start here', link: '/guide/getting-started' },
-	{ text: 'Set up plugin unit tests', link: '/guide/plugin-unit-tests' },
 	{ text: 'Runtime', link: '/guide/runtime' },
-	{ text: 'REST API tests', link: '/guide/rest-api' },
+	{ text: 'Constants', link: '/reference/constants' },
+	{ text: 'Options', link: '/reference/options' },
 	{ text: 'AI agent instructions', link: '/guide/ai-agents' },
+	{ text: 'Full unit test setup', link: '/guide/full-unit-test-setup' },
 ];
 
 const referenceSidebar = [
 	{ text: 'Available symbols', link: '/reference/symbols' },
-	{ text: 'Runtime configuration', link: '/reference/configuration' },
+	{ text: 'Runtime-adapted classes', link: '/reference/runtime-classes' },
+	{ text: 'REST API tests', link: '/guide/rest-api' },
+	{ text: 'Override functions', link: '/reference/override-functions' },
 	{ text: 'Limitations', link: '/reference/limitations' },
 	{ text: 'FAQ', link: '/reference/faq' },
 ];
 
 const maintainerSidebar = [
-	{ text: 'Runtime internals', link: '/runtime' },
-	{ text: 'Parser workflow', link: '/parser' },
-	{ text: 'Symbol eligibility', link: '/symbol-eligibility' },
-	{ text: 'Config model', link: '/config' },
-	{ text: 'Test conventions', link: '/tests' },
-	{ text: 'Release workflow', link: '/releaser' },
+	{ text: 'Maintainers', link: '/maintainers' },
 ];
 
 export default defineConfig( {
@@ -30,6 +28,14 @@ export default defineConfig( {
 	description: 'Selected WordPress core behavior for fast, isolated PHPUnit tests.',
 	base: '/unitest-wp-copy/',
 	cleanUrls: true,
+	srcExclude: [
+		'runtime.md',
+		'parser.md',
+		'config.md',
+		'tests.md',
+		'releaser.md',
+		'symbol-eligibility*.md',
+	],
 	ignoreDeadLinks: [
 		/symbol-eligibility-discussion-rest-api/,
 	],
@@ -43,7 +49,7 @@ export default defineConfig( {
 		},
 		nav: [
 			{ text: 'Start here', link: '/guide/getting-started' },
-			{ text: 'Plugin test setup', link: '/guide/plugin-unit-tests' },
+			{ text: 'Full unit test setup', link: '/guide/full-unit-test-setup' },
 			{ text: 'Symbols', link: '/reference/symbols' },
 			{ text: 'Packagist', link: 'https://packagist.org/packages/doiftrue/unitest-wp-copy' },
 		],
