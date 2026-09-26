@@ -262,3 +262,7 @@ Before adding another WordPress dependency:
 5. Restore changed runtime globals and option-store values in `tearDown()`.
 
 For REST route code, continue with [testing REST API code](/guide/rest-api).
+
+If an AI coding agent writes or maintains the tests, copy the project guidance
+from [Instructions for AI agents](/guide/ai-agents) into the repository's
+`AGENTS.md`.

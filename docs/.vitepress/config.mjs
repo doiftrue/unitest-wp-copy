@@ -4,6 +4,7 @@ const guideSidebar = [
 	{ text: 'Getting started', link: '/guide/getting-started' },
 	{ text: 'How the runtime works', link: '/guide/runtime' },
 	{ text: 'Complete plugin test setup', link: '/guide/plugin-unit-tests' },
+	{ text: 'AI agents Instructions', link: '/guide/ai-agents' },
 	{ text: 'Testing REST API code', link: '/guide/rest-api' },
 ];
 
@@ -43,6 +44,7 @@ export default defineConfig( {
 		nav: [
 			{ text: 'Guide', link: '/guide/getting-started' },
 			{ text: 'Plugin example', link: '/guide/plugin-unit-tests' },
+			{ text: 'AI agents', link: '/guide/ai-agents' },
 			{ text: 'Symbols', link: '/reference/symbols' },
 			{ text: 'Packagist', link: 'https://packagist.org/packages/doiftrue/unitest-wp-copy' },
 		],
