@@ -58,7 +58,10 @@ release.all: ## Release all WP lines
 
 
 WORKTREE_DIRS := $(sort $(wildcard worktrees/wp-*))
-worktrees.run: ## Run cmd in worktrees. Eg: make worktrees.run cmd="git status --short"
+# Examples:
+#   make worktrees.run cmd="git status --short"
+#   make worktrees.run cmd="git push origin --tags"
+worktrees.run: ## Run cmd in worktrees.
 	@if [ -z "$(cmd)" ]; then \
 		echo 'Use: make worktrees.run cmd="git status --short"'; \
 		exit 1; \
@@ -76,7 +79,7 @@ worktrees.status: ## Git status in release worktrees
 		echo; \
 	done
 
-worktree.add: ## Create WP line worktree. Eg: make worktree.add  WP_LINE=7.1  FROM_WP_LINE=7.0
+worktrees.add: ## Create WP line worktree. Eg: make worktrees.add  WP_LINE=7.1  FROM_WP_LINE=7.0
 	@[ -n "$(WP_LINE)" ] && [ -n "$(FROM_WP_LINE)" ] || { echo 'Use: make worktree.add WP_LINE=7.1 FROM_WP_LINE=7.0'; exit 1; }
 	@branch="wp-$(WP_LINE)"; \
 	dir="worktrees/$$branch"; \
