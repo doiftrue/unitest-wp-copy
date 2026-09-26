@@ -1,0 +1,36 @@
+:root {
+	--vp-c-brand-1: #3858a6;
+	--vp-c-brand-2: #2d4788;
+	--vp-c-brand-3: #23386d;
+	--vp-c-brand-soft: #dce5ff;
+}
+
+.dark {
+	--vp-c-brand-1: #8da9f2;
+	--vp-c-brand-2: #adc1f8;
+	--vp-c-brand-3: #6f90e4;
+	--vp-c-brand-soft: #2f3f69;
+}
+
+.VPNavBarTitle .logo {
+	border-radius: 6px;
+}
+
+.VPButton.brand {
+	border-color: var(--vp-c-brand-1);
+	background-color: var(--vp-c-brand-1);
+}
+
+.VPButton.brand:hover {
+	border-color: var(--vp-c-brand-2);
+	background-color: var(--vp-c-brand-2);
+}
+
+.vp-doc table {
+	font-size: 90%;
+}
+
+.vp-doc th,
+.vp-doc td {
+	padding: 6px 8px;
+}

@@ -4,6 +4,9 @@ Helper library for PHPUnit tests. It provides selected WordPress core functions 
 
 Use it with [WP_Mock](https://github.com/10up/wp_mock). The runtime keeps real WordPress pure-PHP behavior, while WP_Mock lets tests replace functions marked as mockable when that is needed — which is almost always the case in unit tests.
 
+The complete documentation is available at
+[doiftrue.github.io/unitest-wp-copy](https://doiftrue.github.io/unitest-wp-copy/).
+
 
 Quick Start
 -----------

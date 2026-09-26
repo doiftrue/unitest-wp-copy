@@ -89,6 +89,24 @@ worktrees.add: ## Create WP line worktree. Eg: make worktrees.add  WP_LINE=7.1  
 	git worktree add -b "$$branch" "$$dir" "wp-$(FROM_WP_LINE)"
 
 
+define node_run
+	@docker run --rm --init $(1) --name UNITEST_WP_COPY__node \
+		--user node \
+		-v "$(CURDIR):/usr/src/app" \
+		-w /usr/src/app \
+		node:24-alpine sh -c "$(2)"
+endef
+
+docs.install:
+	$(call node_run,, npm --prefix docs ci)
+
+docs.build:
+	$(call node_run,, npm --prefix docs run build)
+
+docs.dev:
+	$(call node_run,-p 127.0.0.1:5173:5173, npm --prefix docs run dev -- --host 0.0.0.0)
+
+
 php.run: ## Run PHP code. Eg: make php.run code='echo "$wp_version\n";'
 	@if [ -z "$(strip $(value code))" ]; then \
 		echo 'Use: make php.run code='\''include "wp-core/wp-includes/version.php"; echo $$wp_version, "\\n";'\'''; \
