@@ -1,39 +1,36 @@
 # Available symbols
 
-Unitest WP Copy is whitelist-based. A function or class is available only when
-it has been reviewed for isolated execution and included in the selected package
-release.
+The runtime contains only reviewed WordPress functions and classes.
 
-## Symbol index
+## Find a symbol
 
-The generated
-[`SYMBOLS-INFO.md`](https://github.com/doiftrue/unitest-wp-copy/blob/main/SYMBOLS-INFO.md)
-is the authoritative index. When the package is installed, use the copy in
-`vendor/doiftrue/unitest-wp-copy/SYMBOLS-INFO.md` because it matches the exact
-runtime version under test.
+Open the file installed with the package:
 
-## Index sections
+```text
+vendor/doiftrue/unitest-wp-copy/SYMBOLS-INFO.md
+```
 
-| Section | Meaning |
+Use this file instead of the repository copy because it matches your installed
+WordPress line and package version.
+
+## Read the symbol type
+
+| Section | How to use it |
 | --- | --- |
-| Runtime-adapted classes | Reduced WordPress-compatible classes with copied and adapted methods. |
-| Custom-adapted symbols | Manual implementations designed for the isolated runtime. |
-| Copied mockable functions | Original WordPress logic that can be overridden through WP_Mock. |
-| Copied functions and classes | Original WordPress code used directly by tests. |
+| Runtime-adapted classes | Instantiate or extend the reduced class. |
+| Custom-adapted symbols | Use the runtime-specific implementation directly. |
+| Copied mockable functions | Use real behavior or override it with WP_Mock. |
+| Copied functions and classes | Use the original copied behavior directly. |
 
-For runtime-adapted classes, `[wp]` identifies an unchanged copied WordPress
-method and `[adapted]` identifies runtime-specific behavior.
+For runtime-adapted classes, `[wp]` marks an unchanged WordPress method and
+`[adapted]` marks runtime-specific behavior.
 
 ## If a symbol is missing
 
-A missing symbol is not automatically safe to stub globally. First decide what
-the production code needs:
+Do not add an ad-hoc global stub automatically. Prefer one of these:
 
-- inject a project interface for database, network, or filesystem work;
-- wrap the WordPress boundary in a small project adapter;
-- use WP_Mock when the function is already listed as mockable;
-- open an issue if a deterministic WordPress symbol appears suitable for this
-  runtime.
-
-Do not assume that a function exists merely because a related WordPress function
-is included.
+1. Inject a project interface for database, network, or filesystem work.
+2. Wrap the WordPress dependency in a small project adapter.
+3. Use WP_Mock if the symbol is already listed as mockable.
+4. Request a deterministic, dependency-safe symbol in the
+   [issue tracker](https://github.com/doiftrue/unitest-wp-copy/issues).

@@ -1,18 +1,18 @@
 import { defineConfig } from 'vitepress';
 
 const guideSidebar = [
-	{ text: 'Getting started', link: '/guide/getting-started' },
-	{ text: 'How the runtime works', link: '/guide/runtime' },
-	{ text: 'Complete plugin test setup', link: '/guide/plugin-unit-tests' },
-	{ text: 'AI agents Instructions', link: '/guide/ai-agents' },
-	{ text: 'Testing REST API code', link: '/guide/rest-api' },
+	{ text: 'Start here', link: '/guide/getting-started' },
+	{ text: 'Set up plugin unit tests', link: '/guide/plugin-unit-tests' },
+	{ text: 'Runtime', link: '/guide/runtime' },
+	{ text: 'REST API tests', link: '/guide/rest-api' },
+	{ text: 'AI agent instructions', link: '/guide/ai-agents' },
 ];
 
 const referenceSidebar = [
 	{ text: 'Available symbols', link: '/reference/symbols' },
 	{ text: 'Runtime configuration', link: '/reference/configuration' },
 	{ text: 'Limitations', link: '/reference/limitations' },
-	{ text: 'FAQ and support', link: '/reference/faq' },
+	{ text: 'FAQ', link: '/reference/faq' },
 ];
 
 const maintainerSidebar = [
@@ -42,9 +42,8 @@ export default defineConfig( {
 			level: [ 2, 3 ],
 		},
 		nav: [
-			{ text: 'Guide', link: '/guide/getting-started' },
-			{ text: 'Plugin example', link: '/guide/plugin-unit-tests' },
-			{ text: 'AI agents', link: '/guide/ai-agents' },
+			{ text: 'Start here', link: '/guide/getting-started' },
+			{ text: 'Plugin test setup', link: '/guide/plugin-unit-tests' },
 			{ text: 'Symbols', link: '/reference/symbols' },
 			{ text: 'Packagist', link: 'https://packagist.org/packages/doiftrue/unitest-wp-copy' },
 		],

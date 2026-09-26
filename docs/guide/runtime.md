@@ -1,35 +1,27 @@
-# How the runtime works
+# Runtime
 
-Unitest WP Copy is a curated compatibility runtime, not a miniature WordPress
-installation. The package copies dependency-safe WordPress code and supplies
-small adaptations for selected global state and classes.
+Unitest WP Copy is not a WordPress installation. It is a selected set of
+WordPress functions and classes that can run without a database or full
+bootstrap.
 
-## Bootstrap order
+## What gets loaded
 
 ```php
-require_once dirname( __DIR__ ) . '/vendor/autoload.php';
-
 \Unitest_WP_Copy\Bootstrap::init();
-\WP_Mock::bootstrap();
 ```
 
-`Bootstrap::init()` loads copied code, default constants, globals, hook
-registries, in-memory options, and runtime adapters. WP_Mock starts afterward so
-tests can register handlers for supported boundaries.
+This initializes:
 
-## Runtime categories
+- copied WordPress functions and classes;
+- WordPress-like constants and globals;
+- hooks and in-memory options;
+- runtime-adapted classes such as `wpdb` and `WP_REST_Server`.
 
-| Category | Purpose |
-| --- | --- |
-| Copied functions and classes | Original WordPress implementations that are safe in isolation. |
-| Mockable copied functions | Original behavior plus an optional WP_Mock handler. |
-| Runtime-adapted functions | WordPress-compatible behavior backed by in-memory state. |
-| Runtime-adapted classes | Reduced classes that preserve useful WordPress methods without unsupported infrastructure. |
+Call `\WP_Mock::bootstrap()` afterward if tests need mocks.
 
-## Options without a database
+## Set an option
 
-`get_option()` and `get_site_option()` read object properties instead of database
-rows:
+Options are stored in memory:
 
 ```php
 $GLOBALS['stub_wp_options']->my_plugin_title = 'Test title';
@@ -37,28 +29,20 @@ $GLOBALS['stub_wp_options']->my_plugin_title = 'Test title';
 self::assertSame( 'Test title', get_option( 'my_plugin_title' ) );
 ```
 
-Stored values have priority over WP_Mock handlers. To mock an option through
-WP_Mock, use an option name that is not present in the corresponding store.
+Network options use `$GLOBALS['stub_wp_site_options']`.
 
-```php
-\WP_Mock::userFunction( 'get_option', [
-	'args'   => [ 'missing_plugin_option', false ],
-	'return' => 'mocked value',
-] );
-```
+Stored values take priority over WP_Mock handlers. To mock `get_option()`, use an
+option name that is absent from the store.
 
-## Shared process state
+## Restore changed state
 
-The runtime uses the same global state model as WordPress. A mutation remains
-visible until the test restores it.
+Runtime globals are shared for the life of the PHP process:
 
 ```php
 private object $original_options;
 
 protected function setUp(): void {
 	parent::setUp();
-	\WP_Mock::setUp();
-
 	$this->original_options = clone $GLOBALS['stub_wp_options'];
 }
 
@@ -66,37 +50,31 @@ protected function tearDown(): void {
 	$GLOBALS['stub_wp_options'] = $this->original_options;
 	unset( $GLOBALS['wp_rest_server'] );
 
-	\WP_Mock::tearDown();
 	parent::tearDown();
 }
 ```
 
-Restore every global, option, or registry changed by a test. REST tests should
-always unset `$GLOBALS['wp_rest_server']` after registering routes.
+This example assumes the test extends `WP_Mock\Tools\TestCase`. Restore every
+global, option, hook, or registry changed by a test before calling
+`parent::tearDown()`.
 
-## Overriding constants and functions
+## Override constants
 
-Define supported constants before calling `Bootstrap::init()`:
+Define constants before bootstrap:
 
 ```php
 define( 'WP_CONTENT_DIR', '/srv/wp/wp-content' );
 define( 'WP_CONTENT_URL', 'https://wp.test/wp-content' );
 define( 'WP_ENVIRONMENT_TYPE', 'development' );
-```
 
-Copied functions are guarded with `function_exists()`. A project can therefore
-define a special-purpose replacement before bootstrap, although WP_Mock is
-usually clearer for functions listed as mockable.
+\Unitest_WP_Copy\Bootstrap::init();
+```
 
 ## Runtime-adapted classes
 
-Some WordPress classes are useful even though their complete infrastructure is
-not. The runtime currently includes adapters such as:
+Some WordPress classes are reduced to the parts useful in unit tests:
 
-- `\Unitest_WP_Copy\wpdb__Runtime` for SQL-building methods without querying a
-  database;
-- `\Unitest_WP_Copy\WP_REST_Server__Runtime` for in-memory route registration
-  and dispatch.
+- `\Unitest_WP_Copy\wpdb__Runtime` builds SQL but does not query a database.
+- `\Unitest_WP_Copy\WP_REST_Server__Runtime` registers and dispatches routes in memory.
 
-Bootstrap exposes compatible globals or aliases where required. Consult
-`SYMBOLS-INFO.md` for the exact public methods available in each package release.
+See `vendor/doiftrue/unitest-wp-copy/SYMBOLS-INFO.md` for their public methods.

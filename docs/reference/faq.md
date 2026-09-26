@@ -1,41 +1,40 @@
-# FAQ and support
+# FAQ
 
 ## Is this a complete WordPress test environment?
 
-No. It is a selected in-memory runtime for unit tests. Use WordPress integration
-tests when code requires the database, filesystem, network, or full bootstrap.
+No. It is an in-memory runtime for selected WordPress code.
 
 ## Why not mock every WordPress function?
 
-Real deterministic WordPress code catches formatting, sanitization, parsing, and
-compatibility mistakes that a made-up mock return value cannot. Mock only the
-environment boundary that the test needs to control.
+Real formatting, sanitization, and parsing code catches mistakes that fixed mock
+values cannot.
 
-## Why must Unitest WP Copy initialize before WP_Mock?
+## Why must Unitest WP Copy load before WP_Mock?
 
-The runtime first defines copied WordPress functions. Mockable functions include
-an injected WP_Mock handler path, so WP_Mock can control them after bootstrap.
+The runtime defines the WordPress functions first. Mockable functions then use
+WP_Mock handlers when a test registers one.
 
-## Can WP_Mock override every copied function?
+## Can WP_Mock replace every copied function?
 
-No. Only functions listed in the mockable section of `SYMBOLS-INFO.md` support
-that behavior. Regular copied functions intentionally keep their WordPress
-implementation.
+No. Only functions in the **Copied mockable functions** section of
+`SYMBOLS-INFO.md` can be replaced.
 
-## Why does my option mock not run?
+## Why is my `get_option()` mock ignored?
 
-An option already present in `$GLOBALS['stub_wp_options']` or
-`$GLOBALS['stub_wp_site_options']` takes priority. Change the stored property
-directly, or use a missing option name for the WP_Mock handler.
+Values in `$GLOBALS['stub_wp_options']` take priority. Change the stored value or
+mock an option name that is absent from the store.
 
 ## Which package version should I install?
 
-Use the line matching the WordPress version supported by the plugin, such as
-`doiftrue/unitest-wp-copy:6.9.*` for WordPress 6.9.
+Match the WordPress line:
 
-## Where can I report a problem?
+```bash
+composer require --dev doiftrue/unitest-wp-copy:7.1.*
+```
 
-Open an issue in the
-[Unitest WP Copy repository](https://github.com/doiftrue/unitest-wp-copy/issues).
-Include the package version, PHP version, smallest reproducible test, and full
-error message.
+`7.1.*` means any Unitest WP Copy release built for WordPress 7.1.
+
+## Where do I report a problem?
+
+Open an [issue](https://github.com/doiftrue/unitest-wp-copy/issues) with the
+package version, PHP version, smallest reproducible test, and full error message.

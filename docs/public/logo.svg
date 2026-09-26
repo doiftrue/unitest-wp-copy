@@ -1,5 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
-  <title id="title">Unitest WP Copy</title>
-  <rect width="64" height="64" rx="12" fill="#3858a6"/>
-  <path fill="#fff" d="M13 16h7l5 30h-8zm16 0h7l-4 18-4-8zm12 0h10l-5 30h-8l-3-14z"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" fill="none">
+  <title>Unitest WP Copy</title>
+  <rect width="256" height="256" rx="48" fill="#3858A6"/>
+  <path d="m80 80-40 48 40 48m96-96 40 48-40 48" stroke="#FFF" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="m98 130 21 23 39-48" stroke="#FFF" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

@@ -1,69 +1,127 @@
-# Complete WordPress plugin unit-test setup
+# Set up unit tests for a WordPress plugin
 
-This example creates a small plugin and a complete PHPUnit setup. The production
-class sanitizes and formats user-provided text with real WordPress functions,
-while a site-mode decision is controlled through WP_Mock.
+This is the minimum complete setup needed to run the first isolated unit test
+for a WordPress plugin.
 
-The example targets WordPress 6.9 and PHP 8.1. Change the package constraint to
-the WordPress line supported by your plugin.
+It targets WordPress 7.1, PHP 8.1, and PHPUnit 9.6.
 
 ## Project structure
 
 ```text
 content-card/
 ├── composer.json
+├── Makefile
 ├── phpunit.xml
-├── content-card.php
+├── content-card.php          # existing plugin file
 ├── src/
-│   └── ContentCard.php
+│   └── ContentCard.php       # existing plugin code
 └── tests/
     ├── bootstrap.php
     └── ContentCardTest.php
 ```
 
-## 1. Composer configuration
+The example assumes the plugin already contains these two files:
+
+`src/ContentCard.php`:
+
+```php
+namespace Example\ContentCard;
+
+final class ContentCard {
+
+	public function render( string $title, string $content ): string {
+		$title = sanitize_text_field( $title );
+		$body  = wpautop( make_clickable( wp_kses_post( $content ) ) );
+		$class = is_multisite() ? 'content-card content-card--network' : 'content-card';
+
+		return sprintf(
+			'<article class="%s"><h2>%s</h2><div class="content-card__body">%s</div></article>',
+			esc_attr( $class ),
+			esc_html( $title ),
+			$body
+		);
+	}
+}
+```
+
+`content-card.php`:
+
+```php
+/**
+ * Plugin Name: Content Card
+ */
+
+namespace Example\ContentCard;
+
+defined( 'ABSPATH' ) || exit;
+
+require_once __DIR__ . '/vendor/autoload.php';
+```
+
+Your plugin can have a different structure and code. The remaining files belong
+to the unit-test setup.
+
+## Install the test runtime
 
 Create `composer.json`:
 
 ```json
 {
-  "name": "example/content-card",
-  "description": "Example WordPress plugin with isolated unit tests.",
-  "type": "wordpress-plugin",
-  "require": {
-    "php": ">=8.1"
-  },
-  "require-dev": {
-    "doiftrue/unitest-wp-copy": "6.9.*",
-    "phpunit/phpunit": "^9.6",
-    "10up/wp_mock": "*"
-  },
-  "autoload": {
-    "psr-4": {
-      "Example\\ContentCard\\": "src/"
-    }
-  },
-  "scripts": {
-    "test": "phpunit"
-  },
-  "config": {
-    "allow-plugins": {
-      "composer/installers": true
-    }
-  }
+	"name": "example/content-card",
+	"description": "Example WordPress plugin with isolated unit tests.",
+	"type": "wordpress-plugin",
+	"scripts": {
+		"phpunit": "phpunit"
+	},
+	"require": {
+		"php": ">=8.1"
+	},
+	"require-dev": {
+		"doiftrue/unitest-wp-copy": "7.1.*",
+		"phpunit/phpunit": "^9.6",
+		"10up/wp_mock": "*"
+	}
 }
 ```
 
-Install the test dependencies:
+## Add the test command
 
-```bash
-composer install
+Create `Makefile`:
+
+```makefile
+define php_run
+    @mkdir -p "$(CURDIR)/tmp/composer-cache"
+    docker run --rm $(1) --name UNITEST_WP_COPY__php --user 1000:1000 \
+        -v "$(CURDIR):/app" -w /app \
+        -v "$(CURDIR)/tmp/composer-cache:/tmp/composer-cache" \
+        -e COMPOSER_CACHE_DIR=/tmp/composer-cache \
+        composer sh -c "$(2)"
+endef
+
+composer: ## Run Composer. Eg: make composer update vendor/package
+	$(call php_run,, composer $(filter-out $@,$(MAKECMDGOALS)))
+
+composer.install: ## Install dependencies
+	$(call php_run,, composer install $(filter-out $@,$(MAKECMDGOALS)))
+
+composer.update: ## Update dependencies
+	$(call php_run,, composer update $(filter-out $@,$(MAKECMDGOALS)))
+
+phpunit: ## Run tests.
+	$(call php_run,,composer run phpunit -- --colors=always)
 ```
 
-The runtime package already declares the Composer repository used to resolve its
-WordPress-line packages.
+Install dependencies:
 
-## 2. PHPUnit configuration
+```bash
+make composer.install
+```
+
+::: info
+Both commands run in the Composer PHP container with the plugin directory mounted at `/app`.
+::: 
+
+## Configure PHPUnit
 
 Create `phpunit.xml`:
 
@@ -84,22 +142,19 @@ Create `phpunit.xml`:
 </phpunit>
 ```
 
-Add the generated test cache and dependencies to `.gitignore`:
+Create `.gitignore`:
 
 ```text
 /vendor/
 /.phpunit.cache/
+/tmp/
 ```
 
-## 3. Test bootstrap
+## Bootstrap the runtime
 
 Create `tests/bootstrap.php`:
 
 ```php
-<?php
-
-declare(strict_types=1);
-
 require_once dirname( __DIR__ ) . '/vendor/autoload.php';
 
 define( 'WP_ENVIRONMENT_TYPE', 'development' );
@@ -109,103 +164,19 @@ define( 'WP_DEBUG', true );
 \WP_Mock::bootstrap();
 ```
 
-Constants must be defined before runtime initialization. Unitest WP Copy must
-also initialize before WP_Mock.
+Define runtime constants before `Bootstrap::init()`. Load WP_Mock afterward.
 
-## 4. Plugin class
-
-Create `src/ContentCard.php`:
-
-```php
-<?php
-
-declare(strict_types=1);
-
-namespace Example\ContentCard;
-
-final class ContentCard {
-
-	public function render( string $title, string $content ): string {
-		$title = sanitize_text_field( $title );
-		$body  = wpautop( make_clickable( wp_kses_post( $content ) ) );
-		$class = is_multisite() ? 'content-card content-card--network' : 'content-card';
-
-		return sprintf(
-			'<article class="%s"><h2>%s</h2><div class="content-card__body">%s</div></article>',
-			esc_attr( $class ),
-			esc_html( $title ),
-			$body
-		);
-	}
-}
-```
-
-This class uses real WordPress behavior for:
-
-- `sanitize_text_field()`;
-- `wp_kses_post()`;
-- `make_clickable()`;
-- `wpautop()`;
-- `esc_attr()` and `esc_html()`.
-
-`is_multisite()` is a runtime boundary that can use its default behavior or a
-WP_Mock handler.
-
-## 5. Main plugin file
-
-Create `content-card.php`:
-
-```php
-<?php
-/**
- * Plugin Name: Content Card
- * Description: Renders sanitized content cards.
- * Requires PHP: 8.1
- * Version: 1.0.0
- */
-
-declare(strict_types=1);
-
-namespace Example\ContentCard;
-
-defined( 'ABSPATH' ) || exit;
-
-require_once __DIR__ . '/vendor/autoload.php';
-
-function render_content_card( string $title, string $content ): string {
-	return ( new ContentCard() )->render( $title, $content );
-}
-```
-
-The unit test targets `ContentCard` directly. It does not include the main plugin
-file because plugin-header and WordPress lifecycle wiring are not the behavior
-under test.
-
-## 6. Unit tests
+## Write the tests
 
 Create `tests/ContentCardTest.php`:
 
 ```php
-<?php
-
-declare(strict_types=1);
-
 namespace Example\ContentCard\Tests;
 
 use Example\ContentCard\ContentCard;
-use PHPUnit\Framework\TestCase;
+use WP_Mock\Tools\TestCase;
 
 final class ContentCardTest extends TestCase {
-
-	protected function setUp(): void {
-		parent::setUp();
-		\WP_Mock::setUp();
-	}
-
-	protected function tearDown(): void {
-		\WP_Mock::tearDown();
-		parent::tearDown();
-	}
 
 	public function test_renders_content_with_real_wordpress_formatting(): void {
 		$html = ( new ContentCard() )->render(
@@ -233,36 +204,25 @@ final class ContentCardTest extends TestCase {
 }
 ```
 
-The first test is valuable because it does not replace WordPress formatting with
-made-up return values. It verifies the behavior that production code actually
-depends on. The second test isolates an environment decision by overriding the
-mockable `is_multisite()` boundary.
+The first test keeps deterministic WordPress behavior real. The second controls
+only the environment value needed by the test.
 
-## 7. Run the suite
+## Run the tests
 
 ```bash
-composer test
+make phpunit
 ```
-
-Expected result:
 
 ```text
 OK (2 tests, 7 assertions)
 ```
 
-## Extending this setup
+## Add more WordPress code
 
-Before adding another WordPress dependency:
+Before using another function or class:
 
-1. Find the function or class in `vendor/doiftrue/unitest-wp-copy/SYMBOLS-INFO.md`.
-2. Use its real implementation when the behavior is deterministic.
-3. Use `WP_Mock::userFunction()` only when the symbol is listed as mockable.
-4. Replace unsupported database, network, or filesystem dependencies with an
-   injected project interface or a focused test fake.
-5. Restore changed runtime globals and option-store values in `tearDown()`.
-
-For REST route code, continue with [testing REST API code](/guide/rest-api).
-
-If an AI coding agent writes or maintains the tests, copy the project guidance
-from [Instructions for AI agents](/guide/ai-agents) into the repository's
-`AGENTS.md`.
+1. Find it in `vendor/doiftrue/unitest-wp-copy/SYMBOLS-INFO.md`.
+2. Use the real implementation for deterministic behavior.
+3. Use WP_Mock only when the function is listed as mockable.
+4. Restore changed runtime state in `tearDown()`.
+5. Use an integration test for database, filesystem, or full-bootstrap behavior.

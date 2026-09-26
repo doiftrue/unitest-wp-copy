@@ -3,42 +3,41 @@ layout: home
 
 hero:
   name: Unitest WP Copy
-  text: Real WordPress behavior in isolated PHPUnit tests
-  tagline: Use selected WordPress core functions and classes without a database, HTTP server, or full WordPress bootstrap.
+  text: Test WordPress code without loading WordPress
+  tagline: Real WordPress functions and classes in fast, isolated PHPUnit tests.
   image:
     src: /logo.svg
     alt: Unitest WP Copy logo
   actions:
     - theme: brand
-      text: Get started
+      text: Start here
       link: /guide/getting-started
     - theme: alt
-      text: Complete plugin example
+      text: Set up plugin tests
       link: /guide/plugin-unit-tests
 
 features:
-  - title: Real core logic
-    details: Exercise selected WordPress formatting, sanitization, URL, REST, and utility code instead of replacing everything with stubs.
-  - title: Fast and isolated
-    details: Run ordinary PHPUnit tests without installing WordPress, connecting a database, or booting the request lifecycle.
-  - title: Mockable boundaries
-    details: Combine the runtime with WP_Mock when environment-dependent WordPress functions need controlled results.
+  - title: Real WordPress behavior
+    details: Use selected core formatting, sanitization, URL, hook, REST, and utility code.
+  - title: No WordPress installation
+    details: No database, web server, or full WordPress bootstrap is required.
+  - title: Works with WP_Mock
+    details: Mock supported environment boundaries while keeping deterministic core logic real.
 ---
 
-## Start with the matching WordPress line
+## Install
+
+Choose the package line that matches your WordPress version:
 
 ```bash
-composer require --dev doiftrue/unitest-wp-copy:6.9.* 10up/wp_mock
+composer require --dev doiftrue/unitest-wp-copy:7.1.* 10up/wp_mock
 ```
 
-Initialize Unitest WP Copy before WP_Mock in the PHPUnit bootstrap:
+Initialize the runtime before WP_Mock:
 
 ```php
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once dirname( __DIR__ ) . '/vendor/autoload.php';
 
 \Unitest_WP_Copy\Bootstrap::init();
 \WP_Mock::bootstrap();
 ```
-
-Continue with the [getting-started guide](/guide/getting-started), or copy the
-complete [WordPress plugin test setup](/guide/plugin-unit-tests).

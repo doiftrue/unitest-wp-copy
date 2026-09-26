@@ -1,10 +1,9 @@
-# Testing REST API code
+# Test REST API code
 
-The runtime provides an in-memory REST server for route registration,
-validation, sanitization, dispatch, response links, OPTIONS, and batch requests.
-It does not serve HTTP or load WordPress core endpoint controllers.
+The runtime can register and dispatch REST routes in memory. No HTTP server is
+started.
 
-## Register and dispatch a route
+## Register and call a route
 
 ```php
 public function test_returns_an_item(): void {
@@ -36,42 +35,39 @@ public function test_returns_an_item(): void {
 }
 ```
 
-The integer schema converts the route parameter from the string `"42"` to the
-integer `42`.
+The request is validated, `id` is converted to an integer, and the callback is
+executed directly.
 
-## Reset REST state
+## Reset the server
 
-`rest_get_server()` caches the server in a process-wide global. Always remove it
-after a test that registers routes:
+`rest_get_server()` caches its instance:
 
 ```php
 protected function tearDown(): void {
 	unset( $GLOBALS['wp_rest_server'] );
-	\WP_Mock::tearDown();
 	parent::tearDown();
 }
 ```
 
-Otherwise routes can leak into later tests.
+Always reset it after registering routes. When the test extends
+`WP_Mock\Tools\TestCase`, the parent method handles WP_Mock cleanup.
 
-## Route registration choices
+## Test permissions
 
-Use direct `$server->register_route()` when the test is about request handling.
-Use `register_rest_route()` when the test also needs WordPress's
-`rest_api_init` timing check.
-
-`rest_do_request()` returns the direct dispatch result. Serving filters normally
-applied by WordPress's live `serve_request()` path, including automatic
-`_fields` trimming and `Allow` headers, are available as functions but are not
-applied automatically.
-
-## Authentication defaults
-
-The runtime defaults `current_user_can()` and `is_user_logged_in()` to `false`.
-Override them for permission tests:
+Authentication functions return `false` by default. Override a mockable boundary
+when needed:
 
 ```php
 \WP_Mock::userFunction( 'current_user_can' )
 	->with( 'read_private_catalog_items' )
 	->andReturn( true );
 ```
+
+## Runtime boundary
+
+The runtime supports route registration, validation, sanitization, dispatch,
+OPTIONS, response links, and batch requests.
+
+It does not serve live HTTP or load WordPress core endpoint controllers.
+Post-dispatch behavior from `serve_request()`, such as automatic `_fields`
+filtering and `Allow` headers, is not applied automatically.
