@@ -4,7 +4,7 @@ The runtime contains only reviewed WordPress functions and classes.
 
 ## Find a symbol
 
-Open the file installed with the package:
+Open the file installed with the package - [`SYMBOLS-INFO.md`](https://github.com/doiftrue/unitest-wp-copy/blob/main/SYMBOLS-INFO.md):
 
 ```text
 vendor/doiftrue/unitest-wp-copy/SYMBOLS-INFO.md
