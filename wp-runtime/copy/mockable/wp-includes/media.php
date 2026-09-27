@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/media.php (WP 6.9.8)
+// wp-includes/media.php (WP 6.9.9)
 if( ! function_exists( 'wp_high_priority_element_flag' ) ) :
 	function wp_high_priority_element_flag( $value = null ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -19,7 +19,7 @@ if( ! function_exists( 'wp_high_priority_element_flag' ) ) :
 	}
 endif;
 
-// wp-includes/media.php (WP 6.9.8)
+// wp-includes/media.php (WP 6.9.9)
 if( ! function_exists( 'wp_get_additional_image_sizes' ) ) :
 	function wp_get_additional_image_sizes() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {

@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/pomo/translations.php (WP 6.9.8)
+// wp-includes/pomo/translations.php (WP 6.9.9)
 if( ! class_exists( 'Gettext_Translations' ) ) :
 		class Gettext_Translations extends Translations {
 	

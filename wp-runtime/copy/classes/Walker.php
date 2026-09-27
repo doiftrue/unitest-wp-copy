@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-walker.php (WP 6.9.8)
+// wp-includes/class-wp-walker.php (WP 6.9.9)
 if( ! class_exists( 'Walker' ) ) :
 	class Walker {
 		/**
