@@ -4,8 +4,7 @@ Helper library for PHPUnit tests. It provides selected WordPress core functions 
 
 Use it with [WP_Mock](https://github.com/10up/wp_mock). The runtime keeps real WordPress pure-PHP behavior, while WP_Mock lets tests replace functions marked as mockable when that is needed — which is almost always the case in unit tests.
 
-The complete documentation is available at
-[doiftrue.github.io/unitest-wp-copy](https://doiftrue.github.io/unitest-wp-copy/).
+> Complete documentation: [doiftrue.github.io/unitest-wp-copy](https://doiftrue.github.io/unitest-wp-copy/).
 
 
 Quick Start
@@ -208,6 +207,9 @@ Runtime Configuration and Shared State
 Configure options before or after `\Unitest_WP_Copy\WP_Runtime::boot()`.
 
 ```php
+use Unitest_WP_Copy\WP_Options;
+use Unitest_WP_Copy\WP_Runtime;
+
 // tests/bootstrap.php
 define( 'ABSPATH', '/srv/wp/' );
 define( 'WP_CONTENT_DIR', '/srv/wp/wp-content' );
@@ -217,16 +219,16 @@ define( 'WP_DEBUG', true );
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-\Unitest_WP_Copy\WP_Options::set( 'home', 'https://wp.test' );
-\Unitest_WP_Copy\WP_Options::set( 'siteurl', 'https://wp.test' );
-\Unitest_WP_Copy\WP_Options::set( 'template', 'wp-test-template' );
+WP_Options::set( 'home', 'https://wp.test' );
+WP_Options::set( 'siteurl', 'https://wp.test' );
+WP_Options::set( 'template', 'wp-test-template' );
 
-\Unitest_WP_Copy\WP_Runtime::boot();
-\WP_Mock::bootstrap();
+WP_Runtime::boot();
+WP_Mock::bootstrap();
 
 // Set custom options after boot too.
-\Unitest_WP_Copy\WP_Options::set( 'my_option', 'test-value' );
-\Unitest_WP_Copy\WP_Options::set( 'template', 'my-theme' );
+WP_Options::set( 'my_option', 'test-value' );
+WP_Options::set( 'template', 'my-theme' );
 ```
 
 The runtime adds defaults only for absent keys. The normal defaults are:

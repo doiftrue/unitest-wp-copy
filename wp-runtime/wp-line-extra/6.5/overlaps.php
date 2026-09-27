@@ -35,7 +35,7 @@ if( ! function_exists( '_wp_specialchars' ) ) :
 		if ( ! $charset ) {
 			static $_charset = null;
 			if ( ! isset( $_charset ) ) {
-				$_charset   = \Unitest_WP_Copy\WP_Options::get( 'blog_charset' );
+				$_charset   = get_option( 'blog_charset' );
 			}
 			$charset = $_charset;
 		}
