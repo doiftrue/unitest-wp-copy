@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/block-patterns.php (WP 6.7.8)
+// wp-includes/block-patterns.php (WP 6.7.9)
 if( ! function_exists( 'wp_normalize_remote_block_pattern' ) ) :
 	function wp_normalize_remote_block_pattern( $pattern ) {
 		if ( isset( $pattern['block_types'] ) ) {

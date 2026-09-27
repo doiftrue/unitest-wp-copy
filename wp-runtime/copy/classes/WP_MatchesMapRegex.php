@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-matchesmapregex.php (WP 6.7.8)
+// wp-includes/class-wp-matchesmapregex.php (WP 6.7.9)
 if( ! class_exists( 'WP_MatchesMapRegex' ) ) :
 	class WP_MatchesMapRegex {
 		/**

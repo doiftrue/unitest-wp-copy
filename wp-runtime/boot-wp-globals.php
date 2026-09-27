@@ -1,12 +1,14 @@
 <?php
 /**
- * @var \Unitest_WP_Copy\Bootstrap $this
+ * @var \Unitest_WP_Copy\WP_Runtime $this
  */
+
+use Unitest_WP_Copy\WP_Options;
 
 smilies_init();
 
 $GLOBALS['timestart'] = microtime( true );
-$_SERVER['HTTP_HOST'] = parse_url( $GLOBALS['stub_wp_options']->home, PHP_URL_HOST );
+$_SERVER['HTTP_HOST'] = parse_url( WP_Options::get( 'home' ), PHP_URL_HOST );
 
 global $wp_plugin_paths;
 $wp_plugin_paths || $wp_plugin_paths = [];

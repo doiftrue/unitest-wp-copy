@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/class-wp-locale.php (WP 6.7.8)
+// wp-includes/class-wp-locale.php (WP 6.7.9)
 if( ! class_exists( 'WP_Locale' ) ) :
 	class WP_Locale {
 		/**

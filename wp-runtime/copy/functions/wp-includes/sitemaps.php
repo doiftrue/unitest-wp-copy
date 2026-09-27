@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/sitemaps.php (WP 6.7.8)
+// wp-includes/sitemaps.php (WP 6.7.9)
 if( ! function_exists( 'wp_sitemaps_get_max_urls' ) ) :
 	function wp_sitemaps_get_max_urls( $object_type ) {
 		/**
