@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/ms-functions.php (WP 6.6.8)
+// wp-includes/ms-functions.php (WP 6.6.9)
 if( ! function_exists( 'get_current_site' ) ) :
 	function get_current_site() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
@@ -14,7 +14,7 @@ if( ! function_exists( 'get_current_site' ) ) :
 	}
 endif;
 
-// wp-includes/ms-functions.php (WP 6.6.8)
+// wp-includes/ms-functions.php (WP 6.6.9)
 if( ! function_exists( 'force_ssl_content' ) ) :
 	function force_ssl_content( $force = '' ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
