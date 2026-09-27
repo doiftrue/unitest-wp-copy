@@ -19,6 +19,66 @@ because its changes are shared by all WordPress-line tags that publish it.
 Availability for a particular WordPress line can be checked in the repository
 tags.
 
+## 5.0 - 2026-09-28
+
+### Breaking changes
+
+- Runtime 5.0 removes `$GLOBALS['stub_wp_options']` and
+  `$GLOBALS['stub_wp_site_options']`. There is no compatibility layer for these
+  globals.
+
+### Changed
+
+- Replaced the public option globals with `WP_Options::set()` and
+  `WP_Options::set_site()`.
+- Added `WP_Options::save_state()` and `restore_state()` for option test-state
+  isolation.
+- Renamed the preferred runtime entry point to `WP_Runtime::boot()`.
+  `Bootstrap::init()` remains available as a deprecated compatibility alias.
+
+### Migration from 4.x
+
+Replace direct writes to normal options:
+
+```php
+// Runtime 4.x.
+$GLOBALS['stub_wp_options']->my_option = 'value';
+
+// Runtime 5.0.
+\Unitest_WP_Copy\WP_Options::set( 'my_option', 'value' );
+```
+
+Replace direct writes to network options:
+
+```php
+// Runtime 4.x.
+$GLOBALS['stub_wp_site_options']->my_option = 'value';
+
+// Runtime 5.0.
+\Unitest_WP_Copy\WP_Options::set_site( 'my_option', 'value' );
+```
+
+Replace test setup that clones and restores the two globals with:
+
+```php
+protected function setUp(): void {
+	parent::setUp();
+	\Unitest_WP_Copy\WP_Options::save_state();
+}
+
+protected function tearDown(): void {
+	\Unitest_WP_Copy\WP_Options::restore_state();
+	parent::tearDown();
+}
+```
+
+Options may be set before or after `WP_Runtime::boot()`; boot only fills keys
+that are not already configured. Read values through `get_option()` and
+`get_site_option()` as before.
+
+Use `WP_Runtime::boot()` for new code. Existing
+`Bootstrap::init()` calls continue to work, but are deprecated.
+
 ## 4.2 - 2026-09-19
 
 ### Added
