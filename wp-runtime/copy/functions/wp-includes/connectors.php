@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/connectors.php (WP 7.1.1)
+// wp-includes/connectors.php (WP 7.1.2)
 if( ! function_exists( 'wp_connectors_parse_application_password_credentials' ) ) :
 	function wp_connectors_parse_application_password_credentials( string $value ): array {
 		$separator = strpos( $value, ':' );
@@ -25,7 +25,7 @@ if( ! function_exists( 'wp_connectors_parse_application_password_credentials' ) 
 	}
 endif;
 
-// wp-includes/connectors.php (WP 7.1.1)
+// wp-includes/connectors.php (WP 7.1.2)
 if( ! function_exists( '_wp_connectors_mask_api_key' ) ) :
 	function _wp_connectors_mask_api_key( string $key ): string {
 		if ( strlen( $key ) <= 4 ) {

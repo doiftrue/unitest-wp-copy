@@ -27,7 +27,7 @@ if ( ! function_exists( 'get_bloginfo' ) ) :
 				$output = site_url();
 				break;
 			case 'description':
-				$output = $GLOBALS['stub_wp_options']->blogdescription;
+				$output = get_option( 'blogdescription' );
 				break;
 			case 'rdf_url':
 				$output = home_url( '/feed/rdf' ); // was: get_feed_link( 'rdf' );
@@ -61,26 +61,26 @@ if ( ! function_exists( 'get_bloginfo' ) ) :
 				$output = get_template_directory_uri();
 				break;
 			case 'admin_email':
-				$output = $GLOBALS['stub_wp_options']->admin_email;
+				$output = get_option( 'admin_email' );
 				break;
 			case 'charset':
-				$output = $GLOBALS['stub_wp_options']->blog_charset;
+				$output = get_option( 'blog_charset' );
 				if ( '' === $output ) {
 					$output = 'UTF-8';
 				}
 				break;
 			case 'html_type':
-				$output = $GLOBALS['stub_wp_options']->html_type;
+				$output = get_option( 'html_type' );
 				break;
 			case 'version':
 				$output = wp_get_wp_version();
 				break;
 			case 'language':
-				$output = $GLOBALS['stub_wp_options']->language;
+				$output = get_option( 'language' );
 				break;
 			case 'name':
 			default:
-				$output = $GLOBALS['stub_wp_options']->blogname;
+				$output = get_option( 'blogname' );
 				break;
 		}
 

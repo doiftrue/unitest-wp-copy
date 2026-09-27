@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/block-patterns.php (WP 7.1.1)
+// wp-includes/block-patterns.php (WP 7.1.2)
 if( ! function_exists( 'wp_normalize_remote_block_pattern' ) ) :
 	function wp_normalize_remote_block_pattern( $pattern ) {
 		if ( isset( $pattern['block_types'] ) ) {
@@ -19,14 +19,14 @@ if( ! function_exists( 'wp_normalize_remote_block_pattern' ) ) :
 	}
 endif;
 
-// wp-includes/block-patterns.php (WP 7.1.1)
+// wp-includes/block-patterns.php (WP 7.1.2)
 if( ! function_exists( 'register_block_pattern_category' ) ) :
 	function register_block_pattern_category( $category_name, $category_properties ) {
 		return WP_Block_Pattern_Categories_Registry::get_instance()->register( $category_name, $category_properties );
 	}
 endif;
 
-// wp-includes/block-patterns.php (WP 7.1.1)
+// wp-includes/block-patterns.php (WP 7.1.2)
 if( ! function_exists( 'unregister_block_pattern_category' ) ) :
 	function unregister_block_pattern_category( $category_name ) {
 		return WP_Block_Pattern_Categories_Registry::get_instance()->unregister( $category_name );
