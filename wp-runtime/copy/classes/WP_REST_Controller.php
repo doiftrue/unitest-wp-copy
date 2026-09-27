@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/rest-api/endpoints/class-wp-rest-controller.php (WP 6.8.9)
+// wp-includes/rest-api/endpoints/class-wp-rest-controller.php (WP 6.8.10)
 if( ! class_exists( 'WP_REST_Controller' ) ) :
 	abstract class WP_REST_Controller {
 	

@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/option.php (WP 6.8.9)
+// wp-includes/option.php (WP 6.8.10)
 if( ! function_exists( 'get_registered_settings' ) ) :
 	function get_registered_settings() {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {

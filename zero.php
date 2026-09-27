@@ -5,5 +5,5 @@
  * and don't want to setup composer autoloading.
  */
 
-require_once __DIR__ . '/wp-runtime/Bootstrap.php';
-\Unitest_WP_Copy\Bootstrap::init();
+require_once __DIR__ . '/wp-runtime/WP_Runtime.php';
+\Unitest_WP_Copy\WP_Runtime::boot();

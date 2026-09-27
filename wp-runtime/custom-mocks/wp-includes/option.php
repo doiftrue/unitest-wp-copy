@@ -5,12 +5,13 @@
  */
 
 use Unitest_WP_Copy\WP_Mock_Utils;
+use Unitest_WP_Copy\WP_Options;
 
 /**
  * Retrieves an option from the in-memory runtime store.
  *
  * Known differences from WordPress core:
- * - Options exist only in $GLOBALS['stub_wp_options']; there is no database, cache, or saving.
+ * - Options exist only in the in-memory WP_Options store; there is no database, cache, or saving.
  * - Values are returned with the same PHP type that was stored. WordPress usually returns
  *   database values as strings.
  * - Deprecated option names and special installation/setup behavior are not supported.
@@ -18,11 +19,11 @@ use Unitest_WP_Copy\WP_Mock_Utils;
  * - Stored options have priority over WP_Mock handlers. This prevents a broad get_option()
  *   mock from changing runtime settings used by nested function calls.
  * - WP_Mock handles only options missing from the store. To override a stored option, change
- *   $GLOBALS['stub_wp_options'] or use its pre_option_* / option_* filter.
+ *   WP_Options::set() or use its pre_option_* / option_* filter.
  *
  * Priorities:
  *   1. `pre_option_*` filters;
- *   2. Value from `$GLOBALS['stub_wp_options']`;
+ *   2. Value from the normal option store;
  *   3. WP_Mock handler for not existing option;
  *   4. `default_option_*` filter and $default_value.
  *
@@ -46,11 +47,10 @@ if ( ! function_exists( 'get_option' ) ) :
 			return $pre;
 		}
 
-		$options        = (array) ( $GLOBALS['stub_wp_options'] ?? [] );
 		$passed_default = func_num_args() > 1;
 
-		if ( array_key_exists( $option, $options ) ) {
-			$value = $options[ $option ];
+		if ( WP_Options::has( $option ) ) {
+			$value = WP_Options::get( $option );
 			if ( in_array( $option, [ 'siteurl', 'home', 'category_base', 'tag_base' ], true ) ) {
 				$value = untrailingslashit( $value );
 			}
@@ -71,7 +71,7 @@ endif;
  *
  * Priorities:
  *   1. `pre_site_option_*` filters;
- *   2. Value from `$GLOBALS['stub_wp_site_options']`;
+ *   2. Value from the site option store;
  *   3. WP_Mock handler for not existing option;
  *   4. `default_site_option_*` filter and $default_value.
  */
@@ -96,11 +96,10 @@ if ( ! function_exists( 'get_site_option' ) ) :
 			return $pre;
 		}
 
-		$options        = (array) ( $GLOBALS['stub_wp_site_options'] ?? [] );
 		$passed_default = func_num_args() > 1;
 
-		if ( array_key_exists( $option, $options ) ) {
-			$value = $options[ $option ];
+		if ( WP_Options::has_site( $option ) ) {
+			$value = WP_Options::get_site( $option );
 
 			return apply_filters( "site_option_{$option}", $value, $option, $network_id );
 		}
