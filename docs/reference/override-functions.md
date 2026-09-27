@@ -1,7 +1,7 @@
 # Override functions
 
 Every runtime-provided WordPress function is guarded by `function_exists()`.
-Define a function before `Bootstrap::init()` to prevent Unitest WP Copy from
+Define a function before `Bootstrap::init()` to prevent "Unitest WP Copy" from
 loading its implementation.
 
 ## Full override

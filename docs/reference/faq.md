@@ -9,7 +9,7 @@ No. It is an in-memory runtime for selected WordPress code.
 Real formatting, sanitization, and parsing code catches mistakes that fixed mock
 values cannot.
 
-## Why must Unitest WP Copy load before WP_Mock?
+## Why must "Unitest WP Copy" load before WP_Mock?
 
 The runtime defines the WordPress functions first. Mockable functions then use
 WP_Mock handlers when a test registers one.
@@ -33,7 +33,7 @@ Match the WordPress line:
 composer require --dev doiftrue/unitest-wp-copy:7.1.*
 ```
 
-`7.1.*` means any Unitest WP Copy release built for WordPress 7.1.
+`7.1.*` means any "Unitest WP Copy" release built for WordPress 7.1.
 
 ## Where do I report a problem?
 

@@ -1,6 +1,6 @@
 # Start here
 
-Unitest WP Copy runs selected WordPress core code inside ordinary PHPUnit tests.
+This package runs selected WordPress core code inside ordinary PHPUnit tests.
 
 ## Install the runtime
 
@@ -24,7 +24,7 @@ require_once dirname( __DIR__ ) . '/vendor/autoload.php';
 ```
 
 ::: warning
-The order matters: Unitest WP Copy defines the WordPress functions, then WP_Mock
+The order matters: "Unitest WP Copy" defines the WordPress functions, then WP_Mock
 adds mock handlers for supported functions.
 :::
 

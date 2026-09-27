@@ -1,6 +1,6 @@
 # Limitations
 
-Unitest WP Copy is for isolated unit tests, not WordPress integration tests.
+"Unitest WP Copy" is for isolated unit tests, not WordPress integration tests.
 
 ## Included
 

@@ -1,6 +1,6 @@
 # Maintainers
 
-This site documents how to **use** Unitest WP Copy. Documentation for
+This site documents how to **use** "Unitest WP Copy". Documentation for
 **developing and maintaining** the package is kept in the repository, next to the
 source it describes, so it stays accurate for contributors and coding agents.
 

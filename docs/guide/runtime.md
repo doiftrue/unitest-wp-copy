@@ -1,7 +1,7 @@
 # Runtime
 
-Unitest WP Copy is not a WordPress installation. It is a selected set of
-WordPress functions and classes that can run without a database or full
+"Unitest WP Copy" is not a full WordPress installation. It is a selected set of
+WordPress functions and classes (symbols) that can run without a database or full
 bootstrap.
 
 ## Runtime lifecycle

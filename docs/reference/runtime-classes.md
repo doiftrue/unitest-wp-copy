@@ -1,7 +1,7 @@
 # Runtime-adapted classes
 
 Some WordPress classes cannot run unchanged without a database or full
-WordPress bootstrap. Unitest WP Copy provides reduced classes that combine
+WordPress bootstrap. "Unitest WP Copy" provides reduced classes that combine
 selected original WordPress methods with runtime-specific behavior.
 
 The available public methods and properties are listed under
