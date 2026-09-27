@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/cron.php (WP 6.5.11)
+// wp-includes/cron.php (WP 6.5.12)
 if( ! function_exists( 'wp_get_schedules' ) ) :
 	function wp_get_schedules() {
 		$schedules = array(
