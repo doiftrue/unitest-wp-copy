@@ -4,7 +4,9 @@ This package runs selected WordPress core code inside ordinary PHPUnit tests.
 
 ## Install the runtime
 
-Use the package line that matches the WordPress version supported by your plugin:
+Use the package line that matches the WordPress version supported by your plugin.
+See [WordPress versions](/guide/wp-versions) for the supported lines and
+how package versioning works:
 
 ```bash
 composer require --dev  doiftrue/unitest-wp-copy:7.1.*  10up/wp_mock

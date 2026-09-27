@@ -9,6 +9,17 @@ No. It is an in-memory runtime for selected WordPress code.
 Real formatting, sanitization, and parsing code catches mistakes that fixed mock
 values cannot.
 
+## Why is my `get_option()` mock ignored?
+
+Values configured through `WP_Options::set()` are checked before WP_Mock handlers.
+Change the stored value or mock an option name that is absent from the store.
+See [Options](/reference/options) for the complete lookup order and examples.
+
+## Which package version should I install?
+
+Match the WordPress line. See [WordPress versions](/guide/wp-versions)
+for the supported lines and Composer constraints.
+
 ## Why must "Unitest WP Copy" load before WP_Mock?
 
 The runtime defines the WordPress functions first. Mockable functions then use
@@ -18,22 +29,6 @@ WP_Mock handlers when a test registers one.
 
 No. Only functions in the **Copied mockable functions** section of
 `SYMBOLS-INFO.md` can be replaced.
-
-## Why is my `get_option()` mock ignored?
-
-Values configured through `WP_Options::set()` are checked before WP_Mock handlers.
-Change the stored value or mock an option name that is absent from the store.
-See [Options](/reference/options) for the complete lookup order and examples.
-
-## Which package version should I install?
-
-Match the WordPress line:
-
-```bash
-composer require --dev doiftrue/unitest-wp-copy:7.1.*
-```
-
-`7.1.*` means any "Unitest WP Copy" release built for WordPress 7.1.
 
 ## Where do I report a problem?
 

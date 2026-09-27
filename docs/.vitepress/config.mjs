@@ -6,6 +6,7 @@ const guideSidebar = [
 	{ text: 'Constants', link: '/reference/constants' },
 	{ text: 'Options', link: '/reference/options' },
 	{ text: 'AI agent instructions', link: '/guide/ai-agents' },
+	{ text: 'WP versions', link: '/guide/wp-versions' },
 	{ text: 'Full unit test setup', link: '/guide/full-unit-test-setup' },
 ];
 

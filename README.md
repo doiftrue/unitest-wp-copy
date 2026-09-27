@@ -193,13 +193,13 @@ Use the package line that matches your WP version:
 | 6.5            | `doiftrue/unitest-wp-copy:6.5.*` |
 
 Real release tags use 4 numbers, for example `7.0.2.8`:
-- `7.0` is the target WordPress version line;
-- `2.8` is this repository's version for that line.
+- `7.0` —  the target WordPress version line - `<major>.<minor>`.
+- `2.8` —  this package version for that line - `<major>.<minor>`.
 
 Usage examples in your composer.json:
 - `7.0.2.8` - pin one exact release.
-- `~7.0.2.8` - allow conservative updates starting from this build (usually small runtime fixes).
-- `7.0.*` - allow any update in the WP `7.0` line (new copied functions/classes may appear and affect existing tests).
+- `7.0.2.*` - allow conservative updates starting from this build (small fixes).
+- `7.0.*` - allow any update of this package (major changes may affect existing tests).
 
 
 Runtime Configuration and Shared State
