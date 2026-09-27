@@ -1,4 +1,4 @@
-The following functions and classes are available in this (unit test) environment. Symbols are copied from WordPress 7.1.1.
+The following functions and classes are available in this (unit test) environment. Symbols are copied from WordPress 7.1.2.
 
 Runtime-adapted classes (NOT mockable via WP_Mock).
 Partially copied WordPress classes provided by the runtime. Use them directly or extend them to build your own mock.
