@@ -43,14 +43,6 @@ define( 'LOGGED_IN_SALT', 'test-logged-in-salt-unitest-wp-copy' );
 define( 'NONCE_SALT', 'test-nonce-salt-unitest-wp-copy' );
 define( 'SECRET_KEY', 'test-secret-key-unitest-wp-copy' );
 
-// Database result formats used by copied wpdb helpers.
-define( 'EZSQL_VERSION', 'WP1.25' );
-define( 'OBJECT', 'OBJECT' );
-define( 'object', 'OBJECT' );
-define( 'OBJECT_K', 'OBJECT_K' );
-define( 'ARRAY_A', 'ARRAY_A' );
-define( 'ARRAY_N', 'ARRAY_N' );
-
 // Template-part areas.
 define( 'WP_TEMPLATE_PART_AREA_HEADER', 'header' );
 define( 'WP_TEMPLATE_PART_AREA_FOOTER', 'footer' );

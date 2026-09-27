@@ -88,5 +88,3 @@ Runtime configuration has two parts:
   environment type, debug mode, and other values defined before bootstrap.
 - [Options](/reference/options) — mutable site and network values stored in
   memory, including defaults, lookup order, mocking, and cleanup.
-
-Configure constants before `\Unitest_WP_Copy\WP_Runtime::boot()`. Options can be provided before or after boot.

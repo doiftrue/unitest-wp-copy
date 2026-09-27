@@ -40,7 +40,7 @@ get_site_option( 'options_name' );
 1. `pre_option_{$option}` and `pre_option` filters.
 2. `WP_Options` store value, followed by the
    `option_{$option}` filter.
-3. `WP_Mock` handler, but only when the option is absent from the store.
+3. `WP_Mock` handler, if the option is absent from the store.
 4. `default_option_{$option}` filter and the supplied default value.
 
 ::: info
@@ -54,7 +54,7 @@ The same lookup order, using the network-option equivalents:
 
 1. `pre_site_option_{$option}` and `pre_site_option` filters.
 2. `WP_Options` store value, followed by the `site_option_{$option}` filter.
-3. `WP_Mock` handler, but only when the option is absent from the store.
+3. `WP_Mock` handler, if the option is absent from the store.
 4. `default_site_option_{$option}` filter and the supplied default value.
 
 Outside multisite, `get_site_option()` delegates to `get_option()`.

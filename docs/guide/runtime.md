@@ -39,4 +39,4 @@ Some WordPress classes are reduced to the parts useful in unit tests:
 - `\Unitest_WP_Copy\WP_REST_Server__Runtime` registers and dispatches routes in memory.
 
 See [Runtime-adapted classes](/reference/runtime-classes) for extension examples,
-and `vendor/doiftrue/unitest-wp-copy/SYMBOLS-INFO.md` for their public methods.
+and [`SYMBOLS-INFO.md`](https://github.com/doiftrue/unitest-wp-copy/blob/main/SYMBOLS-INFO.md) for their public methods.
