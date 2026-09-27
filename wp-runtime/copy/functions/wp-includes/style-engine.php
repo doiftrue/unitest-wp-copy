@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/style-engine.php (WP 7.0.5)
+// wp-includes/style-engine.php (WP 7.0.6)
 if( ! function_exists( 'wp_style_engine_get_styles' ) ) :
 	function wp_style_engine_get_styles( $block_styles, $options = array() ) {
 		$options = wp_parse_args(
@@ -35,7 +35,7 @@ if( ! function_exists( 'wp_style_engine_get_styles' ) ) :
 	}
 endif;
 
-// wp-includes/style-engine.php (WP 7.0.5)
+// wp-includes/style-engine.php (WP 7.0.6)
 if( ! function_exists( 'wp_style_engine_get_stylesheet_from_css_rules' ) ) :
 	function wp_style_engine_get_stylesheet_from_css_rules( $css_rules, $options = array() ) {
 		if ( empty( $css_rules ) ) {
@@ -71,7 +71,7 @@ if( ! function_exists( 'wp_style_engine_get_stylesheet_from_css_rules' ) ) :
 	}
 endif;
 
-// wp-includes/style-engine.php (WP 7.0.5)
+// wp-includes/style-engine.php (WP 7.0.6)
 if( ! function_exists( 'wp_style_engine_get_stylesheet_from_context' ) ) :
 	function wp_style_engine_get_stylesheet_from_context( $context, $options = array() ) {
 		return WP_Style_Engine::compile_stylesheet_from_css_rules( WP_Style_Engine::get_store( $context )->get_all_rules(), $options );

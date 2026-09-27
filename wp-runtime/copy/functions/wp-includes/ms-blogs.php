@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/ms-blogs.php (WP 7.0.5)
+// wp-includes/ms-blogs.php (WP 7.0.6)
 if( ! function_exists( 'clean_site_details_cache' ) ) :
 	function clean_site_details_cache( $site_id = 0 ) {
 		$site_id = (int) $site_id;

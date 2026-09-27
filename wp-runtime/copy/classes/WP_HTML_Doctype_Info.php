@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/html-api/class-wp-html-doctype-info.php (WP 7.0.5)
+// wp-includes/html-api/class-wp-html-doctype-info.php (WP 7.0.6)
 if( ! class_exists( 'WP_HTML_Doctype_Info' ) ) :
 	class WP_HTML_Doctype_Info {
 		/**

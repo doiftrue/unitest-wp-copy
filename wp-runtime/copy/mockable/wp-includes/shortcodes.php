@@ -2,7 +2,7 @@
 
 // ------------------auto-generated---------------------
 
-// wp-includes/shortcodes.php (WP 7.0.5)
+// wp-includes/shortcodes.php (WP 7.0.6)
 if( ! function_exists( 'shortcode_exists' ) ) :
 	function shortcode_exists( $tag ) {
 		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
