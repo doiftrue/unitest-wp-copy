@@ -1,17 +1,16 @@
 <?php
 
+use Unitest_WP_Copy\WP_Options;
+
 // Needed only for mock tests: loads 10up/wp_mock classes.
 require_once dirname( __DIR__, 3 ) . '/vendor/autoload.php';
 
 class general_template__custom_mocks__Test extends \PHPUnit\Framework\TestCase {
 
-	private object $initial_stub_wp_options;
-
 	protected function setUp(): void {
 		parent::setUp();
-		\WP_Mock::setUp();
-
-		$this->initial_stub_wp_options = clone $GLOBALS['stub_wp_options'];
+		WP_Mock::setUp();
+		WP_Options::save_state();
 		$GLOBALS['wp_filter']         = [];
 		$GLOBALS['wp_actions']        = [];
 		$GLOBALS['wp_filters']        = [];
@@ -19,23 +18,22 @@ class general_template__custom_mocks__Test extends \PHPUnit\Framework\TestCase {
 	}
 
 	protected function tearDown(): void {
-		$GLOBALS['stub_wp_options'] = clone $this->initial_stub_wp_options;
-
-		\WP_Mock::tearDown();
+		WP_Options::restore_state();
+		WP_Mock::tearDown();
 		parent::tearDown();
 	}
 
 	public function test__get_bloginfo_basic_fields() {
-		$GLOBALS['stub_wp_options']->html_type       = 'application/xhtml+xml';
-		$GLOBALS['stub_wp_options']->language        = 'fr-FR';
-		$GLOBALS['stub_wp_options']->blogname        = 'Example Site';
-		$GLOBALS['stub_wp_options']->blogdescription = 'Example tagline';
-		$GLOBALS['stub_wp_options']->blog_charset    = 'ISO-8859-1';
-		$GLOBALS['stub_wp_options']->admin_email     = 'admin@example.test';
-		$GLOBALS['stub_wp_options']->home            = 'https://test.loc';
-		$GLOBALS['stub_wp_options']->siteurl         = 'https://test.loc';
-		$GLOBALS['stub_wp_options']->stylesheet      = 'child-theme';
-		$GLOBALS['stub_wp_options']->template        = 'parent-theme';
+		WP_Options::set( 'html_type', 'application/xhtml+xml' );
+		WP_Options::set( 'language', 'fr-FR' );
+		WP_Options::set( 'blogname', 'Example Site' );
+		WP_Options::set( 'blogdescription', 'Example tagline' );
+		WP_Options::set( 'blog_charset', 'ISO-8859-1' );
+		WP_Options::set( 'admin_email', 'admin@example.test' );
+		WP_Options::set( 'home', 'https://test.loc' );
+		WP_Options::set( 'siteurl', 'https://test.loc' );
+		WP_Options::set( 'stylesheet', 'child-theme' );
+		WP_Options::set( 'template', 'parent-theme' );
 
 		$this->assertSame( 'application/xhtml+xml', get_bloginfo( 'html_type' ) );
 		$this->assertSame( 'fr-FR', get_bloginfo( 'language' ) );
@@ -57,7 +55,7 @@ class general_template__custom_mocks__Test extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function test__get_bloginfo_display_filters() {
-		$GLOBALS['stub_wp_options']->blogdescription = 'tagline';
+		WP_Options::set( 'blogdescription', 'tagline' );
 
 		$cb1 = static function ( $value, $show ) {
 			return ( 'description' === $show ) ? strtoupper( $value ) : $value;
@@ -74,7 +72,7 @@ class general_template__custom_mocks__Test extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function test__bloginfo_echoes_display_value() {
-		$GLOBALS['stub_wp_options']->blogdescription = 'tagline';
+		WP_Options::set( 'blogdescription', 'tagline' );
 
 		ob_start();
 		bloginfo( 'description' );

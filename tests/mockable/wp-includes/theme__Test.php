@@ -4,13 +4,11 @@ require_once dirname( __DIR__, 3 ) . '/vendor/autoload.php';
 
 class theme__mockable__Test extends \PHPUnit\Framework\TestCase {
 
-	private object $initial_stub_wp_options;
-
 	protected function setUp(): void {
 		parent::setUp();
 		\WP_Mock::setUp();
 
-		$this->initial_stub_wp_options = clone $GLOBALS['stub_wp_options'];
+		\Unitest_WP_Copy\WP_Options::save_state();
 		$GLOBALS['_wp_theme_features'] = [];
 		$GLOBALS['_wp_registered_theme_features'] = [];
 		$GLOBALS['wp_filter'] = [];
@@ -20,7 +18,7 @@ class theme__mockable__Test extends \PHPUnit\Framework\TestCase {
 	}
 
 	protected function tearDown(): void {
-		$GLOBALS['stub_wp_options'] = clone $this->initial_stub_wp_options;
+		\Unitest_WP_Copy\WP_Options::restore_state();
 
 		\WP_Mock::tearDown();
 		parent::tearDown();
@@ -67,7 +65,7 @@ class theme__mockable__Test extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function test__get_stylesheet(): void {
-		$GLOBALS['stub_wp_options']->stylesheet = 'child-theme';
+		\Unitest_WP_Copy\WP_Options::set( 'stylesheet', 'child-theme' );
 		$this->assertSame( 'child-theme', get_stylesheet() );
 	}
 
@@ -77,7 +75,7 @@ class theme__mockable__Test extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function test__get_template(): void {
-		$GLOBALS['stub_wp_options']->template = 'parent-theme';
+		\Unitest_WP_Copy\WP_Options::set( 'template', 'parent-theme' );
 		$this->assertSame( 'parent-theme', get_template() );
 	}
 

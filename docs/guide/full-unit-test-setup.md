@@ -160,11 +160,11 @@ require_once dirname( __DIR__ ) . '/vendor/autoload.php';
 define( 'WP_ENVIRONMENT_TYPE', 'development' );
 define( 'WP_DEBUG', true );
 
-\Unitest_WP_Copy\Bootstrap::init();
+\Unitest_WP_Copy\WP_Runtime::boot();
 \WP_Mock::bootstrap();
 ```
 
-Define runtime constants before `Bootstrap::init()`. Load WP_Mock afterward.
+Define runtime constants before `WP_Runtime::boot()`. Load WP_Mock afterward.
 
 ## Write the tests
 

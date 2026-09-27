@@ -1,34 +1,31 @@
 <?php
 
+use Unitest_WP_Copy\WP_Options;
+
 // Needed only for mock tests: loads 10up/wp_mock classes.
 require_once dirname( __DIR__, 3 ) . '/vendor/autoload.php';
 
 class option__custom_mocks__Test extends \PHPUnit\Framework\TestCase {
 
-	private object $initial_stub_wp_options;
-	private object $initial_stub_wp_site_options;
-
 	protected function setUp(): void {
 		parent::setUp();
-		\WP_Mock::setUp();
-		$this->initial_stub_wp_options      = clone $GLOBALS['stub_wp_options'];
-		$this->initial_stub_wp_site_options = clone $GLOBALS['stub_wp_site_options'];
+		WP_Mock::setUp();
+		WP_Options::save_state();
 	}
 
 	protected function tearDown(): void {
-		$GLOBALS['stub_wp_options']      = clone $this->initial_stub_wp_options;
-		$GLOBALS['stub_wp_site_options'] = clone $this->initial_stub_wp_site_options;
-		\WP_Mock::tearDown();
+		WP_Options::restore_state();
+		WP_Mock::tearDown();
 		parent::tearDown();
 	}
 
 	public function test__get_option() {
-		$GLOBALS['stub_wp_options']->runtime_test            = 'stored';
-		$GLOBALS['stub_wp_options']->runtime_false           = false;
-		$GLOBALS['stub_wp_options']->runtime_null            = null;
-		$GLOBALS['stub_wp_options']->runtime_serialized      = 'a:1:{s:3:"key";s:5:"value";}';
-		$GLOBALS['stub_wp_options']->siteurl                = 'https://example.com/';
-		$GLOBALS['stub_wp_options']->category_base           = '/category/';
+		WP_Options::set( 'runtime_test', 'stored' );
+		WP_Options::set( 'runtime_false', false );
+		WP_Options::set( 'runtime_null', null );
+		WP_Options::set( 'runtime_serialized', 'a:1:{s:3:"key";s:5:"value";}' );
+		WP_Options::set( 'siteurl', 'https://example.com/' );
+		WP_Options::set( 'category_base', '/category/' );
 
 		$this->assertSame( 'stored', get_option( ' runtime_test ' ) );
 		$this->assertFalse( get_option( 'runtime_false', 'fallback' ) );
@@ -56,8 +53,8 @@ class option__custom_mocks__Test extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function test__get_option__mockable_handler() {
-		$GLOBALS['stub_wp_options']->runtime_test = 'stored';
-		\WP_Mock::userFunction( 'get_option', [
+		WP_Options::set( 'runtime_test', 'stored' );
+		WP_Mock::userFunction( 'get_option', [
 			'return' => 'mocked',
 		] );
 
@@ -66,14 +63,14 @@ class option__custom_mocks__Test extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function test__get_site_option() {
-		$GLOBALS['stub_wp_options']->runtime_network_test      = 'single-site';
-		$GLOBALS['stub_wp_site_options']->runtime_network_test = 'multisite';
-		$GLOBALS['stub_wp_site_options']->runtime_false        = false;
-		$GLOBALS['stub_wp_site_options']->runtime_null         = null;
+		WP_Options::set( 'runtime_network_test', 'single-site' );
+		WP_Options::set_site( 'runtime_network_test', 'multisite' );
+		WP_Options::set_site( 'runtime_false', false );
+		WP_Options::set_site( 'runtime_null', null );
 
 		$this->assertSame( 'single-site', get_site_option( 'runtime_network_test' ) );
 
-		\WP_Mock::userFunction( 'is_multisite', [ 'return' => true ] );
+		WP_Mock::userFunction( 'is_multisite', [ 'return' => true ] );
 		$this->assertSame( 'multisite', get_site_option( 'runtime_network_test' ) );
 		$this->assertFalse( get_site_option( 'runtime_false', 'fallback' ) );
 		$this->assertNull( get_site_option( 'runtime_null', 'fallback' ) );
@@ -97,9 +94,9 @@ class option__custom_mocks__Test extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function test__get_site_option__mockable_handler() {
-		$GLOBALS['stub_wp_site_options']->runtime_network_test = 'stored';
-		\WP_Mock::userFunction( 'is_multisite', [ 'return' => true ] );
-		\WP_Mock::userFunction( 'get_site_option', [
+		WP_Options::set_site( 'runtime_network_test', 'stored' );
+		WP_Mock::userFunction( 'is_multisite', [ 'return' => true ] );
+		WP_Mock::userFunction( 'get_site_option', [
 			'return' => 'mocked',
 		] );
 

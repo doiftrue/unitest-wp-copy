@@ -23,7 +23,7 @@ Quick Start
 	```php
 	require_once __DIR__ . '/../vendor/autoload.php';
 
-	\Unitest_WP_Copy\Bootstrap::init();
+	\Unitest_WP_Copy\WP_Runtime::boot();
 	\WP_Mock::bootstrap();
 	```
 
@@ -76,7 +76,7 @@ class RenderCommentTest extends \PHPUnit\Framework\TestCase {
 
 Without WP_Mock
 ---------------
-You may initialize only `\Unitest_WP_Copy\Bootstrap::init()` and use the real runtime. However, you will not be able to conveniently mock functions that the runtime has already loaded.
+You may initialize only `\Unitest_WP_Copy\WP_Runtime::boot()` and use the real runtime. However, you will not be able to conveniently mock functions that the runtime has already loaded.
 
 
 Available Symbols
@@ -203,9 +203,9 @@ Usage examples in your composer.json:
 - `7.0.*` - allow any update in the WP `7.0` line (new copied functions/classes may appear and affect existing tests).
 
 
-Bootstrap Overrides and Shared State
+Runtime Configuration and Shared State
 ------------------------------------
-Define overrides before `\Unitest_WP_Copy\Bootstrap::init()`.
+Configure options before or after `\Unitest_WP_Copy\WP_Runtime::boot()`.
 
 ```php
 // tests/bootstrap.php
@@ -215,39 +215,22 @@ define( 'WP_CONTENT_URL', 'https://wp.test/wp-content' );
 define( 'WP_ENVIRONMENT_TYPE', 'development' );
 define( 'WP_DEBUG', true );
 
-// Used by get_option()
-$GLOBALS['stub_wp_options'] = (object) [
-	'home'            => 'https://wp.test',
-	'siteurl'         => 'https://wp.test',
-	'language'        => 'en-US',
-	'blogname'        => 'Unitest WP Copy',
-	'blogdescription' => 'unitest-wp-copy runtime',
-	'admin_email'     => 'admin@wp.test',
-	'stylesheet'      => 'wp-test-stylesheet',
-	'template'        => 'wp-test-template',
-];
-
-// Used by get_site_option()
-$GLOBALS['stub_wp_site_options'] = (object) [
-	'siteurl'           => 'https://wp.test',
-	'upload_filetypes'  => 'jpg jpeg png gif',
-	'fileupload_maxk'   => 1500,
-	'blog_upload_space' => 100,
-];
-
 require_once __DIR__ . '/vendor/autoload.php';
-\Unitest_WP_Copy\Bootstrap::init();
+
+\Unitest_WP_Copy\WP_Options::set( 'home', 'https://wp.test' );
+\Unitest_WP_Copy\WP_Options::set( 'siteurl', 'https://wp.test' );
+\Unitest_WP_Copy\WP_Options::set( 'template', 'wp-test-template' );
+
+\Unitest_WP_Copy\WP_Runtime::boot();
 \WP_Mock::bootstrap();
 
-// define custom OR re-define options after init:
-$GLOBALS['stub_wp_options']->my_option = 'test-value';
-$GLOBALS['stub_wp_options']->template  = 'my-theme';
+// Set custom options after boot too.
+\Unitest_WP_Copy\WP_Options::set( 'my_option', 'test-value' );
+\Unitest_WP_Copy\WP_Options::set( 'template', 'my-theme' );
 ```
 
-Full list of default options used by the runtime:
-```php
-// Used by get_option()
-$GLOBALS['stub_wp_options'] = [
+The runtime adds defaults only for absent keys. The normal defaults are:
+```txt
 	'home'                        => 'https://wp.test',
 	'siteurl'                     => 'https://wp.test',
 	'gmt_offset'                  => 0,
@@ -289,27 +272,24 @@ $GLOBALS['stub_wp_options'] = [
 	'registration'               => 'none',
 	'blog_upload_space'          => 100,
 	'https_migration_required'   => false,
-];
+```
 
-// Used by get_site_option()
-$GLOBALS['stub_wp_site_options'] = [
-	'siteurl'                     => $GLOBALS['stub_wp_options']->siteurl,
-	'WPLANG'                      => $GLOBALS['stub_wp_options']->WPLANG,
+The site defaults are:
+```txt
+	'siteurl'                     => normal option `siteurl`,
+	'WPLANG'                      => normal option `WPLANG`,
 	'banned_email_domains'        => [],
 	'upload_filetypes'            => 'jpg jpeg png gif',
 	'upload_space_check_disabled' => false,
 	'fileupload_maxk'             => 1500,
 	'registration'                => 'none',
 	'blog_upload_space'           => 100,
-];
 ```
 
 ### Redefine Runtime Globals
 
 Runtime globals initialized or updated by bootstrap (shared in one PHP process):
 ```php
-$GLOBALS['stub_wp_options']
-$GLOBALS['stub_wp_site_options']
 $GLOBALS['timestart']
 $_SERVER['HTTP_HOST']
 $blog_id
@@ -330,32 +310,32 @@ $wpsmiliestrans
 $wp_smiliessearch
 ```
 
-If a test mutates these globals/options, restore them in `setUp()` / `tearDown()`.
+If a test mutates options, use `WP_Options::save_state()` and `restore_state()`.
 
 ### How `get_option()` Works
 
-`get_option()` uses `$GLOBALS['stub_wp_options']` instead of a database. Configured options have priority over `WP_Mock` handlers so that a broad mock cannot accidentally change options used by nested runtime calls.
+`get_option()` uses the in-memory `WP_Options` store instead of a database. Configured options have priority over `WP_Mock` handlers so that a broad mock cannot accidentally change options used by nested runtime calls.
 
 The lookup order is:
 
 1. `pre_option_{$option}` and `pre_option` filters;
-2. the value in `$GLOBALS['stub_wp_options']` and the `option_{$option}` filter;
+2. the stored value and the `option_{$option}` filter;
 3. a `WP_Mock::userFunction( 'get_option', ... )` handler for an option not present in the store;
 4. the `default_option_{$option}` filter and the default value.
 
 Override a configured option by changing the store:
 ```php
-$GLOBALS['stub_wp_options']->medium_size_w = 640;
+\Unitest_WP_Copy\WP_Options::set( 'medium_size_w', 640 );
 ```
 
-Use `WP_Mock` to mock an option that does not exist in `$GLOBALS['stub_wp_options']`:
+Use `WP_Mock` to mock an option that does not exist in the store:
 ```php
 WP_Mock::userFunction( 'get_option', [
 	'args'   => [ 'my_plugin_option', false ],
 	'return' => 'test-value',
 ] );
 ```
-IMPORTANT: `WP_Mock` cannot override an option when it exists in `$GLOBALS['stub_wp_options']`.
+IMPORTANT: `WP_Mock` cannot override an option when it exists in the store.
 
 
 ### Redefine Constants

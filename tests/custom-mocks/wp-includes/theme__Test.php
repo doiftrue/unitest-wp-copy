@@ -1,17 +1,17 @@
 <?php
 
+use Unitest_WP_Copy\WP_Options;
+
 // Needed only for mock tests: loads 10up/wp_mock classes.
 require_once dirname( __DIR__, 3 ) . '/vendor/autoload.php';
 
 class theme__custom_mocks__Test extends \PHPUnit\Framework\TestCase {
 
-	private object $initial_stub_wp_options;
-
 	protected function setUp(): void {
 		parent::setUp();
-		\WP_Mock::setUp();
+		WP_Mock::setUp();
 
-		$this->initial_stub_wp_options = clone $GLOBALS['stub_wp_options'];
+		WP_Options::save_state();
 		$GLOBALS['wp_filter'] = [];
 		$GLOBALS['wp_actions'] = [];
 		$GLOBALS['wp_filters'] = [];
@@ -19,14 +19,14 @@ class theme__custom_mocks__Test extends \PHPUnit\Framework\TestCase {
 	}
 
 	protected function tearDown(): void {
-		$GLOBALS['stub_wp_options'] = clone $this->initial_stub_wp_options;
+		WP_Options::restore_state();
 
-		\WP_Mock::tearDown();
+		WP_Mock::tearDown();
 		parent::tearDown();
 	}
 
 	public function test__get_stylesheet_directory_and_uri() {
-		$GLOBALS['stub_wp_options']->stylesheet = 'child/theme';
+		WP_Options::set( 'stylesheet', 'child/theme' );
 
 		$this->assertSame(
 			wp_normalize_path( WP_CONTENT_DIR . '/themes/child/theme' ),
@@ -39,7 +39,7 @@ class theme__custom_mocks__Test extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function test__get_template_directory_and_uri() {
-		$GLOBALS['stub_wp_options']->template = 'parent/theme';
+		WP_Options::set( 'template', 'parent/theme' );
 
 		$this->assertSame(
 			wp_normalize_path( WP_CONTENT_DIR . '/themes/parent/theme' ),
@@ -52,13 +52,13 @@ class theme__custom_mocks__Test extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function test__get_stylesheet_directory_uri__mockable_handler() {
-		\WP_Mock::userFunction( 'get_stylesheet_directory_uri', [ 'return' => 'https://mocked.test/child' ] );
+		WP_Mock::userFunction( 'get_stylesheet_directory_uri', [ 'return' => 'https://mocked.test/child' ] );
 
 		$this->assertSame( 'https://mocked.test/child', get_stylesheet_directory_uri() );
 	}
 
 	public function test__get_template_directory__mockable_handler() {
-		\WP_Mock::userFunction( 'get_template_directory', [ 'return' => '/tmp/mocked-theme' ] );
+		WP_Mock::userFunction( 'get_template_directory', [ 'return' => '/tmp/mocked-theme' ] );
 
 		$this->assertSame( '/tmp/mocked-theme', get_template_directory() );
 	}

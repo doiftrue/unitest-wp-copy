@@ -20,8 +20,8 @@ Dependency documents:
 - Reject a symbol if any dependency requires unsupported runtime behavior (DB, full WordPress bootstrap, network I/O, admin/request lifecycle, or similarly heavy runtime coupling).
 - Do not add unresolved dependencies "for later".
 - A symbol that reads options is compatible only when every option name it may read is resolvable in the runtime (see the `get_option()`/`get_site_option()` priority in [runtime.md](runtime.md)):
-  - `get_option()` calls require each option present in `$GLOBALS['stub_wp_options']`;
-  - `get_site_option()` calls require each option present in `$GLOBALS['stub_wp_site_options']` in multisite mode.
+  - `get_option()` calls require each option present in the normal `WP_Options` store;
+  - `get_site_option()` calls require each option present in the site `WP_Options` store in multisite mode.
   - The existence of these runtime mocks alone does not make arbitrary or unresolved option access eligible.
 - The symbol should solve an in-memory / pure-PHP task that is useful for unit tests.
 - Symbol behavior should be predictable and not tightly coupled to a "live" runtime (DB, HTTP, admin/request lifecycle).

@@ -1,13 +1,13 @@
 <?php
 
-class feed__Test extends \PHPUnit\Framework\TestCase {
+use Unitest_WP_Copy\WP_Options;
 
-	private object $initial_stub_wp_options;
+class feed__Test extends \PHPUnit\Framework\TestCase {
 
 	protected function setUp(): void {
 		parent::setUp();
 
-		$this->initial_stub_wp_options = clone $GLOBALS['stub_wp_options'];
+		WP_Options::save_state();
 		$GLOBALS['wp_filter']         = [];
 		$GLOBALS['wp_actions']        = [];
 		$GLOBALS['wp_filters']        = [];
@@ -15,7 +15,7 @@ class feed__Test extends \PHPUnit\Framework\TestCase {
 	}
 
 	protected function tearDown(): void {
-		$GLOBALS['stub_wp_options'] = clone $this->initial_stub_wp_options;
+		WP_Options::restore_state();
 
 		parent::tearDown();
 	}
@@ -43,7 +43,7 @@ class feed__Test extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function test__html_type_rss() {
-		$GLOBALS['stub_wp_options']->html_type = 'application/xhtml+xml';
+		WP_Options::set( 'html_type', 'application/xhtml+xml' );
 
 		ob_start();
 		html_type_rss();
@@ -53,8 +53,8 @@ class feed__Test extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function test__get_bloginfo_rss() {
-		$GLOBALS['stub_wp_options']->blogname        = '<strong>Site &amp; Feed</strong>';
-		$GLOBALS['stub_wp_options']->blogdescription = 'News &amp; Updates';
+		WP_Options::set( 'blogname', '<strong>Site &amp; Feed</strong>' );
+		WP_Options::set( 'blogdescription', 'News &amp; Updates' );
 
 		$this->assertSame( 'Site &amp; Feed', get_bloginfo_rss() );
 		$this->assertSame( 'News &amp; Updates', get_bloginfo_rss( 'description' ) );
@@ -68,7 +68,7 @@ class feed__Test extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function test__bloginfo_rss() {
-		$GLOBALS['stub_wp_options']->blogname = '<em>Site &amp; Feed</em>';
+		WP_Options::set( 'blogname', '<em>Site &amp; Feed</em>' );
 
 		$cb = static function ( $value, $show ) {
 			return ( '' === $show ) ? "$value displayed" : $value;
@@ -81,4 +81,5 @@ class feed__Test extends \PHPUnit\Framework\TestCase {
 
 		$this->assertSame( 'Site &amp; Feed displayed', $out );
 	}
+
 }

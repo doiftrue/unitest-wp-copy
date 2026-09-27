@@ -5,7 +5,7 @@
  */
 
 /**
- * INFO: This mock change `wp_load_alloption()` with `$GLOBALS['stub_wp_options']->blog_charset`.
+ * INFO: This mock changes `wp_load_alloptions()` with the runtime blog charset.
  *
  * See: wp-includes/formatting.php (WP 6.5.8)
  */
@@ -35,7 +35,7 @@ if( ! function_exists( '_wp_specialchars' ) ) :
 		if ( ! $charset ) {
 			static $_charset = null;
 			if ( ! isset( $_charset ) ) {
-				$_charset   = $GLOBALS['stub_wp_options']->blog_charset;
+				$_charset   = \Unitest_WP_Copy\WP_Options::get( 'blog_charset' );
 			}
 			$charset = $_charset;
 		}

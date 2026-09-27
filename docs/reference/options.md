@@ -5,123 +5,107 @@ The runtime provides in-memory implementations of `get_option()` and
 
 ## Configure options
 
-Set initial values before bootstrap:
+Set initial values before or after boot:
 
 ```php
-$GLOBALS['stub_wp_options'] = (object) [
-	'home'      => 'https://example.test',
-	'siteurl'   => 'https://example.test',
-	'my_option' => 'enabled',
-];
+use Unitest_WP_Copy\WP_Options;
+use Unitest_WP_Copy\WP_Runtime;
 
-$GLOBALS['stub_wp_site_options'] = (object) [
-	'my_option' => 'enabled',
-];
+WP_Options::set( 'home', 'https://example.test' );
+WP_Options::set( 'siteurl', 'https://example.test' );
+WP_Options::set_site( 'registration', 'all' );
 
-\Unitest_WP_Copy\Bootstrap::init();
+WP_Runtime::boot();
+
+WP_Options::set( 'my_plugin_title', 'Test title' );
 ```
 
 Bootstrap keeps provided values and adds any missing defaults.
 
-Change values after bootstrap through the options object:
 
-```php
-\Unitest_WP_Copy\Bootstrap::init();
-
-$GLOBALS['stub_wp_options']->home      = 'https://example.test';
-$GLOBALS['stub_wp_options']->siteurl   = 'https://example.test';
-$GLOBALS['stub_wp_options']->my_option = 'enabled';
-
-$GLOBALS['stub_wp_site_options']->my_option = 'enabled';
-```
 
 ## How option lookup works
+
+Options should be reed via regular WP functions:
+
+```php
+get_option( 'options_name' );
+get_site_option( 'options_name' );
+```
 
 ### get_option()
 
 `get_option()` resolves a value in this order:
 
-1. `pre_option_{$option}` and `pre_option` filters;
-2. a value from `$GLOBALS['stub_wp_options']`, followed by the
-   `option_{$option}` filter;
-3. a `WP_Mock` handler, but only when the option is absent from the store;
-4. the `default_option_{$option}` filter and the supplied default value.
+1. `pre_option_{$option}` and `pre_option` filters.
+2. `WP_Options` store value, followed by the
+   `option_{$option}` filter.
+3. `WP_Mock` handler, but only when the option is absent from the store.
+4. `default_option_{$option}` filter and the supplied default value.
 
+::: info
 A pre-option filter short-circuits the remaining lookup when it returns a value
 other than `false`.
+::: 
 
 ### get_site_option()
 
-In multisite mode, `get_site_option()` follows the same lookup order, using the
-network-option equivalents:
+The same lookup order, using the network-option equivalents:
 
-1. `pre_site_option_{$option}` and `pre_site_option` filters;
-2. a value from `$GLOBALS['stub_wp_site_options']`, followed by the
-   `site_option_{$option}` filter;
-3. a `WP_Mock` handler, but only when the option is absent from the store;
-4. the `default_site_option_{$option}` filter and the supplied default value.
+1. `pre_site_option_{$option}` and `pre_site_option` filters.
+2. `WP_Options` store value, followed by the `site_option_{$option}` filter.
+3. `WP_Mock` handler, but only when the option is absent from the store.
+4. `default_site_option_{$option}` filter and the supplied default value.
 
 Outside multisite, `get_site_option()` delegates to `get_option()`.
 
 
 ## Store & Restore option state
 
-Stored values take priority over WP_Mock handlers. This prevents a broad
-`get_option()` mock from changing runtime settings used by nested function
-calls.
-
-To override a stored option, change `$GLOBALS['stub_wp_options']` or use its
-`pre_option_*` or `option_*` filter.
-
-Both stores are process-wide. Save their original values in `setUp()`, set
-options directly in the store during a test, and restore the stores in
-`tearDown()`:
+Isolate test state. Save and restore both stores with an internal LIFO stack:
 
 ```php
-private object $original_options;
-private object $original_site_options;
-
 protected function setUp(): void {
 	parent::setUp();
-
-	$this->original_options      = clone $GLOBALS['stub_wp_options'];
-	$this->original_site_options = clone $GLOBALS['stub_wp_site_options'];
+	WP_Options::save_state();
 }
 
 protected function tearDown(): void {
-	$GLOBALS['stub_wp_options']      = $this->original_options;
-	$GLOBALS['stub_wp_site_options'] = $this->original_site_options;
-
+	WP_Options::restore_state();
 	parent::tearDown();
 }
 
 public function test__plugin_title(): void {
-	$GLOBALS['stub_wp_options']->my_plugin_title = 'Test title';
+	WP_Options::set( 'my_plugin_title', 'Test title' );
 
 	self::assertSame( 'Test title', get_option( 'my_plugin_title' ) );
 }
 ```
 
-## Mock an option
+`save_state()` and `restore_state()` require a booted runtime. An unmatched
+`restore_state()` throws `LogicException`.
 
-A WP_Mock handler runs only after global stored values have been checked. Mock
-an option name that is absent from `$GLOBALS['stub_wp_options']`:
+State does not include constants, hooks, `$_SERVER`, or other WP globals.
+
+### Nested state saves
 
 ```php
-\WP_Mock::userFunction( 'get_option' )
-	->with( 'my_plugin_flag' )
-	->andReturn( 'mocked' );
+WP_Options::save_state(); // State A.
+WP_Options::set( 'blogname', 'B' );
 
-self::assertSame( 'mocked', get_option( 'my_plugin_flag' ) );
+WP_Options::save_state(); // State B.
+WP_Options::set( 'blogname', 'C' );
+
+WP_Options::restore_state(); // Restores B.
+WP_Options::restore_state(); // Restores A.
 ```
-
-If `my_plugin_flag` already exists in the store, its stored value is returned
-and the handler is not called.
 
 ## Default options
 
-Bootstrap adds these values to `$GLOBALS['stub_wp_options']` when they are not
-already present:
+The authoritative default lists live in `WP_Options`. They cover the deterministic
+values required by copied runtime functions.
+
+For regular site:
 
 ```php
 [
@@ -169,12 +153,12 @@ already present:
 ]
 ```
 
-Bootstrap adds these network defaults to `$GLOBALS['stub_wp_site_options']`:
+For network:
 
 ```php
 [
-	'siteurl'                     => $GLOBALS['stub_wp_options']->siteurl,
-	'WPLANG'                      => $GLOBALS['stub_wp_options']->WPLANG,
+	'siteurl'                     => 'https://wp.test',
+	'WPLANG'                      => '',
 	'banned_email_domains'        => [],
 	'upload_filetypes'            => 'jpg jpeg png gif',
 	'upload_space_check_disabled' => false,

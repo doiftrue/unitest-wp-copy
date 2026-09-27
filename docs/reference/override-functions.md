@@ -1,7 +1,7 @@
 # Override functions
 
 Every runtime-provided WordPress function is guarded by `function_exists()`.
-Define a function before `Bootstrap::init()` to prevent "Unitest WP Copy" from
+Define a function before `WP_Runtime::boot()` to prevent "Unitest WP Copy" from
 loading its implementation.
 
 ## Full override
@@ -15,7 +15,7 @@ function sanitize_locale_name( $locale_name ) {
 	return 'test-locale';
 }
 
-\Unitest_WP_Copy\Bootstrap::init();
+\Unitest_WP_Copy\WP_Runtime::boot();
 \WP_Mock::bootstrap();
 ```
 

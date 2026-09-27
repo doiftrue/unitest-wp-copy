@@ -1,15 +1,16 @@
 <?php
 
+use Unitest_WP_Copy\WP_Options;
+
 class general_template__Test extends \PHPUnit\Framework\TestCase {
 
-	private object $initial_stub_wp_options;
 	private array $initial_server = [];
 	private array $initial_allowedtags = [];
 
 	protected function setUp(): void {
 		parent::setUp();
 
-		$this->initial_stub_wp_options = clone $GLOBALS['stub_wp_options'];
+		WP_Options::save_state();
 		$this->initial_server = $_SERVER;
 		$this->initial_allowedtags = $GLOBALS['allowedtags'] ?? [];
 
@@ -23,7 +24,7 @@ class general_template__Test extends \PHPUnit\Framework\TestCase {
 	}
 
 	protected function tearDown(): void {
-		$GLOBALS['stub_wp_options'] = clone $this->initial_stub_wp_options;
+		WP_Options::restore_state();
 		$GLOBALS['allowedtags'] = $this->initial_allowedtags;
 		$_SERVER = $this->initial_server;
 
@@ -76,7 +77,7 @@ class general_template__Test extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function test__bloginfo() {
-		$GLOBALS['stub_wp_options']->blogdescription = 'Example tagline';
+		WP_Options::set( 'blogdescription', 'Example tagline' );
 
 		ob_start();
 		bloginfo( 'description' );
@@ -259,18 +260,18 @@ class general_template__Test extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function test__get_language_attributes() {
-		$GLOBALS['stub_wp_options']->language = 'fr-FR';
-		$GLOBALS['stub_wp_options']->html_type = 'text/html';
+		WP_Options::set( 'language', 'fr-FR' );
+		WP_Options::set( 'html_type', 'text/html' );
 
 		$this->assertSame( 'lang="fr-FR"', get_language_attributes( 'html' ) );
 
-		$GLOBALS['stub_wp_options']->html_type = 'application/xhtml+xml';
+		WP_Options::set( 'html_type', 'application/xhtml+xml' );
 		$this->assertSame( 'xml:lang="fr-FR"', get_language_attributes( 'xhtml' ) );
 	}
 
 	public function test__language_attributes() {
-		$GLOBALS['stub_wp_options']->language = 'en-US';
-		$GLOBALS['stub_wp_options']->html_type = 'text/html';
+		WP_Options::set( 'language', 'en-US' );
+		WP_Options::set( 'html_type', 'text/html' );
 
 		ob_start();
 		language_attributes();

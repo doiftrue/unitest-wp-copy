@@ -86,7 +86,7 @@ class theme__Test extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function test__get_stylesheet_uri() {
-		$GLOBALS['stub_wp_options']->stylesheet = 'child-theme';
+		\Unitest_WP_Copy\WP_Options::set( 'stylesheet', 'child-theme' );
 
 		$this->assertStringContainsString( '/wp-content/themes/child-theme/style.css', get_stylesheet_uri() );
 	}

@@ -38,6 +38,6 @@ Initialize the runtime before WP_Mock:
 ```php
 require_once dirname( __DIR__ ) . '/vendor/autoload.php';
 
-\Unitest_WP_Copy\Bootstrap::init();
+\Unitest_WP_Copy\WP_Runtime::boot();
 \WP_Mock::bootstrap();
 ```

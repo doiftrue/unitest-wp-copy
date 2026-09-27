@@ -9,7 +9,7 @@ bootstrap.
 Runtime state is shared for the life of the PHP process:
 
 1. define any constants required by the test environment;
-2. call `\Unitest_WP_Copy\Bootstrap::init()` to load copied WordPress symbols,
+2. call `\Unitest_WP_Copy\WP_Runtime::boot()` to load copied WordPress symbols,
    initialize WordPress-like constants, globals, hooks, options, and
    runtime-adapted classes;
 3. call `\WP_Mock::bootstrap()` when mocks are needed;
@@ -18,7 +18,7 @@ Runtime state is shared for the life of the PHP process:
 5. run the code under test;
 6. restore every changed process-wide value in `tearDown()`.
 
-`Bootstrap::init()` initializes the in-memory option stores. See
+`WP_Runtime::boot()` initializes the in-memory option stores. See
 [Options](/reference/options) for configuration, lookup, mocking, defaults, and
 state cleanup.
 

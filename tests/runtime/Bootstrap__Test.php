@@ -1,6 +1,8 @@
 <?php
 
 use Unitest_WP_Copy\Bootstrap;
+use Unitest_WP_Copy\WP_Options;
+use Unitest_WP_Copy\WP_Runtime;
 
 require_once TESTS_ROOT_DIR . '/Project_TestCase.php';
 
@@ -8,9 +10,10 @@ class Bootstrap__Test extends Project_TestCase {
 
 	public function test__init(): void {
 		// NOTE: Bootstrap::init() already run on test init
+		$this->assertTrue( WP_Runtime::boot() instanceof WP_Runtime );
 		$this->assertTrue( Bootstrap::init() instanceof Bootstrap );
 		$this->assertSame( '2.0', REST_API_VERSION );
-		$this->assertSame( '1', $GLOBALS['stub_wp_options']->blog_public );
+		$this->assertSame( '1', get_option( 'blog_public' ) );
 	}
 
 	/**

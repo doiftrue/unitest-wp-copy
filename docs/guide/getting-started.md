@@ -19,7 +19,7 @@ Create `tests/bootstrap.php`:
 ```php
 require_once dirname( __DIR__ ) . '/vendor/autoload.php';
 
-\Unitest_WP_Copy\Bootstrap::init();
+\Unitest_WP_Copy\WP_Runtime::boot();
 \WP_Mock::bootstrap();
 ```
 
@@ -89,5 +89,4 @@ Runtime configuration has two parts:
 - [Options](/reference/options) — mutable site and network values stored in
   memory, including defaults, lookup order, mocking, and cleanup.
 
-Configure constants before `\Unitest_WP_Copy\Bootstrap::init()`. Options can be
-provided before bootstrap or changed afterward.
+Configure constants before `\Unitest_WP_Copy\WP_Runtime::boot()`. Options can be provided before or after boot.

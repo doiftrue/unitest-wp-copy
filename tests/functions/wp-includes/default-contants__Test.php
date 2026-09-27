@@ -69,7 +69,7 @@ class default_contants__Test extends \PHPUnit\Framework\TestCase {
 
 	public function test__wp_cookie_constants() {
 		wp_cookie_constants();
-		$this->assertSame( md5( $GLOBALS['stub_wp_options']->siteurl ), COOKIEHASH );
+		$this->assertSame( md5( get_option( 'siteurl' ) ), COOKIEHASH );
 		$this->assertSame( 'wordpress_' . COOKIEHASH, AUTH_COOKIE );
 		$this->assertSame( 'wordpress_logged_in_' . COOKIEHASH, LOGGED_IN_COOKIE );
 		$this->assertStringEndsWith( '/wp-admin', ADMIN_COOKIE_PATH );

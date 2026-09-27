@@ -1,5 +1,7 @@
 <?php
 
+use Unitest_WP_Copy\WP_Options;
+
 class https_detection__Test extends \PHPUnit\Framework\TestCase {
 
 	private string $home;
@@ -7,42 +9,42 @@ class https_detection__Test extends \PHPUnit\Framework\TestCase {
 
 	protected function setUp(): void {
 		parent::setUp();
-		$this->home    = $GLOBALS['stub_wp_options']->home;
-		$this->siteurl = $GLOBALS['stub_wp_options']->siteurl;
+		$this->home    = get_option( 'home' );
+		$this->siteurl = get_option( 'siteurl' );
 	}
 
 	protected function tearDown(): void {
-		$GLOBALS['stub_wp_options']->home    = $this->home;
-		$GLOBALS['stub_wp_options']->siteurl = $this->siteurl;
+		WP_Options::set( 'home', $this->home );
+		WP_Options::set( 'siteurl', $this->siteurl );
 		parent::tearDown();
 	}
 
 	public function test__wp_is_home_url_using_https() {
-		$GLOBALS['stub_wp_options']->home = 'https://wp.test';
+		WP_Options::set( 'home', 'https://wp.test' );
 		$this->assertTrue( wp_is_home_url_using_https() );
 
-		$GLOBALS['stub_wp_options']->home = 'http://wp.test';
+		WP_Options::set( 'home', 'http://wp.test' );
 		$this->assertFalse( wp_is_home_url_using_https() );
 	}
 
 	public function test__wp_is_site_url_using_https() {
-		$GLOBALS['stub_wp_options']->siteurl = 'https://wp.test';
+		WP_Options::set( 'siteurl', 'https://wp.test' );
 		$this->assertTrue( wp_is_site_url_using_https() );
 
-		$GLOBALS['stub_wp_options']->siteurl = 'http://wp.test';
+		WP_Options::set( 'siteurl', 'http://wp.test' );
 		$this->assertFalse( wp_is_site_url_using_https() );
 	}
 
 	public function test__wp_is_using_https() {
-		$GLOBALS['stub_wp_options']->home    = 'https://wp.test';
-		$GLOBALS['stub_wp_options']->siteurl = 'https://wp.test';
+		WP_Options::set( 'home', 'https://wp.test' );
+		WP_Options::set( 'siteurl', 'https://wp.test' );
 		$this->assertTrue( wp_is_using_https() );
 
-		$GLOBALS['stub_wp_options']->siteurl = 'http://wp.test';
+		WP_Options::set( 'siteurl', 'http://wp.test' );
 		$this->assertFalse( wp_is_using_https() );
 
-		$GLOBALS['stub_wp_options']->home    = 'http://wp.test';
-		$GLOBALS['stub_wp_options']->siteurl = 'https://wp.test';
+		WP_Options::set( 'home', 'http://wp.test' );
+		WP_Options::set( 'siteurl', 'https://wp.test' );
 		$this->assertFalse( wp_is_using_https() );
 	}
 
@@ -60,4 +62,5 @@ class https_detection__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertTrue( wp_is_local_html_output( '<link href="//wp.test/wp-json/">' ) );
 		remove_action( 'wp_head', 'rest_output_link_wp_head' );
 	}
+
 }

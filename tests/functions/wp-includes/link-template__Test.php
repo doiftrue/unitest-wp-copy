@@ -1,5 +1,7 @@
 <?php
 
+use Unitest_WP_Copy\WP_Options;
+
 class link_template__Test extends \PHPUnit\Framework\TestCase {
 
 	private array $tmp_dirs = [];
@@ -120,7 +122,7 @@ class link_template__Test extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function test__get_parent_theme_file_uri() {
-		$GLOBALS['stub_wp_options']->template = 'parent-theme';
+		WP_Options::set( 'template', 'parent-theme' );
 
 		$this->assertStringContainsString(
 			'/wp-content/themes/parent-theme/inc/config.php',

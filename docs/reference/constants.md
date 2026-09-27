@@ -1,17 +1,17 @@
 # Constants
 
-Define runtime constants before calling `Bootstrap::init()`:
+Define runtime constants before calling `WP_Runtime::boot()`:
 
 ```php
+require_once dirname( __DIR__ ) . '/vendor/autoload.php';
+
 define( 'ABSPATH', '/srv/wp/' );
 define( 'WP_CONTENT_DIR', '/srv/wp/wp-content' );
 define( 'WP_CONTENT_URL', 'https://wp.test/wp-content' );
 define( 'WP_ENVIRONMENT_TYPE', 'development' );
 define( 'WP_DEBUG', true );
 
-require_once dirname( __DIR__ ) . '/vendor/autoload.php';
-
-\Unitest_WP_Copy\Bootstrap::init();
+\Unitest_WP_Copy\WP_Runtime::boot();
 \WP_Mock::bootstrap();
 ```
 
