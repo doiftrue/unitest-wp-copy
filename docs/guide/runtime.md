@@ -8,28 +8,27 @@ bootstrap.
 
 Runtime state is shared for the life of the PHP process:
 
-1. define any constants required by the test environment;
-2. call `\Unitest_WP_Copy\WP_Runtime::boot()` to load copied WordPress symbols,
-   initialize WordPress-like constants, globals, hooks, options, and
-   runtime-adapted classes;
-3. call `\WP_Mock::bootstrap()` when mocks are needed;
-4. configure the globals, hooks, registries, or runtime adapters required by the
-   test;
-5. run the code under test;
-6. restore every changed process-wide value in `tearDown()`.
+1. **Define test constants.**
+2. Call **`\Unitest_WP_Copy\WP_Runtime::boot()`** once per PHP process.
+   1. Load **runtime changes for the current WordPress version**.
+   2. Load **selected symbols** and runtime adapters.
+   3. Start **in-memory option stores** and mockable-function support.
+   4. Define **WordPress constants**.
+   5. Initialize **WordPress-like globals**.
+   6. Load **adapted initialization fragments**.
+   7. Register the **REST OPTIONS hook**.
+3. Configure required **globals, hooks, registries, and adapters**.
+4. **Run the code under test.**
+5. **Assert the result.**
+6. Restore **shared state** in `tearDown()`.
 
-`WP_Runtime::boot()` initializes the in-memory option stores. See
-[Options](/reference/options) for configuration, lookup, mocking, defaults, and
-state cleanup.
+### Optional mocks
 
-For example, tests that register REST routes must remove the cached server:
+`WP_Mock` is separate from this runtime. When a test needs its handlers, call
+`\WP_Mock::bootstrap()` as well.
 
-```php
-protected function tearDown(): void {
-	unset( $GLOBALS['wp_rest_server'] );
-	parent::tearDown();
-}
-```
+See [Options](/reference/options) for option configuration, lookup, mocking,
+defaults, and state cleanup.
 
 ## Runtime-adapted classes
 
