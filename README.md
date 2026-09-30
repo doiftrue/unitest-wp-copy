@@ -1,10 +1,10 @@
 About
 =====
+> DOCS: [doiftrue.github.io/unitest-wp-copy](https://doiftrue.github.io/unitest-wp-copy/).
+
 Helper library for PHPUnit tests. It provides selected WordPress core functions and classes that can run without full WordPress bootstrap (database or external services).
 
 Use it with [WP_Mock](https://github.com/10up/wp_mock). The runtime keeps real WordPress pure-PHP behavior, while WP_Mock lets tests replace functions marked as mockable when that is needed — which is almost always the case in unit tests.
-
-> Complete documentation: [doiftrue.github.io/unitest-wp-copy](https://doiftrue.github.io/unitest-wp-copy/).
 
 
 Quick Start

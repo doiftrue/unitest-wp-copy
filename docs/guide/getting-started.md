@@ -9,7 +9,8 @@ See [WordPress versions](/guide/wp-versions) for the supported lines and
 how package versioning works:
 
 ```bash
-composer require --dev  doiftrue/unitest-wp-copy:7.1.*  10up/wp_mock
+composer require --dev doiftrue/unitest-wp-copy:7.1.*
+composer require --dev 10up/wp_mock
 ```
 
 For example, `7.1.*` contains code copied from WordPress 7.1.

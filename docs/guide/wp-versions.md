@@ -25,7 +25,8 @@ WordPress versions before 6.5 are not supported.
 For example, for a plugin tested with WordPress 6.9:
 
 ```bash
-composer require --dev doiftrue/unitest-wp-copy:6.9.* 10up/wp_mock
+composer require --dev doiftrue/unitest-wp-copy:6.9.*
+composer require --dev 10up/wp_mock
 ```
 
 ## What the version means

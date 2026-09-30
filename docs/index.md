@@ -30,7 +30,8 @@ features:
 Choose the package line that matches your WordPress version:
 
 ```bash
-composer require --dev doiftrue/unitest-wp-copy:7.1.* 10up/wp_mock
+composer require --dev doiftrue/unitest-wp-copy:7.1.*
+composer require --dev 10up/wp_mock
 ```
 
 Initialize the runtime before WP_Mock:
