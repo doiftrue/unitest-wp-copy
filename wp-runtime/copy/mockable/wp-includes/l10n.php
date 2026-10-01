@@ -114,3 +114,65 @@ if( ! function_exists( 'get_locale' ) ) :
 	}
 endif;
 
+// wp-includes/l10n.php (WP 6.9.9)
+if( ! function_exists( 'determine_locale' ) ) :
+	function determine_locale() {
+		if ( \Unitest_WP_Copy\WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return \Unitest_WP_Copy\WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+	
+		/**
+		 * Filters the locale for the current request prior to the default determination process.
+		 *
+		 * Using this filter allows to override the default logic, effectively short-circuiting the function.
+		 *
+		 * @since 5.0.0
+		 *
+		 * @param string|null $locale The locale to return and short-circuit. Default null.
+		 */
+		$determined_locale = apply_filters( 'pre_determine_locale', null );
+	
+		if ( $determined_locale && is_string( $determined_locale ) ) {
+			return $determined_locale;
+		}
+	
+		if (
+			isset( $GLOBALS['pagenow'] ) && 'wp-login.php' === $GLOBALS['pagenow'] &&
+			( ! empty( $_GET['wp_lang'] ) || ! empty( $_COOKIE['wp_lang'] ) )
+		) {
+			if ( ! empty( $_GET['wp_lang'] ) ) {
+				$determined_locale = sanitize_locale_name( $_GET['wp_lang'] );
+			} else {
+				$determined_locale = sanitize_locale_name( $_COOKIE['wp_lang'] );
+			}
+		} elseif (
+			is_admin() ||
+			( isset( $_GET['_locale'] ) && 'user' === $_GET['_locale'] && wp_is_json_request() )
+		) {
+			$determined_locale = get_user_locale();
+		} elseif (
+			( ! empty( $_REQUEST['language'] ) || isset( $GLOBALS['wp_local_package'] ) )
+			&& wp_installing()
+		) {
+			if ( ! empty( $_REQUEST['language'] ) ) {
+				$determined_locale = sanitize_locale_name( $_REQUEST['language'] );
+			} else {
+				$determined_locale = $GLOBALS['wp_local_package'];
+			}
+		}
+	
+		if ( ! $determined_locale ) {
+			$determined_locale = get_locale();
+		}
+	
+		/**
+		 * Filters the locale for the current request.
+		 *
+		 * @since 5.0.0
+		 *
+		 * @param string $determined_locale The locale.
+		 */
+		return apply_filters( 'determine_locale', $determined_locale );
+	}
+endif;
+

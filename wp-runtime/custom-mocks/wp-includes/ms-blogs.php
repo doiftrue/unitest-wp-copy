@@ -22,6 +22,8 @@ if ( ! function_exists( 'switch_to_blog' ) ) :
 		}
 
 		$GLOBALS['_wp_switched_stack'][] = $prev_blog_id;
+		$GLOBALS['wpdb']->set_blog_id( $new_blog_id );
+		$GLOBALS['table_prefix']         = $GLOBALS['wpdb']->get_blog_prefix();
 		$GLOBALS['blog_id']              = (int) $new_blog_id;
 		$GLOBALS['current_blog_id']      = (int) $new_blog_id;
 		$GLOBALS['switched']             = true;
@@ -45,6 +47,8 @@ if ( ! function_exists( 'restore_current_blog' ) ) :
 		}
 
 		$blog_id                  = array_pop( $GLOBALS['_wp_switched_stack'] );
+		$GLOBALS['wpdb']->set_blog_id( $blog_id );
+		$GLOBALS['table_prefix']  = $GLOBALS['wpdb']->get_blog_prefix();
 		$GLOBALS['blog_id']       = (int) $blog_id;
 		$GLOBALS['current_blog_id'] = (int) $blog_id;
 		$GLOBALS['switched']      = ! empty( $GLOBALS['_wp_switched_stack'] );
