@@ -1,11 +1,10 @@
 About
 =====
+> DOCS: [doiftrue.github.io/unitest-wp-copy](https://doiftrue.github.io/unitest-wp-copy/).
+
 Helper library for PHPUnit tests. It provides selected WordPress core functions and classes that can run without full WordPress bootstrap (database or external services).
 
 Use it with [WP_Mock](https://github.com/10up/wp_mock). The runtime keeps real WordPress pure-PHP behavior, while WP_Mock lets tests replace functions marked as mockable when that is needed — which is almost always the case in unit tests.
-
-The complete documentation is available at
-[doiftrue.github.io/unitest-wp-copy](https://doiftrue.github.io/unitest-wp-copy/).
 
 
 Quick Start
@@ -194,13 +193,13 @@ Use the package line that matches your WP version:
 | 6.5            | `doiftrue/unitest-wp-copy:6.5.*` |
 
 Real release tags use 4 numbers, for example `7.0.2.8`:
-- `7.0` is the target WordPress version line;
-- `2.8` is this repository's version for that line.
+- `7.0` —  the target WordPress version line - `<major>.<minor>`.
+- `2.8` —  this package version for that line - `<major>.<minor>`.
 
 Usage examples in your composer.json:
 - `7.0.2.8` - pin one exact release.
-- `~7.0.2.8` - allow conservative updates starting from this build (usually small runtime fixes).
-- `7.0.*` - allow any update in the WP `7.0` line (new copied functions/classes may appear and affect existing tests).
+- `7.0.2.*` - allow conservative updates starting from this build (small fixes).
+- `7.0.*` - allow any update of this package (major changes may affect existing tests).
 
 
 Runtime Configuration and Shared State
@@ -208,6 +207,9 @@ Runtime Configuration and Shared State
 Configure options before or after `\Unitest_WP_Copy\WP_Runtime::boot()`.
 
 ```php
+use Unitest_WP_Copy\WP_Options;
+use Unitest_WP_Copy\WP_Runtime;
+
 // tests/bootstrap.php
 define( 'ABSPATH', '/srv/wp/' );
 define( 'WP_CONTENT_DIR', '/srv/wp/wp-content' );
@@ -217,16 +219,16 @@ define( 'WP_DEBUG', true );
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-\Unitest_WP_Copy\WP_Options::set( 'home', 'https://wp.test' );
-\Unitest_WP_Copy\WP_Options::set( 'siteurl', 'https://wp.test' );
-\Unitest_WP_Copy\WP_Options::set( 'template', 'wp-test-template' );
+WP_Options::set( 'home', 'https://wp.test' );
+WP_Options::set( 'siteurl', 'https://wp.test' );
+WP_Options::set( 'template', 'wp-test-template' );
 
-\Unitest_WP_Copy\WP_Runtime::boot();
-\WP_Mock::bootstrap();
+WP_Runtime::boot();
+WP_Mock::bootstrap();
 
 // Set custom options after boot too.
-\Unitest_WP_Copy\WP_Options::set( 'my_option', 'test-value' );
-\Unitest_WP_Copy\WP_Options::set( 'template', 'my-theme' );
+WP_Options::set( 'my_option', 'test-value' );
+WP_Options::set( 'template', 'my-theme' );
 ```
 
 The runtime adds defaults only for absent keys. The normal defaults are:

@@ -40,11 +40,13 @@ Method marks: `[wp]` — unchanged copied WordPress method, `[adapted]` — runt
         _real_escape()               [adapted]
         add_placeholder_escape()     [wp]
         esc_like()                   [wp]
+        get_blog_prefix()            [adapted]
         placeholder_escape()         [wp]
         prepare()                    [wp]
         remove_placeholder_escape()  [wp]
+        set_blog_id()                [adapted]
     Public properties:
-        $posts, $comments, $users, $blogs, $postmeta, $commentmeta, $termmeta, $usermeta, $blogmeta, $sitemeta
+        $base_prefix, $prefix, $blogid, $siteid, $posts, $comments, $users, $blogs, $postmeta, $commentmeta, $termmeta, $usermeta, $blogmeta, $sitemeta
 ```
 
 Custom-adapted WordPress symbols (Mockable via WP_Mock):
@@ -67,6 +69,7 @@ get_stylesheet_directory()
 get_stylesheet_directory_uri()
 get_template_directory()
 get_template_directory_uri()
+get_user_locale()
 is_user_logged_in()
 restore_current_blog()
 switch_to_blog()
@@ -86,6 +89,7 @@ convert_smilies()
 current_datetime()
 current_theme_supports()
 current_time()
+determine_locale()
 force_ssl_admin()
 force_ssl_content()
 get_admin_url()
