@@ -9,6 +9,8 @@ return [
 	'before_last_bar'            => '2.8.0',
 	'_n_noop'                    => '2.5.0',
 	'get_locale'                 => '1.5.0 mockable',
+	'determine_locale'           => '5.0.0 mockable',
+	// 'get_user_locale'         => '4.7.0', // why: custom mock without user/session runtime
 	// '__'         => '', // why: custom mock
 	// '_e'         => '', // why: custom mock
 	// '_x'         => '', // why: custom mock
@@ -25,12 +27,10 @@ return [
 /*
 Not suitable in isolated PHPUnit env:
 
-determine_locale                      // why: depends on is_admin() runtime context.
 _ex                                   // why: i18n runtime dependency (context translation).
 _load_textdomain_just_in_time         // why: textdomain loading/filesystem/runtime dependency.
 get_available_languages               // why: language pack filesystem dependency.
 get_translations_for_domain           // why: translation registry/runtime dependency.
-get_user_locale                       // why: user/session runtime dependency.
 has_translation                       // why: translation registry/runtime dependency.
 is_locale_switched                    // why: locale switching runtime dependency.
 is_textdomain_loaded                  // why: translation registry/runtime dependency.

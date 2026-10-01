@@ -10,6 +10,7 @@ class ms_blogs__custom_mocks__Test extends \PHPUnit\Framework\TestCase {
 		\WP_Mock::setUp();
 
 		$GLOBALS['blog_id'] = 1;
+		$GLOBALS['wpdb']    = new \Unitest_WP_Copy\wpdb__Runtime();
 		unset( $GLOBALS['current_blog_id'], $GLOBALS['_wp_switched_stack'], $GLOBALS['switched'] );
 	}
 
@@ -46,6 +47,20 @@ class ms_blogs__custom_mocks__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( 1, $GLOBALS['current_blog_id'] );
 		$this->assertFalse( $GLOBALS['switched'] );
 		$this->assertSame( [], $GLOBALS['_wp_switched_stack'] );
+	}
+
+	public function test__switch_updates_wpdb_prefix_without_changing_base_prefix(): void {
+		switch_to_blog( 5 );
+
+		$this->assertSame( 'wp_', $GLOBALS['wpdb']->base_prefix );
+		$this->assertSame( 'wp_5_', $GLOBALS['wpdb']->prefix );
+		$this->assertSame( 'wp_5_posts', $GLOBALS['wpdb']->posts );
+
+		restore_current_blog();
+
+		$this->assertSame( 'wp_', $GLOBALS['wpdb']->base_prefix );
+		$this->assertSame( 'wp_', $GLOBALS['wpdb']->prefix );
+		$this->assertSame( 'wp_posts', $GLOBALS['wpdb']->posts );
 	}
 
 }

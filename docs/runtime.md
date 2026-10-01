@@ -64,7 +64,7 @@ the filenames of the corresponding WordPress implementations.
 | Runtime adapter | Generated trait | Manual adaptation |
 | --- | --- | --- |
 | `WP_REST_Server__Runtime` | `WP_REST_Server__Copied_Methods` | Live HTTP serving is disabled; status and headers are recorded in memory; the root index omits theme/media/post enrichment. A guarded alias exposes it as global `WP_REST_Server`. |
-| `wpdb__Runtime` | `wpdb__Copied_Methods` | `_real_escape()` uses `addslashes()` because the runtime has no database connection; standard table-name properties support SQL builders. |
+| `wpdb__Runtime` | `wpdb__Copied_Methods` | WordPress 7.1 adaptations provide multisite prefix switching for the reduced table set; `_real_escape()` uses `addslashes()` because the runtime has no database connection. |
 
 ### REST runtime
 

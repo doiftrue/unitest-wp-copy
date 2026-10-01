@@ -23,5 +23,17 @@ class wpdb__Runtime__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( 'wp_comments', $wpdb->comments );
 		$this->assertSame( 'wp_users', $wpdb->users );
 		$this->assertSame( 'wp_blogs', $wpdb->blogs );
+		$this->assertSame( 'wp_', $wpdb->base_prefix );
+		$this->assertSame( 'wp_', $wpdb->prefix );
+		$this->assertSame( 1, $wpdb->blogid );
+		$this->assertSame( 1, $wpdb->siteid );
+
+		$this->assertSame( 1, $wpdb->set_blog_id( 5, 2 ) );
+		$this->assertSame( 'wp_', $wpdb->base_prefix );
+		$this->assertSame( 'wp_5_', $wpdb->prefix );
+		$this->assertSame( 5, $wpdb->blogid );
+		$this->assertSame( 2, $wpdb->siteid );
+		$this->assertSame( 'wp_5_posts', $wpdb->posts );
+		$this->assertSame( 'wp_users', $wpdb->users );
 	}
 }

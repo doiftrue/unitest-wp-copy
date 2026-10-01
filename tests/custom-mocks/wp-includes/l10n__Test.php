@@ -80,4 +80,16 @@ class l10n__custom_mocks__Test extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( 'abc', esc_attr_x( 'abc', 'ctx' ) );
 	}
 
+	public function test__get_user_locale(): void {
+		$this->assertSame( get_locale(), get_user_locale() );
+	}
+
+	public function test__get_user_locale__mockable_handler(): void {
+		\WP_Mock::userFunction( 'get_user_locale' )
+			->with( 15 )
+			->andReturn( 'de_DE' );
+
+		$this->assertSame( 'de_DE', get_user_locale( 15 ) );
+	}
+
 }
