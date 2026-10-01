@@ -19,6 +19,23 @@ because its changes are shared by all WordPress-line tags that publish it.
 Availability for a particular WordPress line can be checked in the repository
 tags.
 
+## 5.1 - 2026-10-01
+
+### Added
+
+- Added mockable `determine_locale()` with the original WordPress fallback
+  logic.
+- Added a runtime-adapted, mockable `get_user_locale()` fallback for tests
+  without a user or session database.
+
+### Changed
+
+- Extended `wpdb__Runtime` with WordPress 7.1-compatible blog and network
+  identifiers and prefix handling.
+- Updated `switch_to_blog()` and `restore_current_blog()` to switch
+  blog-specific table names while preserving the base and network table
+  prefixes.
+
 ## 5.0 - 2026-09-28
 
 ### Breaking changes
