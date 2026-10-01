@@ -7,6 +7,19 @@
 use Unitest_WP_Copy\WP_Mock_Utils;
 
 /**
+ * Runtime adaptation of get_user_locale() without a user or session database.
+ */
+if ( ! function_exists( 'get_user_locale' ) ) :
+	function get_user_locale( $user = 0 ) {
+		if ( WP_Mock_Utils::has_handler( __FUNCTION__ ) ) {
+			return WP_Mock_Utils::call( __FUNCTION__, func_get_args() );
+		}
+
+		return get_locale();
+	}
+endif;
+
+/**
  * Runtime adaptations of translation helpers from WordPress 7.0 wp-includes/l10n.php.
  *
  * Translation lookup is intentionally reduced to source-string and plural selection fallbacks.
