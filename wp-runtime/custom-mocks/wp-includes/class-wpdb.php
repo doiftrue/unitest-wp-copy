@@ -8,7 +8,7 @@
 
 namespace Unitest_WP_Copy;
 
-#[AllowDynamicProperties]
+#[\AllowDynamicProperties]
 class wpdb__Runtime {
 
 	use wpdb__Copied_Methods;
